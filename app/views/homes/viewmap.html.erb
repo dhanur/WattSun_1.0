@@ -56,6 +56,20 @@
 
 				$("input[type='radio'][name='type1']").click(function() {
 					
+				for ( i = 0; i < 5; i++) {
+	
+				$("#installer1" + i).html("");
+				$("#installer2" + i).html("");
+			    }
+			    for ( i = 0; i < 3; i++) {
+				$("#panel1" + i).html("");
+				$("#panel2" + i).html("");
+				
+				$("#inverter1" + i).html("");
+				$("#inverter2" + i).html("");
+									
+				}
+				
 										
 					$.ajax({
 						url : "/homes/datafetch",
@@ -114,7 +128,7 @@
 
 								}
 							} else {
-								for ( i = 0; i < 5; i++) {
+								for ( i = 0; i < 3; i++) {
 
 									$("#panel1" + i).html("");
 
@@ -133,7 +147,7 @@
 
 								}
 							} else {
-								for ( i = 0; i < 5; i++) {
+								for ( i = 0; i < 3; i++) {
 
 									$("#inverter1" + i).html("");
 
@@ -150,6 +164,21 @@
 				});
 
 				$("input[type='radio'][name='type2']").click(function() {
+				
+				for ( i = 0; i < 5; i++) {
+	
+				$("#installer1" + i).html("");
+				$("#installer2" + i).html("");
+			    }
+			    for ( i = 0; i < 3; i++) {
+				$("#panel1" + i).html("");
+				$("#panel2" + i).html("");
+				
+				$("#inverter1" + i).html("");
+				$("#inverter2" + i).html("");
+									
+				}
+
 					$.ajax({
 						url : "/homes/datafetch",
 						type : "POST",
@@ -204,7 +233,7 @@
 
 								}
 							} else {
-								for ( i = 0; i < 5; i++) {
+								for ( i = 0; i < 3; i++) {
 
 									$("#panel2" + i).html("");
 
@@ -223,7 +252,7 @@
 
 								}
 							} else {
-								for ( i = 0; i < 5; i++) {
+								for ( i = 0; i < 3; i++) {
 
 									$("#inverter2" + i).html("");
 
@@ -464,11 +493,12 @@
           
        function makemake()
         {      
-          		for ( i = 0; i < 5; i++) {
+				for ( i = 0; i < 5; i++) {
 	
 				$("#installer1" + i).html("");
 				$("#installer2" + i).html("");
-			
+			    }
+			    for ( i = 0; i < 3; i++) {
 				$("#panel1" + i).html("");
 				$("#panel2" + i).html("");
 				
@@ -476,7 +506,6 @@
 				$("#inverter2" + i).html("");
 									
 				}
-				
 				
 		      	
    		input1 = formatted_address.split(",");							
@@ -1422,7 +1451,7 @@
 										} 
 										
 										else {
-										for ( i = 0; i < 5; i++) {
+										for ( i = 0; i < 3; i++) {
 									
 											$("#panel1" + i).html("");
 											$("#panel2" + i).html("");
@@ -1449,7 +1478,7 @@
 											}
 										} 
 										else {
-											for ( i = 0; i < 5; i++) {
+											for ( i = 0; i < 3; i++) {
 									
 											$("#inverter1" + i).html("");
 											$("#inverter2" + i).html("");
@@ -1750,19 +1779,19 @@
    function setValueNewTranscation(input){
    	
    	   
-   	     
-   		for ( i = 0; i < 5; i++) {
+				for ( i = 0; i < 5; i++) {
 	
 				$("#installer1" + i).html("");
 				$("#installer2" + i).html("");
-			
+			    }
+			    for ( i = 0; i < 3; i++) {
 				$("#panel1" + i).html("");
 				$("#panel2" + i).html("");
 				
 				$("#inverter1" + i).html("");
 				$("#inverter2" + i).html("");
 									
-		}
+				}
    	
    		input1 = formatted_address.split(",");							
 		var secondline=''
@@ -2685,7 +2714,7 @@
 										} 
 										
 										else {
-										for ( i = 0; i < 5; i++) {
+										for ( i = 0; i < 3; i++) {
 									
 											$("#panel1" + i).html("");
 											$("#panel2" + i).html("");
@@ -2712,7 +2741,7 @@
 											}
 										} 
 										else {
-											for ( i = 0; i < 5; i++) {
+											for ( i = 0; i < 3; i++) {
 									
 											$("#inverter1" + i).html("");
 											$("#inverter2" + i).html("");
@@ -2752,19 +2781,21 @@
        {
        	
       
-   		for ( i = 0; i < 5; i++) {
+				for ( i = 0; i < 5; i++) {
 	
 				$("#installer1" + i).html("");
 				$("#installer2" + i).html("");
-			
+			    }
+			    
+			    for ( i = 0; i < 3; i++) {
 				$("#panel1" + i).html("");
 				$("#panel2" + i).html("");
 				
 				$("#inverter1" + i).html("");
 				$("#inverter2" + i).html("");
 									
-		}
-       	
+				}
+				
        	$.ajax({
 					url : "/homes/alldatafetchonmarkerclick",
 					type : "POST",
@@ -3686,7 +3717,7 @@
 										} 
 										
 										else {
-										for ( i = 0; i < 5; i++) {
+										for ( i = 0; i < 3; i++) {
 									
 											$("#panel1" + i).html("");
 											$("#panel2" + i).html("");
@@ -3713,7 +3744,7 @@
 											}
 										} 
 										else {
-											for ( i = 0; i < 5; i++) {
+											for ( i = 0; i < 3; i++) {
 									
 											$("#inverter1" + i).html("");
 											$("#inverter2" + i).html("");
