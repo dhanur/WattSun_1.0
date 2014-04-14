@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>
+            Wattsun
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link href="/assets/bootstrap.min.css" rel="stylesheet">
+        <link href="/assets/flat-ui.css" rel="stylesheet">
+        <link href="/assets/reset.css" rel="stylesheet">
+        <link href="/assets/style_user_profile.css" rel="stylesheet">
+
+        <link href="/assets/mediaqueries_user_profile.css" rel="stylesheet">
+        <script src="/assets/jquery.js"></script>
+        <script src="/assets/bootstrap.min.js"></script>
+
+
+        <script>
+        
+           
+           $( document ).ready(function() {
+					$('#new_psd').focusin(function() { 
+					  $('#npass').html(''); 
+					  $('#passwd_match').html(''); 
+					});
+					
+					
+					$('#con_new_psd').focusin(function() { 
+					  $('#conpass').html(''); 
+					  $('#passwd_match').html(''); 
+					});
+					
+					$('#cur_psd').focusin(function() { 
+					  $('#cpass').html(''); 					  
+					});
+					
+					$('#newmobilephn').focusin(function() { 
+					  $('#e_mphone').html('');					  
+					});
+					
+					$('#newworkphn').focusin(function() { 
+					  $('#e_wphone').html('');					  
+					});
+					
+					
+			});
+				
+        
+        
+        
+            function updateMobilePhone()
+            {
+            	 
+            	if ($('#newmobilephn').val() == '' || $('#newmobilephn').val() == null)
+				{
+							$('#e_mphone').html("Mobile phone can't be blank.");
+				}
+						
+				else
+				{		
+					
+                	$("#mobile_btn").val('Updating...');	
+                				        	
+	            	$.ajax({
+	            	url: "/homes/profileupdate",
+	        	    type: "POST",
+	            	dataType: 'JSON',
+	            	data: { 'mphone' : $("#newmobilephn").val() }, 
+	            
+	            	success: function(response){
+	            		     			                           
+	     			                           $('#cur_mphone').html($("#newmobilephn").val());
+	     			                           $("#newmobilephn").val('');
+	     			                           $("#mobile_btn").val('Updated');
+	     			                           
+	        	        }
+	            	 });              	
+                }
+            }
+            
+            
+            
+            function updateOfficePhone()
+            {
+            	            	 
+            	if ($('#newworkphn').val() == '' || $('#newworkphn').val() == null)
+				{
+							$('#e_wphone').html("Work phone can't be blank.");
+				}
+						
+				else
+				{	 
+					$("#work_btn").val('Updating...');  
+            	             	          	
+	            	$.ajax({
+	            	url: "/homes/profileupdate",
+	        	    type: "POST",
+	            	dataType: 'JSON',
+	            	data: { 'ophone' : $("#newworkphn").val() }, 
+	            
+	            	success: function(response){
+	            		  
+	            		                       $('#cur_ophone').html($("#newworkphn").val());
+	     			                           $("#newworkphn").val('');
+	     									   $("#work_btn").val('Updated');
+	     			  }
+	            	 }); 
+	            } 	              	
+            	
+            }
+        
+        
+          function updatePassword()
+            {
+              var flag=0;
+              
+              if ($('#new_psd').val() == '' || $('#new_psd').val() == null)
+						{
+							$('#npass').html("New password can't be blank.");
+							
+							flag=1;
+						}
+						
+					else
+				   	{
+						    $('#npass').html("");
+					}
+				
+				
+			 if ($('#con_new_psd').val() == '' || $('#con_new_psd').val() == null)
+						{
+							$('#conpass').html("Confirm new password can't be blank.");
+							
+							flag=1;
+						}
+						
+					else
+				   	{
+						    $('#conpass').html("");
+					}
+					
+					
+			 if (flag!=1)
+						{
+							if ($('#new_psd').val() != $('#con_new_psd').val())	
+					           {
+					    	       $('#passwd_match').html("Your password does not match.");
+					    	    }	
+				    
+				    
+						    else
+						    {
+							    $('#passwd_match').html("");
+								$("#psd_btn").val('Updating...');
+									
+											
+								$.ajax({
+					            	url: "/homes/profileupdate",
+					        	    type: "POST",
+					            	dataType: 'JSON',
+					            	data: { 'cur_psd' : $("#cur_psd").val(),'new_psd' : $("#new_psd").val() }, 
+					            
+					            	success: function(response){
+							            		
+							            		if (response['status']=='done')
+							            		{
+							     			      $('#cur_psd').val('');
+							     			      $('#new_psd').val('');
+							     			      $('#con_new_psd').val('');
+							     			      $("#psd_btn").val('Updated');
+							     			    } 							     			    
+								     		   else
+								     		   {
+								     			  $('#cpass').html("Your current password does not match.");
+								     			  $("#psd_btn").val('Update');							     			   	
+								     		   } 
+					        	        }
+					            	 });     
+						      }	           	         	
+            	
+                          }
+            }
+        
+        </script>
+      
+
+    </head>
+    <body>
+
+        <div class="container">
+            <div id="bgnav" class="navbar navbar-fixed-top navbar-inverse">
+                <div id="navigation" role="navigation">
+
+                    <div class="navbar-header">
+
+                        <button id="btn_collapse" type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+
+                        <a class="navlink" style="color: white;" href='#Top'> 
+                            <div id="logo"><p class="logo_txt">Wattsun</p></div>
+                        </a>
+
+                    </div>
+                    <div id="top_menu_scroll" class="collapse navbar-collapse no-transition">
+                        <ul id="pull_right" class="nav navbar-nav">
+
+                            <li id="else" class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">What else does WattSun do? <b style="color:#fff" class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Instant Target Map <br />Coming soon!</a></li>
+                                    <li><a href="#">Instant 3D Home <br />Coming soon!</a></li>
+                                </ul>
+                            </li>
+                            <li id="faq"><a class="navlink" href="/homes/faq">FAQs</a></li>
+                            
+                            <li id="setn" class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" >Settings<b style="color:#fff" class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Profile</a></li>
+                                    <li><a href="/homes/userpayment">Payment</a></li>
+                                    <li><a href="/homes/purchaseitq">Purchases</a></li>
+                                    <li><a href="/homes/userproblem">Problem?</a></li>
+                                </ul>
+                            </li>
+                            <li> <form action="../homes/logout" method="post">
+          	 				  	<input id="login" class="form-control" type="submit" value="Logout"/>
+                               
+                                   </form>
+                              </li>
+
+                        </ul>
+
+                    </div><!-- /.nav-collapse -->
+                    
+
+                </div><!-- /.navbar -->
+            </div>
+        </div>
+        <!--End .container-->
+
+        <div id="bg_wrapper">
+            <div id="content_wrapper">
+                <div id="sidebar_menu" style="float:left;">
+                    <ul id="menu_list" class="nav nav-pills nav-stacked">
+                        <li id="profile"><a href="#">Profile</a></li>
+                        <li id="payment"><a href="/homes/userpayment">Payment</a></li>
+                        <li id="purchases"><a href="/homes/purchaseitq">Purchases</a></li>
+                        <li id="problem"><a href="/homes/userproblem">Problem?</a></li>
+                    </ul>
+                </div>
+                <div id="menu_content" style="float:right;">
+                    <div id="menu_content_header">
+                        Profile settings for John Smith @ Big Bob Solar Inc.
+                    </div>
+
+                    <div id="menu_content_profile_set">
+                        <div id="static_info">
+                            <table class="table">
+                                <tr>
+                                    <td>Name</td><td><%=@user.first['first_name']+' '+@user.first['last_name'] %></td>
+
+                                </tr>
+                                <tr>
+                                    <td>Title</td><td><%=@user.first['title'] %></td>
+
+                                </tr>
+                                <tr>
+                                    <td>Company</td><td><%=@user.first['company_name'] %></td>
+
+                                </tr>
+                                <tr>
+                                    <td>Address</td><td><%=@user.first['company_address'] %></td>
+
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div id="change_info">
+                            <div id="change_info_username" class="chnginf">
+                                <form class="form-horizontal" role="form">
+
+                                    <div class="form-group">
+                                        <label style="text-align: left;" class="col-sm-6 control-label">Username</label>
+                                        <div class="col-sm-6">
+                                            <p class="form-control-static"><%=@user.first['company_email_id'] %></p>
+                                        </div>
+                                    </div>
+                                                                                                    
+                                </form>
+                            </div>
+                            <div id="change_info_mobile_phn" class="chnginf">
+                                <form class="form-horizontal" role="form">
+									
+									<div class="form-group">
+                                        <label style="text-align: left;" class="col-sm-6 control-label">Mobile phone</label>
+                                        <div class="col-sm-6">
+                                            <p class="form-control-static" id="cur_mphone"><%=@user.first['mobile_phone'] %></p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label style="text-align: left;" for="newmobilephn" class="col-sm-6 control-label">New mobile phone</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control" id="newmobilephn" placeholder="555-555-5555">
+                                            <span style="color: red;" class="error_msg" id="e_mphone"></span>
+                                            <br>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="mobile_btn" class="col-sm-6 control-label"></label>
+                                        <div class="col-sm-6">
+                                            <input type="button" class="form-control" id="mobile_btn" onclick="updateMobilePhone()" value="Update"> </input>
+                                        </div>
+                                    </div>
+
+
+                                </form>
+                            </div>
+                            <div id="change_info_work_phn" class="chnginf">
+                                <form class="form-horizontal" role="form">
+                                   
+                                    <div class="form-group">
+                                        <label style="text-align: left;" class="col-sm-6 control-label">Work phone</label>
+                                        <div class="col-sm-6">
+                                            <p class="form-control-static" id="cur_ophone"><%=@user.first['office_phone'] %></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label style="text-align: left;" for="newworkphn" class="col-sm-6 control-label">New work phone</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control" id="newworkphn" placeholder="123-555-7890">
+                                            <span style="color: red;" class="error_msg" id="e_wphone"></span>
+                                            <br>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="work_btn" class="col-sm-6 control-label"></label>
+                                        <div class="col-sm-6">
+                                            <input type="button" class="form-control" id="work_btn" onclick="updateOfficePhone()" value="Update"> </input>
+                                        </div>
+                                    </div>
+
+
+
+                                </form>
+                            </div>
+                            <div id="change_password" class="chnginf">
+                                <form class="form-horizontal" role="form">
+
+                                    <div class="form-group">
+                                        <label style="text-align: left;" for="cur_psd" class="col-sm-6 control-label">Current password</label>
+                                        <div class="col-sm-6">
+                                            <input type="password" class="form-control" id="cur_psd">
+                                            <span style="color: red;" class="error_msg" id="cpass"></span>
+                                            <br>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label style="text-align: left;" for="new_psd" class="col-sm-6 control-label">New password</label>
+                                        <div class="col-sm-6">
+                                            <input type="password" class="form-control" id="new_psd">
+                                            <span style="color: red;" class="error_msg" id="npass"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label style="text-align: left;" for="con_new_psd" class="col-sm-6 control-label">Confirm new password</label>
+                                        <div class="col-sm-6">
+                                            <input type="password" class="form-control" id="con_new_psd">
+                                            <span style="color: red;" class="error_msg" id="conpass"></span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                    	<label style="text-align: left;" class="col-sm-6 control-label"> </label>
+                                    	<div class="col-sm-6">
+                                         <span style="color: red;" class="error_msg" id="passwd_match"></span>
+                                        </div>
+                                    </div>  
+                                     
+                                    <div class="form-group">
+                                        <label for="psd_btn" class="col-sm-6 control-label"></label>
+                                        <div class="col-sm-6">
+                                            <input type="button" class="form-control" id="psd_btn" onclick="updatePassword()" value="Update">
+
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="clear:left;"></div>
+
+            </div>
+            <!--End #content_wrapper-->
+        </div>
+        <!--End #bg_wrapper-->
+
+
+    </body>
+
+</html>

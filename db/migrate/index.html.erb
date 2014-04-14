@@ -1,0 +1,289 @@
+  
+ <!DOCTYPE html>
+<html data-wf-site="51fff6d9992ea8e738000225">
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="<%= meta_description %>">
+  <meta name="author" content="<%= meta_author %>">
+  <meta name="Keywords" content="<%= meta_keywords %>">
+
+  <link rel="stylesheet" type="text/css" href="../assets/sunible.webflow.css">
+  <link rel="stylesheet" type="text/css" href="../assets/sunible.webflow.css">
+ 
+  <link rel="stylesheet" type="text/css" href="../webflow.css">
+  
+  <style>
+      
+      
+      .w-button {
+          background-color:#166B01;
+      }
+      
+  </style>
+  
+  <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+  
+<script>
+  
+function initialize() {
+  // Create the autocomplete object, restricting the search
+  // to geographical location types.
+  autocomplete = new google.maps.places.Autocomplete(
+      /** @type {HTMLInputElement} */(document.getElementById('autocomplete')),
+      { types: ['geocode'] });
+  // When the user selects an address from the dropdown,
+  // populate the address fields in the form.
+  // google.maps.event.addListener(autocomplete, 'place_changed', function() {
+    // fillInAddress();
+  // });
+}
+
+function geolocate() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var geolocation = new google.maps.LatLng(
+          position.coords.latitude, position.coords.longitude);
+      autocomplete.setBounds(new google.maps.LatLngBounds(geolocation,
+          geolocation));
+    });
+  }
+}
+</script>
+ 
+
+</head>
+<body onload="initialize()">
+ <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="z-index: 5">
+    <div class="container">
+      <div class="navbar-header" autofocus="autofocus">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navlink" style="color: white;" href='#Top'> <img class="brand" src="../assets/Zen.png" width="100" alt="5316ba08c23a10552200042e_Zen.png"> </a>
+        
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav pull-right">
+        	
+          <li> <a class="navlink" style="color: white;" href='#Top'>What else does WattSun do?</a></li>
+          <li><a class="navlink" style="color: white;" href=<%= faqs_path %>>FAQs</a></li>
+          <li><a class="navlink" style="color: white;" href=<%= contact_path %>>Contact</a></li>
+          <li><a class="button"  style="color: white;"  data-toggle="modal"  data-target=".bs-example-modal-lg">LOGIN</a>
+        </ul>
+      </div><!-- /.nav-collapse -->
+    </div><!-- /.container -->
+  </nav><!-- /.navbar -->
+ 
+ <!-- /.dialog box -->
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color:green">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" >LOG IN</h4>
+      </div>
+      <div class="modal-body">
+      <form>
+         <input class="w-input apply-form " type="text" placeholder="User name" name="User name" data-name="User name" required="required" ></input>
+         <input class="w-input apply-form" type="password" placeholder="Password" name="Password" data-name="Password" required="required" ></input>
+         <input class="w-button address-button apply-button" type="submit" value="Submit" data-wait="Please wait..." data-dismiss="modal" ></input> 
+        </form>
+       </div> 
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+ <div class="hero-section">
+    <div class="w-container">
+      <h1 class="hero-text link"><strong>Instant Prospect Qualification. <br></strong>Qualify your solar&nbsp;prospects with one click. Up to 25 points of qualification including estimated credit score, roof type and heat source. All you need is an address.&nbsp;<br><strong>$99/month to access&nbsp;+ $5/qualification.</strong></h1>
+    </div>
+  </div>
+<div class="address-section">
+    <div class="w-container">
+      <div class="w-row">
+        <div class="w-form">
+        	<form action='/homes/viewmap' class='apply-form' method='post'>
+       
+          	<div class="w-col w-col-6 address-column">
+                       <input id="autocomplete" class="w-input address-form"  type="text" placeholder="Enter California Street Address" onFocus="geolocate()" name="address" data-name="Address"  required="required"></input>
+            </div>
+            <div class="w-col w-col-6 address-column">
+                       <input class="w-button address-button" type="submit" value="Qualify This" wait="Hold on.." data-wait="Hold on.."></input>
+                       
+            </div>  
+          </form>
+            
+          </div>
+      </div>
+    </div>
+  </div>
+  <div class="benefit-section">
+    <div class="w-container">
+      <div class="w-row">
+        <div class="w-col w-col-6">
+          <img src="assets/flat-design-resources.jpg" alt="53169cbb171335542200027c_flat-design-resources.jpg">
+        </div>
+        <div class="w-col w-col-6 benefit-section">
+          <h2>Heading One</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut&nbsp;</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="benefit-section">
+    <div class="w-container">
+      <div class="w-row">
+        <div class="w-col w-col-6 benefit-section">
+          <h2>Heading&nbsp;Two</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut&nbsp;</p>
+        </div>
+        <div class="w-col w-col-6">
+          <img src="assets/flat-design-resources.jpg" alt="53169cbb171335542200027c_flat-design-resources.jpg">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="benefit-section">
+    <div class="w-container">
+      <div class="w-row">
+        <div class="w-col w-col-6">
+          <img src="assets/flat-design-resources.jpg" alt="53169cbb171335542200027c_flat-design-resources.jpg">
+        </div>
+        <div class="w-col w-col-6 benefit-section">
+          <h2>Heading</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut&nbsp;</p>
+        </div>
+      </div>
+    </div>
+  </div>
+    	
+  <div class="benefit-section apply-section">
+     <div class="w-container">
+       <div class="w-col w-col-12">
+         <h1>Apply to Access Wattsun</h1>
+       </div>
+     
+       <form action='/homes/create' method='post' class='apply-form'>
+       	
+       <div class="row">
+           
+             <div class="col-lg-6">
+               <div class="input-group">
+               
+               <input class="form-control apply-form"   type="text" placeholder="First Name" name="first_name" data-name="First Name" required="required"></input>
+               </div>
+             </div>
+             
+             
+             <div class="col-lg-6">
+               <div class="input-group">
+                 
+              <input class="form-control apply-form"   type="text" placeholder="Last Name" name="last_name" data-name="Last Name"  required="required"></input>
+               
+                </div>
+             </div>
+        </div>
+         
+         
+           <div class="row">
+                
+             <div class="col-lg-6">
+               <div class="input-group">
+               
+              <input class="form-control apply-form"   type="text" placeholder="Company" name="company_email" data-name="company" required="required" ></input>
+               </div>
+            </div>
+             
+             
+             <div class="col-lg-6">
+               <div class="input-group">
+                 
+               <input class="form-control apply-form"  type="text" placeholder="Title" name="title" data-name="Title" required="required" ></input>
+               
+                </div>
+             </div>
+        </div>
+        
+          <div class="row">
+                
+             <div class="col-lg-6">
+               <div class="input-group">
+               
+                <input class="form-control  apply-form"  type="email" placeholder="Work Email" name="work_email" data-name="Work Email" required="required" ></input>
+               </div>
+             </div>
+             
+             
+             <div class="col-lg-6">
+               <div class="input-group">
+                 
+               <input class="form-control apply-form" type="text" placeholder="Mobile" name="mobile" data-name="Mobile" required="required"></input>
+               
+                </div>
+             </div>
+        </div>
+         
+              
+        <div class="row">
+            <div class="btn-group">
+              <div class="col-lg-6">      
+                   	<input class="w-button address-button" type="submit" value="Apply" wait="Hold on.." data-wait="Hold on.."></input>
+              </div>
+            </div> 
+        </div>
+        
+      </form>
+            
+             
+        </div>
+    </div>
+       
+
+  
+  <div class="container">
+   <footer>
+    <hr>
+      <p class="pull-right">
+        <%= link_to '<span class="glyphicon-class glyphicon glyphicon-chevron-up"></span> Back to top'.html_safe, '#Top' %>
+      </p>
+      <p class="pull-left">
+        &copy; <%= Time.now.year %> <%= site_name %> 
+        &bull;
+        <%= link_to "Privacy", privacy_path %></li>
+        &bull;
+        <%= link_to "Terms", terms_path %></li>
+      </p>
+    </footer>
+  </div> <!-- /container -->
+  </body>
+ </html> 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 

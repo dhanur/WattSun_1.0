@@ -1,0 +1,759 @@
+@media screen and (max-width: 1398px){
+    #about{
+
+
+        width:85%;
+
+    }
+    #apply{
+
+        width:15%;
+    }
+    #qualify_search{
+        font-family: 'latolig';
+        font-size: 29px;
+    }
+    .col-sm-6 .form-control{
+        font-family: 'latolig';
+        font-size: 29px;
+    }
+
+
+}
+
+
+
+
+@media screen and (max-width: 1280px){
+    #about{
+
+        font-size: 31px;
+
+    }
+    #about_body{
+
+        font-size: 31px;
+
+    }
+    #text_head{
+        text-align: center;
+        font-size: 31px;
+        font-family: 'latoreg';
+    }
+    .textwrap_mar{
+        margin-bottom:40px;
+    }
+    #textwrap{
+        word-wrap:break-word;
+        font-size: 20px;
+        line-height: 32px;
+        font-family: 'latolig';
+
+    }
+
+    #qualify_search{
+        font-family: 'latolig';
+        font-size: 27px;
+    }
+    .col-sm-6 .form-control{
+        font-family: 'latolig';
+        font-size: 27px;
+    }
+
+}
+
+@media screen and (max-width: 1131px){
+    #about{
+
+        font-size: 30px;
+
+    }
+    #about_body{
+
+        font-size: 30px;
+
+    }
+    #text_head{
+        text-align: center;
+        font-size: 30px;
+        font-family: 'latoreg';
+    }
+    .textwrap_mar{
+        margin-bottom:40px;
+    }
+    #textwrap{
+        word-wrap:break-word;
+        font-size: 20px;
+        line-height: 31px;
+        font-family: 'latolig';
+
+    }
+    #qualify_search{
+        font-family: 'latolig';
+        font-size: 26px;
+    }
+    .col-sm-6 .form-control{
+        font-family: 'latolig';
+        font-size: 26px;
+    }
+
+
+
+}
+
+
+@media screen and (max-width: 1097px){
+    #about{
+
+        font-size: 28px;
+
+
+    }
+    #about_body{
+
+        font-size: 28px;
+
+    }
+    #text_head{
+        text-align: center;
+        font-size: 28px;
+        font-family: 'latoreg';
+    }
+    .textwrap_mar{
+        margin-bottom:36px;
+    }
+    #textwrap{
+        word-wrap:break-word;
+        font-size: 20px;
+        font-family: 'latolig';
+
+    }
+    #qualify_search{
+        font-family: 'latolig';
+        font-size: 26px;
+    }
+    .col-sm-6 .form-control{
+        font-family: 'latolig';
+        font-size: 26px;
+    }
+
+}
+
+@media screen and (max-width: 1024px){
+    #about{
+        width:100%;
+        font-size: 27px;
+
+
+    }
+    #about_body{
+
+        font-size: 27px;
+
+    }
+    #text_head{
+        text-align: center;
+        font-size: 27px;
+        font-family: 'latoreg';
+    }
+    .textwrap_mar{
+        margin-bottom:34px;
+    }
+    #textwrap{
+        word-wrap:break-word;
+        font-size: 19px;
+        font-family: 'latolig';
+
+    }
+    #apply{
+
+        width:16%;
+    }
+    #qualify_search{
+        font-family: 'latolig';
+        font-size: 25px;
+    }
+    .col-sm-6 .form-control{
+        font-family: 'latolig';
+        font-size: 25px;
+    }
+
+}
+@media screen and (max-width: 845px){
+    #about{
+        width:100%;
+        font-size: 26px;
+
+
+    }
+    #about_body{
+
+        font-size: 26px;
+
+    }
+    #text_head{
+        text-align: center;
+        font-size: 26px;
+        font-family: 'latoreg';
+    }
+    .textwrap_mar{
+        margin-bottom:33px;
+    }
+    #textwrap{
+        word-wrap:break-word;
+        font-size: 18px;
+        font-family: 'latolig';
+
+    }
+    #qualify{
+        font-size:22px;
+
+    }
+    .form-control::-webkit-input-placeholder {
+        font-size:22px;
+        font-family: 'latolig';
+    }
+
+    .form-control:-moz-placeholder { /* Firefox 18- */
+        font-family: 'latolig';
+        font-size:22px;
+    }
+
+    .form-control::-moz-placeholder {  /* Firefox 19+ */
+        font-family: 'latolig';
+        font-size:22px;
+    }
+
+    .form-control:-ms-input-placeholder {  
+        font-family: 'latolig';
+        font-size:22px;
+    }
+    #apply{
+
+        width:17%;
+    }
+    #qualify_search{
+        font-family: 'latolig';
+        font-size: 24px;
+    }
+    .col-sm-6 .form-control{
+        font-family: 'latolig';
+        font-size: 24px;
+    }
+
+}
+@media screen and (max-width: 805px){
+
+
+    #about{
+        width:100%;
+        font-size: 23px;
+        line-height: 60px;
+        padding-top:40px;
+    }
+    #about_body{
+
+        font-size: 23px;
+        line-height: 60px;
+
+    }
+    #text_head{
+        text-align: center;
+        font-size: 23px;
+        font-family: 'latoreg';
+    }
+    .textwrap_mar{
+        margin-bottom:32px;
+    }
+    #textwrap{
+        word-wrap:break-word;
+        font-size: 17px;
+        font-family: 'latolig';
+
+    }
+    #qualify_search{
+        font-family: 'latolig';
+        font-size: 22px;
+    }
+    .col-sm-6 .form-control{
+        font-family: 'latolig';
+        font-size: 27px;
+    }
+
+}
+@media screen and (max-width: 768px){
+.navbar-nav{float:left}
+    #find_address{
+        margin-top:30px;
+        height:170px;
+        width:100%
+    }
+    #find_address_form{
+        padding-top:55px;
+        width:70%;
+        margin:0 auto;
+    }
+    p.col-sm-6{
+        padding:0;
+    }
+    #apply{
+
+        width:100%;
+        margin:0 0 70px 0;
+    }
+    #app_access_head{
+        margin:0;
+        font-size:23px;
+    }
+    #apply{
+        height:45px;
+        font-size:23px;
+    }
+    #qualify_search{
+        font-family: 'latolig';
+        font-size: 22px;
+    }
+    .col-sm-6 .form-control{
+        font-family: 'latolig';
+        font-size: 22px;
+    }
+
+
+}
+@media screen and (min-width: 767px){
+    div.navbar-collapse.collapse.in{
+        background:#fff;
+    }
+}
+@media screen and (max-width: 767px){
+
+    
+    .navlink{
+        margin-top:0px;
+    }
+    div.navbar-collapse.collapse.in{
+        
+        text-align:left;
+        
+    }
+    .navbar-inverse .navbar-nav>li{
+        padding-right:10px;
+        width:100%;
+    }
+    .navbar-inverse .navbar-nav>li>a{
+        color:#fff;
+    }
+    .navbar-inverse .navbar-nav>li>a:hover{
+        color:#fff;
+    }
+    .col-sm-9 .form-control{
+        margin-bottom:0px;
+    }
+    #find_address{
+        margin-top:30px;
+        height:170px;
+        width:100%
+    }
+    #find_address_form{
+        padding-top:26px;
+        width:70%;
+        margin:0 auto;
+    }
+    .form-control::-webkit-input-placeholder {
+        font-size:19px;
+        font-family: 'latolig';
+        text-align: center;
+    }
+
+    .form-control:-moz-placeholder { /* Firefox 18- */
+        font-family: 'latolig';
+        font-size:19px;
+        text-align: center;
+    }
+
+    .form-control::-moz-placeholder {  /* Firefox 19+ */
+        font-family: 'latolig';
+        font-size:19px;
+        text-align: center;
+    }
+
+    .form-control:-ms-input-placeholder {  
+        font-family: 'latolig';
+        font-size:19px;
+        text-align: center;
+    }
+    #qualify_search{
+        font-family: 'latolig';
+        font-size: 21px;
+    }
+    .col-sm-6 .form-control{
+        font-family: 'latolig';
+        font-size: 21px;
+    }
+
+}
+@media screen and (max-width: 703px){
+    #about{
+        width:100%;
+        font-size: 19px;
+        line-height: 55px;
+
+    }
+    #about_body{
+
+        font-size: 19px;
+        line-height: 55px;
+
+
+    }
+    #text_head{
+        text-align: center;
+        font-size: 19px;
+        font-family: 'latoreg';
+    }
+    .textwrap_mar{
+        margin-bottom:30px;
+    }
+    #textwrap{
+        word-wrap:break-word;
+        font-size: 15px;
+        font-family: 'latolig';
+
+    }
+    #qualify_search{
+        font-family: 'latolig';
+        font-size: 19px;
+    }
+    .col-sm-6 .form-control{
+        font-family: 'latolig';
+        font-size: 19px;
+    }
+    .form-control::-webkit-input-placeholder {
+        font-size:16px;
+        font-family: 'latolig';
+        text-align: center;
+        padding-top:0px;
+    }
+
+    .form-control:-moz-placeholder { /* Firefox 18- */
+        font-family: 'latolig';
+        font-size:16px;
+        text-align: center;
+    }
+
+    .form-control::-moz-placeholder {  /* Firefox 19+ */
+        font-family: 'latolig';
+        font-size:16px;
+        text-align: center;
+    }
+
+    .form-control:-ms-input-placeholder {  
+        font-family: 'latolig';
+        font-size:16px;
+        text-align: center;
+    }
+
+}
+@media screen and (max-width: 606px){
+    /*    #bgnav{
+            width:100%;
+            background:#fff;
+            padding:6px 0px 4px 0px;
+            box-shadow:0 2px 6px rgba(0,0,0,.2);
+        }
+        #navigation{
+            background:#fff;
+            width:75%;
+            margin:0 auto;
+    
+    
+        }*/
+    #btn_collapse{
+
+        margin-top:20px;
+        width: 36px;
+        height: 30px;
+    }
+    .navbar-toggle .icon-bar{
+        
+        width:15px;
+    }
+    .brand{
+        display:none;
+    }
+    #logo{
+        background:url('../assets/wattsun_logo.png');
+        background-size: 80px 80px;
+        background-repeat: no-repeat;
+        width:80px;
+        height: 80px;
+    }
+    body {
+        padding-top: 90px;
+
+    }
+
+    #about{
+        width:100%;
+        font-size: 18px;
+        line-height: 52px;
+
+    }
+    #about_body{
+
+        font-size: 18px;
+        line-height: 52px;
+
+
+    }
+    .col-sm-9 .form-control{
+        margin-bottom:0px;
+        height:55px;
+    }
+    #qualify{
+        height:55px;
+        font-size: 19px;
+    }
+
+    #find_address{
+        margin-top:30px;
+        height:150px;
+        width:100%
+    }
+    #find_address_form{
+        padding-top:22px;
+        width:70%;
+        margin:0 auto;
+    }
+    .form-control::-webkit-input-placeholder {
+        font-size:16px;
+        font-family: 'latolig';
+        text-align: center;
+    }
+
+    .form-control:-moz-placeholder { /* Firefox 18- */
+        font-family: 'latolig';
+        font-size:16px;
+        text-align: center;
+    }
+
+    .form-control::-moz-placeholder {  /* Firefox 19+ */
+        font-family: 'latolig';
+        font-size:16px;
+        text-align: center;
+    }
+
+    .form-control:-ms-input-placeholder {  
+        font-family: 'latolig';
+        font-size:16px;
+        text-align: center;
+    }
+    #qualify_search{
+        font-family: 'latolig';
+        font-size: 18px;
+    }
+    .col-sm-6 .form-control{
+        font-family: 'latolig';
+        font-size: 18px;
+    }
+
+}
+@media screen and (max-width: 562px){
+    #logo{
+        background:url('../assets/wattsun_logo.png');
+        background-size: 68px 68px;
+        background-repeat: no-repeat;
+        width:68px;
+        height: 68px;
+    }
+    body {
+        padding-top: 78px;
+
+    }
+    #about{
+        width:100%;
+        font-size: 17px;
+        line-height: 40px;
+        padding-top:35px;
+    }
+    #about_body{
+
+        font-size: 17px;
+        line-height: 40px;
+
+
+    }
+    .col-sm-9 .form-control{
+        margin-bottom:0px;
+        height:50px;
+    }
+    .col-sm-6 .form-control{
+        height:50px;
+        font-size:15px;
+    }
+    #qualify{
+        height:50px;
+        font-size: 18px;
+    }
+
+    #find_address{
+        margin-top:27px;
+        height:140px;
+        width:100%
+    }
+    #find_address_form{
+        padding-top:20px;
+        width:70%;
+        margin:0 auto;
+    }
+
+    .form-control::-webkit-input-placeholder {
+        font-size:16px;
+        font-family: 'latolig';
+        text-align: center;
+
+    }
+
+    .form-control:-moz-placeholder { /* Firefox 18- */
+        font-family: 'latolig';
+        font-size:16px;
+        text-align: center;
+    }
+
+    .form-control::-moz-placeholder {  /* Firefox 19+ */
+        font-family: 'latolig';
+        font-size:16px;
+        text-align: center;
+    }
+
+    .form-control:-ms-input-placeholder {  
+        font-family: 'latolig';
+        font-size:16px;
+        text-align: center;
+    }
+    #app_access_head{
+        margin:0;
+        font-size:20px;
+    }
+    #apply{
+        height:50px;
+        font-size:19px;
+    }
+    #qualify_search{
+        font-family: 'latolig';
+        font-size: 17px;
+    }
+    .col-sm-6 .form-control{
+        font-family: 'latolig';
+        font-size: 17px;
+    }
+
+
+}
+@media screen and (max-width: 418px){
+    #btn_collapse{
+
+        margin-top:15px;
+        
+    }
+    #logo{
+        background:url('../assets/wattsun_logo.png');
+        background-size: 60px 60px;
+        background-repeat: no-repeat;
+        width:60px;
+        height: 60px;
+    }
+    body {
+        padding-top: 70px;
+
+    }
+    #about{
+        width:100%;
+        font-size: 16px;
+        line-height: 33px;
+        padding-top:33px;
+    }
+    #about_body{
+
+        font-size: 16px;
+        line-height: 33px;
+
+
+    }
+    .col-sm-6 .form-control{
+        height:45px;
+    }
+    .form-control::-webkit-input-placeholder {
+        font-size:16px;
+        font-family: 'latolig';
+        text-align: center;
+        padding-bottom:6px;
+        font-size:15px;
+    }
+
+    .form-control:-moz-placeholder { /* Firefox 18- */
+        font-family: 'latolig';
+        font-size:16px;
+        text-align: center;
+        font-size:15px;
+
+    }
+
+    .form-control::-moz-placeholder {  /* Firefox 19+ */
+        font-family: 'latolig';
+        font-size:16px;
+        text-align: center;
+        font-size:15px;
+    }
+
+    .form-control:-ms-input-placeholder {  
+        font-family: 'latolig';
+        font-size:16px;
+        text-align: center;
+        font-size:15px;
+    }
+    #app_access_head{
+        margin:0;
+        font-size:19px;
+    }
+    #apply{
+        height:45px;
+        font-size:18px;
+    }
+    #qualify_search{
+        font-family: 'latolig';
+        font-size: 16px;
+    }
+    .col-sm-6 .form-control{
+        font-family: 'latolig';
+        font-size: 16px;
+    }
+
+}
+@media screen and (max-width: 406px){
+    #about{
+        width:100%;
+        font-size: 16px;
+        line-height: 26px;
+        padding-top:33px;
+    }
+    #about_body{
+
+        font-size: 16px;
+        line-height: 26px;
+
+
+    }
+    .col-sm-6 .form-control{
+        height:40px;
+    }
+    #app_access_head{
+        margin:0;
+        font-size:17px;
+    }
+    #apply{
+        height:40px;
+        font-size:17px;
+        margin:0 0 50px 0;
+    }
+}

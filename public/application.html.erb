@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html data-wf-site="51fff6d9992ea8e738000225">
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="<%= meta_description %>">
+  <meta name="author" content="<%= meta_author %>">
+  <meta name="Keywords" content="<%= meta_keywords %>">
+
+  <title><%= full_title(yield(:title)) %></title>
+
+  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= csrf_meta_tags %>
+  
+</head>
+<body>
+<!-- 
+  <% if current_page?(root_path) %>    
+  
+  <% elsif current_page?(homes_viewmap_path) %>  
+  <div class="container" style='margin: 0; padding: 0; position:fixed; width: 100%'>
+  <% else %>
+   <div class="container" style='margin: 0; padding: 0;  width: 100%'>
+    <% end %> -->
+  <%= yield %>
+  <!-- </div> -->
+  </body>
+ </html> 

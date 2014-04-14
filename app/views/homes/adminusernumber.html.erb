@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>ProspectZen</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="icon" href="/assets/favicon.ico" type="image/x-icon"> 
+        <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+		<link href="/assets/bootstrap.css" rel="stylesheet">
+		<link href="/assets/flat-ui.css" rel="stylesheet">
+		<link href="/assets/reset.css" rel="stylesheet">
+		<link href="/assets/style_admin_user_number.css" rel="stylesheet">
+
+<!--		<link href="/assets/mediaqueries_admin_user_number.css" rel="stylesheet">-->
+        <style>
+            #content_wrapper{
+            
+                min-width: 1083px;
+            
+            }
+            #menu_content{
+            
+                min-width: 900px;
+            
+            }
+            .panel-body{
+                border-top-left-radius:0px;
+                border-top-right-radius:0px;
+                padding:0px;
+                padding-top:15px;
+                padding-bottom:15px;
+            }
+            .panel-body ul li{
+/*                border-bottom:1px solid #0C8722;*/
+                padding-left:16px;
+            }
+            .panel-body ul li:last-child{
+                border-bottom:0px;
+            }
+            .nav-pills > li > a{
+                font-size:16px;
+            }
+           #usr_purchases a{
+            font-size:16px;
+           }
+            #usr_payment a{
+            font-size:16px;
+           }
+        </style>
+		<link rel="stylesheets" type="text/css" href="/assets/dataTables.bootstrap.css">
+		<script src="/assets/jquery.js"></script>
+
+		<script src="/assets/bootstrap.min.js"></script>
+		<script src="/assets/jquery.dataTables.min.js"></script>
+		<script src="/assets/dataTables.bootstrap.js"></script>
+		<script>
+			$(document).ready(function() {
+				
+									
+					$('#monthlyacc').focusin(function() { 
+					  $('#ma_error').html(''); 
+					 
+					});
+					
+									
+					$('#house_chrg').focusin(function() { 
+					
+					  $('#hc_error').html('');
+					});
+					
+					$('#cur_credits').focusin(function() { 
+					
+					  $('#credits_error').html('');
+					});
+					
+					
+					
+					
+
+				$('#example').dataTable();
+
+				$('.dataTables_filter input').attr("placeholder", "Search by address, name, city, zip, anything!");
+				$('.dataTables_filter input').attr("class", "form-control");
+				$('#example_paginate').css({
+					"width" : "423px",
+					"font-size" : "14px",
+					"float" : "right",
+					"margin-bottom" : "25px"
+				});
+				$('.dataTables_filter input').css({
+					"width" : "90%",
+					"margin-top" : "-10px",
+					"position" : "absolute",
+					"right" : "22px"
+				});
+				//                $('.dataTables_filter input').css("margin-top", "5px");
+				$('table').css({
+					"width" : "100%"
+				});
+				$('#example_length select.form-control').css("height", "46px");
+				$('#example_length').css({
+					"margin-left" : "5px",
+					"padding" : "5px 0px"
+				});
+				$('#example_info.dataTables_info').css({
+					"display" : "none"
+				});
+
+			});
+		</script>
+
+		<script>
+			function updateMa() {
+
+				$("#mabtn").val('Changing...');
+				if (($("#monthlyacc").val()== 0) || ($("#monthlyacc").val()==""))
+				{
+					
+                $("#ma_error").html("money can't be 0 or empty in plan");
+              	$("#mabtn").val('Change');
+             
+              	
+              }
+              
+              else if(($("#monthlyacc").val() < 0.5))
+              	{
+              		
+                $("#ma_error").html("money can't be less than $0.5");
+              	$("#mabtn").val('Change');
+              
+              }
+              else
+              {
+				$.ajax({
+					url : "/homes/updateplan",
+					type : "POST",
+					dataType : 'JSON',
+					data : {
+						'ma' : $("#monthlyacc").val()
+					},
+
+					success : function(response) {
+            
+						$("#updatedma").html('$' + $("#monthlyacc").val());
+						$("#mabtn").val('Changed');
+							}
+					
+				});
+				}
+			}
+
+			function updateHc() {
+
+				$("#hcbtn").val('Changing...');
+                if (($("#house_chrg").val()== 0) || ($("#house_chrg").val()==""))
+				{
+                $("#hc_error").html("money can't be 0 or empty in amount");
+              	$("#hcbtn").val('Change');
+              	
+              }
+              else if(($("#house_chrg").val() < 0.5))
+              	{
+                $("#hc_error").html("money can't be less than $0.5");
+              	$("#hcbtn").val('Change');
+               
+              }
+              else
+              {
+				$.ajax({
+					url : "/homes/updatechrg",
+					type : "POST",
+					dataType : 'JSON',
+					data : {
+						'hc' : $("#house_chrg").val()
+					},
+
+					success : function(response) {
+
+						$("#hcbtn").val('Changed');
+						$("#updatedhc").html('$' + $("#house_chrg").val() + 'per prospect');
+                      
+                        
+                      
+                      
+					}
+				});
+				}
+			}
+
+         
+         
+         
+         function abc() {
+         	         
+                if (($("#cur_credits").val()== 0) || ($("#cur_credits").val()==""))
+				{
+                $("#credits_error").html("credits can't be 0 or empty in amount");
+              }
+         	   else
+         	   {
+         	            a=$("#cur_credits").val();
+         	            b=$("#prev_credits").html(); 
+         	            total=parseInt(a)+parseInt(b);
+         	        				        
+						$("#old_credits").html("No. of credits: " + $("#prev_credits").html());
+						$("#new_credits").html("New credit balance: " +  total);
+
+						
+						$("#basicModal").modal();
+					}
+		             	}
+		             	
+         function updatecredits() {
+             	
+				$('#basicModal').modal('hide');
+				$.ajax({
+					url : "/homes/updatecredits",
+					type : "POST",
+					dataType : 'JSON',
+					data : { 
+						'cur_credits': $("#cur_credits").val(),		
+						'prev_credits': $("#prev_credits").val(),				
+					},
+
+					success : function(response) {
+						addedcredits= response['results']
+						 $("#creditsbtn").val('added');
+						 $("#prev_credits").html(addedcredits);
+						 $("#cur_credits").val('');				
+
+					}
+				});
+
+			}
+
+
+       
+		</script>
+
+	</head>
+	<body>
+        
+		<div class="container">
+			<div id="bgnav" class="navbar navbar-fixed-top navbar-inverse">
+				<div id="navigation" role="navigation">
+
+					<div class="navbar-header">
+
+						<button id="btn_collapse" type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+
+						<a class="navlink" style="color: white;" href='/homes/adminuserstatus'> <div id="logo"></div> </a>
+
+					</div>
+					<div class="collapse navbar-collapse no-transition">
+						<ul id="pull_right" class="nav navbar-nav">
+
+							<li>
+								<form action="../homes/adminlogout" method="post">
+									<input id="login" class="form-control" type="submit" value="LOGOUT"/>
+
+								</form>
+							</li>
+
+						</ul>
+
+					</div><!-- /.nav-collapse -->
+
+				</div><!-- /.navbar -->
+			</div>
+		</div>
+		<!--End .container-->
+
+		<div id="bg_wrapper">
+			<div id="content_wrapper">
+				<div id="sidebar_menu" style="float:left;">
+					<ul id="menu_list" class="nav nav-pills nav-stacked">
+						<li id="usr_status">
+							<a href="/homes/adminuserstatus"><span style="margin-right:3px;font-size:16px;" class="glyphicon glyphicon-thumbs-up"></span>User Statuses</a>
+						</li>
+						<li id="usr_profile">
+							<a href="/homes/adminuserprofile"><span style="margin-right:3px;font-size:16px;" class="glyphicon glyphicon-user"></span>User Profiles</a>
+						</li>
+						<li id="usr_payment">
+							<a href="/homes/adminuserpayment"><span style="margin-right:3px;font-size:16px;" class="glyphicon glyphicon-credit-card"></span>User Payment</a>
+						</li>
+                        <li id="usr_purchases"  class="panel">
+                           <a  class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><span style="margin-right:3px;font-size:16px;" class="glyphicon glyphicon-list"></span>User Purchases</a>
+                            <div id="collapseOne" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <ul>
+                                        <li id="admn_itq_panel"><a href="/homes/adminuserpurchase" style="color:#000">Instant Prospect Qualifier  </a></li>
+                                        <li id="admn_itm_panel"><a href="#" style="color:#000">Instant Prospect Generator  </a></li>
+                                        <li id="admn_ih_panel"><a href="#" style="color:#000">Instant 3D Home</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+						<li id="usr_sales">
+
+							<a href="/homes/sales"><span style="margin-right:3px;font-size:16px;" class="glyphicon glyphicon-usd"></span>Sales</a>
+
+						</li>
+					</ul>
+				</div>
+				<div id="menu_content" style="float:right;">
+					<a href="/homes/adminuserpayment" style="font-size:16px;color:#000;margin-left:15px;">&lt;Back to list</a>
+					<div id="menu_content_header">
+						
+					    <div style="float:left;font-family:'latolig'">Payment settings for <%= @user.first['first_name'] %> <%= @user.first['last_name'] %> @ <%= @user.first['company_name'] %> </div>
+						
+						<% if session[:super_admin_user_id]%>						
+						<div style="float:right;font-family:'latolig'"><a href="/homes/superadmin" style="color:#fff">Super Admin</a></div><div style="clear:both"></div>
+						<%end%>
+                        <div style="clear:both"></div>
+						
+					</div>
+
+					<div id="menu_content_admin_user_number">
+
+						
+                                <div class="col-sm-12" style="font-family:'latobold'">
+                                Billing Credit Card
+                                  </div>
+                            <div class="col-sm-4" style="margin-left: 20px;margin-bottom:20px;">
+                                Credit Card
+                            </div>
+                            <div class="col-sm-4" style="margin-bottom:20px;">
+                                <% if @user.first['payment_status'] == '1' %>
+                                Registered
+                                 <% else %> 
+                                Not Registered
+                                <% end %>
+                            </div>
+                        
+						
+												
+						<div class="col-sm-12" style="font-family:'latobold'">
+							
+							Pricing
+						</div>
+
+						<div style="margin-left:20px;">
+							<div class="col-sm-4">
+								Monthly access
+							</div>
+							<div class="col-sm-4" id="updatedma">
+								
+								 $<%= @user.first['monthly_charge']%>
+								
+							</div>
+							<div class="col-sm-4">
+								<input class="form-control" type="text" name="pricing_mnth_acs"  id="monthlyacc" style="width:100px;float:left;margin-right: 10px;border-radius:0px">
+								<p><input type="button" class="form-control" style="width: 100px;background: #5cb85c;color: #fff;border: 0px;border-radius:0px" id="mabtn" onclick="updateMa()" value="Change">
+								<span style="float:left; color: red;" class="error_msg" id="ma_error"></span></p>
+								</input>
+
+							</div>
+							<div style="clear:both"></div>
+							<div class="col-sm-4" style="margin-bottom:30px;">
+								Next charge
+							</div>
+							<div class="col-sm-4">
+								<% if @user.first['payment_status'] == '1' %>
+								<%= Date.strptime(@user.first['current_period_end'],'%s') %>
+								<% end %>
+							</div>
+							<div style="clear:both"></div>
+							<div class="col-sm-4">
+								Instant Prospect Qualifier
+							</div>
+							<div class="col-sm-4" id="updatedhc">
+								
+								$<%= @user.first['house_charge'] %> per prospect
+								
+							</div>
+							<div class="col-sm-4">
+								<input class="form-control" type="text"  id="house_chrg" name="pricing_itq" style="width:100px;float:left;margin-right: 10px;border-radius:0px">
+								<p><input type="button" class="form-control" style="border-radius:0px;width: 100px;background: #5cb85c;color: #fff;border: 0px;" id="hcbtn" onclick="updateHc()" value="Change">
+								<span style="float:left; color: red;" class="error_msg" id="hc_error"></span></p>
+								</input>
+							</div>
+							<div style="clear:both"></div>
+							<div class="col-sm-4">
+								Instant Target Map
+							</div>
+							<div class="col-sm-4">
+								-
+							</div>
+							<div class="col-sm-4">
+								<input class="form-control" type="text" name="pricing_it," style="width:100px;float:left;margin-right: 10px;border-radius:0px">
+								<input class="form-control" type="submit" value="change" style="width:100px;background: #5cb85c;color: #fff;border: 0px;border-radius:0px">
+							</div>
+							<div style="clear:both"></div>
+							<div class="col-sm-4">
+								Instant 3D Home
+							</div>
+							<div class="col-sm-4">
+								-
+							</div>
+							<div class="col-sm-4">
+								<input class="form-control" type="text" name="pricing_h" style="width:100px;float:left;margin-right: 10px;border-radius:0px">
+								<input class="form-control" type="submit" value="change" style="width:100px;background: #5cb85c;color: #fff;border: 0px;border-radius:0px">
+							</div>
+							<div style="clear:both"></div>
+						</div>
+                    
+                       
+                       
+						<div class="col-sm-12" style="font-family:'latobold'">
+							Credits
+						</div>
+						<div style="margin-left:20px;">
+
+							<div class="col-sm-4">
+								Instant Prospect Qualifier
+							</div>
+							<div class="col-sm-4" id="prev_credits">
+								<% if @user.first['payment_status'] == '1' %>
+								<%= @user.first['credits'] %> 
+								<% end %>
+							</div>
+							<div class="col-sm-4">
+								<input class="form-control" type="text" name="pricing_itq" id="cur_credits" style="width:100px;float:left;margin-right: 10px;border-radius:0px">
+								<p><input class="form-control" type="button" id="creditsbtn" value="add" style="width:100px;background: #5cb85c;color: #fff;border: 0px;border-radius:0px" onclick='abc()'>
+                                <span style="float:left; color: red;" class="error_msg" id="credits_error"></span></p>
+							</div>
+							<div style="clear:both"></div>
+							<div class="col-sm-4">
+								Instant Target Map
+							</div>
+							<div class="col-sm-4">
+								-
+							</div>
+							<div class="col-sm-4">
+								<input class="form-control" type="text" name="pricing_it," style="width:100px;float:left;margin-right: 10px;border-radius:0px">
+								<input class="form-control" type="submit" value="add" style="width:100px;background: #5cb85c;color: #fff;border: 0px;border-radius:0px">
+							</div>
+							<div style="clear:both"></div>
+							<div class="col-sm-4">
+								Instant 3D Home
+							</div>
+							<div class="col-sm-4">
+								-
+							</div>
+							<div class="col-sm-4">
+								<input class="form-control" type="text" name="pricing_h" style="width:100px;float:left;margin-right: 10px;border-radius:0px">
+								<input class="form-control" type="submit" value="add" style="width:100px;background: #5cb85c;color: #fff;border: 0px;border-radius:0px">
+							</div>
+							<div style="clear:both"></div>
+						</div>
+
+						
+					</div>
+				</div>
+				<div style="clear:left;"></div>
+
+			</div>
+			<!--End #content_wrapper-->
+		</div>
+		<!--End #bg_wrapper-->
+
+<div class="modal" id="basicModal">
+							<div class="modal-dialog">
+								<div class="modal-content" style="border-radius:4px;">
+									<div class="modal-header" style="background:#5cb85c;color:#fff;">
+										<button type="button" class="close fui-cross" data-dismiss="modal" aria-hidden="true"></button>
+										<h4 class="modal-title">You are awarding credits to a user!</h4>
+									</div>
+
+									<div class="modal-body">
+										<p>
+											Type of Credit: Instant Target Qualification
+										</p>
+										<p id="old_credits">
+											
+										</p>
+										<p id="new_credits">											
+										</p>  <br>
+										
+										<p style="text-align: center; font-weight: bold;"> (Will send email notification to user)</p>
+									</div>
+
+									<div class="modal-footer">
+										<!-- <a  >Confirm</a><a href="#" class="btn">Cancel</a> -->
+										<a class="btn btn-primary" style=" cursor: pointer;background:#850003;border:2px solid #850003;border-radius:0px;height: 39px;line-height: 15px;" onclick="updatecredits()" >Confirm</a>
+					                 										
+										<a class="btn btn-primary"  data-dismiss="modal" style=" cursor: pointer;background:#fff;border-radius:0px;border:2px solid #5cb85c;color:#000;height: 39px;line-height: 15px;">Cancel</a>
+									</div>
+								</div>
+							</div>
+						</div>
+
+	</body>
+
+</html>

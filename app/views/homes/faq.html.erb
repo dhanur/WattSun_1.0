@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>ProspectZen</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link rel="icon" href="/assets/favicon.ico" type="image/x-icon"> 
+        <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+		<link href="/assets/bootstrap.min.css" rel="stylesheet">
+		<link href="/assets/flat-ui.css" rel="stylesheet">
+		<link href="/assets/reset.css" rel="stylesheet">
+		<link href="/assets/style_faq.css" rel="stylesheet">
+
+		<link href="/assets/mediaqueries_faq.css" rel="stylesheet">
+        <style>
+        #ask_qstn{
+            border-color:#5cb85c !important;
+            border-radius:0px !important;
+        }
+        
+        </style>
+		<script src="/assets/jquery.js"></script>
+		<script src="/assets/bootstrap.min.js"></script>
+        <script>
+            $(function() {
+              $('.back_top a').click(function() {
+                    
+                    $('html,body').animate({
+                      scrollTop:0
+                    }, 700);
+                    return false;
+                 
+              });
+                
+		                
+		        $('a[href*=#]:not([href=#])').click(function() {
+			    if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+		
+			      var target = $(this.hash);
+			      target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+			      if (target.length) {
+			        $('html,body').animate({
+			          scrollTop: target.offset().top
+			        }, 1000);
+			        return false;
+			      }
+			    }
+			  });
+            });
+        </script>
+        
+        
+
+	</head>
+	<body>
+
+		<div class="container">
+			<div id="bgnav" class="navbar navbar-fixed-top navbar-inverse">
+				<div id="navigation" role="navigation">
+
+					<div class="navbar-header">
+
+						<button id="btn_collapse" type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+
+						<a class="navlink" style="color: white;" href='/homes/index'>
+						<div id="logo">
+							<p class="logo_txt">
+								ProspectZen 
+							</p>
+						</div> </a>
+
+					</div>
+					
+					<% if session[:current_user_id] %>
+					
+					<div id="top_menu_scroll" class="collapse navbar-collapse no-transition">
+						<ul id="pull_right" class="nav navbar-nav">
+
+							<li id="else" class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">What else does ProspectZen do? <b style="color:#fff" class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li>
+										<a href="#"> Instant Prospect Generator 
+										<br />
+										Coming soon!</a>
+									</li>
+									<li>
+										<a href="#">Instant 3D Home
+										<br />
+										Coming soon!</a>
+									</li>
+								</ul>
+							</li>
+							<li id="faq">
+								<a class="navlink" href="#">FAQs</a>
+							</li>
+
+							<li id="conta">
+								<a class="navlink" href="/homes/contact">Contact</a>
+							</li>
+							<li>
+								<form action="../homes/logout" method="post">
+									<input id="login" class="form-control" type="submit" value="LOGOUT"/>
+
+								</form>
+							</li>
+
+						</ul>
+
+					</div><!-- /.nav-collapse -->
+					
+					<% else %>
+					
+					<div class="collapse navbar-collapse">
+								<ul class="nav navbar-nav" id="pull_right">
+
+									<li id="else" class="dropdown">
+										<a href="#" class="dropdown-toggle" data-toggle="dropdown">What else does WattSun do? <b class="caret"></b></a>
+										<ul class="dropdown-menu">
+											<li>
+												<a href="#">Instant Target Map
+												<br />
+												Coming soon!</a>
+											</li>
+											<li>
+												<a href="#">Instant 3D Home
+												<br />
+												Coming soon!</a>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<a class="navlink" href="#">FAQs</a>
+									</li>
+									<li>
+										<a class="navlink" href="/homes/contact">Contact</a>
+									</li>
+									<li>
+										<a id="login" class="button" href="/homes/userlogin">LOGIN</a>
+
+								</ul>
+
+							</div><!-- /.nav-collapse -->
+							
+					<% end %>		
+
+				</div><!-- /.navbar -->
+			</div>
+		</div>
+		<!--End .container-->
+
+		<div id="bg_wrapper">
+			<div id="content_wrapper">
+
+				<div id="faq_container">
+					<p id="faq_container_heading">
+						Frequently Asked Questions
+					</p>
+					<div id="qstn_srch">
+											<input id="ask_qstn" type="text" class="form-control" placeholder="Search FAQs">
+					</div>
+					<div id="categories">
+						<div class="col-sm-6 single_cat">
+							<p class="category_head">
+								Category One
+							</p>
+							<ul>
+								<li>
+									<a href="#one">Question1</a>
+								</li>
+								<li>
+									<a href="#two">Question2</a>
+								</li>
+								<li>
+									<a href="#three">Question3</a>
+								</li>
+								<li>
+									<a href="#four">Question4</a>
+								</li>
+								<li>
+									<a href="#five">Question5</a>
+								</li>
+							</ul>
+						</div>
+						<div class="col-sm-6 single_cat">
+							<p class="category_head">
+								Category Two
+							</p>
+							<ul>
+								<li>
+									<a href="#one">Question1</a>
+								</li>
+								<li>
+									<a href="#two">Question2</a>
+								</li>
+								<li>
+									<a href="#three">Question3</a>
+								</li>
+								<li>
+									<a href="#four">Question4</a>
+								</li>
+								<li>
+									<a href="#five">Question5</a>
+								</li>
+							</ul>
+						</div>
+						<div class="col-sm-6 single_cat">
+							<p class="category_head">
+								Category Three
+							</p>
+							<ul>
+								<li>
+									<a href="#one">Question1</a>
+								</li>
+								<li>
+									<a href="#two">Question2</a>
+								</li>
+								<li>
+									<a href="#three">Question3</a>
+								</li>
+								<li>
+									<a href="#four">Question4</a>
+								</li>
+								<li>
+									<a href="#five">Question5</a>
+								</li>
+							</ul>
+						</div>
+						<div class="col-sm-6 single_cat">
+							<p class="category_head">
+								Category Four
+							</p>
+							<ul>
+								<li>
+									<a href="#one">Question1</a>
+								</li>
+								<li>
+									<a href="#two">Question2</a>
+								</li>
+								<li>
+									<a href="#three">Question3</a>
+								</li>
+								<li>
+									<a href="#four">Question4</a>
+								</li>
+								<li>
+									<a href="#five">Question5</a>
+								</li>
+							</ul>
+						</div>
+						<div class="col-sm-6 single_cat">
+							<p class="category_head">
+								Category Five
+							</p>
+							<ul>
+								<li>
+									<a href="#one">Question1</a>
+								</li>
+								<li>
+									<a href="#two">Question2</a>
+								</li>
+								<li>
+									<a href="#three">Question3</a>
+								</li>
+								<li>
+									<a href="#four">Question4</a>
+								</li>
+								<li>
+									<a href="#five">Question5</a>
+								</li>
+							</ul>
+						</div>
+						<div class="col-sm-6 single_cat">
+							<p class="category_head">
+								Category Six
+							</p>
+							<ul>
+								<li>
+									<a href="#one">Question1</a>
+								</li>
+								<li>
+									<a href="#two">Question2</a>
+								</li>
+								<li>
+									<a href="#three">Question3</a>
+								</li>
+								<li>
+									<a href="#four">Question4</a>
+								</li>
+								<li>
+									<a href="#five">Question5</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div id="contact_us_foot">
+						If your question is not answered here, please <a href="/homes/contact">contact us</a>
+					</div>
+					<hr class="style_hr"/>
+
+					<div id="big_qstn">
+                        <h1 id="one"></h1>
+						<div class="big_qstn_head">
+							Question One
+						</div>
+						<div class="big_qstn_body">
+							Loreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsum
+						</div>
+
+						<div class="back_top">
+                            
+							<a  href="#">back to top</a>
+						</div>
+
+						<div class="big_qstn_head">
+                            <h1 id="two"></h1>
+							Question One
+						</div>
+						<div class="big_qstn_body">
+							Loreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsum
+						</div>
+
+						<div class="back_top">
+							<a  href="#">back to top</a>
+						</div>
+
+						<div class="big_qstn_head">
+                            <h1 id="three"></h1>
+							Question One
+						</div>
+						<div class="big_qstn_body">
+							Loreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsum
+						</div>
+
+						<div class="back_top">
+							<a  href="#">back to top</a>
+						</div>
+
+						<div class="big_qstn_head">
+                            <h1 id="four"></h1>
+							Question One
+						</div>
+						<div class="big_qstn_body">
+							Loreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsum
+						</div>
+
+						<div class="back_top">
+							<a  href="#">back to top</a>
+						</div>
+
+						<div class="big_qstn_head">
+                            <h1 id="five"></h1>
+							Question One
+						</div>
+						<div class="big_qstn_body">
+							Loreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsum
+						</div>
+
+						<div class="back_top">
+							<a  href="#">back to top</a>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+			<!--End #content_wrapper-->
+
+		</div>
+		<!--End #bg_wrapper-->
+
+
+
+        <script type="text/javascript" src="/assets/hilitor.js"></script>
+		<script type="text/javascript">
+		
+		  var myInput2;
+		
+		  document.addEventListener("DOMContentLoaded", function() {
+		    myHilitor2 = new Hilitor("content_wrapper");
+		    myHilitor2.setMatchType("left");
+		  }, false);
+		
+		  document.getElementById("ask_qstn").addEventListener("keyup", function() {
+		    myHilitor2.apply(this.value);
+		  }, false);
+		
+		</script>
+	</body>
+
+</html>

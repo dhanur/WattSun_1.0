@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>
+            Wattsun
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link href="/assets/bootstrap.min.css" rel="stylesheet">
+        <link href="/assets/flat-ui.css" rel="stylesheet">
+        <link href="/assets/reset.css" rel="stylesheet">
+        <link href="/assets/style_purchaseview.css" rel="stylesheet">
+
+        <link href="/assets/mediaqueries_purchaseview.css" rel="stylesheet">
+        <script src="/assets/jquery.js"></script>
+        <script src="/assets/bootstrap.min.js"></script>
+
+
+
+    </head>
+    <body>
+
+        <div class="container">
+            <div id="bgnav" class="navbar navbar-fixed-top navbar-inverse">
+                <div id="navigation" role="navigation">
+
+                    <div class="navbar-header">
+
+                        <button id="btn_collapse" type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+
+                        <a class="navlink" style="color: white;" href='#Top'> 
+                            <div id="logo"><p class="logo_txt">Wattsun</p></div>
+
+
+
+                        </a>
+
+                    </div>
+                     <div id="top_menu_scroll" class="collapse navbar-collapse no-transition">
+                        <ul id="pull_right" class="nav navbar-nav">
+
+                            <li id="else" class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">What else does WattSun do? <b style="color:#fff" class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Instant Target Map <br />Coming soon!</a></li>
+                                    <li><a href="#">Instant 3D Home <br />Coming soon!</a></li>
+                                </ul>
+                            </li>
+                            <li id="faq"><a class="navlink" href="/homes/faq">FAQs</a></li>
+                            
+                            <li id="setn" class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" >Settings<b style="color:#fff" class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="/homes/userprofile">Profile</a></li>
+                                    <li><a href="/homes/userpayment">Payment</a></li>
+                                    <li><a href="/homes/purchaseitq">Purchases</a></li>
+                                    <li><a href="/homes/userproblem">Problem?</a></li>
+                                </ul>
+                            </li>
+                            <li> <form action="../homes/logout" method="post">
+          	 				  	<input id="login" class="form-control" type="submit" value="Logout"/>
+                               
+                                   </form>
+                              </li>
+
+                        </ul>
+
+                    </div><!-- /.nav-collapse -->
+
+                </div><!-- /.navbar -->
+            </div>
+        </div>
+        <!--End .container-->
+
+        <div id="bg_wrapper">
+            <div id="content_wrapper">
+                <div id="sidebar_menu" style="float:left;">
+                    <ul id="menu_list" class="nav nav-pills nav-stacked">
+                        <li id="profile"><a href="/homes/userprofile">Profile</a></li>
+                        <li id="payment"><a href="/homes/userpayment">Payment</a></li>
+                        <li id="purchases"  class="panel">
+
+                            <a  class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Purchases</a>
+                            <div id="collapseOne" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <ul>
+                                        <li id="itq_panel"><a href="/homes/purchaseitq">Instant Target Qualification</a></li>
+                                        <li id="itm_panel"><a href="#">Instant Target Map</a></li>
+                                        <li id="ih_panel"><a href="#">Instant 3D Home</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li id="problem">
+
+                            <a href="/homes/userproblem">Problem?</a>
+
+                        </li>
+                    </ul>
+                </div>
+                <div id="menu_content" style="float:right;">
+                    <div id="menu_content_header">
+                        <%= @user.first['first_name'] %> <%= @user.first['last_name'] %> @ <%= @transction.first['address'] %>
+                    </div>
+
+
+                    <div style="font-size: 18px;padding:15px;">
+                        
+                        
+                        <div id="left_view" style="line-height: 26px;">
+                            <div id="resident" class="btm_mrgn">
+                                <div id="resident_head" class="left_headings col-sm-4">RESIDENT</div>
+                                <div style="clear: both;"></div>
+                                <div><div class="left_headings col-sm-4">Name of Owner</div><div class="right_headings col-sm-4"><%= @transction.first['owner_name'] %></div></div>
+                                <div style="clear: both;"></div>
+                                <div><div class="left_headings col-sm-4">Mailing Address</div><div class="right_headings col-sm-4"><%= @transction.first['mailing_address'] %></div></div>
+                                <div style="clear: both;"></div>
+                                <div><div class="left_headings col-sm-4">Address Owner Occupied?</div><div class="right_headings col-sm-4"><%= @transction.first['owner_occupied_indicator'] %></div></div>
+                                <div style="clear: both;"></div>
+                                <div><div class="left_headings col-sm-4">Estimated Credit Score</div><div class="right_headings col-sm-4"></div></div>
+                                <div style="clear: both;"></div>
+                                <div><div class="left_headings col-sm-4">Estimated Annual Income</div><div class="right_headings col-sm-4">680<br />$125 000</div></div>
+                                <div style="clear: both;"></div>
+                            </div>
+                            <div id="property" class="btm_mrgn">
+                                <div id="property_head" class="left_headings col-sm-4">PROPERTY & ROOF</div>
+                                <div style="clear: both;"></div>
+                                <div><div class="left_headings col-sm-4">Property Type</div><div class="right_headings col-sm-4"><%= @transction.first['land_use_code'] %></div></div>
+                                <div style="clear: both;"></div>
+                                <div><div class="left_headings col-sm-4">Zoning</div><div class="right_headings col-sm-4"><%= @transction.first['zoning'] %></div></div>
+                                <div style="clear: both;"></div>
+                                <div><div class="left_headings col-sm-4">Age of Home</div><div class="right_headings col-sm-4"><% if @transction.first['year_built'].blank? %> <% else %><%= Time.now.year - @transction.first['year_built'] %> years <% end %></div></div>
+                                <div style="clear: both;"></div>
+                            </div>
+                            <div id="gross_area" class="btm_mrgn">
+                                <div id="gross_head" class="left_headings col-sm-4">Property & Roof</div>
+                                <div style="clear: both;"></div>
+                                <div><div class="left_headings col-sm-4">Bedrooms</div><div class="right_headings col-sm-4"><% if @transction.first['year_built'].blank? %> <% else %> <%= @transction.first['living_area'] %>sqft <% end %></div></div>
+                                <div style="clear: both;"></div>
+                                <div><div class="left_headings col-sm-4">Bathrooms(Full/Half)</div><div class="right_headings col-sm-4">3 2/1</div></div>
+                                <div style="clear: both;"></div>
+                            </div>
+                            <div id="heating" class="btm_mrgn">
+                                <div id="heating_head" class="left_headings col-sm-4">Heating Type</div><div id="heating_head" class="left_headings col-sm-4"><%= @transction.first['heat_type'] %></div>
+                                <div style="clear: both;"></div>
+                                <div><div class="left_headings col-sm-4">Heating Fuel</div><div class="right_headings col-sm-4"><%= @transction.first['heat_fuel'] %></div></div>
+                                <div style="clear: both;"></div>
+                            </div>
+                            <div id="roof" class="btm_mrgn">
+                                <div id="roof_head" class="left_headings col-sm-4">Roof Type</div><div id="roof_head" class="left_headings col-sm-4"><%= @transction.first['roof_type'] %></div>
+                                <div style="clear: both;"></div>
+                                <div><div class="left_headings col-sm-4">Roof Material</div><div class="right_headings col-sm-4"><%= @transction.first['roof_material'] %></div></div>
+                                <div style="clear: both;"></div>
+                                <div><div class="left_headings col-sm-4">Roof Condition</div><div class="right_headings col-sm-4">Composite Shingle Poor</div></div>
+                                <div style="clear: both;"></div>
+                            </div>
+                        </div>
+                        
+                        
+                        <div id="right_view" style="line-height: 26px;">
+                            <div id="solar_mi" class="btm_mrgn">
+                                <div><div class="left_headings col-sm-4">SOLAR MARKET INTELLIGENCE</div><div class="right_headings">*(for Zip )*</div></div>
+                                <div style="clear: both;margin-bottom: 20px;"></div>
+                                <div><div class="left_headings col-sm-4">No. of solar installations</div><div class="right_headings"><% %></div></div>
+                                <div style="clear: both;margin-bottom: 20px;"></div>
+                                <div><div class="left_headings col-sm-4">% Third party Owned</div><div class="right_headings col-sm-4">81%</div></div>
+                                <div style="clear: both;margin-bottom: 20px;"></div>
+                                <div><div class="left_headings col-sm-4">Top Installers</div><div class="right_headings col-sm-4"><ol type="1">
+                                           
+                                           
+                                            <li>Solar City</li>
+                                            <li>Verengo Solar</li>
+                                            <li>Vivint Solar</li>
+                                            <li>Real Goods Solar</li>
+                                            <li>Peterson Dean</li>
+                                            
+                                            
+                                        </ol></div></div>
+                                <div style="clear: both;margin-bottom: 20px;"></div>
+                                <div><div class="left_headings col-sm-4">Top Panels Used</div><div class="right_headings col-sm-4"><ol type="1">
+                                            <li>Yingli</li>
+                                            <li>Sharp</li>
+                                            <li>Candian Solar</li>
+                                       
+                                            
+                                            
+                                        </ol></div></div>
+                                <div style="clear: both;margin-bottom: 20px;"></div>
+                                <div><div class="left_headings col-sm-4">Top Inverters Used</div><div class="right_headings col-sm-4"><ol type="1">
+                                            <li>Emphase</li>
+                                            <li>SMA</li>
+                                            <li>SolarBridge</li>
+                                       
+                                            
+                                            
+                                        </ol></div></div>
+                                <div style="clear: both;margin-bottom: 20px;"></div>
+                                <div><div class="left_headings col-sm-4">DEMOGRAPHICS</div><div class="right_headings col-sm-4">*(for Zip 94025)*</div></div>
+                                <div style="clear: both;"></div>
+                                <div><div class="left_headings col-sm-4">Race/Ethnicity Breakup</div><div class="right_headings col-sm-4"><ol type="1">
+                                            <li>African American (63%)</li>
+                                            <li>White(17%)</li>
+                                            <li>Hispanic Latino(12%)</li>
+                                            <li>Others(8%)</li>
+                                       
+                                            
+                                            
+                                        </ol></div></div>
+                                <div style="clear: both;margin-bottom: 20px;"></div>
+                                <div><div class="left_headings col-sm-4">Average Household Size</div><div class="right_headings col-sm-4">4</div></div>
+                                <div style="clear: both;margin-bottom: 20px;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+            <!--End #content_wrapper-->
+        </div>
+        <!--End #bg_wrapper-->
+
+
+    </body>
+
+</html>

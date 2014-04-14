@@ -1,0 +1,4284 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>
+      Wattsun 
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+    <link href="/assets/bootstrap.css" rel="stylesheet">
+    <link href="/assets/reset.css" rel="stylesheet">
+    <link href="/assets/stylepage2_test.css" rel="stylesheet">
+     
+    <link href="/assets/mediaqueriespage2_test.css" rel="stylesheet">
+    <script src="/assets/jquery.js">
+    </script>
+    <script src="/assets/bootstrap.js">
+    </script>
+    <script src="/assets/jquery.nicescroll.js">
+    </script>
+    
+    
+    <style>
+       
+            #myModal{
+                overflow-y:hidden;
+            }
+    </style>
+    
+    
+ 		<script src="//www.google.com/jsapi?key=ABQIAAAAuPsJpk3MBtDpJ4G8cqBnjRRaGTYH6UMl8mADNa0YKuWNNa8VNxQCzVBXTx2DYyXGsTOxpWhvIG7Djw" type="text/javascript"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+
+		<script type="text/javascript">
+			var input;
+			var radiovalue = 'zip';
+			var citycode = '';
+			var zipcode = '';
+			var ge;
+			var placeSearch, autocomplete;
+			var x, y;
+			
+			
+			// var transcationid;
+			
+			var geocoder;
+
+			$(document).ready(function() {
+				
+				
+				$('#loc_search').focusin(function() {					
+				
+					$('#search_error').html('');					
+
+				});
+
+
+				$("input[type='radio'][name='type1']").click(function() {
+					
+										
+					$.ajax({
+						url : "/homes/datafetch",
+						type : "POST",
+						dataType : 'JSON',
+						data : {
+							'zip' : zipcode,
+							'citycode' : citycode,
+							'radio' : $(this).val()
+						},
+						success : function(response) {
+
+							if (response['utility'].length > 0) {
+								var str = ''
+								for ( i = 0; i < response['utility'].length; i++) {
+
+									str += response['utility'][i]['utility'] + '<br>';
+									$("#utilityspan1").html(str);
+
+								}
+
+							}
+
+							if (response['zipeverythingelse'].length > 0) {
+
+								$("#solar_homes1").html(response['zipeverythingelse'][0]['no_of_solar_homes']);
+								$("#3rd_party1").html(response['zipeverythingelse'][0]['3rd_party_owned_system']);
+								$("#average_system1").html(response['zipeverythingelse'][0]['average_system_size']);
+
+							}
+
+							if (response['topinstaller'].length > 0) {
+								for ( i = 0; i < response['topinstaller'].length; i++) {
+
+									$("#installer1" + i).html(response['topinstaller'][i]['installers']);
+
+								}
+							} else {
+								for ( i = 0; i < 5; i++) {
+
+									$("#installer1" + i).html("");
+
+								}
+
+								$("#solar_homes1").html('');
+								$("#3rd_party1").html('');
+								$("#average_system1").html('');
+
+							}
+
+							if (response['toppanelbrands'].length > 0) {
+
+								for ( i = 0; i < response['toppanelbrands'].length; i++) {
+
+									$("#panel1" + i).html(response['toppanelbrands'][i]['panel_brands']);
+
+								}
+							} else {
+								for ( i = 0; i < 5; i++) {
+
+									$("#panel1" + i).html("");
+
+								}
+								$("#solar_homes1").html('');
+								$("#3rd_party1").html('');
+								$("#average_system1").html('');
+
+							}
+
+							if (response['topinverterbrands'].length > 0) {
+
+								for ( i = 0; i < response['topinverterbrands'].length; i++) {
+
+									$("#inverter1" + i).html(response['topinverterbrands'][i]['inverter_brands']);
+
+								}
+							} else {
+								for ( i = 0; i < 5; i++) {
+
+									$("#inverter1" + i).html("");
+
+								}
+
+								$("#solar_homes1").html('');
+								$("#3rd_party1").html('');
+								$("#average_system1").html('');
+
+							}
+
+						}
+					});
+				});
+
+				$("input[type='radio'][name='type2']").click(function() {
+					$.ajax({
+						url : "/homes/datafetch",
+						type : "POST",
+						dataType : 'JSON',
+						data : {
+							'zip' : zipcode,
+							'citycode' : citycode,
+							'radio' : $(this).val()
+						},
+						success : function(response) {
+
+							if (response['utility'].length > 0) {
+								var str = ''
+								for ( i = 0; i < response['utility'].length; i++) {
+
+									str += response['utility'][i]['utility'] + '<br>';
+									$("#utilityspan2").html(str);
+
+								}
+
+							}
+
+							if (response['zipeverythingelse'].length > 0) {
+								$("#solar_homes2").html(response['zipeverythingelse'][0]['no_of_solar_homes']);
+								$("#3rd_party2").html(response['zipeverythingelse'][0]['3rd_party_owned_system']);
+								$("#average_system2").html(response['zipeverythingelse'][0]['average_system_size']);
+							}
+
+							if (response['topinstaller'].length > 0) {
+								for ( i = 0; i < response['topinstaller'].length; i++) {
+
+									$("#installer2" + i).html(response['topinstaller'][i]['installers']);
+
+								}
+							} else {
+								for ( i = 0; i < 5; i++) {
+
+									$("#installer2" + i).html("");
+
+								}
+
+								$("#solar_homes2").html('');
+								$("#3rd_party2").html('');
+								$("#average_system2").html('');
+							}
+
+							if (response['toppanelbrands'].length > 0) {
+
+								for ( i = 0; i < response['toppanelbrands'].length; i++) {
+
+									$("#panel2" + i).html(response['toppanelbrands'][i]['panel_brands']);
+
+								}
+							} else {
+								for ( i = 0; i < 5; i++) {
+
+									$("#panel2" + i).html("");
+
+								}
+
+								$("#solar_homes2").html('');
+								$("#3rd_party2").html('');
+								$("#average_system2").html('');
+							}
+
+							if (response['topinverterbrands'].length > 0) {
+
+								for ( i = 0; i < response['topinverterbrands'].length; i++) {
+
+									$("#inverter2" + i).html(response['topinverterbrands'][i]['inverter_brands']);
+
+								}
+							} else {
+								for ( i = 0; i < 5; i++) {
+
+									$("#inverter2" + i).html("");
+
+								}
+
+								$("#solar_homes2").html('');
+								$("#3rd_party2").html('');
+								$("#average_system2").html('');
+							}
+
+						}
+					});
+				});
+			});
+
+			var geocoder;
+			var placemark;
+			var placemark2 = new Array;
+			google.load("earth", "1");
+
+			var componentForm = {
+				street_number : 'short_name',
+				route : 'short_name',
+				locality : 'short_name',
+				country : 'short_name',
+				postal_code : 'short_name',
+			    administrative_area_level_1: 'short_name',
+		        administrative_area_level_2: "short_name",
+			};
+
+			var componentForm1 = {
+				street_number : '',
+				route : '',
+				locality : '',
+				country : '',
+				administrative_area_level_1: '',
+		        administrative_area_level_2: "",
+				postal_code : ''
+			};
+			
+			var formatted_address;
+
+			$(window).bind('keypress', function(e) {
+				if (e.keyCode == 13) {
+				
+         			input = document.getElementById('loc_search').value;
+
+					componentForm1 = {
+						street_number : '',
+						route : '',
+						locality : '',
+						country : '',
+						postal_code : '',
+						administrative_area_level_1: '',
+		                administrative_area_level_2: '',
+					};
+
+					check();
+
+				}
+			});
+
+			function init() {
+				
+				 
+				input = document.getElementById('loc_search').value;
+				
+				google.earth.createInstance('map-canvas', initCallback, failureCallback);
+				}
+		
+		
+		
+		    function camerapositionpurchase()
+		 	   {
+		    	var lookAt = ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND);		
+				var input = document.getElementById('loc_search').value;		
+		
+				ge.getNavigationControl().setVisibility(ge.VISIBILITY_AUTO);
+		    	
+		    	$.getJSON('http://maps.googleapis.com/maps/api/geocode/json?address='+input+'&sensor=false', null, function (data) {
+		
+              
+				var p = data.results[0].geometry.location
+				var q = p.lat;
+				var r = p.lng;
+			   
+			   formatted_address= data.results[0].formatted_address;
+			   setValueNewTranscation(formatted_address);							
+					
+						var la = ge.createLookAt('');
+				
+						la.set(q,r,0, // altitude
+				
+						ge.ALTITUDE_RELATIVE_TO_GROUND,
+				
+						0, // heading
+				
+						0, // straight-down tilt
+				
+						80// range (inverse of zoom)
+				
+						);
+						
+						ge.getView().setAbstractView(la);
+				
+						});				
+
+		    	
+		    	
+		    }
+		    
+		    
+		     function camerapositionfirsttym(input)
+		 	   {
+		    	var lookAt = ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND);		
+				
+				ge.getNavigationControl().setVisibility(ge.VISIBILITY_AUTO);
+		    	
+		    	$.getJSON('http://maps.googleapis.com/maps/api/geocode/json?address='+input+'&sensor=false', null, function (data) {
+		
+              
+				var p = data.results[0].geometry.location
+				var q = p.lat;
+				var r = p.lng;
+			   
+			   formatted_address= data.results[0].formatted_address;
+			   
+			  		   
+			   							var length = data.results[0]["address_components"].length;
+																			
+										for (var i = 0; i < length; i++)
+										
+										{								
+												
+												var addressType = data.results[0]["address_components"][i]["types"][0];
+												
+												if (componentForm[addressType])
+												
+												{
+													
+													if (addressType == 'postal_code')
+													
+													{
+													
+													zipcode = data.results[0]["address_components"][i]["long_name"];
+													
+													}	
+													
+													
+													if (addressType == 'locality') 
+													
+													{
+													
+													citycode = data.results[0]["address_components"][i]["long_name"];										
+													
+													}								
+										
+												}
+																				
+										}								
+					
+				        setValueNewTranscation(formatted_address);	
+						var la = ge.createLookAt('');
+				
+						la.set(q,r,0, // altitude
+				
+						ge.ALTITUDE_RELATIVE_TO_GROUND,
+				
+						0, // heading
+				
+						0, // straight-down tilt
+				
+						80// range (inverse of zoom)
+				
+						);
+						
+						ge.getView().setAbstractView(la);
+				
+						});				
+
+		    	
+		    	
+		    }
+		    
+		 
+	 
+	 
+	    	function cameraposition() {
+	 				
+				var lookAt = ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND);
+		
+				var input = document.getElementById('loc_search').value;
+
+		
+				ge.getNavigationControl().setVisibility(ge.VISIBILITY_AUTO);
+		
+				$.getJSON('http://maps.googleapis.com/maps/api/geocode/json?address='+input+'&sensor=false', null, function (data) {
+		
+              
+				var p = data.results[0].geometry.location
+				var q = p.lat;
+				var r = p.lng;
+			    	
+				formatted_address= data.results[0].formatted_address;
+
+								placemark2 = ge.createPlacemark('');
+                                var icon = ge.createIcon('');
+					            placemark2.setName(data.results[0].formatted_address);
+			
+								//designing of placemark
+								icon.setHref('http://maps.google.com/mapfiles/kml/paddle/red-circle.png');
+								var style = ge.createStyle('');
+								style.getIconStyle().setIcon(icon);
+								style.getIconStyle().setScale(1.0);
+								placemark2.setStyleSelector(style);
+								
+								point2 = ge.createPoint('');
+								point2.setLatitude(q);
+								point2.setLongitude(r);
+								placemark2.setGeometry(point2);
+								ge.getFeatures().appendChild(placemark2);
+						
+						        makemake();
+								google.earth.addEventListener(placemark2, 'click', function(event) {
+		
+									var length = data.results[0]["address_components"].length;
+																			
+										for (var i = 0; i < length; i++)
+										
+										{								
+												
+												var addressType = data.results[0]["address_components"][i]["types"][0];
+												
+												if (componentForm[addressType])
+												
+												{
+													
+													if (addressType == 'postal_code')
+													
+													{
+													
+													zipcode = data.results[0]["address_components"][i]["long_name"];
+													
+													}	
+													
+													
+													if (addressType == 'locality') 
+													
+													{
+													
+													citycode = data.results[0]["address_components"][i]["long_name"];										
+													
+													}								
+										
+												}
+																				
+										}								 		
+										
+								     setValueNewTranscation(formatted_address);	
+										// Prevent default balloon from popping up for marker placemarks										
+									 event.preventDefault();										
+										
+								});
+								
+						var la = ge.createLookAt('');
+				
+						la.set(q,r,0, // altitude
+				
+						ge.ALTITUDE_RELATIVE_TO_GROUND,
+				
+						0, // heading
+				
+						0, // straight-down tilt
+				
+						80// range (inverse of zoom)
+				
+						);
+						
+						ge.getView().setAbstractView(la);
+				
+						});				
+
+		}
+        
+   
+          
+       function makemake()
+        {
+        	
+          		for ( i = 0; i < 5; i++) {
+	
+				$("#installer1" + i).html("");
+				$("#installer2" + i).html("");
+			
+				$("#panel1" + i).html("");
+				$("#panel2" + i).html("");
+				
+				$("#inverter1" + i).html("");
+				$("#inverter2" + i).html("");
+									
+				}
+        	
+        	$.ajax({
+					url : "/homes/checkpurchase",
+					type : "POST",
+					dataType : 'JSON',
+					
+					data : {
+						'zip' : componentForm1['postal_code'],
+						'city' : componentForm1['locality'],
+						'street' : componentForm1['street_number'],
+						'route' : componentForm1['route'],
+						'state' : componentForm1['administrative_area_level_1'],
+						'county' : componentForm1['administrative_area_level_2'],
+						'country' : componentForm1['country'],
+						'address' : formatted_address
+					},
+ 
+                    
+					success : function(response) {
+						
+						   $("#prev_chk").show();       
+					       $("#prev_checks").html(response['results'][0]['prev_check']);
+						  
+						        
+					          var check_flag=0; 						 
+                    
+		                    	if(response['results'][0]['owner_name']=='' || response['results'][0]['owner_name']==null )
+		                        {
+		                               $("#own1").hide();
+		                               $("#own2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#own1").show();
+		                               $("#own2").show();
+									   $("#owner_name1").html(response['results'][0]['owner_name']);
+									   $("#owner_name2").html(response['results'][0]['owner_name']);
+									   check_flag=1;
+								}
+		     
+		                                         
+		                        
+		                    	if(response['results'][0]['mailing_address']=='' || response['results'][0]['mailing_address']==null)
+		                        {
+		                               $("#ma1").hide();
+		                               $("#ma2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#ma1").show();
+		                               $("#ma2").show();
+									   $("#mailing_address1").html(response['results'][0]['mailing_address']);
+							           $("#mailing_address2").html(response['results'][0]['mailing_address']);
+							           check_flag=1;
+								}
+		     
+		                        
+		                        
+		                        if(response['results'][0]['owner_occupied_indicator']=='' || response['results'][0]['owner_occupied_indicator']==null)
+		                        {
+		                               $("#oo1").hide();
+		                               $("#oc2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#oo1").show();
+		                               $("#oo2").show();
+		                               
+		                               if (response['results'][0]['owner_occupied_indicator']==1)
+		                               {
+												   $("#owner_occupied1").html('Yes');
+												   $("#owner_occupied2").html('Yes');
+									   }
+									   else
+									   {
+							        			   $("#owner_occupied1").html('No');
+							        			   $("#owner_occupied2").html('No');
+							           }
+							           check_flag=1;
+								}
+								
+							
+								if (check_flag==1)
+								 {
+								     $("#check_owner1").show();
+								     $("#check_owner2").show();
+								     check_flag=0;
+								 }
+								else
+								 {
+								 	 $("#check_owner1").hide();
+									 $("#check_owner2").hide();
+								 }
+							
+							
+	    						if(response['results'][0]['last_sale_date']=='' || response['results'][0]['last_sale_date']==null)
+		                        {
+		                               $("#lsd1").hide();
+		                               $("#lsd2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#lsd1").show();
+		                               $("#lsd2").show();
+									   $("#last_sale_date1").html(response['results'][0]['last_sale_date']);
+							           $("#last_sale_date2").html(response['results'][0]['last_sale_date']);
+							           check_flag=1;
+								}
+								
+								
+								
+								
+								
+								if(response['results'][0]['last_sale_price']=='' || response['results'][0]['last_sale_price']==null)
+		                        {
+		                               $("#lsp1").hide();
+		                               $("#lsp2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#lsp1").show();
+		                               $("#lsp2").show();
+									   $("#last_sale_price1").html(response['results'][0]['last_sale_price']);
+							           $("#last_sale_price2").html(response['results'][0]['last_sale_price']);
+							           check_flag=1;
+								}
+								
+								
+						
+																
+								if(response['results'][0]['last_sale_price_per_sqr_ft']=='' || response['results'][0]['last_sale_price_per_sqr_ft']==null)
+		                        {
+		                               $("#lspps1").hide();
+		                               $("#lspps2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#lspps1").show();
+		                               $("#lspps2").show();
+									   $("#last_sale_price_per_sqrft1").html(response['results'][0]['last_sale_price_per_sqr_ft']);
+							           $("#last_sale_price_per_sqrft2").html(response['results'][0]['last_sale_price_per_sqr_ft']);
+							           check_flag=1;
+								}
+								
+													
+								if(response['results'][0]['land_use_code']=='' || response['results'][0]['land_use_code']==null)
+		                        {
+		                               $("#luc1").hide();
+		                               $("#luc2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#luc1").show();
+		                               $("#luc2").show();
+									   $("#land_use_code1").html(response['results'][0]['land_use_code']);
+							           $("#land_use_code2").html(response['results'][0]['land_use_code']);
+							           check_flag=1;
+								}
+								
+						
+						
+						
+						       													
+								if(response['results'][0]['zoning']=='' || response['results'][0]['zoning']==null)
+		                        {
+		                               $("#z1").hide();
+		                               $("#z2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#z1").show();
+		                               $("#z2").show();
+									   $("#zoning1").html(response['results'][0]['zoning']);
+							           $("#zoning2").html(response['results'][0]['zoning']);
+							           check_flag=1;
+								}
+								
+								
+								
+														       													
+								if(response['results'][0]['no_of_residential_per_common_units']=='' || response['results'][0]['no_of_residential_per_common_units']==null)
+		                        {
+		                               $("#rpcu1").hide();
+		                               $("#rpcu2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#rpcu1").show();
+		                               $("#rpcu2").show();
+									   $("#residential_per_common_units1").html(response['results'][0]['no_of_residential_per_common_units']);
+							           $("#residential_per_common_units2").html(response['results'][0]['no_of_residential_per_common_units']);
+							           check_flag=1;
+								}
+								
+								
+					
+								if(response['results'][0]['gross_area']=='' || response['results'][0]['gross_area']==null)
+		                        {
+		                               $("#ga1").hide();
+		                               $("#ga2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#ga1").show();
+		                               $("#ga2").show();
+									   $("#gross_area1").html(response['results'][0]['gross_area']+'sqft');
+							           $("#gross_area2").html(response['results'][0]['gross_area']+'sqft');
+							           check_flag=1;
+								}
+						
+						        
+						  
+						  		if(response['results'][0]['living_area']=='' || response['results'][0]['living_area']==null)
+		                        {
+		                               $("#la1").hide();
+		                               $("#la2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#la1").show();
+		                               $("#la2").show();
+									   $("#living_area1").html(response['results'][0]['living_area']+'sqft');
+							           $("#living_area2").html(response['results'][0]['living_area']+'sqft');
+							           check_flag=1;
+								}
+						
+						       
+						       
+									
+								if(response['results'][0]['no_of_bedrooms']=='' || response['results'][0]['no_of_bedrooms']==null)
+		                        {
+		                               $("#nobed1").hide();
+		                               $("#nobed2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#nobed1").show();
+		                               $("#nobed2").show();
+									   $("#no_of_bedroom1").html(response['results'][0]['no_of_bedrooms']);
+								       $("#no_of_bedroom2").html(response['results'][0]['no_of_bedrooms']);
+								       check_flag=1;
+								}
+								
+								
+								
+																	
+								if(response['results'][0]['no_of_bathrooms']=='' || response['results'][0]['no_of_bathrooms']==null)
+		                        {
+		                               $("#nobath1").hide();
+		                               $("#nobath2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#nobath1").show();
+		                               $("#nobath2").show();
+									   $("#no_of_bathroom1").html(response['results'][0]['no_of_bathrooms']);
+								       $("#no_of_bathroom2").html(response['results'][0]['no_of_bathrooms']);
+								       check_flag=1;
+								}
+								
+																
+						
+								if(response['age']=='' || response['age']==null)
+		                        {
+		                        	//    alert(response['age']);
+		                               $("#aoh1").hide();
+		                               $("#aoh2").hide();
+		                        }
+		                        
+		                        else{
+		                        	// alert(response['age']);
+		                        	   $("#aoh1").show();
+		                               $("#aoh2").show();
+									   $("#age_of_home1").html(response['age']);
+							           $("#age_of_home2").html(response['age']);
+							           check_flag=1;
+								}
+								
+		
+		
+								
+								if(response['results'][0]['pool']=='' || response['results'][0]['pool']==null)
+		                        {
+		                               $("#po1").hide();
+		                               $("#po2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#po1").show();
+		                               $("#po2").show();
+		                               
+		                               if (response['results'][0]['pool']==1)
+		                               {
+												   $("#pool1").html('Yes');
+												   $("#pool2").html('Yes');
+									    }
+									   else
+									   {
+							        			    $("#pool1").html('No');
+							        			    $("#pool2").html('No');
+							           }
+							           check_flag=1;
+								}
+								
+								
+											
+								if(response['results'][0]['heat_type']=='' || response['results'][0]['heat_type']==null)
+		                        {
+		                               $("#ht1").hide();
+		                               $("#ht2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#ht1").show();
+		                               $("#ht2").show();
+									   $("#heat_type1").html(response['results'][0]['heat_type']);
+							           $("#heat_type2").html(response['results'][0]['heat_type']);
+							           check_flag=1;
+								}
+								
+								
+								if(response['results'][0]['heat_fuel']=='' || response['results'][0]['heat_fuel']==null)
+		                        {
+		                               $("#hf1").hide();
+		                               $("#hf2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#hf1").show();
+		                               $("#hf2").show();
+									   $("#heat_fuel1").html(response['results'][0]['heat_fuel']);
+								       $("#heat_fuel2").html(response['results'][0]['heat_fuel']);
+								       check_flag=1;
+								}
+								
+								
+								if(response['results'][0]['roof_type']=='' || response['results'][0]['roof_type']==null)
+		                        {
+		                               $("#rt1").hide();
+		                               $("#rt2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#rt1").show();
+		                               $("#rt2").show();
+									   $("#roof_type1").html(response['results'][0]['roof_type']);
+							           $("#roof_type2").html(response['results'][0]['roof_type']);
+							           check_flag=1;
+								}
+								
+								
+								
+								if(response['results'][0]['roof_shape']=='' || response['results'][0]['roof_shape']==null)
+		                        {
+		                               $("#rs1").hide();
+		                               $("#rs2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#rs1").show();
+		                               $("#rs2").show();
+									   $("#roof_shape1").html(response['results'][0]['roof_shape']);
+							           $("#roof_shape2").html(response['results'][0]['roof_shape']);
+							           check_flag=1;
+								}
+								
+								
+								
+								
+								if(response['results'][0]['roof_frame']=='' || response['results'][0]['roof_frame']==null)
+		                        {
+		                               $("#rf1").hide();
+		                               $("#rf2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#rf1").show();
+		                               $("#rf2").show();
+									   $("#roof_frame1").html(response['results'][0]['roof_frame']);
+							           $("#roof_frame2").html(response['results'][0]['roof_frame']);
+							           check_flag=1;
+								}
+								
+								
+								
+								if(response['results'][0]['roof_material']=='' || response['results'][0]['roof_material']==null)
+		                        {
+		                               $("#rm1").hide();
+		                               $("#rm2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#rm1").show();
+		                               $("#rm2").show();
+									   $("#roof_material1").html(response['results'][0]['roof_material']);
+								       $("#roof_material2").html(response['results'][0]['roof_material']);
+								       check_flag=1;
+								}								
+							
+							
+							
+							
+								if(response['results'][0]['condition']=='' || response['results'][0]['condition']==null)
+		                        {
+		                               $("#rc1").hide();
+		                               $("#rc2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#rc1").show();
+		                               $("#rc2").show();
+									   $("#roof_condition1").html(response['results'][0]['condition']);
+								       $("#roof_condition2").html(response['results'][0]['condition']);
+								       check_flag=1;
+								}								
+							
+							
+						    	if(response['results'][0]['no_of_stories']=='' || response['results'][0]['no_of_stories']==null)
+		                        {
+		                               $("#noos1").hide();
+		                               $("#noos2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#noos1").show();
+		                               $("#noos2").show();
+									   $("#no_of_stories1").html(response['results'][0]['no_of_stories']);
+								       $("#no_of_stories2").html(response['results'][0]['no_of_stories']);
+								       check_flag=1;
+								}	
+
+							
+							
+								if (check_flag==1)
+								 {
+								     $("#check_property1").show();
+								     $("#check_property2").show();
+								     check_flag=0;
+								 }
+								else
+								 {
+								 	 $("#check_property1").hide();
+									 $("#check_property2").hide();
+								 }
+
+								// $("#est_credit_score1").html(response['transaction'][0]['owner_name']);
+								// $("#est_credit_score2").html(response['transaction'][0]['owner_name']);
+		
+								// $("#est_annual_income1").html(response['transaction'][0]['owner_name']);
+								// $("#est_annual_income2").html(response['transaction'][0]['owner_name']);
+		
+								
+		     					// $("#bedroom_type1").html(response['transaction'][0]['owner_name']);
+								// $("#bedroom_type2").html(response['transaction'][0]['owner_name']);
+		
+								// $("#roof_condition1").html(response['transaction'][0]['heat_fuel']);
+								// $("#roof_condition2").html(response['transaction'][0]['heat_fuel']);
+
+                        // transcationid = response['results'][0]['transaction_id'];
+
+									if (response['utility'].length > 0) {
+										var str = ''
+										for ( i = 0; i < response['utility'].length; i++) {
+									
+											str += response['utility'][i]['utility'] + '<br>';
+											$("#utilityspan1").html(str);
+											$("#utilityspan2").html(str);
+									
+											}
+											
+								            check_flag=1;
+										}
+										
+									
+									
+									     
+									if (check_flag==1)
+									 {
+									     $("#check_utility1").show();
+									     $("#check_utility2").show();
+									     check_flag=0;
+									 }
+									else
+									 {
+									 	 $("#check_utility1").hide();
+										 $("#check_utility2").hide();
+									 }
+			                        	
+										
+								 					
+								
+										if (response['zipeverythingelse'].length > 0) {
+											check_flag=1;
+									
+											$("#solar_homes1").html(response['zipeverythingelse'][0]['no_of_solar_homes']);
+											$("#3rd_party1").html(response['zipeverythingelse'][0]['3rd_party_owned_system']);
+											$("#average_system1").html(response['zipeverythingelse'][0]['average_system_size']);
+									
+											$("#solar_homes2").html(response['zipeverythingelse'][0]['no_of_solar_homes']);
+											$("#3rd_party2").html(response['zipeverythingelse'][0]['3rd_party_owned_system']);
+											$("#average_system2").html(response['zipeverythingelse'][0]['average_system_size']);
+										}
+								
+										if (response['topinstaller'].length > 0) {
+											check_flag=1;
+											for ( i = 0; i < response['topinstaller'].length; i++) {
+									
+											$("#installer1" + i).html(response['topinstaller'][i]['installers']);
+											$("#installer2" + i).html(response['topinstaller'][i]['installers']);
+									
+											}
+										}
+										
+										else {
+										for ( i = 0; i < 5; i++) {
+									
+											$("#installer1" + i).html("");
+											$("#installer2" + i).html("");
+									
+											}
+									
+											$("#solar_homes1").html('');
+											$("#3rd_party1").html('');
+											$("#average_system1").html('');
+									
+											$("#solar_homes2").html('');
+											$("#3rd_party2").html('');
+											$("#average_system2").html('');
+										}
+								
+										if (response['toppanelbrands'].length > 0) {
+											
+											check_flag=1;											
+											for ( i = 0; i < response['toppanelbrands'].length; i++) {
+									
+											$("#panel1" + i).html(response['toppanelbrands'][i]['panel_brands']);
+											$("#panel2" + i).html(response['toppanelbrands'][i]['panel_brands']);
+									
+											}
+										} 
+										
+										else {
+										for ( i = 0; i < 5; i++) {
+									
+											$("#panel1" + i).html("");
+											$("#panel2" + i).html("");
+									
+											}
+									
+											$("#solar_homes1").html('');
+											$("#3rd_party1").html('');
+											$("#average_system1").html('');
+									
+											$("#solar_homes2").html('');
+											$("#3rd_party2").html('');
+											$("#average_system2").html('');
+										}
+								
+										if (response['topinverterbrands'].length > 0) {
+									       
+									        check_flag=1;
+											for ( i = 0; i < response['topinverterbrands'].length; i++) {
+									
+											$("#inverter1" + i).html(response['topinverterbrands'][i]['inverter_brands']);
+											$("#inverter2" + i).html(response['topinverterbrands'][i]['inverter_brands']);
+									
+											}
+										} 
+										else {
+											for ( i = 0; i < 5; i++) {
+									
+											$("#inverter1" + i).html("");
+											$("#inverter2" + i).html("");
+									
+											}
+									
+											$("#solar_homes1").html('');
+											$("#3rd_party1").html('');
+											$("#average_system1").html('');
+									
+											$("#solar_homes2").html('');
+											$("#3rd_party2").html('');
+											$("#average_system2").html('');
+										}
+					
+					              	if (check_flag==1)
+									 {
+									     $("#check_market_intelligence1").show();
+									     $("#check_market_intelligence2").show();
+									     check_flag=0;
+									 }
+									else
+									 {
+									 	 $("#check_market_intelligence1").hide();
+										 $("#check_market_intelligence2").hide();
+									 }
+	
+										
+					} 
+					
+				});
+			
+        }
+        
+        
+			function check() {
+				var input = document.getElementById('loc_search').value;
+				//console.log(input)
+				$.ajax({
+					type : "Post",
+					url : "http://maps.google.com/maps/api/geocode/json?sensor=false&address=" + input,
+					dataType : "JSON",
+					async : false,
+					success : function(response) {
+ 
+						var length = response["results"][0]["address_components"].length;
+						 
+ 						formatted_address=response["results"][0]["formatted_address"];
+ 							
+						for (var i = 0; i < length; i++) {
+						
+							var addressType = response["results"][0]["address_components"][i]["types"][0];
+							if (componentForm[addressType]) {
+								if (addressType == 'postal_code') {
+									zipcode = response["results"][0]["address_components"][i]["long_name"];
+
+								}
+
+								if (addressType == 'locality') {
+									citycode = response["results"][0]["address_components"][i]["long_name"];
+
+								}
+
+							}
+						}
+						for (var i = 0; i < length; i++) {
+							var addressType1 = response["results"][0]["address_components"][i]["types"][0];
+							if (componentForm[addressType1]) {
+
+								if (addressType1 == 'country') {
+									componentForm1['country'] = response["results"][0]["address_components"][i]["short_name"];
+
+								}
+								if (addressType1 == 'street_number') {
+									componentForm1['street_number'] = response["results"][0]["address_components"][i]["short_name"];
+
+								}
+								if (addressType1 == 'administrative_area_level_1') {
+									componentForm1['administrative_area_level_1'] = response["results"][0]["address_components"][i]["short_name"];
+
+								}
+								if (addressType1 == 'administrative_area_level_2') {
+									componentForm1['administrative_area_level_2'] = response["results"][0]["address_components"][i]["short_name"];
+
+								}
+								if (addressType1 == 'route') {
+									componentForm1['route'] = response["results"][0]["address_components"][i]["short_name"];
+
+								}
+								if (addressType1 == 'locality') {
+									componentForm1['locality'] = response["results"][0]["address_components"][i]["short_name"];
+
+								}
+								if (addressType1 == 'postal_code') {
+									componentForm1['postal_code'] = response["results"][0]["address_components"][i]["short_name"];
+
+								}
+							}
+						}
+
+						if (componentForm1['postal_code'] != '' && componentForm1['country'] != '' && componentForm1['locality'] != '' && componentForm1['street_number'] != '' && componentForm1['route'] != '' && componentForm1['administrative_area_level_2'] != '' && componentForm1['administrative_area_level_1'] != '') 
+						{
+						   	 
+							flag = 1;
+							$("#search_error").html('');
+							
+							$("#prev_chk").hide();
+							$("#check_owner1").hide();
+							$("#check_owner2").hide();
+							
+							$("#check_property1").hide();
+							$("#check_property2").hide();
+							
+							$("#check_utility1").hide();
+							$("#check_utility2").hide();
+							
+							$("#check_market_intelligence1").hide();					
+							$("#check_market_intelligence2").hide();
+							
+							input1 = formatted_address.split(",");							
+							input1.pop();
+							$("#panel_search_result").html(input1);					   	
+						   
+						    
+						     				
+					    	$.ajax({
+								url : "/homes/addresspresentcheck",
+								type : "POST",
+								dataType : 'JSON',
+								
+								data : {
+									'address' :	formatted_address,						
+								},
+							
+								success : function(response1) {	
+							    
+							        if (response1['data']==0)
+									{
+							    			input1=formatted_address;
+							         		input1 = input1.split(",");							
+											input1.pop();
+
+											$("#address_display_on_popup").html(input1.toString()+" ?");																			
+											$("#myModal").modal();
+							        }
+							            
+							        else
+							         {
+							    
+							         	camerapositionpurchase();
+							         	
+							         }							    
+							    
+							   }
+							 });
+							    					   
+						  
+						} else {
+							flag = 0;
+							
+							$("#search_error").html('That is not a valid street address.');
+						}
+
+					},
+					// latlong = response["results"][0]["geometry"]["location"];        },
+					error : function(error) {
+
+					}
+				});
+
+			}
+
+	
+			function makepurchase() {				
+				
+			    	$('#myModal').modal('hide');				
+				
+					$("#prev_chk").hide();
+					$("#check_owner1").hide();
+					$("#check_owner2").hide();
+					
+					$("#check_property1").hide();
+					$("#check_property2").hide();
+					
+					$("#check_utility1").hide();
+					$("#check_utility2").hide();
+					
+					$("#check_market_intelligence1").hide();					
+					$("#check_market_intelligence2").hide();
+					
+										
+					$('#utilityspan1').html('');
+					$('#utilityspan2').html('');
+
+					$("#owner_name1").html('');
+					$("#owner_name2").html('');
+
+					$("#mailing_address1").html('');
+					$("#mailing_address2").html('');
+
+					$("#owner_occupied1").html('');
+					$("#owner_occupied2").html('');
+					
+					
+					
+					$("#last_sale_date1").html('');
+					$("#last_sale_date2").html('');
+					
+					$("#last_sale_price1").html('');
+					$("#last_sale_price2").html('');		
+					
+					$("#last_sale_price_per_sqrft1").html('');
+					$("#last_sale_price_per_sqrft2").html('');						
+					
+					$("#land_use_code1").html('');
+					$("#land_use_code2").html('');
+					
+					$("#zoning1").html('');
+					$("#zoning2").html('');		
+					
+					$("#residential_per_common_units1").html('');
+					$("#residential_per_common_units2").html('');	
+
+					$("#gross_area1").html('');
+					$("#gross_area2").html('');
+					
+					$("#living_area1").html('');
+					$("#living_area2").html('');		
+					
+					$("#no_of_bedroom1").html('');
+					$("#no_of_bedroom2").html('');	
+
+					$("#no_of_bathroom1").html('');
+					$("#no_of_bathroom1").html('');
+					
+					$("#age_of_home1").html('');
+					$("#age_of_home2").html('');		
+					
+					$("#pool1").html('');
+					$("#pool2").html('');		
+
+					$("#heat_type1").html('');
+					$("#heat_type2").html('');
+
+					$("#heat_fuel1").html('');
+					$("#heat_fuel2").html('');
+
+					$("#roof_type1").html('');
+					$("#roof_type2").html('');
+					
+					$("#roof_shape1").html('');
+					$("#roof_shape2").html('');
+					
+					$("#roof_frame1").html('');
+					$("#roof_frame2").html('');					
+
+					$("#roof_material1").html('');
+					$("#roof_material2").html('');
+
+					$("#roof_condition1").html('');
+					$("#roof_condition2").html('');	
+					
+
+					$("#est_credit_score1").html('');
+					$("#est_credit_score2").html('');
+
+					$("#est_annual_income1").html('');
+					$("#est_annual_income2").html('');
+					
+					
+					cameraposition();
+
+		}
+	
+	
+	
+
+   function setValueNewTranscation(input){
+   	
+   	     
+   	     
+   		for ( i = 0; i < 5; i++) {
+	
+				$("#installer1" + i).html("");
+				$("#installer2" + i).html("");
+			
+				$("#panel1" + i).html("");
+				$("#panel2" + i).html("");
+				
+				$("#inverter1" + i).html("");
+				$("#inverter2" + i).html("");
+									
+		}
+   	
+   	    $("#panel_search_result").html(input);
+   	
+   		$.ajax({
+					url : "/homes/alldatafetchonmarkernewtrans",
+					type : "POST",
+					dataType : 'JSON',
+					data : {
+						'address' :input,
+						'zip' : zipcode
+						},
+					success : function(response) {
+					
+					  $("#prev_chk").show();
+					  $("#prev_checks").html(response['transaction'][0]['prev_check']);	
+
+                      var check_flag=0;
+                
+                      if (response['transaction'].length > 0){
+                    
+		                    	if(response['transaction'][0]['owner_name']=='' || response['transaction'][0]['owner_name']==null )
+		                        {
+		                               $("#own1").hide();
+		                               $("#own2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#own1").show();
+		                               $("#own2").show();
+									   $("#owner_name1").html(response['transaction'][0]['owner_name']);
+									   $("#owner_name2").html(response['transaction'][0]['owner_name']);
+									   check_flag=1;
+								}
+		     
+		                                         
+		                        
+		                    	if(response['transaction'][0]['mailing_address']=='' || response['transaction'][0]['mailing_address']==null)
+		                        {
+		                               $("#ma1").hide();
+		                               $("#ma2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#ma1").show();
+		                               $("#ma2").show();
+									   $("#mailing_address1").html(response['transaction'][0]['mailing_address']);
+							           $("#mailing_address2").html(response['transaction'][0]['mailing_address']);
+							           check_flag=1;
+								}
+		     
+		                        
+		                        
+		                        if(response['transaction'][0]['owner_occupied_indicator']=='' || response['transaction'][0]['owner_occupied_indicator']==null)
+		                        {
+		                               $("#oo1").hide();
+		                               $("#oc2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#oo1").show();
+		                               $("#oo2").show();
+		                               
+		                               if (response['transaction'][0]['owner_occupied_indicator']==1)
+		                               {
+												   $("#owner_occupied1").html('Yes');
+												   $("#owner_occupied2").html('Yes');
+									   }
+									   else
+									   {
+							        			   $("#owner_occupied1").html('No');
+							        			   $("#owner_occupied2").html('No');
+							           }
+							           check_flag=1;
+								}
+								
+							
+								if (check_flag==1)
+								 {
+								     $("#check_owner1").show();
+								     $("#check_owner2").show();
+								     check_flag=0;
+								 }
+								else
+								 {
+								 	 $("#check_owner1").hide();
+									 $("#check_owner2").hide();
+								 }
+							
+							
+	    						if(response['transaction'][0]['last_sale_date']=='' || response['transaction'][0]['last_sale_date']==null)
+		                        {
+		                               $("#lsd1").hide();
+		                               $("#lsd2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#lsd1").show();
+		                               $("#lsd2").show();
+									   $("#last_sale_date1").html(response['transaction'][0]['last_sale_date']);
+							           $("#last_sale_date2").html(response['transaction'][0]['last_sale_date']);
+							           check_flag=1;
+								}
+								
+								
+								
+								
+								
+								if(response['transaction'][0]['last_sale_price']=='' || response['transaction'][0]['last_sale_price']==null)
+		                        {
+		                               $("#lsp1").hide();
+		                               $("#lsp2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#lsp1").show();
+		                               $("#lsp2").show();
+									   $("#last_sale_price1").html(response['transaction'][0]['last_sale_price']);
+							           $("#last_sale_price2").html(response['transaction'][0]['last_sale_price']);
+							           check_flag=1;
+								}
+								
+								
+						
+																
+								if(response['transaction'][0]['last_sale_price_per_sqr_ft']=='' || response['transaction'][0]['last_sale_price_per_sqr_ft']==null)
+		                        {
+		                               $("#lspps1").hide();
+		                               $("#lspps2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#lspps1").show();
+		                               $("#lspps2").show();
+									   $("#last_sale_price_per_sqrft1").html(response['transaction'][0]['last_sale_price_per_sqr_ft']);
+							           $("#last_sale_price_per_sqrft2").html(response['transaction'][0]['last_sale_price_per_sqr_ft']);
+							           check_flag=1;
+								}
+								
+													
+								if(response['transaction'][0]['land_use_code']=='' || response['transaction'][0]['land_use_code']==null)
+		                        {
+		                               $("#luc1").hide();
+		                               $("#luc2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#luc1").show();
+		                               $("#luc2").show();
+									   $("#land_use_code1").html(response['transaction'][0]['land_use_code']);
+							           $("#land_use_code2").html(response['transaction'][0]['land_use_code']);
+							           check_flag=1;
+								}
+								
+						
+						
+						
+						       													
+								if(response['transaction'][0]['zoning']=='' || response['transaction'][0]['zoning']==null)
+		                        {
+		                               $("#z1").hide();
+		                               $("#z2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#z1").show();
+		                               $("#z2").show();
+									   $("#zoning1").html(response['transaction'][0]['zoning']);
+							           $("#zoning2").html(response['transaction'][0]['zoning']);
+							           check_flag=1;
+								}
+								
+								
+								
+														       													
+								if(response['transaction'][0]['no_of_residential_per_common_units']=='' || response['transaction'][0]['no_of_residential_per_common_units']==null)
+		                        {
+		                               $("#rpcu1").hide();
+		                               $("#rpcu2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#rpcu1").show();
+		                               $("#rpcu2").show();
+									   $("#residential_per_common_units1").html(response['transaction'][0]['no_of_residential_per_common_units']);
+							           $("#residential_per_common_units2").html(response['transaction'][0]['no_of_residential_per_common_units']);
+							           check_flag=1;
+								}
+								
+								
+					
+								if(response['transaction'][0]['gross_area']=='' || response['transaction'][0]['gross_area']==null)
+		                        {
+		                               $("#ga1").hide();
+		                               $("#ga2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#ga1").show();
+		                               $("#ga2").show();
+									   $("#gross_area1").html(response['transaction'][0]['gross_area']+'sqft');
+							           $("#gross_area2").html(response['transaction'][0]['gross_area']+'sqft');
+							           check_flag=1;
+								}
+						
+						        
+						  
+						  		if(response['transaction'][0]['living_area']=='' || response['transaction'][0]['living_area']==null)
+		                        {
+		                               $("#la1").hide();
+		                               $("#la2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#la1").show();
+		                               $("#la2").show();
+									   $("#living_area1").html(response['transaction'][0]['living_area']+'sqft');
+							           $("#living_area2").html(response['transaction'][0]['living_area']+'sqft');
+							           check_flag=1;
+								}
+						
+						       
+						       
+									
+								if(response['transaction'][0]['no_of_bedrooms']=='' || response['transaction'][0]['no_of_bedrooms']==null)
+		                        {
+		                               $("#nobed1").hide();
+		                               $("#nobed2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#nobed1").show();
+		                               $("#nobed2").show();
+									   $("#no_of_bedroom1").html(response['transaction'][0]['no_of_bedrooms']);
+								       $("#no_of_bedroom2").html(response['transaction'][0]['no_of_bedrooms']);
+								       check_flag=1;
+								}
+								
+								
+								
+																	
+								if(response['transaction'][0]['no_of_bathrooms']=='' || response['transaction'][0]['no_of_bathrooms']==null)
+		                        {
+		                               $("#nobath1").hide();
+		                               $("#nobath2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#nobath1").show();
+		                               $("#nobath2").show();
+									   $("#no_of_bathroom1").html(response['transaction'][0]['no_of_bathrooms']);
+								       $("#no_of_bathroom2").html(response['transaction'][0]['no_of_bathrooms']);
+								       check_flag=1;
+								}
+								
+																
+						
+								if(response['age']=='' || response['age']==null)
+		                        {
+		                        	//    alert(response['age']);
+		                               $("#aoh1").hide();
+		                               $("#aoh2").hide();
+		                        }
+		                        
+		                        else{
+		                        	// alert(response['age']);
+		                        	   $("#aoh1").show();
+		                               $("#aoh2").show();
+									   $("#age_of_home1").html(response['age']);
+							           $("#age_of_home2").html(response['age']);
+							           check_flag=1;
+								}
+								
+		
+		
+								
+								if(response['transaction'][0]['pool']=='' || response['transaction'][0]['pool']==null)
+		                        {
+		                               $("#po1").hide();
+		                               $("#po2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#po1").show();
+		                               $("#po2").show();
+		                               
+		                               if (response['transaction'][0]['pool']==1)
+		                               {
+												   $("#pool1").html('Yes');
+												   $("#pool2").html('Yes');
+									    }
+									   else
+									   {
+							        			    $("#pool1").html('No');
+							        			    $("#pool2").html('No');
+							           }
+							           check_flag=1;
+								}
+								
+								
+											
+								if(response['transaction'][0]['heat_type']=='' || response['transaction'][0]['heat_type']==null)
+		                        {
+		                               $("#ht1").hide();
+		                               $("#ht2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#ht1").show();
+		                               $("#ht2").show();
+									   $("#heat_type1").html(response['transaction'][0]['heat_type']);
+							           $("#heat_type2").html(response['transaction'][0]['heat_type']);
+							           check_flag=1;
+								}
+								
+								
+								if(response['transaction'][0]['heat_fuel']=='' || response['transaction'][0]['heat_fuel']==null)
+		                        {
+		                               $("#hf1").hide();
+		                               $("#hf2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#hf1").show();
+		                               $("#hf2").show();
+									   $("#heat_fuel1").html(response['transaction'][0]['heat_fuel']);
+								       $("#heat_fuel2").html(response['transaction'][0]['heat_fuel']);
+								       check_flag=1;
+								}
+								
+								
+								if(response['transaction'][0]['roof_type']=='' || response['transaction'][0]['roof_type']==null)
+		                        {
+		                               $("#rt1").hide();
+		                               $("#rt2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#rt1").show();
+		                               $("#rt2").show();
+									   $("#roof_type1").html(response['transaction'][0]['roof_type']);
+							           $("#roof_type2").html(response['transaction'][0]['roof_type']);
+							           check_flag=1;
+								}
+								
+								
+								
+								if(response['transaction'][0]['roof_shape']=='' || response['transaction'][0]['roof_shape']==null)
+		                        {
+		                               $("#rs1").hide();
+		                               $("#rs2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#rs1").show();
+		                               $("#rs2").show();
+									   $("#roof_shape1").html(response['transaction'][0]['roof_shape']);
+							           $("#roof_shape2").html(response['transaction'][0]['roof_shape']);
+							           check_flag=1;
+								}
+								
+								
+								
+								
+								if(response['transaction'][0]['roof_frame']=='' || response['transaction'][0]['roof_frame']==null)
+		                        {
+		                               $("#rf1").hide();
+		                               $("#rf2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#rf1").show();
+		                               $("#rf2").show();
+									   $("#roof_frame1").html(response['transaction'][0]['roof_frame']);
+							           $("#roof_frame2").html(response['transaction'][0]['roof_frame']);
+							           check_flag=1;
+								}
+								
+								
+								
+								if(response['transaction'][0]['roof_material']=='' || response['transaction'][0]['roof_material']==null)
+		                        {
+		                               $("#rm1").hide();
+		                               $("#rm2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#rm1").show();
+		                               $("#rm2").show();
+									   $("#roof_material1").html(response['transaction'][0]['roof_material']);
+								       $("#roof_material2").html(response['transaction'][0]['roof_material']);
+								       check_flag=1;
+								}								
+							
+							
+							
+							
+								if(response['transaction'][0]['condition']=='' || response['transaction'][0]['condition']==null)
+		                        {
+		                               $("#rc1").hide();
+		                               $("#rc2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#rc1").show();
+		                               $("#rc2").show();
+									   $("#roof_condition1").html(response['transaction'][0]['condition']);
+								       $("#roof_condition2").html(response['transaction'][0]['condition']);
+								       check_flag=1;
+								}								
+							
+							
+							
+							
+								if(response['transaction'][0]['no_of_stories']=='' || response['transaction'][0]['no_of_stories']==null)
+		                        {
+		                               $("#noos1").hide();
+		                               $("#noos2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#noos1").show();
+		                               $("#noos2").show();
+									   $("#no_of_stories1").html(response['transaction'][0]['no_of_stories']);
+								       $("#no_of_stories2").html(response['transaction'][0]['no_of_stories']);
+								       check_flag=1;
+								}	
+
+							    
+							
+								if (check_flag==1)
+								 {
+								     $("#check_property1").show();
+								     $("#check_property2").show();
+								     check_flag=0;
+								 }
+								else
+								 {
+								 	 $("#check_property1").hide();
+									 $("#check_property2").hide();
+								 }
+
+							
+							
+								// $("#est_credit_score1").html(response['transaction'][0]['owner_name']);
+								// $("#est_credit_score2").html(response['transaction'][0]['owner_name']);
+		
+								// $("#est_annual_income1").html(response['transaction'][0]['owner_name']);
+								// $("#est_annual_income2").html(response['transaction'][0]['owner_name']);
+		
+								
+		     					// $("#bedroom_type1").html(response['transaction'][0]['owner_name']);
+								// $("#bedroom_type2").html(response['transaction'][0]['owner_name']);
+		
+								// $("#roof_condition1").html(response['transaction'][0]['heat_fuel']);
+								// $("#roof_condition2").html(response['transaction'][0]['heat_fuel']);
+                     }
+
+
+
+									if (response['utility'].length > 0) {
+										var str = ''
+										for ( i = 0; i < response['utility'].length; i++) {
+									
+											str += response['utility'][i]['utility'] + '<br>';
+											$("#utilityspan1").html(str);
+											$("#utilityspan2").html(str);
+									
+											}
+											
+								            check_flag=1;
+										}
+										
+									
+									
+									     
+									if (check_flag==1)
+									 {
+									     $("#check_utility1").show();
+									     $("#check_utility2").show();
+									     check_flag=0;
+									 }
+									else
+									 {
+									 	 $("#check_utility1").hide();
+										 $("#check_utility2").hide();
+									 }
+			                        	
+										
+								 					
+								
+										if (response['zipeverythingelse'].length > 0) {
+											check_flag=1;
+									
+											$("#solar_homes1").html(response['zipeverythingelse'][0]['no_of_solar_homes']);
+											$("#3rd_party1").html(response['zipeverythingelse'][0]['3rd_party_owned_system']);
+											$("#average_system1").html(response['zipeverythingelse'][0]['average_system_size']);
+									
+											$("#solar_homes2").html(response['zipeverythingelse'][0]['no_of_solar_homes']);
+											$("#3rd_party2").html(response['zipeverythingelse'][0]['3rd_party_owned_system']);
+											$("#average_system2").html(response['zipeverythingelse'][0]['average_system_size']);
+										}
+								
+										if (response['topinstaller'].length > 0) {
+											check_flag=1;
+											for ( i = 0; i < response['topinstaller'].length; i++) {
+									
+											$("#installer1" + i).html(response['topinstaller'][i]['installers']);
+											$("#installer2" + i).html(response['topinstaller'][i]['installers']);
+									
+											}
+										}
+										
+										else {
+										for ( i = 0; i < 5; i++) {
+									
+											$("#installer1" + i).html("");
+											$("#installer2" + i).html("");
+									
+											}
+									
+											$("#solar_homes1").html('');
+											$("#3rd_party1").html('');
+											$("#average_system1").html('');
+									
+											$("#solar_homes2").html('');
+											$("#3rd_party2").html('');
+											$("#average_system2").html('');
+										}
+								
+										if (response['toppanelbrands'].length > 0) {
+											
+											check_flag=1;											
+											for ( i = 0; i < response['toppanelbrands'].length; i++) {
+									
+											$("#panel1" + i).html(response['toppanelbrands'][i]['panel_brands']);
+											$("#panel2" + i).html(response['toppanelbrands'][i]['panel_brands']);
+									
+											}
+										} 
+										
+										else {
+										for ( i = 0; i < 5; i++) {
+									
+											$("#panel1" + i).html("");
+											$("#panel2" + i).html("");
+									
+											}
+									
+											$("#solar_homes1").html('');
+											$("#3rd_party1").html('');
+											$("#average_system1").html('');
+									
+											$("#solar_homes2").html('');
+											$("#3rd_party2").html('');
+											$("#average_system2").html('');
+										}
+								
+										if (response['topinverterbrands'].length > 0) {
+									       
+									        check_flag=1;
+											for ( i = 0; i < response['topinverterbrands'].length; i++) {
+									
+											$("#inverter1" + i).html(response['topinverterbrands'][i]['inverter_brands']);
+											$("#inverter2" + i).html(response['topinverterbrands'][i]['inverter_brands']);
+									
+											}
+										} 
+										else {
+											for ( i = 0; i < 5; i++) {
+									
+											$("#inverter1" + i).html("");
+											$("#inverter2" + i).html("");
+									
+											}
+									
+											$("#solar_homes1").html('');
+											$("#3rd_party1").html('');
+											$("#average_system1").html('');
+									
+											$("#solar_homes2").html('');
+											$("#3rd_party2").html('');
+											$("#average_system2").html('');
+										}
+					
+					              	if (check_flag==1)
+									 {
+									     $("#check_market_intelligence1").show();
+									     $("#check_market_intelligence2").show();
+									     check_flag=0;
+									 }
+									else
+									 {
+									 	 $("#check_market_intelligence1").hide();
+										 $("#check_market_intelligence2").hide();
+									 }
+	
+
+					}
+				});       	
+       	
+   	
+   }	
+	
+	
+   function setValue(x)
+       {
+       	
+       	
+   		for ( i = 0; i < 5; i++) {
+	
+				$("#installer1" + i).html("");
+				$("#installer2" + i).html("");
+			
+				$("#panel1" + i).html("");
+				$("#panel2" + i).html("");
+				
+				$("#inverter1" + i).html("");
+				$("#inverter2" + i).html("");
+									
+		}
+       	
+       	$.ajax({
+					url : "/homes/alldatafetchonmarkerclick",
+					type : "POST",
+					dataType : 'JSON',
+					async:false,
+					data : {
+						'tranc' :x,
+						'zip' : zipcode
+						},
+					success : function(response) {
+					
+					  var check_flag=0;
+					  $("#prev_chk").show();
+					  $("#prev_checks").html(response['transaction'][0]['prev_check']);
+
+                      if (response['transaction'].length > 0){
+                      
+                              
+                    
+		                    	if(response['transaction'][0]['owner_name']=='' || response['transaction'][0]['owner_name']==null )
+		                        {
+		                               $("#own1").hide();
+		                               $("#own2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#own1").show();
+		                               $("#own2").show();
+									   $("#owner_name1").html(response['transaction'][0]['owner_name']);
+									   $("#owner_name2").html(response['transaction'][0]['owner_name']);
+									   check_flag=1;
+								}
+		     
+		                                         
+		                        
+		                    	if(response['transaction'][0]['mailing_address']=='' || response['transaction'][0]['mailing_address']==null)
+		                        {
+		                               $("#ma1").hide();
+		                               $("#ma2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#ma1").show();
+		                               $("#ma2").show();
+									   $("#mailing_address1").html(response['transaction'][0]['mailing_address']);
+							           $("#mailing_address2").html(response['transaction'][0]['mailing_address']);
+							           check_flag=1;
+								}
+		     
+		                        
+		                        
+		                        if(response['transaction'][0]['owner_occupied_indicator']=='' || response['transaction'][0]['owner_occupied_indicator']==null)
+		                        {
+		                               $("#oo1").hide();
+		                               $("#oc2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#oo1").show();
+		                               $("#oo2").show();
+		                               
+		                               if (response['transaction'][0]['owner_occupied_indicator']==1)
+		                               {
+												   $("#owner_occupied1").html('Yes');
+												   $("#owner_occupied2").html('Yes');
+									   }
+									   else
+									   {
+							        			   $("#owner_occupied1").html('No');
+							        			   $("#owner_occupied2").html('No');
+							           }
+							           check_flag=1;
+								}
+								
+							
+								if (check_flag==1)
+								 {
+								     $("#check_owner1").show();
+								     $("#check_owner2").show();
+								     check_flag=0;
+								 }
+								else
+								 {
+								 	 $("#check_owner1").hide();
+									 $("#check_owner2").hide();
+								 }
+							
+							
+	    						if(response['transaction'][0]['last_sale_date']=='' || response['transaction'][0]['last_sale_date']==null)
+		                        {
+		                               $("#lsd1").hide();
+		                               $("#lsd2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#lsd1").show();
+		                               $("#lsd2").show();
+									   $("#last_sale_date1").html(response['transaction'][0]['last_sale_date']);
+							           $("#last_sale_date2").html(response['transaction'][0]['last_sale_date']);
+							           check_flag=1;
+								}
+								
+								
+								
+								
+								
+								if(response['transaction'][0]['last_sale_price']=='' || response['transaction'][0]['last_sale_price']==null)
+		                        {
+		                               $("#lsp1").hide();
+		                               $("#lsp2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#lsp1").show();
+		                               $("#lsp2").show();
+									   $("#last_sale_price1").html(response['transaction'][0]['last_sale_price']);
+							           $("#last_sale_price2").html(response['transaction'][0]['last_sale_price']);
+							           check_flag=1;
+								}
+								
+								
+						
+																
+								if(response['transaction'][0]['last_sale_price_per_sqr_ft']=='' || response['transaction'][0]['last_sale_price_per_sqr_ft']==null)
+		                        {
+		                               $("#lspps1").hide();
+		                               $("#lspps2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#lspps1").show();
+		                               $("#lspps2").show();
+									   $("#last_sale_price_per_sqrft1").html(response['transaction'][0]['last_sale_price_per_sqr_ft']);
+							           $("#last_sale_price_per_sqrft2").html(response['transaction'][0]['last_sale_price_per_sqr_ft']);
+							           check_flag=1;
+								}
+								
+													
+								if(response['transaction'][0]['land_use_code']=='' || response['transaction'][0]['land_use_code']==null)
+		                        {
+		                               $("#luc1").hide();
+		                               $("#luc2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#luc1").show();
+		                               $("#luc2").show();
+									   $("#land_use_code1").html(response['transaction'][0]['land_use_code']);
+							           $("#land_use_code2").html(response['transaction'][0]['land_use_code']);
+							           check_flag=1;
+								}
+								
+						
+						
+						
+						       													
+								if(response['transaction'][0]['zoning']=='' || response['transaction'][0]['zoning']==null)
+		                        {
+		                               $("#z1").hide();
+		                               $("#z2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#z1").show();
+		                               $("#z2").show();
+									   $("#zoning1").html(response['transaction'][0]['zoning']);
+							           $("#zoning2").html(response['transaction'][0]['zoning']);
+							           check_flag=1;
+								}
+								
+								
+								
+														       													
+								if(response['transaction'][0]['no_of_residential_per_common_units']=='' || response['transaction'][0]['no_of_residential_per_common_units']==null)
+		                        {
+		                               $("#rpcu1").hide();
+		                               $("#rpcu2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#rpcu1").show();
+		                               $("#rpcu2").show();
+									   $("#residential_per_common_units1").html(response['transaction'][0]['no_of_residential_per_common_units']);
+							           $("#residential_per_common_units2").html(response['transaction'][0]['no_of_residential_per_common_units']);
+							           check_flag=1;
+								}
+								
+								
+					
+								if(response['transaction'][0]['gross_area']=='' || response['transaction'][0]['gross_area']==null)
+		                        {
+		                               $("#ga1").hide();
+		                               $("#ga2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#ga1").show();
+		                               $("#ga2").show();
+									   $("#gross_area1").html(response['transaction'][0]['gross_area']+'sqft');
+							           $("#gross_area2").html(response['transaction'][0]['gross_area']+'sqft');
+							           check_flag=1;
+								}
+						
+						        
+						  
+						  		if(response['transaction'][0]['living_area']=='' || response['transaction'][0]['living_area']==null)
+		                        {
+		                               $("#la1").hide();
+		                               $("#la2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#la1").show();
+		                               $("#la2").show();
+									   $("#living_area1").html(response['transaction'][0]['living_area']+'sqft');
+							           $("#living_area2").html(response['transaction'][0]['living_area']+'sqft');
+							           check_flag=1;
+								}
+						
+						       
+						       
+									
+								if(response['transaction'][0]['no_of_bedrooms']=='' || response['transaction'][0]['no_of_bedrooms']==null)
+		                        {
+		                               $("#nobed1").hide();
+		                               $("#nobed2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#nobed1").show();
+		                               $("#nobed2").show();
+									   $("#no_of_bedroom1").html(response['transaction'][0]['no_of_bedrooms']);
+								       $("#no_of_bedroom2").html(response['transaction'][0]['no_of_bedrooms']);
+								       check_flag=1;
+								}
+								
+								
+								
+																	
+								if(response['transaction'][0]['no_of_bathrooms']=='' || response['transaction'][0]['no_of_bathrooms']==null)
+		                        {
+		                               $("#nobath1").hide();
+		                               $("#nobath2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#nobath1").show();
+		                               $("#nobath2").show();
+									   $("#no_of_bathroom1").html(response['transaction'][0]['no_of_bathrooms']);
+								       $("#no_of_bathroom2").html(response['transaction'][0]['no_of_bathrooms']);
+								       check_flag=1;
+								}
+								
+																
+						
+								if(response['age']=='' || response['age']==null)
+		                        {
+		                        	//    alert(response['age']);
+		                               $("#aoh1").hide();
+		                               $("#aoh2").hide();
+		                        }
+		                        
+		                        else{
+		                        	// alert(response['age']);
+		                        	   $("#aoh1").show();
+		                               $("#aoh2").show();
+									   $("#age_of_home1").html(response['age']);
+							           $("#age_of_home2").html(response['age']);
+							           check_flag=1;
+								}
+								
+		
+		
+								
+								if(response['transaction'][0]['pool']=='' || response['transaction'][0]['pool']==null)
+		                        {
+		                               $("#po1").hide();
+		                               $("#po2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#po1").show();
+		                               $("#po2").show();
+		                               
+		                               if (response['transaction'][0]['pool']==1)
+		                               {
+												   $("#pool1").html('Yes');
+												   $("#pool2").html('Yes');
+									    }
+									   else
+									   {
+							        			    $("#pool1").html('No');
+							        			    $("#pool2").html('No');
+							           }
+							           check_flag=1;
+								}
+								
+								
+											
+								if(response['transaction'][0]['heat_type']=='' || response['transaction'][0]['heat_type']==null)
+		                        {
+		                               $("#ht1").hide();
+		                               $("#ht2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#ht1").show();
+		                               $("#ht2").show();
+									   $("#heat_type1").html(response['transaction'][0]['heat_type']);
+							           $("#heat_type2").html(response['transaction'][0]['heat_type']);
+							           check_flag=1;
+								}
+								
+								
+								if(response['transaction'][0]['heat_fuel']=='' || response['transaction'][0]['heat_fuel']==null)
+		                        {
+		                               $("#hf1").hide();
+		                               $("#hf2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#hf1").show();
+		                               $("#hf2").show();
+									   $("#heat_fuel1").html(response['transaction'][0]['heat_fuel']);
+								       $("#heat_fuel2").html(response['transaction'][0]['heat_fuel']);
+								       check_flag=1;
+								}
+								
+								
+								if(response['transaction'][0]['roof_type']=='' || response['transaction'][0]['roof_type']==null)
+		                        {
+		                               $("#rt1").hide();
+		                               $("#rt2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#rt1").show();
+		                               $("#rt2").show();
+									   $("#roof_type1").html(response['transaction'][0]['roof_type']);
+							           $("#roof_type2").html(response['transaction'][0]['roof_type']);
+							           check_flag=1;
+								}
+								
+								
+								
+								if(response['transaction'][0]['roof_shape']=='' || response['transaction'][0]['roof_shape']==null)
+		                        {
+		                               $("#rs1").hide();
+		                               $("#rs2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#rs1").show();
+		                               $("#rs2").show();
+									   $("#roof_shape1").html(response['transaction'][0]['roof_shape']);
+							           $("#roof_shape2").html(response['transaction'][0]['roof_shape']);
+							           check_flag=1;
+								}
+								
+								
+								
+								
+								if(response['transaction'][0]['roof_frame']=='' || response['transaction'][0]['roof_frame']==null)
+		                        {
+		                               $("#rf1").hide();
+		                               $("#rf2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#rf1").show();
+		                               $("#rf2").show();
+									   $("#roof_frame1").html(response['transaction'][0]['roof_frame']);
+							           $("#roof_frame2").html(response['transaction'][0]['roof_frame']);
+							           check_flag=1;
+								}
+								
+								
+								
+								if(response['transaction'][0]['roof_material']=='' || response['transaction'][0]['roof_material']==null)
+		                        {
+		                               $("#rm1").hide();
+		                               $("#rm2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#rm1").show();
+		                               $("#rm2").show();
+									   $("#roof_material1").html(response['transaction'][0]['roof_material']);
+								       $("#roof_material2").html(response['transaction'][0]['roof_material']);
+								       check_flag=1;
+								}								
+							
+							
+							
+							
+								if(response['transaction'][0]['condition']=='' || response['transaction'][0]['condition']==null)
+		                        {
+		                               $("#rc1").hide();
+		                               $("#rc2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#rc1").show();
+		                               $("#rc2").show();
+									   $("#roof_condition1").html(response['transaction'][0]['condition']);
+								       $("#roof_condition2").html(response['transaction'][0]['condition']);
+								       check_flag=1;
+								}								
+							
+							
+							
+								if(response['transaction'][0]['no_of_stories']=='' || response['transaction'][0]['no_of_stories']==null)
+		                        {
+		                               $("#noos1").hide();
+		                               $("#noos2").hide();
+		                        }
+		                        
+		                        else{
+		                        	
+		                        	   $("#noos1").show();
+		                               $("#noos2").show();
+									   $("#no_of_stories1").html(response['transaction'][0]['no_of_stories']);
+								       $("#no_of_stories2").html(response['transaction'][0]['no_of_stories']);
+								       check_flag=1;
+								}	
+								
+							
+							
+								if (check_flag==1)
+								 {
+								     $("#check_property1").show();
+								     $("#check_property2").show();
+								     check_flag=0;
+								 }
+								else
+								 {
+								 	 $("#check_property1").hide();
+									 $("#check_property2").hide();
+								 }
+
+							
+							
+							
+							
+								// $("#est_credit_score1").html(response['transaction'][0]['owner_name']);
+								// $("#est_credit_score2").html(response['transaction'][0]['owner_name']);
+		
+								// $("#est_annual_income1").html(response['transaction'][0]['owner_name']);
+								// $("#est_annual_income2").html(response['transaction'][0]['owner_name']);
+		
+								
+		     					// $("#bedroom_type1").html(response['transaction'][0]['owner_name']);
+								// $("#bedroom_type2").html(response['transaction'][0]['owner_name']);
+		
+								// $("#roof_condition1").html(response['transaction'][0]['heat_fuel']);
+								// $("#roof_condition2").html(response['transaction'][0]['heat_fuel']);
+                     }
+
+
+
+									if (response['utility'].length > 0) {
+										var str = ''
+										for ( i = 0; i < response['utility'].length; i++) {
+									
+											str += response['utility'][i]['utility'] + '<br>';
+											$("#utilityspan1").html(str);
+											$("#utilityspan2").html(str);
+									
+											}
+											
+								            check_flag=1;
+										}
+										
+									
+									
+									     
+									if (check_flag==1)
+									 {
+									     $("#check_utility1").show();
+									     $("#check_utility2").show();
+									     check_flag=0;
+									 }
+									else
+									 {
+									 	 $("#check_utility1").hide();
+										 $("#check_utility2").hide();
+									 }
+			                        	
+										
+								 					
+								
+										if (response['zipeverythingelse'].length > 0) {
+											check_flag=1;
+									
+											$("#solar_homes1").html(response['zipeverythingelse'][0]['no_of_solar_homes']);
+											$("#3rd_party1").html(response['zipeverythingelse'][0]['3rd_party_owned_system']);
+											$("#average_system1").html(response['zipeverythingelse'][0]['average_system_size']);
+									
+											$("#solar_homes2").html(response['zipeverythingelse'][0]['no_of_solar_homes']);
+											$("#3rd_party2").html(response['zipeverythingelse'][0]['3rd_party_owned_system']);
+											$("#average_system2").html(response['zipeverythingelse'][0]['average_system_size']);
+										}
+								
+										if (response['topinstaller'].length > 0) {
+											check_flag=1;
+											for ( i = 0; i < response['topinstaller'].length; i++) {
+									
+											$("#installer1" + i).html(response['topinstaller'][i]['installers']);
+											$("#installer2" + i).html(response['topinstaller'][i]['installers']);
+									
+											}
+										}
+										
+										else {
+										for ( i = 0; i < 5; i++) {
+									
+											$("#installer1" + i).html("");
+											$("#installer2" + i).html("");
+									
+											}
+									
+											$("#solar_homes1").html('');
+											$("#3rd_party1").html('');
+											$("#average_system1").html('');
+									
+											$("#solar_homes2").html('');
+											$("#3rd_party2").html('');
+											$("#average_system2").html('');
+										}
+								
+										if (response['toppanelbrands'].length > 0) {
+											
+											check_flag=1;											
+											for ( i = 0; i < response['toppanelbrands'].length; i++) {
+									
+											$("#panel1" + i).html(response['toppanelbrands'][i]['panel_brands']);
+											$("#panel2" + i).html(response['toppanelbrands'][i]['panel_brands']);
+									
+											}
+										} 
+										
+										else {
+										for ( i = 0; i < 5; i++) {
+									
+											$("#panel1" + i).html("");
+											$("#panel2" + i).html("");
+									
+											}
+									
+											$("#solar_homes1").html('');
+											$("#3rd_party1").html('');
+											$("#average_system1").html('');
+									
+											$("#solar_homes2").html('');
+											$("#3rd_party2").html('');
+											$("#average_system2").html('');
+										}
+								
+										if (response['topinverterbrands'].length > 0) {
+									       
+									        check_flag=1;
+											for ( i = 0; i < response['topinverterbrands'].length; i++) {
+									
+											$("#inverter1" + i).html(response['topinverterbrands'][i]['inverter_brands']);
+											$("#inverter2" + i).html(response['topinverterbrands'][i]['inverter_brands']);
+									
+											}
+										} 
+										else {
+											for ( i = 0; i < 5; i++) {
+									
+											$("#inverter1" + i).html("");
+											$("#inverter2" + i).html("");
+									
+											}
+									
+											$("#solar_homes1").html('');
+											$("#3rd_party1").html('');
+											$("#average_system1").html('');
+									
+											$("#solar_homes2").html('');
+											$("#3rd_party2").html('');
+											$("#average_system2").html('');
+										}
+					
+					              	if (check_flag==1)
+									 {
+									     $("#check_market_intelligence1").show();
+									     $("#check_market_intelligence2").show();
+									     check_flag=0;
+									 }
+									else
+									 {
+									 	 $("#check_market_intelligence1").hide();
+										 $("#check_market_intelligence2").hide();
+									 }
+	
+					}
+				});       	
+       	
+       }     
+	
+	
+
+	function call(x)
+		{
+
+
+         //    alert(addresses[x]);
+				var point2 = new Array;
+					$.ajax({
+							type : "Post",
+							url : "http://maps.googleapis.com/maps/api/geocode/json?address=" + addresses[x] + "&sensor=false",
+							dataType : "JSON",
+					        async: false,
+							success : function(data) {
+					
+							var p = data.results[0].geometry.location
+							var q = p.lat;
+							var r = p.lng;
+							placemark2 = ge.createPlacemark('');
+							var icon = ge.createIcon('');
+							placemark2.setName(data.results[0].formatted_address);
+					
+							//designing of placemark
+							icon.setHref('http://maps.google.com/mapfiles/kml/paddle/red-circle.png');
+							var style = ge.createStyle('');
+							style.getIconStyle().setIcon(icon);
+							style.getIconStyle().setScale(1.0);
+							placemark2.setStyleSelector(style);
+						
+							point2 = ge.createPoint('');
+							point2.setLatitude(q);
+							point2.setLongitude(r);
+							placemark2.setGeometry(point2);
+							ge.getFeatures().appendChild(placemark2);
+					
+							google.earth.addEventListener(placemark2, 'click', function(event) {
+					
+							//alert(transaction[x])  
+							
+																									
+							var length = data.results[0]["address_components"].length;
+					
+							for (var i = 0; i < length; i++)
+								{
+							
+									var addressType = data.results[0]["address_components"][i]["types"][0];
+							
+									if (componentForm[addressType])
+							
+									{
+							
+									if (addressType == 'postal_code')
+							
+									{
+							
+									zipcode = data.results[0]["address_components"][i]["long_name"];
+																		
+							
+									}
+							
+									if (addressType == 'locality')
+							
+									{
+							
+									citycode = data.results[0]["address_components"][i]["long_name"];
+							
+									}
+					       
+					    		}
+					    		
+					    	
+					
+							}
+							
+								$("#panel_search_result").html(data.results[0].formatted_address);
+					    		setValue(transaction[x]);
+					
+							// Prevent default balloon from popping up for marker placemarks
+					
+							event.preventDefault();
+					
+							});
+					
+							},
+							
+							error : function(error) {
+					
+							}
+					});
+     }
+			
+
+
+			function others() {
+				
+	            addresses =<%= raw @address %>
+	            console.log(addresses);
+                transaction =<%= raw @transaction %>
+              
+				
+				for (var x = 0; x < addresses.length; x++) {
+					
+					call(x);
+				
+				 }
+				
+				if (addresses.length >0)
+				
+				   {
+				 
+				   	
+				   	<% if  session[:last_viewed_address] %>
+				   	
+				   
+				     camerapositionfirsttym('<%= session[:last_viewed_address] %>');
+				   <% else %>
+				    camerapositionfirsttym(addresses[0]);
+				   <% end %> 
+				   
+				}
+           }
+	
+			function failureCallback(errorCode) {
+
+			}
+
+		
+	  function initCallback(instance) {
+
+				autocomplete = new google.maps.places.Autocomplete(/** @type {HTMLInputElement} */(document.getElementById('loc_search')), {
+					types : ['geocode']
+				});
+				
+				geocoder = new google.maps.Geocoder();
+
+				ge = instance;
+			ge.getWindow().setVisibility(true);
+
+				others();
+
+			
+			}
+
+		</script>
+
+          
+  </head>
+  <body  onload="init()">
+    
+    <div class="container" id="menu_navigation">
+      <div id="bgnav" class="navbar navbar-fixed-top navbar-inverse">
+        
+        <div class="navbar-header" id="navigation">
+          
+          <button id="btn_collapse" type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">
+              Toggle navigation
+            </span>
+            <span class="icon-bar">
+            </span>
+            <span class="icon-bar">
+            </span>
+            <span class="icon-bar">
+            </span>
+          </button>
+          
+          <div id="nav_search">
+            <div id="logo_img">
+              <a class="navlink" style="color: white;" href='/homes/viewmap'>
+                <img class="brand" src="/assets/wattsun_logo.png" width="100%" alt="wattsun">
+              </a>
+            </div>
+            <div id="search_bar">
+              <input id="loc_search" class="form-control" type="text" autocomplete="on" autofocus="autofocus" jstcache="0" placeholder="Enter a location" >
+              <div id="search_error" style="font-family:'latoreg';padding-top:2px;color:#fff" >
+               
+              </div>
+            </div>
+            <div style="clear:both">
+            </div>           
+            
+          </div>
+          
+          
+          
+          
+          <div class="collapse navbar-collapse no-transition"  id="pull_right" >
+            <ul class="nav navbar-nav">
+              
+              <li id="else" class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  What else does WattSun do? 
+                  <b style="color:#fff" class="caret">
+                  </b>
+                </a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a href="#">
+                      Instant Target Map
+                      <br />
+                      Coming soon!
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      Instant 3D Home
+                      <br />
+                      Coming soon!
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li id="faq">
+                <a class="navlink" href="/homes/faq">
+                  FAQs
+                </a>
+              </li>
+              
+              <li id="setn" class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  Settings
+                  <b style="color:#fff" class="caret">
+                  </b>
+                </a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a href="/homes/userprofile">
+                      Profile
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/homes/userpayment">
+                      Payment
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/homes/purchaseitq">
+                      Purchases
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/homes/userproblem">
+                      Problem?
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <form action="../homes/logout" method="post">
+                  <input id="login" class="form-control" type="submit" value="Logout"/>
+                  
+                </form>
+              </li>
+              
+            </ul>
+            
+          </div>
+          <!-- /.nav-collapse -->
+          <div style="clear:both">
+          </div>
+        </div>
+        <!-- /.nav-collapse -->
+        
+        
+        <div style="clear:both">
+        </div>
+      </div>
+    </div>
+    <!--End .container-->
+    
+      
+    	<div  class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+	    	<div class="modal-dialog">
+				<div class="modal-content" style="">
+					<div class="modal-header" style="background-color:#fff; height: 150px;border-radius:4px;border-bottom:0px;color:#000;font-size:20px;">
+						<h4 class="modal-title" style="text-align: center;">Qualify</h4>
+						<h4 id="address_display_on_popup" class="modal-title" style="text-align: center;"></h4>
+  						<div style="width:230px;margin:0 auto;height:39px;">
+						<input class="w-button address-button apply-button btn btn-primary btn-sm" type="button" style="float: left; display: inline;color: white;width: 105px;height: 39px;font-size: 18px;background: #5cb85c;border: 1px solid #999;" onclick="makepurchase()" value="Qualify" >
+						</input>
+						<input type="submit" class="w-button address-button apply-button btn btn-primary btn-sm" data-dismiss="modal" style=" float:left; margin-left: 20px; display: inline;width: 105px;height: 39px;font-size: 18px;background: #5cb85c;border: 1px solid #999;" value="Cancel" onclick="clearbox()">
+						</input>
+                    </div>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+
+    
+    
+ 
+	<div id="abc" style="position: fixed;width: 100%;">
+			<div id='map-canvas'></div>
+	</div>
+		
+
+
+    <div id="panel_container" style="position: relative;">
+      <div id="panel_container_content">
+        
+        <div id="panel_search_result">
+         
+        </div>
+        
+        
+        <div id="panel_menu">
+          <div id="panel_menu_show">
+            SHOW
+          </div>
+          <div id="panel_menu_content">
+            <ul class="nav nav-pills">
+              
+              <li class="active" id="everything">
+                <a href="#home" data-toggle="tab">
+                  Everything
+                </a>
+              </li>
+              <li id="check_owner2" style="display: none;">
+                <a href="#owner" data-toggle="tab">
+                  Owner
+                </a>
+              </li>
+              
+              <li id="check_property2" style="display: none;">
+                <a href="#property" data-toggle="tab">
+                  Property
+                </a>
+              </li>
+              
+              <li id="check_utility2" style="display: none;">
+                <a href="#utility" data-toggle="tab" >
+                  Utility
+                </a>
+              </li>
+              
+              <li id="check_market_intelligence2" style="display: none;">
+                <a href="#mar_int" data-toggle="tab">
+                  Market Intelligence
+                </a>
+              </li>
+              <!-- 
+              <li id="check_other">
+                <a href="#other" data-toggle="tab">
+                  Other
+                </a>
+              </li> -->
+              <li id="check_D_home">
+                <a href="#dhome" data-toggle="tab">
+                  3D Home
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div style="clear:both">
+          </div>
+        </div>
+        
+        <div id="panel_table_content">         
+          <!-- Tab panes -->         
+          
+          <div class="tab-content">               
+            
+            <div class="tab-pane active" id="home">
+              <div class="table-responsive" id="prev_chk" style="overflow-x: hidden; display:none;">
+                <table class="table">
+                  <tr>
+                    <td class="left_data">
+                      <div>
+                        <span data-toggle="tooltip" data-original-title="owner_text" class="tool_tips green-tooltip">
+                          PREVIOUS CHECKS
+                        </span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id="prev_checks">
+                        
+                      </span>
+                    </td>
+                  </tr>
+                </table>
+                
+               <br>  
+               <hr class="style-one" /> 
+              </div>
+              
+              
+              <!--end previous checks-->
+              
+            
+              
+              <div class="table-responsive"  id="check_owner1" style="display: none;">
+                <table class="table">
+							                  <caption class="capt">
+							                    OWNER
+							                  </caption>
+							                  
+												<tr id="own1" style="display: none;">
+												<td><div><span data-toggle="tooltip" data-original-title="The full name of the subject property owner." class="tool_tips">Name of Owner<span></div></td><td><span id='owner_name1'></span></td>
+													
+												</tr>
+												<tr id="ma1" style="display: none;">
+													<td><div><span data-toggle="tooltip" data-original-title="Mailing address of subject property owner." class="tool_tips">Mailing Address<span></div></td><td><span id='mailing_address1'></span></td>
+													</tr>
+											
+												<tr id="oo1" style="display: none;">
+													<td><div><span data-toggle="tooltip" data-original-title="Identifies if the subject property is owner occupied: Y/N." class="tool_tips">Owner Occupied?<span></div></td><td><span id='owner_occupied1'></span></td>
+												</tr>
+
+																				
+												<tr id="ecs1" style="display: none;" >
+													<td><div><span data-toggle="tooltip" data-original-title="owner_text" class="tool_tips">Estimated Credit Score<span></div></td><td><span id='est_credit_score1'></span></td>
+												</tr>
+												
+												<tr id="eai1" style="display: none;">
+													<td><div><span data-toggle="tooltip" data-original-title="owner_text" class="tool_tips">Estimated Annual Income<span></div></td><td><span id='est_annual_income1'></span></td>
+												</tr>
+                  
+                </table>
+                
+               <br>  
+               <hr class="style-one" /> 
+              </div>
+              
+              <!--end owner-->
+                 
+              <div class="table-responsive" id="check_property1" style="display: none;">
+                <table class="table">
+							                  <caption class="capt">
+							                    PROPERTY
+							                  </caption>
+							                  
+												<tr id="lsd1" style="display: none;">
+													<td><div><span data-toggle="tooltip" data-original-title="Date of most recent subject property sale." class="tool_tips">Last Sale Date<span></div></td><td><span id='last_sale_date1'></span></td>
+												</tr>
+
+												<tr id="lsp1" style="display: none;">
+													<td><div><span data-toggle="tooltip" data-original-title="Price of the sale as depicted on the recorded sales transaction." class="tool_tips">Last Sale Price<span></div></td><td><span id='last_sale_price1'></span></td>
+												</tr>
+
+												<tr id="lspps1" style="display: none;">
+													<td><div><span data-toggle="tooltip" data-original-title="Sale price of the property in terms of dollar amount per square foot of living/building area (lot area if no building is present)." class="tool_tips">Last Sale Price/sqft<span>
+																											</div></td><td><span id='last_sale_price_per_sqrft1'></span></td>
+												</tr>
+
+												<tr id="luc1" style="display: none;">
+													<td><div><span data-toggle="tooltip" data-original-title="Property Type. A description of the subject site land use." class="tool_tips">Land Use Code<span></div></td><td><span id='land_use_code1'></span></td>
+												</tr>
+
+												<tr id="z1" style="display: none;">
+													<td><div><span data-toggle="tooltip" data-original-title="The zoning classification of the subject property." class="tool_tips">Zoning<span></div></td><td><span id='zoning1'></span></td>
+												</tr>
+
+												<tr id="rpcu1" style="display: none;">
+													<td><div><span data-toggle="tooltip" data-original-title="Number of Residential, Apartment or Business Units." class="tool_tips">Residential/Common Units<span></div></td><td><span id='residential_per_common_units1'></span></td>
+												</tr>
+
+												<tr id="ga1" style="display: none;">
+													<td><div><span data-toggle="tooltip" data-original-title="Total living area square footage including unfinished area." class="tool_tips">Gross Area<span></div></td><td><span id='gross_area1'></span></td>
+												</tr>
+
+												<tr id="la1" style="display: none;">
+													<td><div><span data-toggle="tooltip" data-original-title="Total living area square footage of the property." class="tool_tips">Living Area<span></div></td><td><span id='living_area1'></span></td>
+												</tr>
+
+												<tr id="nobed1" style="display: none;">
+													<td><div><span data-toggle="tooltip" data-original-title="Total number of bedroom contained in the subject property." class="tool_tips">No. of Bedrooms<span></div></td><td><span id='no_of_bedroom1'></span></td>
+												</tr>
+
+												<tr id="nobath1" style="display: none;">
+													<td><div><span data-toggle="tooltip" data-original-title="Total number of baths on the subject property regardless of grade." class="tool_tips">No. of Bathrooms<span></div></td><td><span id='no_of_bathroom1'></span></td>
+												</tr>
+					
+												<tr id="aoh1" style="display: none;">
+													<td><div><span data-toggle="tooltip" data-original-title="Subject property year built - construction year of the original building." class="tool_tips">Age of Home<span></div></td><td><span id='age_of_home1'></span></td>
+												</tr>
+													
+												<tr id="po1" style="display: none;">
+													<td><div><span data-toggle="tooltip" data-original-title="Identifies the existence of a pool with the subject property - Y or N indicator." class="tool_tips">Pool?<span></div></td><td><span id='pool1'></span></td>
+												</tr>
+
+												<tr id="ht1" style="display: none;">
+													<td><div><span data-toggle="tooltip" data-original-title="Type or method of heating (e.g., Hot Water, Heat Pump, Baseboard,Radiant)." class="tool_tips">Heat Type<span></div></td><td><span id='heat_type1'></span></td>
+												</tr>
+												<tr id="hf1" style="display: none;">
+													<td><div><span data-toggle="tooltip" data-original-title="Supplying unit with energy (e.g. gas, hot air, electric)." class="tool_tips">Heat Fuel<span></div></td><td><span id='heat_fuel1'></span></td>
+												</tr>
+												<tr id="rt1" style="display: none;">
+													<td><div><span data-toggle="tooltip" data-original-title="Subject property roof type description." class="tool_tips">Roof Type<span></div></td><td><span id='roof_type1'></span></td>
+												</tr>
+												
+												<tr id="rs1" style="display: none;">
+													<td><div><span data-toggle="tooltip" data-original-title="Type of roof shape (e.g., Gambrel, Gable, Flat, Mansard)." class="tool_tips">Roof Shape<span></div></td><td><span id='roof_shape1'></span></td>
+												</tr>
+
+												<tr id="rf1" style="display: none;">
+													<td><div><span data-toggle="tooltip" data-original-title="The type of roof framing used (e.g., Bar Joist, Reinforced Concrete, Wood Beam, Mansard, Metal Sheeting)." class="tool_tips">Roof Frame<span><span></div></td><td><span id='roof_frame1'></span></td>
+												</tr>
+												
+												<tr id="rm1" style="display: none;">
+													<td><div><span data-toggle="tooltip" data-original-title="Subject property roof surface description." class="tool_tips">Roof Material<span></div></td><td><span id='roof_material1'></span></td>
+												</tr>
+												
+												<tr id="rc1" style="display: none;">
+													<td><div><span data-toggle="tooltip" data-original-title="Comment on the condition of improvements of the subject property." class="tool_tips">Roof Condition<span></div></td><td><span id='roof_condition1'></span></td>
+												</tr>
+												
+												<tr id="noos1" style="display: none;">
+													<td><div><span data-toggle="tooltip" data-original-title="Total number of stories associated with the subject property." class="tool_tips">No. of Stories<span></div></td><td><span id='no_of_stories1'></span></td>
+												</tr>
+
+                </table>
+                
+               <br>  
+               <hr class="style-one" /> 
+              </div>
+              
+              <!--end property-->
+           
+              
+              <div class="table-responsive" id="check_utility1" style="display: none;">
+					<table class="table">
+											<caption class="capt">
+												UTILITY
+											</caption>
+
+											<tr>
+												<td class="left_data">
+													<div>
+													<div><span data-toggle="tooltip" data-original-title="owner_text" class="tool_tips">Provider<span></div>
+												</td>
+												
+												<td class="right_data">
+											    <div>
+													<span id='utilityspan1'></span>
+												</div>
+												</td>
+											</tr>
+
+					</table>
+					
+			     <br>  
+                 <hr class="style-one" /> 
+				</div>            
+              
+              
+     		  <!--end utility-->
+ 
+              <div id="check_market_intelligence1" style="display: none;">    
+              <div class="table-responsive">
+                <table class="table">                  
+                  
+                  <tr>
+                    
+                    <td>
+                      <div>
+                        <span data-toggle="tooltip" data-original-title="owner_text" class="tool_tips green-tooltip" style="font-family:'latobold'">
+                          MARKET INTELLIGENCE
+                        </span>
+                      </div>
+                    </td>
+                    
+                    <td style="padding-left:22px;">
+                      <input type="radio" name="type1" id="changetype-city" value="city" data-toggle="radio" >
+                      <label for="changetype-city" class="radio" style='display: inline'>
+                        City
+                      </label>
+                      
+                      <input type="radio" name="type1" id="changetype-zip" checked='checked' value="zip" >
+                      <label for="changetype-zip" style='display: inline'>
+                        Zip
+                      </label>
+                      
+                    </td>
+                    
+                    
+                  </tr>
+                  
+                  <tr>
+                    <td class="mi_tab_result_pad" style="padding:15px;width:33%">
+                      <div>
+                        <span data-toggle="tooltip" data-original-title="owner_text" class="tool_tips green-tooltip">
+                          Solar Homes
+                        </span>
+                      </div>
+                      <div id='solar_homes1' class="mi_tab_result">
+                       
+                      </div>
+                    </td>
+                    <td class="mi_tab_result_pad" style="padding:15px;width:33%">
+                      <div>
+                        <span data-toggle="tooltip" data-original-title="owner_text" class="tool_tips green-tooltip">
+                          3rd Party
+                        </span>
+                      </div>
+                      <div id='3rd_party1' class="mi_tab_result">
+                       
+                      </div>
+                    </td>
+                    <td class="mi_tab_result_pad" style="padding:15px;width:33%">
+                      <div>
+                        <span data-toggle="tooltip" data-original-title="owner_text" class="tool_tips green-tooltip">
+                          Avg. System
+                        </span>
+                      </div>
+                      <div id='average_system1' class="mi_tab_result">
+                        
+                      </div>
+                      
+                    </td>
+                  </tr>
+                  
+                </table>
+              </div>
+              
+         
+              <div class="table-responsive">
+                <table class="table">
+                  <tr>
+                    <td class="left_data" rowspan="5">
+                      <div>
+                        <span data-toggle="tooltip" data-original-title="top Installers" class="tool_tips green-tooltip">
+                          Top Installers
+                        </span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='installer10'></span>
+                    </td>
+                    
+                  </tr>
+                  
+                  <tr>
+                    <td class="right_data">
+                      <span id='installer11'></span>
+                    </td>
+                    
+                  </tr>
+                  <tr>
+                    <td class="right_data">
+                      <span id='installer12'></span>
+                    </td>
+                    
+                  </tr>
+                  <tr>
+                    <td class="right_data">
+                     <span id='installer13'></span>
+                    </td>
+                    
+                  </tr>
+                  <tr>
+                    <td class="right_data">
+                     <span id='installer14'></span>
+                    </td>
+                    
+                  </tr>
+                 
+                 
+                 
+                 
+                 <tr>
+                    <td class="left_data" rowspan="5">
+                      <div>
+                        <span data-toggle="tooltip" data-original-title="top panel brands" class="tool_tips green-tooltip">
+                         Top Panel Brands
+                        </span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='panel10'></span>
+                    </td>
+                    
+                  </tr>
+                  
+                  <tr>
+                    <td class="right_data">
+                      <span id='panel11'></span>
+                    </td>
+                    
+                  </tr>
+                  <tr>
+                    <td class="right_data">
+                      <span id='panel12'></span>
+                    </td>
+                    
+                  </tr>
+                  <tr>
+                    <td class="right_data">
+                     <span id='panel13'></span>
+                    </td>
+                    
+                  </tr>
+                  <tr>
+                    <td class="right_data">
+                     <span id='panel14'></span>
+                    </td>
+                    
+                  </tr>                 
+                  
+                  
+                  <tr>
+                    <td class="left_data" rowspan="5">
+                      <div>
+                        <span data-toggle="tooltip" data-original-title="top inverter brands" class="tool_tips green-tooltip">
+                          Top Inverter Brands
+                        </span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='inverter10'></span>
+                    </td>
+                    
+                  </tr>
+                  
+                  <tr>
+                    <td class="right_data">
+                      <span id='inverter11'></span>
+                    </td>
+                    
+                  </tr>
+                  <tr>
+                    <td class="right_data">
+                     <span id='inverter12'></span>
+                    </td>
+                    
+                  </tr>
+                  <tr>
+                    <td class="right_data">
+                     <span id='inverter13'></span>
+                    </td>
+                    
+                  </tr>
+                  <tr>
+                    <td class="right_data">
+                     <span id='inverter14'></span>
+                    </td>
+                    
+                  </tr>
+                  
+                  
+                </table>
+               </div>         
+              </div>    
+                        
+            </div>
+            <!--end everything-->
+            
+  
+  
+            
+            <div class="tab-pane" id="mar_int">
+               <div class="table-responsive">
+                <table class="table">                  
+                  
+                  <tr>
+                    
+                    <td>
+                      <div>
+                        <span data-toggle="tooltip" data-original-title="owner_text" class="tool_tips green-tooltip" style="font-family:'latobold'">
+                          MARKET INTELLIGENCE
+                        </span>
+                      </div>
+                    </td>
+                    
+                    <td style="padding-left:22px;">
+                      <input type="radio" name="type2" id="changetype-city" value="city" data-toggle="radio" >
+                      <label for="changetype-city" class="radio" style='display: inline'>
+                        City
+                      </label>
+                      
+                      <input type="radio" name="type2" id="changetype-zip" checked='checked' value="zip" >
+                      <label for="changetype-zip" style='display: inline'>
+                        Zip
+                      </label>
+                      
+                    </td>
+                    
+                    
+                  </tr>
+                  
+                  <tr>
+                    <td class="mi_tab_result_pad" style="padding:15px;width:33%">
+                      <div>
+                        <span data-toggle="tooltip" data-original-title="owner_text" class="tool_tips green-tooltip">
+                          Solar Homes
+                        </span>
+                      </div>
+                      <div id='solar_homes2' class="mi_tab_result">
+                       
+                      </div>
+                    </td>
+                    <td class="mi_tab_result_pad" style="padding:15px;width:33%">
+                      <div>
+                        <span data-toggle="tooltip" data-original-title="owner_text" class="tool_tips green-tooltip">
+                          3rd Party
+                        </span>
+                      </div>
+                      <div id='3rd_party2' class="mi_tab_result">
+                       
+                      </div>
+                    </td>
+                    <td class="mi_tab_result_pad" style="padding:15px;width:33%">
+                      <div>
+                        <span data-toggle="tooltip" data-original-title="owner_text" class="tool_tips green-tooltip">
+                          Avg. System
+                        </span>
+                      </div>
+                      <div id='average_system2' class="mi_tab_result">
+                        
+                      </div>
+                      
+                    </td>
+                  </tr>
+                  
+                </table>
+              </div>
+              
+         
+              <div class="table-responsive">
+                <table class="table">
+                  <tr>
+                    <td class="left_data" rowspan="5">
+                      <div>
+                        <span data-toggle="tooltip" data-original-title="top Installers" class="tool_tips green-tooltip">
+                          Top Installers
+                        </span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='installer20'></span>
+                    </td>
+                    
+                  </tr>
+                  
+                  <tr>
+                    <td class="right_data">
+                      <span id='installer21'></span>
+                    </td>
+                    
+                  </tr>
+                  <tr>
+                    <td class="right_data">
+                      <span id='installer22'></span>
+                    </td>
+                    
+                  </tr>
+                  <tr>
+                    <td class="right_data">
+                     <span id='installer23'></span>
+                    </td>
+                    
+                  </tr>
+                  <tr>
+                    <td class="right_data">
+                     <span id='installer24'></span>
+                    </td>
+                    
+                  </tr>
+                 
+                 
+                 
+                 
+                 <tr>
+                    <td class="left_data" rowspan="5">
+                      <div>
+                        <span data-toggle="tooltip" data-original-title="top panel brands" class="tool_tips green-tooltip">
+                         Top Panel Brands
+                        </span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='panel20'></span>
+                    </td>
+                    
+                  </tr>
+                  
+                  <tr>
+                    <td class="right_data">
+                      <span id='panel21'></span>
+                    </td>
+                    
+                  </tr>
+                  <tr>
+                    <td class="right_data">
+                      <span id='panel22'></span>
+                    </td>
+                    
+                  </tr>
+                  <tr>
+                    <td class="right_data">
+                     <span id='panel23'></span>
+                    </td>
+                    
+                  </tr>
+                  <tr>
+                    <td class="right_data">
+                     <span id='panel24'></span>
+                    </td>
+                    
+                  </tr>                 
+                  
+                  
+                  <tr>
+                    <td class="left_data" rowspan="5">
+                      <div>
+                        <span data-toggle="tooltip" data-original-title="top inverter brands" class="tool_tips green-tooltip">
+                          Top Inverter Brands
+                        </span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='inverter20'></span>
+                    </td>
+                    
+                  </tr>
+                  
+                  <tr>
+                    <td class="right_data">
+                      <span id='inverter21'></span>
+                    </td>
+                    
+                  </tr>
+                  <tr>
+                    <td class="right_data">
+                     <span id='inverter22'></span>
+                    </td>
+                    
+                  </tr>
+                  <tr>
+                    <td class="right_data">
+                     <span id='inverter23'></span>
+                    </td>
+                    
+                  </tr>
+                  <tr>
+                    <td class="right_data">
+                     <span id='inverter24'></span>
+                    </td>
+                    
+                  </tr>
+                  
+                  
+                </table>          
+          
+            </div>        
+            
+            
+            </div>
+             <!--end market intelligence -->
+            
+            
+            <div class="tab-pane" id="owner">
+              <div class="table-responsive">
+                <table class="table">
+                  <caption class="capt">
+                    OWNER
+                  </caption>
+                  <tr id="own2" style="display: none;">
+                    <td class="left_data">
+                      <div>
+                        <span data-toggle="tooltip" data-original-title="The full name of the subject property owner." class="tool_tips">Name of Owner<span>                    
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='owner_name2'>
+                       
+                      </span>
+                    </td>
+                  </tr>
+                  <tr id="ma2" style="display: none;">
+                    <td class="left_data">
+                      <div>
+                        <span data-toggle="tooltip" data-original-title="Mailing address of subject property owner." class="tool_tips">Mailing Address<span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='mailing_address2'>
+                        
+                      </span>
+                    </td>
+                  </tr>
+                  <tr id="oo2" style="display: none;">
+                    <td class="left_data">
+                      <div>
+                       <span data-toggle="tooltip" data-original-title="Identifies if the subject property is owner occupied: Y/N." class="tool_tips">Owner Occupied?<span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='owner_occupied2'>
+                       
+                      </span>
+                    </td>
+                  </tr>
+                  <tr id="ecs2" style="display: none;">
+                    <td class="left_data">
+                      <div>
+                        <span data-toggle="tooltip" data-original-title="owner_text" class="tool_tips">Estimated Credit Score<span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='est_credit_score2'>
+                        
+                      </span>
+                    </td>
+                  </tr>
+                  <tr id="eai2" style="display: none;">
+                    <td class="left_data">
+                      <div>
+                        <span data-toggle="tooltip" data-original-title="owner_text" class="tool_tips green-tooltip"> Estimated Annual Income </span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='est_annual_income2'>
+                      
+                      </span>
+                    </td>
+                  </tr>
+                  
+                </table>
+              </div>
+              
+              <!--end owner-->
+            </div>
+            
+            <div class="tab-pane" id="property">
+              <div class="table-responsive">
+                <table class="table">
+                  <caption class="capt">
+                    PROPERTY
+                  </caption>
+
+                  <tr id="lsd2" style="display: none;">
+                    <td class="left_data">
+                      <div>
+                       <span data-toggle="tooltip" data-original-title="Date of most recent subject property sale." class="tool_tips">Last Sale Date<span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='last_sale_date2'>
+                          
+                      </span>
+                    </td>
+                  </tr>
+                  
+                  
+                  
+                  <tr id="lsp2" style="display: none;">
+                    <td class="left_data">
+                      <div>
+                       <span data-toggle="tooltip" data-original-title="Price of the sale as depicted on the recorded sales transaction." class="tool_tips">Last Sale Price<span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='last_sale_price2'>
+                          
+                      </span>
+                    </td>
+                  </tr>
+
+
+
+                  <tr id="lspps2" style="display: none;">
+                    <td class="left_data">
+                      <div>
+                       <span data-toggle="tooltip" data-original-title="Sale price of the property in terms of dollar amount per square foot of living/building area (lot area if no building is present)." class="tool_tips">Last Sale Price/sqft<span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='last_sale_price_per_sqrft2'>
+                          
+                      </span>
+                    </td>
+                  </tr>
+
+                  
+   
+   
+                   <tr id="luc2" style="display: none;">
+                    <td class="left_data">
+                      <div>
+                       <span data-toggle="tooltip" data-original-title="Property Type. A description of the subject site land use." class="tool_tips">Land Use Code<span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='land_use_code2'>
+                          
+                      </span>
+                    </td>
+                  </tr>
+
+                  <tr id="z2" style="display: none;">
+                    <td class="left_data">
+                      <div>
+                      <span data-toggle="tooltip" data-original-title="The zoning classification of the subject property." class="tool_tips">Zoning<span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='zoning2'>
+                          
+                      </span>
+                    </td>
+                  </tr>
+
+
+
+                  <tr id="rpcu2" style="display: none;">
+                    <td class="left_data">
+                      <div>
+                       <span data-toggle="tooltip" data-original-title="Number of Residential, Apartment or Business Units." class="tool_tips">Residential/Common Units<span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='residential_per_common_units2'>
+                          
+                      </span>
+                    </td>
+                  </tr>
+
+                                         
+                  
+                  
+                  <tr id="ga1">
+                    <td class="left_data">
+                      <div>
+ 						<span data-toggle="tooltip" data-original-title="Total living area square footage including unfinished area." class="tool_tips">Gross Area<span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='gross_area2'>
+                      </span>
+                    </td>
+                  </tr>
+                
+
+                  
+                  
+                  <tr id="la1">
+                    <td class="left_data">
+                      <div>
+ 						<span data-toggle="tooltip" data-original-title="Total living area square footage of the property." class="tool_tips">Living Area<span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='living_area2'>
+                      </span>
+                    </td>
+                  </tr>
+                   
+                
+                  <tr id="nobed2">
+                    <td class="left_data">
+                      <div>
+						<span data-toggle="tooltip" data-original-title="Total number of bedroom contained in the subject property." class="tool_tips">No. of Bedrooms<span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='no_of_bedroom2'>
+                      </span>
+                    </td>
+                  </tr>
+
+
+                  <tr id="nobath2">
+                    <td class="left_data">
+                      <div>
+						 <span data-toggle="tooltip" data-original-title="Total number of baths on the subject property regardless of grade." class="tool_tips">No. of Bathrooms<span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='no_of_bathroom2'>
+                      </span>
+                    </td>
+                  </tr>
+                  
+                  
+                  
+                  <tr id="aoh2">
+                    <td class="left_data">
+                      <div>
+                        <span data-toggle="tooltip" data-original-title="Subject property year built - construction year of the original building." class="tool_tips">Age of Home<span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='age_of_home2'>
+                      </span>
+                    </td>
+                  </tr>
+                  
+                  
+                  
+                                    
+                  <tr id="po2">
+                    <td class="left_data">
+                      <div>
+                         <span data-toggle="tooltip" data-original-title="Identifies the existence of a pool with the subject property - Y or N indicator." class="tool_tips">Pool?<span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='pool2'>
+                      </span>
+                    </td>
+                  </tr>
+                  
+
+
+                  
+                  <tr id="ht2">
+                    <td class="left_data">
+                      <div>
+                        <span data-toggle="tooltip" data-original-title="Type or method of heating (e.g., Hot Water, Heat Pump, Baseboard,Radiant)." class="tool_tips">Heat Type<span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='heat_type2'>
+                      </span>
+                    </td>
+                  </tr>
+                                        
+                
+                  
+                  <tr id="hf2">
+                    <td class="left_data">
+                      <div>
+                        <span data-toggle="tooltip" data-original-title="Supplying unit with energy (e.g. gas, hot air, electric)." class="tool_tips">Heat Fuel<span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='heat_fuel2'>
+                      </span>
+                    </td>
+                  </tr>
+                  
+                  
+                  <tr id="rt2">
+                    <td class="left_data">
+                      <div>
+                       <span data-toggle="tooltip" data-original-title="Subject property roof type description." class="tool_tips">Roof Type<span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='roof_type2'>
+                      </span>
+                    </td>
+                  </tr>
+              
+     
+     
+                       
+                  <tr id="rs2">
+                    <td class="left_data">
+                      <div>
+                       <span data-toggle="tooltip" data-original-title="Type of roof shape (e.g., Gambrel, Gable, Flat, Mansard)." class="tool_tips">Roof Shape<span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='roof_shape2'>
+                      </span>
+                    </td>
+                  </tr>
+              
+
+                  
+                  <tr id="rf2">
+                    <td class="left_data">
+                      <div>
+                      <span data-toggle="tooltip" data-original-title="The type of roof framing used (e.g., Bar Joist, Reinforced Concrete, Wood Beam, Mansard, Metal Sheeting)." class="tool_tips">Roof Frame<span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='roof_frame2'>
+                      </span>
+                    </td>
+                  </tr>
+              
+          
+              
+                  <tr id="rm2">
+                    <td class="left_data">
+                      <div>
+                    <span data-toggle="tooltip" data-original-title="Subject property roof surface description." class="tool_tips">Roof Material<span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='roof_material2'>
+                      </span>
+                    </td>
+                  </tr>
+
+                  <tr id="rc2">
+                    <td class="left_data">
+                      <div>
+                       <span data-toggle="tooltip" data-original-title="Comment on the condition of improvements of the subject property." class="tool_tips">Roof Condition<span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='roof_condition2'>
+                      </span>
+                    </td>
+                  </tr>
+                  
+                    
+                  <tr id="noos2">
+                    <td class="left_data">
+                      <div>
+                      <span data-toggle="tooltip" data-original-title="Total number of stories associated with the subject property." class="tool_tips">No. of Stories<span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='no_of_stories2'>
+                      </span>
+                    </td>
+                  </tr>
+                  
+                  
+                </table>
+              </div>
+              
+              <!--end property-->
+            </div>
+            
+            
+            
+            <div class="tab-pane" id="utility">            	
+            	<div class="table-responsive">
+									<table class="table">
+									    	<caption class="capt">
+												UTILITY
+											</caption>
+										
+											<tr>
+												
+												<td class="left_data">
+													<div>
+													<div><span data-toggle="tooltip" data-original-title="owner_text" class="tool_tips">Provider<span></div>
+												</td>
+												
+												<td class="right_data">
+											    <div>
+													<span id='utilityspan2'></span>
+												</div>
+												</td>
+											</tr>							
+									</table>
+              
+                </div>
+                
+                 <!--end utility-->
+            </div>
+            
+       
+            <div class="tab-pane" id="dhome">
+              
+            </div>
+            
+          </div>
+          
+          
+        </div>
+        
+      </div>
+      <div id="panel_container_sidebar">
+        <span id="side" class="glyphicon glyphicon-chevron-left">
+        </span>
+      </div>
+      <div style="clear:both">
+      </div>
+    </div>
+    <!--            End panel container                               -->
+    
+    
+    
+    
+    <script>
+      $(document).ready(function(){
+          
+          //        content table starts  
+          $('body').css("overflowY","hidden");
+          
+          $("#map-canvas").css("height", $(window).height());
+          
+    
+          
+          
+//        content table ends  
+
+        $(".tool_tips").tooltip({
+          placement : 'top'
+        }
+        );
+          
+        $('#panel_container_sidebar').on('click', '.glyphicon-chevron-left', function() {
+                
+                    var panel_width=$('#panel_container').width()-24;
+					$("#panel_container").animate({
+						'margin-left' : -panel_width
+					}, 'slow');
+                   $("#panel_container").find("#side").removeClass("glyphicon glyphicon-chevron-left");
+                   $("#panel_container").find("#side").addClass("glyphicon glyphicon-chevron-right");
+
+        });
+        $('#panel_container_sidebar').on('click', '.glyphicon-chevron-right', function() {
+
+//				var side_class=$('#side').attr('class');
+//                if(side_class=="glyphicon glyphicon-chevron-right"){
+//                
+//                }
+
+					$("#panel_container").animate({
+						'margin-left' : "0px"
+					}, 'slow');
+                   $("#panel_container").find("#side").removeClass("glyphicon glyphicon-chevron-right");
+                   $("#panel_container").find("#side").addClass("glyphicon glyphicon-chevron-left");
+
+        });
+        
+        var win_width=$(window).width();
+        if(win_width>942){
+          
+          fun4();
+          fun1();
+            cal_height1();
+        }
+        
+        else if(win_width<=942 && win_width>=768 ){
+          
+          fun4();
+          fun2();
+          cal_height2();
+        }
+        
+        
+        else if(win_width<=767){
+          
+          fun3();
+            cal_height3();
+        }
+        
+      });
+      
+      $(window).resize(function(){
+        
+          
+          $("#map-canvas").css("height", $(window).height());
+        var win_width=$(window).width();
+        if(win_width>942){
+          
+          fun4();
+          fun1();
+          cal_height1();
+        }
+        
+        else if(win_width<=942 && win_width>=768 ){
+          
+          fun4();
+          fun2();
+          cal_height2();
+        }
+        
+        else if(win_width<=767){
+          
+          fun3();
+          cal_height2();
+
+        }
+
+    
+        
+      });
+      
+        
+    function cal_height1(){
+            
+            var win_height=$(window).height();  
+            var nav_height=$('#bgnav').innerHeight();
+            var srch_height=$('#panel_search_result').innerHeight();  
+            var menu_tab_height=$('#panel_menu').innerHeight(); 
+            var total_fixed=win_height-(nav_height+srch_height+menu_tab_height);
+            //alert(win_height);
+            //console.log(win_height,nav_height,srch_height,menu_tab_height);
+            $('#panel_container').css({"margin-top":nav_height});
+            $('#panel_table_content').css({"height":total_fixed,"overflowY":"hidden"}); 
+            $("#panel_table_content").niceScroll({
+					styler : "fb",
+					cursorcolor : "#5cb85c",
+					cursorwidth : '6',
+					cursorborderradius : '10px',
+					background : '#404040',
+					spacebarenabled : false,
+					cursorborder : '',
+					zindex : '1000'
+            });
+        
+        
+    }    
+    
+    function cal_height2(){
+        
+            //alert("fsdfas");
+            var win_height=$(window).height();  
+            var nav_height=$('#bgnav').innerHeight();
+            var srch_height=$('#panel_search_result').innerHeight();  
+            var menu_tab_height=$('#panel_menu').innerHeight();
+            var abs_google_srch=$('#loc_search').innerHeight();
+            var error_message_height=$('#search_error').innerHeight();
+            var total_fixed=win_height-(nav_height+srch_height+menu_tab_height+abs_google_srch+error_message_height);
+        
+            $('#panel_container').css("margin-top",nav_height+abs_google_srch+error_message_height);
+            $('#panel_table_content').css({"height":total_fixed,"overflowY":"hidden"}); 
+            $("#panel_table_content").niceScroll({
+					styler : "fb",
+					cursorcolor : "#5cb85c",
+					cursorwidth : '6',
+					cursorborderradius : '10px',
+					background : '#404040',
+					spacebarenabled : false,
+					cursorborder : '',
+					zindex : '1000'
+            });
+    
+    }
+    
+    function cal_height3(){
+        
+            //alert("fsdfas");
+            var win_height=$(window).height();  
+            var nav_height=$('#bgnav').innerHeight();
+            var srch_height=$('#panel_search_result').innerHeight();  
+            var menu_tab_height=$('#panel_menu').innerHeight();
+            var abs_google_srch=$('#loc_search').innerHeight();
+            var error_message_height=$('#search_error').innerHeight();
+            var total_fixed=win_height-(nav_height+srch_height+menu_tab_height+abs_google_srch+error_message_height);
+           
+//            alert("navi"+nav_height);
+//            alert("search"+srch_height);
+//            alert("menu_tab"+menu_tab_height);
+//            alert("googlesearch"+abs_google_srch);
+//            alert("err_msg"+error_message_height);
+        
+            //console.log(win_height,nav_height,srch_height,menu_tab_height,abs_google_srch,error_message_height);
+            $('#panel_container').css("margin-top",nav_height+abs_google_srch+error_message_height+5);
+            $('#panel_table_content').css({"height":total_fixed,"overflowY":"scroll"}); 
+            $("#panel_table_content").niceScroll({
+					styler : "fb",
+					cursorcolor : "#5cb85c",
+					cursorwidth : '6',
+					cursorborderradius : '10px',
+					background : '#404040',
+					spacebarenabled : false,
+					cursorborder : '',
+					zindex : '1000'
+            });
+    
+    }
+        
+        
+      function fun1(){
+        $('#search_bar').css("position","relative");
+        $('#loc_search').css("border","0px");
+        $('#search_bar').css("margin-top","0px");
+        $('#loc_search').removeAttr('style');
+        $('#nav_search').removeAttr('style');
+        $('#bgnav').removeAttr('style');
+        
+      }
+      
+      function fun2(){
+        var win_width= parseInt($(window).width(),10);
+        
+        var center_width=(win_width*92)/100;
+        var nav_height=$('.container').height();
+        $('#search_bar').css("position","absolute");
+        $('#loc_search').css("border","1px solid #bdc3c7");
+        $('#search_bar').css("border","0px");
+        $('#search_bar').css("margin-top","69px");
+        $('#loc_search').css("width",center_width);
+        $('#nav_search').css("width","50px");
+        $('#bgnav').removeAttr('style');
+        
+        
+      }
+      
+      function fun3(){
+        
+
+        $('#pull_right').addClass('respons');
+        var win_width= parseInt($(window).width(),10);
+        
+        var center_width=(win_width*92)/100;
+        var nav_height=$('.container').height();
+        $('#search_bar').css("position","absolute");
+        $('#loc_search').css("border","1px solid #bdc3c7");
+        $('#search_bar').css("margin-top","69px");
+        $('#loc_search').css("width",center_width);
+        $('#nav_search').css("width","50px");
+        $('#search_bar').css("margin-top","61px");
+        $('#bgnav').css("padding","13px 0px 10px 0px");
+      }
+      
+      
+      function fun4(){
+
+        $('#pull_right').removeClass('respons');
+      }
+      
+    </script>
+  </body>
+</html>

@@ -1,0 +1,195 @@
+
+@media screen and (max-width:996px){
+    .logo_txt{
+        display: none;
+    }
+}
+
+@media screen and (max-width: 791px){
+    .navbar-nav{
+        margin-top: -9px;
+    }
+    #logo{
+        background-size: 80px 80px;
+        width:80px;
+        height: 80px;
+    }
+}
+@media screen and (max-width: 769px){
+
+    .navbar-nav{
+        margin-top:-9px;
+    }
+}
+@media screen and (max-width: 767px){
+    .no-transition {
+        -webkit-transition: height .0001s;
+        -moz-transition: height .0001s;
+        -ms-transition: height .0001s;
+        -o-transition: height .0001s;
+        transition: height .0001s;
+    }
+    .navbar-inverse .navbar-nav > .open > .dropdown-menu {
+      background-color: #5cb85c;
+    }
+    #pull_right{
+
+        float:none;
+    }
+    .navbar-nav{
+        margin-top:0px;
+    }
+    #btn_collapse{
+        margin-top: 12px;
+    }
+    .logo_txt{
+        display:block;
+        font-size: 28px;
+        padding-top:25px;
+        padding-left: 88px;
+    }
+    #logo{
+        background-size: 80px 80px;
+        width:80px;
+        height: 80px;
+    }
+    .navlink{
+        margin-top:0px;
+    }
+    div.navbar-collapse.collapse.in{
+        text-align:center;
+    }
+    .navbar-inverse .navbar-nav>li{
+
+        width:100%;
+    }
+    .navbar-inverse .navbar-nav>li>a{
+        color:#fff;
+        text-align:center;
+    }
+    .navbar-inverse .navbar-nav>li>a:hover{
+        color:#fff;
+    }
+    #bgnav{
+        height:90px; 
+
+    }
+    div.navbar-collapse.collapse.in{
+        background:#000;
+
+
+    }
+    .dropdown-menu{
+        border-radius: 0px !important;
+    
+    }
+    .navbar-inverse .navbar-nav > .open > .dropdown-menu > li > a{
+         margin-top: 8px;
+    }
+    .navbar-inverse .navbar-nav > .open > .dropdown-menu > li > a:hover{
+        background: #1e781e;
+       
+    }
+    #btn_collapse {
+        margin-top: 23px;
+    }
+    .open > .dropdown-menu {
+        margin-top: 1px !important;
+    }
+    .navbar-inverse .navbar-nav > .open > .dropdown-menu > li > a:hover{
+    background:#000;
+    }
+    .nav.navbar-nav.pull-right{
+    width:100%;
+    }
+    .navbar-nav {
+margin: 0px;
+}
+    .navbar-collapse {
+padding-left:0px;
+        padding-right:0px;
+}
+
+@media screen and (max-width: 640px){
+
+    #btn_collapse{
+        margin-top: 21px;
+        height: 35px;
+        width:35px;
+    }
+    .navbar-toggle:before{
+        font-size:20px;
+        position:absolute;
+        top:-9px;
+        left:12px;
+
+    }
+
+
+
+}
+@media screen and (max-width: 606px){
+
+
+    .navbar-toggle .icon-bar{
+
+        width:15px;
+    }
+
+
+}
+@media screen and (max-width: 562px){
+    #bgnav{
+        height: 80px;
+    }
+    #navigation{
+
+        height: 74px;
+
+    }
+
+
+    #logo{
+        background-size: 68px 68px;
+        width:68px;
+        height: 68px;
+    }
+    .logo_txt{
+        padding-top:25px;
+        padding-left: 75px;
+        font-size: 22px;
+    }
+    div.navbar-collapse.collapse.in{
+        margin-top:6px;
+    }
+}
+
+
+/*button start breaking here*/
+@media screen and (max-width: 464px){
+    .logo_txt{
+        font-size: 21px;
+    }
+
+  
+ }
+   
+@media screen and (max-width: 418px){
+    #bgnav{
+        height: 72px;
+    }
+    #navigation{
+
+        height: 66px;
+
+    }
+    #btn_collapse{
+        margin-top:15px;
+
+    }
+    #logo{
+        background-size: 60px 60px;
+        width:60px;
+        height: 60px;
+    }
+}

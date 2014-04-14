@@ -1,0 +1,1265 @@
+@media screen and (max-width: 1800px){
+	#menu{
+    	position:fixed;
+    	top:110px;
+        background: rgb(0,0,0);
+        
+    }
+    #menu ul.nav.nav-pills{
+        max-width: 360px;
+ 
+    }
+    #content{
+    	position:fixed;
+    	top:330px;
+    }
+}
+@media screen and (max-width: 1567px){
+    #menu ul.nav.nav-pills{
+        max-width: 340px;
+        float:left;
+ 
+    }
+}
+@media screen and (max-width: 1496px){
+     #menu ul.nav.nav-pills{
+        max-width: 339px;
+        float:left;
+ 
+    }
+}
+@media screen and (max-width: 1439px){
+    #content{
+    	position:fixed;
+    	top:330px;
+    }
+}
+@media screen and (max-width: 1398px){
+    #about{
+
+
+        width:85%;
+
+    }
+    #apply{
+
+        width:15%;
+    }
+    #qualify_search{
+        font-family: 'latolig';
+        font-size: 29px;
+    }
+    .col-sm-6 .form-control{
+        font-family: 'latolig';
+        font-size: 29px;
+    }
+
+
+}
+
+
+@media screen and (max-width: 1297px){
+    #content{
+
+        width:34%;
+
+
+    }
+    #menu {
+        
+        width: 34%;
+
+    }
+    .table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td{
+        line-height: 1;
+    }
+}
+
+@media screen and (max-width: 1280px){
+    #about{
+
+        font-size: 31px;
+
+    }
+    #about_body{
+
+        font-size: 31px;
+
+    }
+    #text_head{
+        text-align: center;
+        font-size: 31px;
+        font-family: 'latoreg';
+    }
+    .textwrap_mar{
+        margin-bottom:40px;
+    }
+    #textwrap{
+        word-wrap:break-word;
+        font-size: 20px;
+        line-height: 32px;
+        font-family: 'latolig';
+
+    }
+
+    #qualify_search{
+        font-family: 'latolig';
+        font-size: 27px;
+    }
+    .col-sm-6 .form-control{
+        font-family: 'latolig';
+        font-size: 27px;
+    }
+
+}
+@media screen and (max-width: 1185px){
+    #content{
+    top:330px;
+    }
+}
+@media screen and (max-width: 1140px){
+    #content{
+
+        width:36%;
+        top:330px;
+
+
+    }
+    #menu {
+        
+        width: 36%;
+
+    }
+    .table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td{
+        line-height: 1.1;
+    }
+}
+@media screen and (max-width: 1131px){
+    #content{
+
+        width:34%;
+        top:330px;
+
+
+    }
+    #menu {
+        
+        width: 34%;
+
+    }
+}
+@media screen and (max-width: 1131px){
+    #about{
+
+        font-size: 30px;
+
+    }
+    #about_body{
+
+        font-size: 30px;
+
+    }
+    #text_head{
+        text-align: center;
+        font-size: 30px;
+        font-family: 'latoreg';
+    }
+    .textwrap_mar{
+        margin-bottom:40px;
+    }
+    #textwrap{
+        word-wrap:break-word;
+        font-size: 20px;
+        line-height: 31px;
+        font-family: 'latolig';
+
+    }
+    #qualify_search{
+        font-family: 'latolig';
+        font-size: 26px;
+    }
+    .col-sm-6 .form-control{
+        font-family: 'latolig';
+        font-size: 26px;
+    }
+
+
+
+}
+
+@media screen and (max-width: 1112px){
+    #loc_search{
+        margin-top: -73px;
+        margin-left: 120px;
+        height:45px;
+        width:280px;
+    }
+
+}
+@media screen and (max-width: 1097px){
+
+    #content{
+
+        width:37%;
+        top:299px;
+
+
+
+    }
+    #menu {
+        
+        width: 37%;
+
+    }
+    #loc_search{
+        margin-top: -73px;
+        margin-left: 120px;
+        height:45px;
+        width:280px;
+    }
+
+    #about{
+
+        font-size: 28px;
+
+
+    }
+    #about_body{
+
+        font-size: 28px;
+
+    }
+    #text_head{
+        text-align: center;
+        font-size: 28px;
+        font-family: 'latoreg';
+    }
+    .textwrap_mar{
+        margin-bottom:36px;
+    }
+    #textwrap{
+        word-wrap:break-word;
+        font-size: 20px;
+        font-family: 'latolig';
+
+    }
+    #qualify_search{
+        font-family: 'latolig';
+        font-size: 26px;
+    }
+    .col-sm-6 .form-control{
+        font-family: 'latolig';
+        font-size: 26px;
+    }
+
+}
+@media screen and (max-width: 1089px){
+    #content{
+        top:330px;
+    }
+}
+@media screen and (max-width: 1053px){
+    #loc_search{
+        margin-top: -73px;
+        margin-left: 120px;
+        height:44px;
+        width:275px;
+    }
+}
+@media screen and (max-width: 1038px){
+    #loc_search{
+        margin-top: -73px;
+        margin-left: 120px;
+        height:44px;
+        width:250px;
+    }
+}
+@media screen and (max-width: 1024px){
+    #about{
+        width:100%;
+        font-size: 27px;
+
+
+    }
+    #about_body{
+
+        font-size: 27px;
+
+    }
+    #text_head{
+        text-align: center;
+        font-size: 27px;
+        font-family: 'latoreg';
+    }
+    .textwrap_mar{
+        margin-bottom:34px;
+    }
+    #textwrap{
+        word-wrap:break-word;
+        font-size: 19px;
+        font-family: 'latolig';
+
+    }
+    #apply{
+
+        width:16%;
+    }
+    #qualify_search{
+        font-family: 'latolig';
+        font-size: 25px;
+    }
+    .col-sm-6 .form-control{
+        font-family: 'latolig';
+        font-size: 25px;
+    }
+
+}
+@media screen and (max-width: 994px){
+    #loc_search{
+
+        width:68%;
+    }
+}
+@media screen and (max-width: 980px){
+    #loc_search{
+
+        width:60%;
+    }
+}
+@media screen and (max-width: 979px){
+    #tog .glyphicon .glyphicon-chevron-left{
+        position:fixed;
+    top:165px;
+    }
+    #menu{
+        position:fixed;
+
+        top:168px;
+    }
+    #content{
+        position: fixed;
+        top:388px;
+    }
+    #loc_search{
+        position:absolute;
+        top:117px;
+        height:45px;
+        width:82%;
+        margin:0 auto;
+        z-index:-1;
+
+
+    }
+    .form-control::-webkit-input-placeholder {
+        text-align:center;
+    }
+
+    .form-control:-moz-placeholder { /* Firefox 18- */
+        text-align:center;
+    }
+
+    .form-control::-moz-placeholder {  /* Firefox 19+ */
+        text-align:center;
+    }
+
+    .form-control:-ms-input-placeholder {  
+        text-align:center;
+    }
+}
+@media screen and (max-width:971px){
+    #content{
+        position: fixed;
+        top:357px;
+    }
+}
+@media screen and (max-width:970px){
+    #content{
+        position: fixed;
+        top:388px;
+    }
+}
+@media screen and (max-width:920px){
+    #content{
+
+        width:40%;
+
+
+    }
+    #menu {
+
+        width: 40%;
+
+    }
+}
+@media screen and (max-width:898px){
+   #content{
+       
+        top:388px;
+    }
+}
+@media screen and (max-width:814px){
+    #content{
+       
+        top:419px;
+    }
+}
+@media screen and (max-width: 800px){
+    #menu{
+       
+        top:114px;
+    }
+    #content{
+       
+        top:413px;
+    }
+    #loc_search{
+        position:absolute;
+        top:117px;
+        height:40px;
+        width:85%;
+        margin:0 auto;
+        z-index:-1;
+    }    
+    #menu {
+        margin-top: 45px;
+
+    }
+    #content{
+
+        width:40%;
+
+
+    }
+    #menu {
+
+        width: 40%;
+
+    }
+
+}
+@media screen and (max-width: 770px){
+    #content{
+       
+        top:382px;
+    
+        width:44%;
+
+
+    }
+    #menu {
+
+        width: 44%;
+
+    }
+
+}
+
+@media screen and (max-width: 768px){
+     #content{
+       
+        top:379px;
+    
+      
+
+    }
+    #menu {
+        margin-top: 42px;
+
+    }
+    #loc_search{
+
+        top:114px;
+
+
+    }
+    div.navbar-collapse.collapse.in {
+
+        margin-top: 1px;
+    }
+    .form-control::-webkit-input-placeholder {
+        text-align:center;
+    }
+
+    .form-control:-moz-placeholder { /* Firefox 18- */
+        text-align:center;
+    }
+
+    .form-control::-moz-placeholder {  /* Firefox 19+ */
+        text-align:center;
+    }
+
+    .form-control:-ms-input-placeholder {  
+        text-align:center;
+    }
+    #find_address{
+        margin-top:30px;
+        height:170px;
+        width:100%
+    }
+    #find_address_form{
+        padding-top:55px;
+        width:70%;
+        margin:0 auto;
+    }
+    p.col-sm-6{
+        padding:0;
+    }
+    #apply{
+
+        width:100%;
+        margin:0 0 70px 0;
+    }
+    #app_access_head{
+        margin:0;
+        font-size:23px;
+    }
+    #apply{
+        height:45px;
+        font-size:23px;
+    }
+    #qualify_search{
+        font-family: 'latolig';
+        font-size: 22px;
+    }
+    .col-sm-6 .form-control{
+        font-family: 'latolig';
+        font-size: 22px;
+    }
+    div.navbar-collapse.collapse.in {
+    margin-top: 15px;
+    }
+    
+
+
+}
+
+
+@media screen and (max-width: 767px){
+    #pull_right{
+    margin-top:6px;
+    }
+
+    .navlink{
+        margin-top:0px;
+    }
+    div.navbar-collapse.collapse.in{
+
+        text-align:left;
+
+    }
+    .navbar-inverse .navbar-nav>li{
+        
+        width:100%;
+    }
+    .navbar-inverse .navbar-nav>li>a{
+        color:#fff;
+        text-align:right;
+    }
+    .navbar-inverse .navbar-nav>li>a:hover{
+        color:#fff;
+    }
+    .col-sm-9 .form-control{
+        margin-bottom:0px;
+    }
+    #find_address{
+        margin-top:30px;
+        height:170px;
+        width:100%
+    }
+    #find_address_form{
+        padding-top:26px;
+        width:70%;
+        margin:0 auto;
+    }
+    .form-control::-webkit-input-placeholder {
+        font-size:19px;
+        font-family: 'latolig';
+        text-align: center;
+    }
+
+    .form-control:-moz-placeholder { /* Firefox 18- */
+        font-family: 'latolig';
+        font-size:19px;
+        text-align: center;
+    }
+
+    .form-control::-moz-placeholder {  /* Firefox 19+ */
+        font-family: 'latolig';
+        font-size:19px;
+        text-align: center;
+    }
+
+    .form-control:-ms-input-placeholder {  
+        font-family: 'latolig';
+        font-size:19px;
+        text-align: center;
+    }
+    #qualify_search{
+        font-family: 'latolig';
+        font-size: 21px;
+    }
+    .col-sm-6 .form-control{
+        font-family: 'latolig';
+        font-size: 21px;
+    }
+    #else{
+    margin-top:0px;
+    font-family: 'latoreg';
+        
+
+    }
+    #setn{
+        margin-top:0px;
+        font-family: 'latoreg';
+
+    }
+    #faq{
+    
+        margin-top: 0;
+    }
+    #login{
+        height:38px;
+    }
+    .open > .dropdown-menu {
+        margin-top: 0px !important;
+    }
+    #btn_collapse {
+        margin-top: 34px !important;
+        background: #23a204;
+    }
+    .navbar-inverse .navbar-nav > .open > .dropdown-menu{
+        background: #5cb85c !important;
+    }
+    div.navbar-collapse.collapse.in{
+    background: #000 !important;
+    }
+    .go_srch {
+    font-size: 18px;
+    }
+}
+@media screen and (min-width: 767px){
+    div.navbar-collapse.collapse.in{
+        background:#23A104;
+    }
+    .navbar-inverse .navbar-nav > .open > .dropdown-menu > li > a{
+         margin-top: 8px;
+    }
+    .navbar-inverse .navbar-nav > .open > .dropdown-menu > li > a:hover{
+        background: #1e781e;
+       
+    }
+}
+@media screen and (max-width: 740px){
+    #content{
+
+        top:410px;
+
+
+    }
+
+}
+@media screen and (max-width: 703px){
+    #menu {
+        margin-top: 38px;
+
+    }
+    #content{
+
+        top:406px;
+
+
+    }
+    #about{
+        width:100%;
+        font-size: 19px;
+        line-height: 55px;
+
+    }
+    #loc_search{
+        height:35px;
+        font-size:18px;
+    }
+    #about_body{
+
+        font-size: 19px;
+        line-height: 55px;
+
+
+    }
+    #text_head{
+        text-align: center;
+        font-size: 19px;
+        font-family: 'latoreg';
+    }
+    .textwrap_mar{
+        margin-bottom:30px;
+    }
+    #textwrap{
+        word-wrap:break-word;
+        font-size: 15px;
+        font-family: 'latolig';
+
+    }
+    #qualify_search{
+        font-family: 'latolig';
+        font-size: 19px;
+    }
+    .col-sm-6 .form-control{
+        font-family: 'latolig';
+        font-size: 19px;
+    }
+    .form-control::-webkit-input-placeholder {
+        font-size:16px;
+        font-family: 'latolig';
+        text-align: center;
+        padding-top:2px;
+    }
+
+    .form-control:-moz-placeholder { /* Firefox 18- */
+        font-family: 'latolig';
+        font-size:16px;
+        text-align: center;
+    }
+
+    .form-control::-moz-placeholder {  /* Firefox 19+ */
+        font-family: 'latolig';
+        font-size:16px;
+        text-align: center;
+    }
+
+    .form-control:-ms-input-placeholder {  
+        font-family: 'latolig';
+        font-size:16px;
+        text-align: center;
+    }
+
+}
+
+@media screen and (max-width: 648px){
+    #content {
+        top: 406px;
+
+    }
+}
+@media screen and (max-width: 606px){
+
+    /*    #bgnav{
+            width:100%;
+            background:#fff;
+            padding:6px 0px 4px 0px;
+            box-shadow:0 2px 6px rgba(0,0,0,.2);
+        }
+        #navigation{
+            background:#fff;
+            width:75%;
+            margin:0 auto;
+    
+    
+        }*/
+   
+    #menu {
+        margin-top: 17px;
+
+    }
+    #content{
+
+        width:70%;
+        top:354px;
+
+
+    }
+    #menu {
+
+        width: 70%;
+
+    }
+    div.navbar-collapse.collapse.in {
+        margin-top: 4px;
+    }
+    #navigation{
+        width:85%;
+        height:88px;
+    }
+    #loc_search{
+
+        top:94px;
+
+
+    }
+    #navigation{
+        width:85%;
+        height:80px;
+    }
+    #btn_collapse{
+
+        margin-top:25px !important;
+        width: 36px;
+        height: 30px;
+    }
+    .navbar-toggle .icon-bar{
+
+        width:15px;
+    }
+    .brand{
+        display:none;
+    }
+    #logo{
+        background:url('../assets/wattsun_logo.png');
+        background-size: 80px 80px;
+        background-repeat: no-repeat;
+        width:80px;
+        height: 80px;
+    }
+    body {
+        padding-top: 90px;
+
+    }
+
+    #about{
+        width:100%;
+        font-size: 18px;
+        line-height: 52px;
+
+    }
+    #about_body{
+
+        font-size: 18px;
+        line-height: 52px;
+
+
+    }
+    .col-sm-9 .form-control{
+        margin-bottom:0px;
+        height:55px;
+    }
+    #qualify{
+        height:55px;
+        font-size: 19px;
+    }
+
+    #find_address{
+        margin-top:30px;
+        height:150px;
+        width:100%
+    }
+    #find_address_form{
+        padding-top:22px;
+        width:70%;
+        margin:0 auto;
+    }
+    .form-control::-webkit-input-placeholder {
+        font-size:16px;
+        font-family: 'latolig';
+        text-align: center;
+    }
+
+    .form-control:-moz-placeholder { /* Firefox 18- */
+        font-family: 'latolig';
+        font-size:16px;
+        text-align: center;
+    }
+
+    .form-control::-moz-placeholder {  /* Firefox 19+ */
+        font-family: 'latolig';
+        font-size:16px;
+        text-align: center;
+    }
+
+    .form-control:-ms-input-placeholder {  
+        font-family: 'latolig';
+        font-size:16px;
+        text-align: center;
+    }
+    #qualify_search{
+        font-family: 'latolig';
+        font-size: 18px;
+    }
+    .col-sm-6 .form-control{
+        font-family: 'latolig';
+        font-size: 18px;
+    }
+    div.navbar-collapse.collapse.in {
+        margin-top: 18px;
+    }
+    
+
+}
+@media screen and (max-width: 562px){
+    #menu {
+        margin-top: 6px;
+
+    }
+    #content{
+
+        width:70%;
+        top:343px;
+
+
+    }
+    #loc_search{
+
+        top:85px;
+
+
+    }
+    #navigation{
+        width:85%;
+        height:68px;
+    }
+    #logo{
+        background:url('../assets/wattsun_logo.png');
+        background-size: 68px 68px;
+        background-repeat: no-repeat;
+        width:68px;
+        height: 68px;
+    }
+    body {
+        padding-top: 78px;
+
+    }
+    #about{
+        width:100%;
+        font-size: 17px;
+        line-height: 40px;
+        padding-top:35px;
+    }
+    #about_body{
+
+        font-size: 17px;
+        line-height: 40px;
+
+
+    }
+    .col-sm-9 .form-control{
+        margin-bottom:0px;
+        height:50px;
+    }
+    .col-sm-6 .form-control{
+        height:50px;
+        font-size:15px;
+    }
+    #qualify{
+        height:50px;
+        font-size: 18px;
+    }
+
+    #find_address{
+        margin-top:27px;
+        height:140px;
+        width:100%
+    }
+    #find_address_form{
+        padding-top:20px;
+        width:70%;
+        margin:0 auto;
+    }
+
+    .form-control::-webkit-input-placeholder {
+        font-size:16px;
+        font-family: 'latolig';
+        text-align: center;
+
+    }
+
+    .form-control:-moz-placeholder { /* Firefox 18- */
+        font-family: 'latolig';
+        font-size:16px;
+        text-align: center;
+    }
+
+    .form-control::-moz-placeholder {  /* Firefox 19+ */
+        font-family: 'latolig';
+        font-size:16px;
+        text-align: center;
+    }
+
+    .form-control:-ms-input-placeholder {  
+        font-family: 'latolig';
+        font-size:16px;
+        text-align: center;
+    }
+    #app_access_head{
+        margin:0;
+        font-size:20px;
+    }
+    #apply{
+        height:50px;
+        font-size:19px;
+    }
+    #qualify_search{
+        font-family: 'latolig';
+        font-size: 17px;
+    }
+    .col-sm-6 .form-control{
+        font-family: 'latolig';
+        font-size: 17px;
+    }
+    #btn_collapse{
+
+        margin-top:19px !important;
+    }
+
+}
+
+@media screen and (max-width: 465px){
+    #content{
+        top:374px;
+    }
+}
+
+@media screen and (max-width: 418px){
+    #menu {
+        margin-top: 0px;
+
+    }
+    #content {
+        margin-top: -26px;
+
+    }
+    div.navbar-collapse.collapse.in {
+        margin-top: 6px;
+    }
+    #loc_search{
+
+        top:76px;
+        font-size:17px;
+
+    }
+    #navigation{
+        width:85%;
+        height:62px;
+    }
+    #btn_collapse{
+
+        margin-top:15px;
+
+    }
+    #logo{
+        background:url('../assets/wattsun_logo.png');
+        background-size: 60px 60px;
+        background-repeat: no-repeat;
+        width:60px;
+        height: 60px;
+    }
+    body {
+        padding-top: 70px;
+
+    }
+    #about{
+        width:100%;
+        font-size: 16px;
+        line-height: 33px;
+        padding-top:33px;
+    }
+    #about_body{
+
+        font-size: 16px;
+        line-height: 33px;
+
+
+    }
+    .col-sm-6 .form-control{
+        height:45px;
+    }
+    .form-control::-webkit-input-placeholder {
+        font-size:16px;
+        font-family: 'latolig';
+        text-align: center;
+        padding-bottom:6px;
+        font-size:15px;
+    }
+
+    .form-control:-moz-placeholder { /* Firefox 18- */
+        font-family: 'latolig';
+        font-size:16px;
+        text-align: center;
+        font-size:15px;
+
+    }
+
+    .form-control::-moz-placeholder {  /* Firefox 19+ */
+        font-family: 'latolig';
+        font-size:16px;
+        text-align: center;
+        font-size:15px;
+    }
+
+    .form-control:-ms-input-placeholder {  
+        font-family: 'latolig';
+        font-size:16px;
+        text-align: center;
+        font-size:15px;
+    }
+    #app_access_head{
+        margin:0;
+        font-size:19px;
+    }
+    #apply{
+        height:45px;
+        font-size:18px;
+    }
+    #qualify_search{
+        font-family: 'latolig';
+        font-size: 16px;
+    }
+    .col-sm-6 .form-control{
+        font-family: 'latolig';
+        font-size: 16px;
+    }
+    #bgnav{
+        height: 70px;
+    }
+    #btn_collapse{
+
+        margin-top:14px !important;
+    }
+    div.navbar-collapse.collapse.in {
+        margin-top: 12px;
+    }
+}
+
+
+
+@media screen and (max-width: 406px){
+    #tog_less{
+        display:none;
+    }
+    #tog_more{
+        display:none;
+    }
+    #map-canvas{
+    opacity:0;
+    }
+    #content{
+
+        width:100%;
+        top:343px;
+
+    }
+    #menu {
+
+        width: 100%;
+
+    }
+    #about{
+        width:100%;
+        font-size: 16px;
+        line-height: 26px;
+        padding-top:33px;
+    }
+    #about_body{
+
+        font-size: 16px;
+        line-height: 26px;
+
+
+    }
+    .col-sm-6 .form-control{
+        height:40px;
+    }
+    #app_access_head{
+        margin:0;
+        font-size:17px;
+    }
+    #apply{
+        height:40px;
+        font-size:17px;
+        margin:0 0 50px 0;
+    }
+    .go_srch {
+    font-size: 17px;
+    }
+}
+@media screen and (max-width: 402px){
+    #content{
+        top:343px;
+
+    }
+
+}
+@media screen and (max-width: 360px){
+    #content{
+        top:343px;
+
+    }
+}
+@media screen and (max-width: 325px){
+    #content{
+        top:374px;
+
+    }
+}
+/*
+@media screen and (max-width: 223px){
+    #content{
+        top:374px;
+
+    }
+}
+@media screen and (max-width: 284px){
+    #content{
+        top:374px;
+
+    }
+}
+*/
+@media screen and (max-width: 236px){
+    #content{
+        top:405px;
+
+    }
+}
+
+
+
+@media screen and (max-width: 767px){
+    .no-transition {
+        -webkit-transition: height .0001s;
+        -moz-transition: height .0001s;
+        -ms-transition: height .0001s;
+        -o-transition: height .0001s;
+        transition: height .0001s;
+    }
+    .navbar-inverse .navbar-nav > .open > .dropdown-menu {
+        background-color: #1F8708;
+    }
+    #pull_right{
+
+        float:none;
+    }
+    .navbar-nav{
+        margin-top:0px;
+    }
+    #btn_collapse{
+        margin-top: 12px;
+    }
+
+    .navlink{
+        margin-top:0px;
+    }
+    div.navbar-collapse.collapse.in{
+        text-align:center;
+    }
+    .navbar-inverse .navbar-nav>li{
+
+        width:100%;
+    }
+    .navbar-inverse .navbar-nav>li>a{
+        color:#fff;
+        text-align:center;
+    }
+    .navbar-inverse .navbar-nav>li>a:hover{
+        color:#fff;
+    }
+
+    div.navbar-collapse.collapse.in{
+        background:#000;
+
+
+    }
+    .dropdown-menu{
+        border-radius: 0px !important;
+    }
+    
+}
+

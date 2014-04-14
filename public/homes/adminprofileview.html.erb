@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title> Wattsun </title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<link href="/assets/bootstrap.min.css" rel="stylesheet">
+		<link href="/assets/flat-ui.css" rel="stylesheet">
+		<link href="/assets/reset.css" rel="stylesheet">
+		<link href="/assets/style_profileview_by_admin.css" rel="stylesheet">
+
+		<link href="/assets/mediaqueries_profileview_by_admin.css" rel="stylesheet">
+		<script src="/assets/jquery.js"></script>
+		<script src="/assets/bootstrap.min.js"></script>
+		
+		
+		
+		
+        <script>        
+           
+           $( document ).ready(function() {
+					$('#new_psd').focusin(function() { 
+					  $('#npass').html(''); 
+					  $('#passwd_match').html(''); 
+					});
+					
+					
+					$('#con_new_psd').focusin(function() { 
+					  $('#conpass').html(''); 
+					  $('#passwd_match').html(''); 
+					});
+					
+					$('#cur_psd').focusin(function() { 
+					  $('#cpass').html(''); 					  
+					});
+					
+					$('#newmobilephn').focusin(function() { 
+					  $('#e_mphone').html('');					  
+					});
+					
+					$('#newworkphn').focusin(function() { 
+					  $('#e_wphone').html('');					  
+					});
+					
+					
+			});
+				
+        
+        
+        
+            function updateMobilePhone()
+            {
+            	 
+            	if ($('#newmobilephn').val() == '' || $('#newmobilephn').val() == null)
+				{
+							$('#e_mphone').html("Mobile phone can't be blank.");
+				}
+						
+				else
+				{		
+					
+                	$("#mobile_btn").val('Updating...');	
+                				        	
+	            	$.ajax({
+	            	url: "/homes/profileupdate",
+	        	    type: "POST",
+	            	dataType: 'JSON',
+	            	data: { 'mphone' : $("#newmobilephn").val() }, 
+	            
+	            	success: function(response){
+	            		     			                           
+	     			                           $('#cur_mphone').html($("#newmobilephn").val());
+	     			                           $("#newmobilephn").val('');
+	     			                           $("#mobile_btn").val('Updated');
+	     			                           
+	        	        }
+	            	 });              	
+                }
+            }
+            
+            
+            
+            function updateOfficePhone()
+            {
+            	            	 
+            	if ($('#newworkphn').val() == '' || $('#newworkphn').val() == null)
+				{
+							$('#e_wphone').html("Work phone can't be blank.");
+				}
+						
+				else
+				{	 
+					$("#work_btn").val('Updating...');  
+            	             	          	
+	            	$.ajax({
+	            	url: "/homes/profileupdate",
+	        	    type: "POST",
+	            	dataType: 'JSON',
+	            	data: { 'ophone' : $("#newworkphn").val() }, 
+	            
+	            	success: function(response){
+	            		  
+	            		                       $('#cur_ophone').html($("#newworkphn").val());
+	     			                           $("#newworkphn").val('');
+	     									   $("#work_btn").val('Updated');
+	     			  }
+	            	 }); 
+	            } 	              	
+            	
+            }
+        
+                
+        </script>
+
+	</head>
+	<body>
+
+		<div class="container">
+			<div id="bgnav" class="navbar navbar-fixed-top navbar-inverse">
+				<div id="navigation" role="navigation">
+
+					<div class="navbar-header">
+						<a class="navlink" style="color: white;" href='#Top'>
+						<div id="logo">							
+						</div> </a>
+
+					</div>
+					
+						<ul id="pull_right" class="nav navbar-nav">					
+							<li>
+								<form action="../homes/logout" method="post">
+									<input id="login" class="button" style='width:79px; font-size:17px;height: 50px' type="submit" value="Logout"/>
+								</form>
+							</li>
+
+						</ul>
+
+					
+
+				</div><!-- /.navbar -->
+			</div>
+		</div>
+		<!--End .container-->
+
+		<div id="bg_wrapper">
+			<div id="content_wrapper">
+				<div id="sidebar_menu" style="float:left;">
+					<ul id="menu_list" class="nav nav-pills nav-stacked">
+						<li id="usr_status">
+							<a href="/homes/adminuserstatus">User Statuses</a>
+						</li>
+						<li id="usr_profile">
+							<a href=""/homes/adminuserprofile"">User Profiles</a>
+						</li>
+						<li id="usr_payment">
+							<a href="/homes/adminuserpayment">User Payment</a>
+						</li>
+						<li id="usr_purchases"  class="panel">
+
+							<a  class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">User Purchases</a>
+							<div id="collapseOne" class="panel-collapse collapse">
+								<div class="panel-body">
+									<ul>
+										<li id="admn_itq_panel">
+											<a href="#" style="color:#000">Instant Target Qualification</a>
+										</li>
+										<li id="admn_itm_panel">
+											<a href="#" style="color:#000">Instant Target Map</a>
+										</li>
+										<li id="admn_ih_panel">
+											<a href="#" style="color:#000">Instant 3D Home</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</li>
+
+						<li id="problem">
+
+							<a href="#">Sales</a>
+
+						</li>
+					</ul>
+				</div>
+				<div id="menu_content" style="float:right;">
+					<a href="/homes/adminuserprofile" style="font-size:16px;color:#000;margin-left:15px;">&lt;Back to list</a>
+					<div id="menu_content_header">
+						Profile of John Smith @ Big Bob Solar Inc.
+					</div>
+
+					<div id="menu_content_profile_set">
+						<div id="static_info">
+							<table class="table">
+								<tr>
+									<td>Name</td><td><%= @user.first['first_name']+' '+@user.first['last_name'] %></td>
+
+								</tr>
+								<tr>
+									<td>Title</td><td><%= @user.first['title'] %></td>
+
+								</tr>
+								<tr>
+									<td>Company</td><td><%= @user.first['company_name'] %></td>
+
+								</tr>
+								<tr>
+									<td>Address</td><td><%= @user.first['company_address'] %></td>
+
+								</tr>
+							</table>
+						</div>
+
+						<div id="change_info">
+							<div id="change_info_username" class="chnginf">
+								<form class="form-horizontal" role="form">
+
+									<div class="form-group">
+										<label style="text-align: left;" class="col-sm-6 control-label">Username</label>
+										<div class="col-sm-6">
+											<p class="form-control-static">
+												<%= @user.first['company_email_id'] %>
+											</p>
+										</div>
+									</div>
+
+								</form>
+							</div>
+							<div id="change_info_mobile_phn" class="chnginf">
+								<form class="form-horizontal" role="form">
+
+									<div class="form-group">
+										<label style="text-align: left;" class="col-sm-6 control-label">Mobile phone</label>
+										<div class="col-sm-6">
+											<p class="form-control-static" id="cur_mphone">
+												<%= @user.first['mobile_phone'] %>
+											</p>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label style="text-align: left;" for="newmobilephn" class="col-sm-6 control-label">New mobile phone</label>
+										<div class="col-sm-6">
+											<input type="text" class="form-control" id="newmobilephn" placeholder="555-555-5555">
+											<span style="color: red;" class="error_msg" id="e_mphone"></span>
+											<br>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label for="mobile_btn" class="col-sm-6 control-label"></label>
+										<div class="col-sm-6">
+											<input type="button" class="form-control" id="mobile_btn" onclick="updateMobilePhone()" value="Update">
+											</input>
+										</div>
+									</div>
+
+								</form>
+							</div>
+							<div id="change_info_work_phn" class="chnginf">
+								<form class="form-horizontal" role="form">
+
+									<div class="form-group">
+										<label style="text-align: left;" class="col-sm-6 control-label">Work phone</label>
+										<div class="col-sm-6">
+											<p class="form-control-static" id="cur_ophone">
+												<%= @user.first['office_phone'] %>
+											</p>
+										</div>
+									</div>
+									<div class="form-group">
+										<label style="text-align: left;" for="newworkphn" class="col-sm-6 control-label">New work phone</label>
+										<div class="col-sm-6">
+											<input type="text" class="form-control" id="newworkphn" placeholder="123-555-7890">
+											<span style="color: red;" class="error_msg" id="e_wphone"></span>
+											<br>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label for="work_btn" class="col-sm-6 control-label"></label>
+										<div class="col-sm-6">
+											<input type="button" class="form-control" id="work_btn" onclick="updateOfficePhone()" value="Update">
+											</input>
+										</div>
+									</div>
+
+								</form>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<div style="clear:left;"></div>
+
+			</div>
+			<!--End #content_wrapper-->
+		</div>
+		<!--End #bg_wrapper-->
+
+	</body>
+
+</html>

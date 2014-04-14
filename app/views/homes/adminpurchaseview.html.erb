@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>
+            ProspectZen
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link rel="icon" href="/assets/favicon.ico" type="image/x-icon"> 
+        <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+        <link href="/assets/bootstrap.css" rel="stylesheet">
+        <link href="/assets/flat-ui.css" rel="stylesheet">
+        <link href="/assets/reset.css" rel="stylesheet">
+        <link href="/assets/style_admin_purchase_view.css" rel="stylesheet">
+
+        <link href="/assets/mediaqueries_admin_purchase_view.css" rel="stylesheet">
+        <style>
+            
+            body{
+            overflow-y:scroll !important;
+               
+            }
+            #myModal{
+                overflow-y:hidden;
+            }
+            .mylabel{
+            background-color: #999;
+            }
+            .label-important{
+                background-color:#b94a48;
+            
+            }
+            #content_wrapper{
+            
+                min-width: 1083px;
+            
+            }
+            #menu_content{
+            
+                min-width: 900px;
+            
+            }
+            .panel-body{
+                border-top-left-radius:0px;
+                border-top-right-radius:0px;
+                padding:0px;
+                padding-top:15px;
+                padding-bottom:15px;
+            }
+            .panel-body ul li{
+/*                border-bottom:1px solid #0C8722;*/
+                padding-left:16px;
+            }
+            .panel-body ul li:last-child{
+                border-bottom:0px;
+            }
+            .table{
+                margin-left:15px;
+            }
+            .table > tbody > tr > td{
+                border:0px;
+                padding-top: 0px;
+padding-bottom: 0px;
+                padding-left:0px;
+            }
+            .main_heading{
+            font-family:latobold;
+            }
+            
+            .nav-pills > li > a{
+                font-size:16px;
+            }
+            #usr_purchases a{
+            font-size:16px;
+                
+            }
+            </style>
+        <script src="/assets/jquery.js"></script>
+        <script src="/assets/bootstrap.min.js"></script>
+        
+        <script type="text/javascript">
+         $(document).ready(function() {
+         var flag=0;  
+                  
+        <% if @transction.first['prev_check'].blank? %>
+			$('#prev_check').css("display","none");
+		<% else %>
+			$('#prev_check').show();
+		<% end %>
+		
+		<% if @transction.first['owner_name'].blank? %>
+              $('#owner_name').css("display","none");
+         <% else %>
+              $('#owner_name').css("display","block");
+         <% end %>
+         
+         <% if @transction.first['mailing_address'].blank? %>
+              $('#mailing_address').css("display","none");
+         <% else %>
+              $('#mailing_address').css("display","block");
+         <% end %>
+         
+         <% if @transction.first['owner_occupied_indicator'].blank? %>
+              $('#owner_occupied').css("display","none");
+         <% else %>
+              $('#owner_occupied').css("display","block");
+         <% end %>
+         
+          <% if @transction.first['land_use_code'].blank? %>
+              $('#land_use_code').css("display","none");
+         <% else %>
+              $('#land_use_code').css("display","block");
+         <% end %> 
+         
+         <% if @transction.first['no_of_residential_per_common_units'].blank? %>
+              $('#no_of_residential_per_common_units').css("display","none");
+         <% else %>
+              $('#no_of_residential_per_common_units').show(); 
+         <% end %>
+         
+         <% if @owned.blank? %>
+              $('#last_sale_date').css("display","none");
+         <% else %>
+              $('#last_sale_date').css("display","block");
+         <% end %>
+         
+         <% if @transction.first['Premoves'].blank? %>
+              $('#likelihood_of_relocation').css("display","none");
+         <% else %>
+              $('#likelihood_of_relocation').css("display","block");
+         <% end %>        
+         
+         // <% if @transction.first['last_sale_price_per_sqr_ft'].blank? %>
+              // $('#last_sale_price_per_sqrft').hide();
+         // <% else %>
+              // $('#last_sale_price_per_sqrft').show(); 
+               // flag = 1;
+         // <% end %>
+      
+         <% if @transction.first['heat_type'].blank? %>
+              $('#heat_type').css("display","none");
+         <% else %>
+              $('#heat_type').css("display","block");
+              flag = 1;
+         <% end %>
+         
+         <% if @transction.first['heat_fuel'].blank? %>
+              $('#heat_fuel').css("display","none");
+         <% else %>
+              $('#heat_fuel').css("display","block");
+              flag = 1; 
+         <% end %>
+         
+          <% if @age.blank? %>
+              $('#age_of_home').css("display","none");
+         <% else %>
+              $('#age_of_home').css("display","block");
+              flag = 1;
+         <% end %>
+         
+          <% if @transction.first['PersonsatResidence_z4'].blank? %>
+              $('#persons_living').css("display","none");
+         <% else %>
+              $('#persons_living').css("display","block");
+              flag = 1;
+         <% end %>       
+      
+         <% if @transction.first['gross_area'].blank? %>
+              $('#gross_area').css("display","none");
+         <% else %>
+              $('#gross_area').css("display","block"); 
+              flag = 1;
+         <% end %>
+         
+         <% if @transction.first['no_of_bedrooms'].blank? && @transction.first['no_of_bathrooms'].blank?%>
+              $('#no_of_bedrooms').css("display","none");
+         <% else %>
+              $('#no_of_bedrooms').css("display","block");
+              flag = 1;
+         <% end %>
+        
+         <% if @transction.first['pool'].blank? %>
+              $('#pool').css("display","none");
+         <% else %>
+              $('#pool').css("display","block");
+              flag = 1; 
+         <% end %>
+         
+         <% if (@utility.length > 0) %>
+                utl =<%= raw @utility %>
+                $('#utility').css("display","block");
+        		
+        		var str = ''
+        		    
+        	 	  flag = 1;
+				for (var x = 0; x < utl.length; x++) {
+					
+					str+=utl[x]+'<br>';
+				
+				 }
+
+		    	$("#utility_data").html(str);
+		
+		<% else %>
+                $('#utility').css("display","none");
+               
+		<% end %>  
+		
+		if (flag == 0)
+         {
+         	$('#electricity_head').css("display","none");
+         }
+         
+         else{
+         	flag=0;
+         }
+         
+         <% if @transction.first['riskiq3'].blank? %>
+              $('#est_credit_score').css("display","none");
+         <% else %>
+              $('#est_credit_score').css("display","block");
+              flag = 1;
+         <% end %>
+         
+         <% if @transction.first['IncomeIQ_Dol'].blank? %>
+              $('#income').css("display","none");
+         <% else %>
+              $('#income').css("display","block");
+               flag = 1;
+         <% end %> 
+         
+         <% if @transction.first['Homeequity_pc_z4'].blank? %>
+              $('#home_equity_to_home_value_ratio').css("display","none");
+         <% else %>
+              $('#home_equity_to_home_value_ratio').css("display","block");
+              flag = 1;
+         <% end %>
+         
+         <% if @transction.first['DebtRatio'].blank? %>
+              $('#debt_to_income_ratio').css("display","none");
+         <% else %>
+              $('#debt_to_income_ratio').css("display","block");
+               flag = 1;
+         <% end %>
+         
+         <% if @transction.first['last_sale_price'].blank? %>
+              $('#last_sale_price').css("display","none");
+         <% else %>
+              $('#last_sale_price').css("display","block");
+              flag = 1;
+         <% end %>
+         
+         if (flag == 0)
+         {
+         	$('#money_head').css("display","none");
+         }
+         
+         else{
+         	flag=0;
+         }
+         
+         <% if @transction.first['roof_frame'].blank? %>
+              $('#roof_frame').css("display","none");
+         <% else %>
+              $('#roof_frame').css("display","block");
+              flag = 1; 
+         <% end %>
+         
+                  
+         <% if @transction.first['roof_shape'].blank? %>
+              $('#roof_shape').css("display","none");
+         <% else %>
+              $('#roof_shape').css("display","block");
+              flag = 1; 
+         <% end %>
+         
+         <% if @transction.first['roof_type'].blank? %>
+              $('#roof_type').css("display","none");
+         <% else %>
+              $('#roof_type').css("display","block");
+              flag = 1;
+         <% end %>
+         
+         <% if @transction.first['roof_material'].blank? %>
+              $('#roof_material').css("display","none");
+         <% else %>
+              $('#roof_material').css("display","block");
+              flag = 1;
+         <% end %>
+         
+         // <% if @transction.first['condition'].blank? %>
+              // $('#roof_condition').hide();
+         // <% else %>
+              // $('#roof_condition').show(); 
+               // flag = 1;
+         // <% end %>
+         
+         <% if @transction.first['no_of_stories'].blank? %>
+              $('#no_of_stories').css("display","none");
+         <% else %>
+              $('#no_of_stories').css("display","block");
+               flag = 1;
+         <% end %>
+         
+         
+
+         // <% if @transction.first['living_area'].blank? %>
+              // $('#living_area').hide();
+         // <% else %>
+              // $('#living_area').show(); 
+              // flag = 1;
+         // <% end %>
+        
+         <% if @transction.first['zoning'].blank? %>
+              $('#zoning').css("display","none");
+         <% else %>
+              $('#zoning').css("display","block");
+              flag = 1;
+         <% end %>
+
+         if (flag == 0)
+         {
+         	$('#installation_head').css("display","none");
+         }
+         
+         else{
+         	flag=0;
+         }
+   
+         <% if @transction.first['delineate'].blank? %>
+              $('#delineate').css("display","none");
+         <% else %>
+              $('#delineate').css("display","block");
+               flag = 1;
+         <% end %>
+      
+         <% if @transction.first['AIQ_Green'].blank? %>
+              $('#green_living_model').css("display","none");
+         <% else %>
+              $('#green_living_model').css("display","block");
+               flag = 1;
+         <% end %>
+         
+         <% if @transction.first['HomeOwner_pct_z4'].blank? %>
+              $('#homeowner_penetration').css("display","none");
+         <% else %>
+              $('#homeowner_penetration').css("display","block");
+              flag = 1; 
+         <% end %>
+         
+         <% if @transction.first['Age_z4'].blank? %>
+              $('#head_of_household_age').css("display","none");
+         <% else %>
+              $('#head_of_household_age').css("display","block");
+              flag = 1;
+         <% end %>
+
+         // <% if @transction.first['ResidenceTime_z4'].blank? %>
+              // $('#time_at_residence').hide();
+         // <% else %>
+              // $('#time_at_residence').show(); 
+              // flag = 1;
+         // <% end %>
+//         
+         // <% if @transction.first['MortgageAmount_z4'].blank? %>
+              // $('#amount_of_mortgage').hide();
+         // <% else %>
+              // $('#amount_of_mortgage').show(); 
+              // flag = 1;
+         // <% end %>
+
+         // <% if @transction.first['LoantoValue_z4'].blank? %>
+              // $('#loan_balance_to_home_value_ratio').hide();
+         // <% else %>
+              // $('#loan_balance_to_home_value_ratio').show(); 
+              // flag = 1;
+         // <% end %>
+                   
+         // <% if @transction.first['IncomeIQ_plus_z4'].blank? %>
+              // $('#est_annual_income').hide();
+         // <% else %>
+              // $('#est_annual_income').show(); 
+              // flag = 1;
+         // <% end %>
+//       
+         // <% if @transction.first['NumberofadultsinZip4'].blank? %>
+              // $('#adults_in_zip').hide();
+         // <% else %>
+              // $('#adults_in_zip').show(); 
+              // flag = 1;
+         // <% end %>
+         
+                
+         if (flag == 0)
+         {
+         	$('#area_head').css("display","none");
+         }
+         
+         else{
+         	flag=0;
+         }
+         
+         
+         
+         <% if @transction.first['zip'].blank? %>
+              $('#smi').hide();
+         <% else %>
+              $('#smi').show(); 
+         <% end %>
+         
+         <% if @zee.blank? && @cee.blank?%>
+              $('#zee').hide();
+              $('#3rd_party_owned_system').hide();
+              $('#average_system').hide();
+              $('#smi').hide();
+              
+         <% else %>
+              $('#zee').show(); 
+              $('#3rd_party_owned_system').show(); 
+              $('#average_system').show(); 
+              $('#smi').show(); 
+         <% end %>
+        
+         <% if @zti.blank? && @cti.blank? %>
+              $('#top_installer').hide();
+         <% else %>
+              $('#top_installer').show(); 
+         <% end %>
+         
+         <% if @zpb.blank? && @cpb.blank? %>
+              $('#top_panel').hide();
+         <% else %>
+              $('#top_panel').show(); 
+         <% end %>
+         
+         <% if @zib.blank? && @cib.blank? %>
+              $('#top_inverter').hide();
+         <% else %>
+              $('#top_inverter').show(); 
+         <% end %>
+         
+         
+
+
+         });
+     </script>
+
+    </head>
+    <body>
+
+        <div class="container">
+            <div id="bgnav" class="navbar navbar-fixed-top navbar-inverse">
+                <div id="navigation" role="navigation">
+
+                    <div class="navbar-header">
+                        <a class="navlink" style="color: white;" href='/homes/adminuserstatus'> 
+                            <div id="logo"></div>
+                        </a>
+
+                    </div>                   
+                        <ul id="pull_right" class="nav navbar-nav">
+                        	                           
+                            <li><form action="../homes/adminlogout" method="post"> 
+                            	<input id="login" class="button" style='width:91px; font-size:15px;height: 41px' type="submit" value="LOGOUT"/>
+							</form>
+
+                        </ul>                  
+
+                </div><!-- /.navbar -->
+            </div>
+        </div>
+        <!--End .container-->
+
+               <div id="bg_wrapper">
+            <div id="content_wrapper">
+                <div id="sidebar_menu" style="float:left;">
+                    <ul id="menu_list" class="nav nav-pills nav-stacked">
+                    	
+                        
+                        
+                        
+                        <li id="usr_status">
+							<a href="/homes/adminuserstatus"><span style="margin-right:3px;font-size:16px;" class="glyphicon glyphicon-thumbs-up"></span>User Statuses</a>
+						</li>
+						<li id="usr_profile">
+							<a href="/homes/adminuserprofile"><span style="margin-right:3px;font-size:16px;" class="glyphicon glyphicon-user"></span>User Profiles</a>
+						</li>
+						<li id="usr_payment">
+							<a href="/homes/adminuserpayment"><span style="margin-right:3px;font-size:16px;" class="glyphicon glyphicon-credit-card"></span>User Payment</a>
+						</li>
+                        <li id="usr_purchases"  class="panel">
+                           <a  class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><span style="margin-right:3px;font-size:16px;" class="glyphicon glyphicon-list"></span>User Purchases</a>
+                            <div id="collapseOne" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <ul>
+                                        <li id="admn_itq_panel"><a href="/homes/adminuserpurchase" style="color:#000">Instant Prospect Qualifier  </a></li>
+                                        <li id="admn_itm_panel"><a href="#" style="color:#000">Instant Prospect Generator  </a></li>
+                                        <li id="admn_ih_panel"><a href="#" style="color:#000">Instant 3D Home</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+						<li id="usr_sales">
+
+							<a href="/homes/sales"><span style="margin-right:3px;font-size:16px;" class="glyphicon glyphicon-usd"></span>Sales</a>
+
+						</li>
+                    </ul>
+                </div>
+                <div id="menu_content" style="float:right;">
+                	<a href="/homes/adminuserpurchaselist" style="font-size:16px;color:#000;margin-left:15px;">&lt;Back to list</a>
+                    <div id="menu_content_header">
+                       <%= @transction.first['address'] %>
+                    </div>
+
+
+                    <div style="font-size: 16px;padding:15px;line-height:22px;">                 
+                        
+                       <div id="resident_head" class="col-sm-12 main_heading">
+                            NEED TO KNOW   
+                           
+                       </div>
+                        <div style="clear:both;"></div>
+                        <div id="prev_check"> <div class="col-sm-4 main_heading">No. of checks on this address</div><div class="col-sm-8"><% if @transction.first['prev_check']==1 %> You're the first <% else %>  <%= @transction.first['prev_check'] %> <% end %> </div> </div>
+                       <div style="clear:both;"></div>
+                        <div id="owner_name"> <div class="col-sm-4 main_heading">Name of Owner(s)</div><div class="col-sm-8"><%= @transction.first['owner_name'].titleize %></div> </div>
+                       <div style="clear:both;"></div>
+                        <div id="mailing_address"> <div class="col-sm-4 main_heading">Full Mailing Address</div><div class="col-sm-8"><%= @transction.first['mailing_address'].titleize %></div></div>
+                             <div style="clear:both;"></div>
+                        <div id="owner_occupied"> <div class="col-sm-4 main_heading">Owner Occupied?</div><div class="col-sm-8"><% if @transction.first['owner_occupied_indicator']=='1' %> Yes <% elsif @transction.first['owner_occupied_indicator']=='0' %> No <% end %></div> </div>
+                      <div style="clear:both;"></div>
+                        <div id="land_use_code"> <div class="col-sm-4 main_heading">Property Type</div><div class="col-sm-8"><% if @transction.first['land_use_code']=='SFR' %>Single Family Home <% else %><%= @transction.first['land_use_code'].titleize %><% end %></div> </div>
+                       <div style="clear:both;"></div>
+                        <div id="no_of_residential_per_common_units"> <div class="col-sm-4 main_heading">No. of Units</div><div class="col-sm-8"><%= @transction.first['no_of_residential_per_common_units'] %></div></div>
+                         <div style="clear:both;"></div>
+                        <div id="likelihood_of_relocation"> <div class="col-sm-4 main_heading">How likely to relocate in 3-6 months?</div><div class="col-sm-8">
+                        	 <%if @transction.first['Premoves'].to_i<= 25 %>
+                        	 Very Unlikely
+                        	 <% elsif @transction.first['Premoves'].to_i<= 50 %> 
+                        	 Unlikely 
+                        	 <% elsif @transction.first['Premoves'].to_i<= 75 %> 
+                        	 Somewhat 
+                        	 <% elsif @transction.first['Premoves'].to_i<= 100 %>
+                        	 very 
+                        	 <% else %> 
+                        	 <% @transction.first['Premoves']%>
+                        	 <%end%></div></div>
+                        <div id="last_sale_date"> <div class="col-sm-4 main_heading">Owned for</div><div class="col-sm-8"><%= @owned %></div></div>
+                        <div style="clear:both;margin-bottom:20px;"></div>
+                        
+                        <div id="electricity_head" class="col-sm-12 main_heading">
+                            ELECTRICITY INDICATORS
+                            
+                        </div>
+                        <div style="clear:both;"></div>
+                        <div id="heat_type"> <div class="col-sm-4 main_heading">Heat Type</div><div class="col-sm-8"><%= @transction.first['heat_type'].titleize %></div></div>
+                        <div style="clear:both;"></div>
+                        <div id="heat_fuel"> <div class="col-sm-4 main_heading">Heat Fuel</div><div class="col-sm-8"><%= @transction.first['heat_fuel'].titleize %></div></div>
+                        <div style="clear:both;"></div>
+                        <div id="age_of_home"> <div class="col-sm-4 main_heading">Age of Home</div><div class="col-sm-8"><%= @age%></div></div>
+                        <div style="clear:both;"></div>
+                        <div id="persons_living"> <div class="col-sm-4 main_heading">Approximate no. of people living here</div><div class="col-sm-8"><%= @transction.first['PersonsatResidence_z4'] %></div></div>
+                        <div style="clear:both;"></div>
+                        <div id="gross_area"> <div class="col-sm-4 main_heading">Gross Area</div><div class="col-sm-8"><%= @transction.first['gross_area'] %>sqft</div></div>
+                        <div style="clear:both;"></div>
+                        <div id="no_of_bedrooms"> <div class="col-sm-4 main_heading">No. of Bed/Baths</div><div class="col-sm-8"><%= @transction.first['no_of_bedrooms'] %>/<%= @transction.first['no_of_bathrooms'] %></div></div>
+                        <div style="clear:both;"></div>
+                        <!-- <div id="no_of_bathrooms"> <div class="col-sm-4 main_heading">No. of Bathrooms</div><div class="col-sm-8"><%= @transction.first['no_of_bathrooms'] %></div></div> -->
+                        <div id="pool"> <div class="col-sm-4 main_heading">Has Pool?</div><div class="col-sm-8"><% if @transction.first['pool']=='1' %> Yes <% elsif @transction.first['pool']=='0' %> No <% end %></div></div>  
+                        <div style="clear:both;"></div>
+                        <div id="utility"> <div class="col-sm-4 main_heading">Utility provider (s)</div><div id="utility_data" class="col-sm-8"></div></div>   
+                       
+                        <div style="clear:both;margin-bottom:20px;"></div>
+                       
+                        <div id="money_head" class="col-sm-12 main_heading">
+                            SHOW ME THE MONEY
+                        </div>
+                        <div style="clear:both;"></div>
+                        <div id="est_credit_score"> <div class="col-sm-4 main_heading">Estimated Credit Score</div>
+	                        <div class="col-sm-8">
+	                        	<%if @transction.first['riskiq3'].to_i<= 36 %>
+	                        	  <650 
+	                        	 <% elsif @transction.first['riskiq3'].to_i<= 50 %> 
+	                        	 650-700 
+	                        	 <% elsif @transction.first['riskiq3'].to_i<= 82 %> 
+	                        	 700-750 
+	                        	 <% elsif @transction.first['riskiq3'].to_i<= 99 %>
+	                        	 800+ 
+	                        	 <%end%>
+	                         </div>
+	                     </div>
+                            <div style="clear:both;"></div>
+                        <div id="income"> <div class="col-sm-4 main_heading">Estimated Household Income</div><div class="col-sm-8">$<%= @transction.first['IncomeIQ_Dol'] %></div></div>
+                            <div style="clear:both;"></div>
+                        <!-- <div id="est_annual_income"> <div class="col-sm-4 main_heading">Income Score</div><div class="col-sm-8"><%= @transction.first['IncomeIQ_plus_z4']%></div></div>                   -->
+                        <div id="home_equity_to_home_value_ratio"> <div class="col-sm-4 main_heading">Estimated Home Equity</div><div class="col-sm-8"><%= @transction.first['Homeequity_pc_z4'] %></div></div>
+                            <div style="clear:both;"></div>
+                        <div id="debt_to_income_ratio"> <div class="col-sm-4 main_heading">Estimated Debt to Income</div><div class="col-sm-8"><%= @transction.first['DebtRatio'] %></div></div>
+                            <div style="clear:both;"></div>
+                        <div id="last_sale_price"> <div class="col-sm-4 main_heading">Last Sale Price</div><div class="col-sm-8"><%= @transction.first['last_sale_price'] %></div></div>
+                        <div style="clear:both;margin-bottom:20px;"></div> 
+
+                        <div id="installation_head" class="col-sm-12 main_heading">
+                            EASE OF INSTALLATION
+                        </div>
+                        <div style="clear:both;"></div> 
+                   		<div id="roof_type"> <div class="col-sm-4 main_heading">Roof Type</div><div class="col-sm-8"><%= @transction.first['roof_type'].titleize %></div></div>
+                            <div style="clear:both;"></div>
+                        <div id="roof_shape"> <div class="col-sm-4 main_heading">Roof Shape</div><div class="col-sm-8"><%= @transction.first['roof_shape'].titleize %></div></div>
+                            <div style="clear:both;"></div>
+                        <div id="roof_frame"> <div class="col-sm-4 main_heading">Roof Frame</div><div class="col-sm-8"><%= @transction.first['roof_frame'].titleize %></div></div>
+                            <div style="clear:both;"></div>
+                        <div id="roof_material"> <div class="col-sm-4 main_heading">Roof Material</div><div class="col-sm-8"><%= @transction.first['roof_material'].titleize %></div></div>
+                            <div style="clear:both;"></div>
+                        <!-- <div id="roof_condition"> <div class="col-sm-4 main_heading">Roof Condition</div><div class="col-sm-8"><%= @transction.first['condition'] %></div></div> -->
+                        <div id="no_of_stories"> <div class="col-sm-4 main_heading">No. of Stories</div><div class="col-sm-8"><%= @transction.first['no_of_stories'] %></div></div>
+                            <div style="clear:both;"></div>
+                        <div id="zoning"> <div class="col-sm-4 main_heading">Zoning</div><div class="col-sm-8"><%= @transction.first['zoning'] %></div></div>      
+                        <!-- <div id="last_sale_price_per_sqrft"> <div class="col-sm-4 main_heading">Last Sale Price/sqft</div><div class="col-sm-8"><%= @transction.first['last_sale_price_per_sqr_ft'] %></div></div> -->
+                        <!-- <div id="living_area"> <div class="col-sm-4 main_heading">Living Area</div><div class="col-sm-8"><%= @transction.first['living_area'] %>sqft</div></div> -->
+                   	    <div style="clear:both;margin-bottom:20px;"></div> 
+                   	    
+                   	    <div id="area_head" class="col-sm-12 main_heading">
+                            AREA PROFILE
+                        </div>
+                        <div style="clear:both;"></div> 
+                        <div id="delineate"> <div class="col-sm-4 main_heading">Segmentation</div>
+	                        <div class="col-sm-8">
+	                          <%if @transction.first['delineate'].to_i>= 101 && @transction.first['delineate'].to_i<= 105 %>
+	                        	 Assimilating New Americans
+	                          <% elsif @transction.first['delineate'].to_i>= 201 && @transction.first['delineate'].to_i<= 207 %> 
+	                        	 Mid-Market America
+	                          <% elsif @transction.first['delineate'].to_i>= 301 && @transction.first['delineate'].to_i<= 307 %> 
+	                        	 High Society
+	                          <% elsif @transction.first['delineate'].to_i>= 401 && @transction.first['delineate'].to_i<= 406 %>
+	                        	 Blue Collar America 
+	                          <% elsif @transction.first['delineate'].to_i>= 501 && @transction.first['delineate'].to_i<= 506 %>
+	                        	 The High and Mighty
+	                          <% elsif @transction.first['delineate'].to_i>= 601 && @transction.first['delineate'].to_i<= 604 %>
+	                        	 In Town Homeowners
+	                          <% elsif @transction.first['delineate'].to_i>= 701 && @transction.first['delineate'].to_i<= 704 %>
+	                        	 Struggling to Get Ahead
+	                          <% elsif @transction.first['delineate'].to_i>= 801 &&@transction.first['delineate'].to_i<= 803 %>
+	                        	 New Americans
+	                          <% elsif @transction.first['delineate'].to_i>= 901 && @transction.first['delineate'].to_i<= 904 %>
+	                        	 Economic Casualties
+	                          <% elsif @transction.first['delineate'].to_i>= 1001 && @transction.first['delineate'].to_i<= 1006 %>
+	                        	 The 'Burbs
+	                          <% else %>
+	                          <%= @transction.first['delineate'] %>
+	                          <%end%>
+	                         </div>
+	                     </div>
+                            <div style="clear:both;"></div>
+	                     <div id="green_living_model">
+							<div class="col-sm-4 main_heading">
+								Green Living Model
+							</div>
+							<div class="col-sm-8">
+								<%if @transction.first['AIQ_Green'].to_i < 25 %>
+								Hardly
+								<%elsif @transction.first['AIQ_Green'].to_i < 50 %>
+								Not very
+								<%elsif @transction.first['AIQ_Green'].to_i < 75 %>
+								Somewhat
+								<% else %>
+								very
+								<% end %>
+							</div>
+                             <div style="clear:both;"></div>
+							</div>
+							<div id="homeowner_penetration">
+								<div class="col-sm-4 main_heading">
+									% homes owned (vs. rented)
+								</div>
+								<div class="col-sm-8">
+									<%= @transction.first['HomeOwner_pct_z4'] %>%
+								</div>
+                                
+							</div>
+                            <div style="clear:both;"></div>
+							<div id="head_of_household_age">
+								<div class="col-sm-4 main_heading">
+									Approximate Head of Household Age
+								</div>
+								<div class="col-sm-8">
+									<%= @transction.first['Age_z4'] %> years
+								</div>
+							</div>
+                            <div style="clear:both;"></div>
+							<!-- <div id="time_at_residence"> <div class="col-sm-4 main_heading">Time at Residence</div><div class="col-sm-8"><%= @transction.first['ResidenceTime_z4'] %></div></div> -->
+							<!-- <div id="amount_of_mortgage"> <div class="col-sm-4 main_heading">Amount of Mortgage</div><div class="col-sm-8"><%= @transction.first['MortgageAmount_z4'] %></div></div> -->
+							<!-- <div id="loan_balance_to_home_value_ratio"> <div class="col-sm-4 main_heading">Loan Balance to Home Value Ratio</div><div class="col-sm-8"><%= @transction.first['LoantoValue_z4'] %></div></div> -->
+							<!-- <div id="adults_in_zip"> <div class="col-sm-4 main_heading">Adults in Zip+4</div><div class="col-sm-8"><%= @transction.first['NumberofadultsinZip4'] %></div></div> -->
+							<div style="clear:both;margin-bottom:20px;"></div>
+
+							<div id="solar_head" class="col-sm-12 main_heading">
+								
+							</div>
+							<div class="table-responsive">
+								<table class="table">
+									<tr id="smi">
+										<td class="col-sm-4 main_heading" style="padding-top:20px !important">SOLAR ADOPTION</td>
+										<td class="col-sm-4 main_heading" style="padding-top:20px">(for <%= @transction.first['zip'] %>)</td>
+										<td class="col-sm-4 main_heading" style="padding-top:20px">(for <%= @transction.first['city'] %>)</td>
+									</tr>
+
+									<tr id="zee">
+										<td class="main_heading">Solar Homes</td>
+										<td><% if @zee.blank? %> <% else %> <%= @zee.first["no_of_solar_homes"] %>kW <% end %></td>
+										<td><% if @cee.blank? %> <% else %> <%= @cee.first["no_of_solar_homes"] %>kW <% end %></td>
+									</tr>
+
+									<tr id="3rd_party_owned_system">
+										<td class="main_heading">3rd Party</td>
+										<td><% if !@zee.blank? %> <%= @zee.first["3rd_party_owned_system"] %> % <% end %></td>
+										<td><% if !@cee.blank? %> <%= @cee.first["3rd_party_owned_system"] %><% end %></td>
+									</tr>
+
+									<tr id="average_system">
+										<td class="main_heading">Avg. System </td>
+										<td><% if !@zee.blank? %> <%= @zee.first["average_system_size"] %> % <% end %></td>
+										<td><% if !@cee.blank? %> <%= @cee.first["average_system_size"] %> % <% end %></td>
+									</tr>
+                                    <tr>
+                                        <td style="padding-bottom:15px"></td>
+                                    </tr>
+									<tr id="top_installer">
+										<td rowspan="5" class="main_heading">Top Installers</td>
+										<td> <% if !@zti[0].blank? %> 1. <%= @zti[0]["installers"] %> <% end %></td>
+										<td> <% if !@cti[0].blank? %> 1. <%= @cti[0]["installers"] %> <% end %></td>
+									</tr>
+									<tr>
+										<td> <% if !@zti[1].blank? %> 2. <%= @zti[1]["installers"] %> <% end %></td>
+										<td> <% if !@cti[1].blank? %> 2. <%= @cti[1]["installers"] %> <% end %></td>
+									</tr>
+									<tr>
+										<td> <% if !@zti[2].blank? %> 3. <%= @zti[2]["installers"] %> <% end %></td>
+										<td> <% if !@cti[2].blank? %> 3. <%= @cti[2]["installers"] %> <% end %></td>
+									</tr>
+									<tr>
+										<td> <% if !@zti[3].blank? %> 4. <%= @zti[3]["installers"] %> <% end %></td>
+										<td> <% if !@cti[3].blank? %> 4. <%= @cti[3]["installers"] %> <% end %></td>
+									</tr>
+									<tr>
+										<td> <% if !@zti[4].blank? %> 5. <%= @zti[4]["installers"] %> <% end %></td>
+										<td> <% if !@cti[4].blank? %> 5. <%= @cti[4]["installers"] %> <% end %></td>
+									</tr>
+                                    <tr>
+                                        <td style="padding-bottom:15px"></td>
+                                    </tr>
+									<tr id="top_panel">
+										<td rowspan="3" class="main_heading">Top Panels Brands</td>
+										<td> <% if !@zpb[0].blank? %> 1. <%= @zpb[0]["panel_brands"] %> <% end %></td>
+										<td> <% if !@cpb[0].blank? %> 1. <%= @cpb[0]["panel_brands"] %> <% end %></td>
+									</tr>
+									<tr>
+										<td> <% if !@zpb[1].blank? %> 2. <%= @zpb[1]["panel_brands"] %> <% end %></td>
+										<td> <% if !@cpb[1].blank? %> 2. <%= @cpb[1]["panel_brands"] %> <% end %></td>
+									</tr>
+									<tr>
+										<td> <% if !@zpb[2].blank? %> 3. <%= @zpb[2]["panel_brands"] %> <% end %></td>
+										<td> <% if !@cpb[2].blank? %> 3. <%= @cpb[2]["panel_brands"] %> <% end %></td>
+									</tr>
+                                    <tr>
+                                        <td style="padding-bottom:15px"></td>
+                                    </tr>
+									<tr id ="top_inverter">
+										<td rowspan="3" class="main_heading">Top Inverters </td>
+										<td> <% if !@zib[0].blank? %> 1. <%= @zib[0]["inverter_brands"] %> <% end %></td>
+										<td> <% if !@cib[0].blank? %> 1. <%= @cib[0]["inverter_brands"] %> <% end %></td>
+									</tr>
+									<tr>
+										<td> <% if !@zib[1].blank? %> 2. <%= @zib[1]["inverter_brands"] %> <% end %></td>
+										<td> <% if !@cib[1].blank? %> 2. <%= @cib[1]["inverter_brands"] %> <% end %></td>
+									</tr>
+									<tr>
+										<td> <% if !@zib[2].blank? %> 3. <%= @zib[2]["inverter_brands"] %> <% end %></td>
+										<td> <% if !@cib[2].blank? %> 3. <%= @cib[2]["inverter_brands"] %> <% end %></td>
+									</tr>
+
+                              
+                          </table>
+                        </div>
+                        
+                        
+                    </div>
+
+
+                </div>
+
+
+            </div>
+            <!--End #content_wrapper-->
+        </div>
+        <!--End #bg_wrapper-->
+
+
+    </body>
+
+</html>

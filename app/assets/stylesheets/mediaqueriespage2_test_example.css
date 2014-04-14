@@ -1,0 +1,127 @@
+@media screen and (max-width:1214px){
+    #loc_search{
+
+       
+        width:450px;
+    }
+    
+}
+@media screen and (max-width:1120px){
+    #loc_search{
+
+       
+        width:380px;
+    }
+}
+@media screen and (max-width:1045px){
+    #loc_search{
+
+       
+        width:300px;
+    }
+}
+@media screen and (min-width:943px){
+    .open > .dropdown-menu {
+        margin-top: 28px !important;
+        
+    }
+}
+
+@media screen and (max-width:942px){
+    .open > .dropdown-menu {
+        margin-top: 18px !important;
+    }
+    
+}
+@media screen and (max-width:957px){
+    #panel_container{
+        margin-top:169px;
+    }
+
+    
+}
+@media screen and (max-width:957px){
+    #explore_banner{
+        padding:9px 10px;
+        line-height:18px;
+    }
+}
+
+@media screen and (max-width:782px){
+    #panel_container{
+        margin-top:139px;
+    }
+}
+@media screen and (max-width:767px){
+    .no-transition {
+        -webkit-transition: height .0001s;
+        -moz-transition: height .0001s;
+        -ms-transition: height .0001s;
+        -o-transition: height .0001s;
+        transition: height .0001s;
+    }
+    .open > .dropdown-menu {
+        margin-top: 0px !important;
+        background:#5cb85c !important;
+    }
+    .navbar-inverse .navbar-nav > .open > .dropdown-menu > li > a:hover {
+        background: #000 !important;
+    }
+    
+    #panel_menu_content{
+        width:auto;
+        padding:0 0px 0px 0px;
+    }
+    #panel_container{
+    width:424px;
+    }
+    #panel_container_content{
+        width:400px;
+    }
+    #panel_menu_show{
+        font-size: 16px;
+    }
+    #panel_search_result{
+        font-size: 21px;
+    }
+}
+
+@media screen and (max-width:463px){
+    #explore_banner{
+        line-height: 18px;
+        text-align: left;
+        font-size: 13px;
+    }
+}
+@media screen and (max-width:406px){
+    
+    #panel_container_sidebar{
+        display:none;
+    }
+    #abc{
+        visibility:hidden;
+    }
+    #panel_container{
+        width:400px;
+    }
+    #panel_container_content{
+        width:400px;
+    }
+    
+}
+@media screen and (max-width:406px){
+    
+   
+    #panel_container{
+        overflow-x: scroll;
+    }
+    #panel_container_content{
+        width:400px;
+    }
+    #loc_search{
+        width:92%;
+        margin-left: 0%;
+    }
+    
+    
+}

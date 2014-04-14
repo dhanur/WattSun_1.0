@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>
+            Wattsun
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link href="/assets/bootstrap.min.css" rel="stylesheet">
+        <link href="/assets/flat-ui.css" rel="stylesheet">
+        <link href="/assets/reset.css" rel="stylesheet">
+        <link href="/assets/style_signup.css" rel="stylesheet">
+
+        <link href="/assets/mediaqueries_signup.css" rel="stylesheet">
+        
+        
+        <script src="/assets/jquery.js"></script>
+        <script src="/assets/bootstrap.min.js"></script>
+        <script src="/assets/field_validation.js"></script>
+        <script type="text/javascript" src="/assets/jquery.customSelect.js"></script>
+        <script type="text/javascript">
+			$(function() {
+
+				$('select.styled').customSelect();
+				
+				
+				
+				
+				<% if session[:errormessagesignup] %>      
+		         
+		              $('#comp_id').html( "Someone has already applied with this email. Please wait for approval or apply with a different email id."); 
+                  
+                   
+                    <%end%>						
+					
+				
+					<% session[:errormessagesignup]=nil %>
+										
+								
+
+			});
+		</script>
+        <style type="text/css">
+			.styled {
+				margin-left: 50px;
+				margin-top: 30px;
+			}
+			span.customSelect {
+				font-size: 15px;
+				background-color: #fff;
+				color: #7c7c7c;
+				padding: 10px 10px;
+				border: 2px solid #B0B6BB;
+				-moz-border-radius: 5px;
+				-webkit-border-radius: 5px;
+				border-radius: 5px 5px;
+			}
+			span.customSelect.changed {
+				background-color: #fff;
+			}
+			.customSelectInner {
+				background: url(/assets/customSelect-arrow.gif) no-repeat center right;
+				width: 220px !important;
+			}
+		</style>
+    </head>
+    <body>
+
+        <div class="container" style="text-shadow:0 1px 2px rgba(0,0,0,.3);">
+            <div id="bgnav" class="navbar navbar-fixed-top navbar-inverse">
+                <div id="navigation" role="navigation">
+
+                    <div class="navbar-header">
+
+                        <button id="btn_collapse" type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+
+                        <a class="navlink" style="color: white;" href='#Top'> 
+                            <div id="logo"><p class="logo_txt">Wattsun</p></div>
+
+                        </a>
+
+                    </div>
+                    <div class="collapse navbar-collapse no-transition" id="side_scroll">
+                        <ul class="nav navbar-nav" id="pull_right">
+
+                            <li id="else" class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">What else does WattSun do? <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Instant Target Map <br />Coming soon!</a></li>
+                                    <li><a href="#">Instant 3D Home <br />Coming soon!</a></li>
+                                </ul>
+                            </li>
+                            <li><a class="navlink" href="/homes/faq">FAQs</a></li>
+                            <li><a class="navlink" href="/homes/contact">Contact</a></li>
+                            <li><a id="login" class="button" href="/homes/userlogin">LOGIN</a>
+
+                        </ul>
+
+                    </div><!-- /.nav-collapse -->
+                    
+
+                </div><!-- /.navbar -->
+            </div>
+        </div>
+        <!--End .container-->
+
+        <div id="bg_wrapper">
+            <div id="content_wrapper">
+                <div id="apply">
+                    <div id="apply_header">
+                        Apply for Access
+                    </div>
+                    <div id="apply_body">
+                        WattSun is available for use by approved solar companies.
+                        <br />
+                        Please tell us who you are and we will be in touch.
+                    </div>
+                    <div id="apply_form">
+                        <div class="row">
+                            <div>
+                                 <form action='/homes/create' method='post' onsubmit="return formValidation()">
+                                                                  
+                                 <p><input class="form-control" name="first_name" id="first_name" type="text" placeholder="First Name"><span style="float:left; color: red;" class="error_msg" id="fname"></span></p>
+                                    <div style="clear:both"></div>
+                                    <p><input class="form-control" name="last_name" id="last_name" type="text" placeholder="Last Name"><span style="float:left; color: red;" class="error_msg" id="lname"></span></p>
+                                    <div style="clear:both"></div>
+                                    <p><input class="form-control"name="title" id="title" type="text" placeholder="Title"><span style="float:left; color: red;" class="error_msg" id="tt"></span></p>
+                                    <div style="clear:both"></div>
+                                    <p><input class="form-control" name="company_name" id="company_name" type="text" placeholder="Company Name"><span style="float:left; color: red;" class="error_msg" id="comp_name"></span></p>
+                                    <div style="clear:both"></div>
+                                    <p><input class="form-control" name="company_address" id="company_address" type="text" placeholder="Company Address"><span style="float:left; color: red;" class="error_msg" id="comp_add"></span></p>
+                                    <div style="clear:both"></div>
+                                    <p><input class="form-control" name="zip" id="zip" type="text" placeholder="Zip"><span style="float:left; color: red;" class="error_msg" id="zp"></span></p>
+                                    <div style="clear:both"></div>
+                                    <p><input class="form-control"  name="city" id="city" type="text" placeholder="City"><span style="float:left; color: red;" class="error_msg" id="cty"></span></p>
+                                    <div style="clear:both"></div>
+                               
+                                    <p> 
+										<select class="form-control" name="state" id="state" class="styled">
+										<option value='' disabled selected style='display:none;'>State</option> 
+										<option value='Chandigarh'>Chandigarh</option>
+										<option value='California'>California</option> 
+										<option value='New York'>New York</option> 									
+										</select> 
+										<span style="float:left" class="error_msg"></span>
+									</p> 
+									                                                                   
+                                    <div style="clear:both"></div>
+                                    <p><input class="form-control" type="text" name="mobile_phone" id="mobile_phone" placeholder="Mobile Phone"><span style="float:left; color: red;" class="error_msg" id="mphone"></span></p>
+                                    <div style="clear:both"></div>
+                                    <p><input class="form-control" type="text" name="office_phone" id="office_phone"placeholder="Office Phone"><span style="float:left; color: red;" class="error_msg" id="ophone"></span></p>
+                                    <div style="clear:both"></div>
+                                    <div id="email_txt">
+                                        To prevent misuse of WattSun, we require that you apply with your solar company issued email id.
+                                        Once approved, this email will be your user name.
+                                    </div>
+                                    <p><input class="form-control" type="email" name="company_email_id" id="company_email_id" placeholder="Company Email ID"><span style="float:left; color: red;" class="error_msg" id="comp_id"></span></p>
+                                    <div style="clear:both"></div>
+                                    <input id="app_ly" type="submit"  class="btn btn-embossed btn-primary" value="Apply">
+                                    <div id="already"><a href="/homes/userlogin">Already approved? Login here</a></div>
+                                
+                                                        
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <!--End #content_wrapper-->
+
+            </div>
+            <!--End #bg_wrapper-->
+
+
+    </body>
+
+</html>

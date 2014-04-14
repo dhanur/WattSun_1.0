@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>
+            ProspectZen
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link rel="icon" href="/assets/favicon.ico" type="image/x-icon"> 
+        <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+        <link href="/assets/bootstrap.min.css" rel="stylesheet">
+        <link href="/assets/flat-ui.css" rel="stylesheet">
+        <link href="/assets/reset.css" rel="stylesheet">
+        <link href="/assets/style_adminlogin.css" rel="stylesheet">
+
+        <link href="/assets/mediaqueries_adminlogin.css" rel="stylesheet">
+        <script src="/assets/jquery.js"></script>
+        <script src="/assets/bootstrap.min.js"></script>
+        
+        
+        	        
+	    <script>
+				
+			$( document ).ready(function() {
+										
+					<% if session[:admin_signup_errormessage] %>      
+		         
+		              $('#data_match').html("Someone has already applied with this email. Please apply with a different email id."); 
+                  
+                    <%end%>						
+					
+					<% session[:admin_signup_errormessage]=nil %>
+					
+					$('#admin_name').focusin(function() { 
+					  $('#name').html(''); 
+					  $('#data_match').html(''); 
+					});
+										
+					$('#admin_email_id').focusin(function() { 
+					  $('#email_id').html(''); 
+					  $('#data_match').html(''); 
+					});
+					
+					
+					$('#admin_password').focusin(function() { 
+					  $('#passwd').html(''); 
+					  $('#data_match').html(''); 
+					});
+					
+			});
+				
+					
+			function dataValidation()
+			{
+								
+					var flag=0;
+				 
+					
+					if ($('#admin_name').val() == '' || $('#admin_name').val() == null)
+					{
+						$('#name').html("Admin name can't be blank.");
+						
+						flag=1;
+					}
+					
+					else
+				   	{
+						    $('#email_id').html("");
+					}
+					
+					
+					if ($('#admin_email_id').val() == '' || $('#admin_email_id').val() == null)
+					{
+						$('#email_id').html("Email id can't be blank.");
+						
+						flag=1;
+					}
+					
+					else
+				   	{
+						    $('#email_id').html("");
+					}
+					
+				   if ($('#admin_password').val() == '' || $('#admin_password').val() == null)
+						{
+							$('#passwd').html("Password can't be blank.");
+							
+							flag=1;
+						}
+						
+					else
+				   	{
+						    $('#passwd').html("");
+					}
+						
+				   
+					if (flag==1)
+					{
+						return false;
+						
+					}
+					else{		
+						return true;
+					}
+			}
+	   
+	     </script>
+	     
+	     <style>
+	     	
+	     	#already a {
+				color: #0D3F82;
+				text-decoration: underline;
+				font-size: 15px;
+				}
+	     	
+	     </style>
+        
+        
+    </head>
+    <body>
+
+        <div class="container">
+            <div id="bgnav" class="navbar navbar-fixed-top navbar-inverse">
+                <div id="navigation" role="navigation">
+
+                    <div class="navbar-header">
+                        <a class="navlink" style="color: white;" href='/homes/adminsignup'> 
+                            <div id="logo"><p class="logo_txt">ProspectZen</p></div>
+                       </a>
+
+                    </div>
+                 </div><!-- /.navbar -->
+            </div>
+        </div>
+        <!--End .container-->
+
+        <div id="bg_wrapper">
+            <div id="content_wrapper">
+                <div id="admin_login">
+                    <div id="admin_login_header">
+                        Admin Signup
+                    </div>
+                    
+                    <div id="admin_login_form">
+                        <div class="row">
+
+                            <form class="form-signin" action="/homes/admincreate" method="post" onsubmit="return dataValidation()" role="form">
+                            	<p><input class="form-control" type="text" placeholder="Admin name" name="admin_name" id="admin_name"><span style="float:left; color: red;" class="error_msg" id="name"></span></p>
+                                <div style="clear:both"></div>
+                                <p><input class="form-control" type="email" placeholder="Email ID" name="admin_email_id" id="admin_email_id"><span style="float:left; color: red;" class="error_msg" id="email_id"></span></p>
+                                <div style="clear:both"></div>
+                                <p><input class="form-control" type="password" placeholder="Password" name="admin_password" id="admin_password"><span style="float:left; color: red;" class="error_msg" id="passwd"> </span></p>
+                                <div style="clear:both"></div>
+							    <p><span style="color: red;" class="error_msg" id="data_match"></span></p>
+                                <div style="clear:both"></div>
+
+                                <input id="adm_login"type="submit" class="btn btn-embossed btn-primary" value="Apply">
+								<div id="already"><a style="color:#5cb85c" href="/homes/adminlogin">Already approved? Login here</a></div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--End #content_wrapper-->
+
+        </div>
+        <!--End #bg_wrapper-->
+
+
+    </body>
+
+</html>
+
+ 

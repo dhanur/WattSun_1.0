@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>
+            Wattsun
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link href="/assets/bootstrap.min.css" rel="stylesheet">
+        <link href="/assets/flat-ui.css" rel="stylesheet">
+        <link href="/assets/reset.css" rel="stylesheet">
+        <link href="/assets/style_contact.css" rel="stylesheet">
+
+        <link href="/assets/mediaqueries_contact.css" rel="stylesheet">
+        <script src="/assets/jquery.js"></script>
+        <script type="text/javascript" src="/assets/jquery.customSelect.js"></script>
+        <script src="/assets/bootstrap.min.js"></script>
+        
+        <script src="/assets/bootstrap-select.js"></script>
+       
+        <script type="text/javascript">
+            $(function() {
+
+                $('select.styled').customSelect();
+
+            });
+        </script>
+
+      
+        <style type="text/css">
+            span.customSelect {
+                font-size:15px;
+                background-color: #fff;
+                color:#7c7c7c;
+                padding:10px 10px;
+                border:2px solid #B0B6BB;
+                -moz-border-radius: 5px;
+                -webkit-border-radius: 5px;
+                border-radius: 5px 5px;
+            }
+            span.customSelect.changed {
+                background-color: #fff;
+            }
+            .customSelectInner {
+                background:url(/assets/customSelect-arrow.gif) no-repeat center right;
+                width:250px !important;
+            }
+        </style>
+        
+           <script>
+				
+			$(document ).ready(function() {
+					
+					
+					$('#full_name').focusin(function() { 
+					  $('#fname').html(''); 					
+					});
+										
+															
+					$('#email').focusin(function() { 
+					  $('#email_id').html(''); 					
+					});
+					
+					$('#what_about').focusin(function() { 
+					  $('#wabout').html(''); 					
+					});
+					
+					$('#message').focusin(function() { 
+					  $('#msg').html(''); 					
+					});
+					
+			});
+				
+					
+			function dataValidation()
+			{
+								
+					var flag=0;
+					
+					if ($('#full_name').val() == '' || $('#full_name').val() == null)
+					{
+						$('#fname').html("Name can't be blank.");
+						
+						flag=1;
+					}
+					
+					else
+				   	{
+						    $('#fname').html("");
+					}
+				 
+					if ($('#email').val() == '' || $('#email').val() == null)
+					{
+						$('#email_id').html("Email id can't be blank.");
+						
+						flag=1;
+					}
+					
+					else
+				   	{
+						    $('#email_id').html("");
+					}
+					
+					
+					if ($('#what_about').val() == '' || $('#what_about').val() == null)
+					{
+						$('#wabout').html("What is about can't be blank.");
+						
+						flag=1;
+					}
+					
+					else
+				   	{
+						    $('#wabout').html("");
+					}
+					
+					
+				   if ($('#message').val() == '' || $('#message').val() == null)
+						{
+							$('#msg').html("Message can't be blank.");
+							
+							flag=1;
+						}
+						
+					else
+				   	{
+						    $('#msg').html("");
+					}
+						
+				   
+					if (flag==1)
+					{
+						return false;
+						
+					}
+					else{		
+						return true;
+					}
+			}
+	   
+	     </script>
+           
+        
+    </head>
+    <body>
+
+        <div class="container">
+            <div id="bgnav" class="navbar navbar-fixed-top navbar-inverse">
+                <div id="navigation" role="navigation">
+
+                    <div class="navbar-header">
+
+                        <button id="btn_collapse" type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+
+                        <a class="navlink" style="color: white;" href='#Top'> 
+                            <div id="logo"><p class="logo_txt">Wattsun</p></div>
+                        </a>
+
+                    </div>
+                    <div class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav pull-right">
+
+                            <li id="else" class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">What else does WattSun do? <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Instant Target Map <br />Coming soon!</a></li>
+                                    <li><a href="#">Instant 3D Home <br />Coming soon!</a></li>
+                                </ul>
+                            </li>
+                            <li><a class="navlink" href="/homes/faq">FAQs</a></li>
+                            <li><a class="navlink" href="#">Contact</a></li>
+                            <li><a id="login" class="button" href="/homes/userlogin">LOGIN</a>
+
+                        </ul>
+
+                    </div><!-- /.nav-collapse -->
+
+                </div><!-- /.navbar -->
+            </div>
+        </div>
+        <!--End .container-->
+
+        <div id="bg_wrapper">
+            <div id="content_wrapper">
+                <div id="contact">
+                    <div id="contact_header">
+                        Questions, Problems, Feedback?
+                    </div>
+                    <div id="contact_body">
+                        Tell us how we can help!
+
+                    </div>
+                    <div id="contact_form">
+                        <div class="row">
+                            <div>
+                                <form action='/homes/contactreceipt' method='post' onsubmit="return dataValidation()">
+                                    <p><input class="form-control" type="text" name="full_name" id="full_name" placeholder="Full Name"><span style="float:left; color: red;" class="error_msg" id="fname"></span></p>
+                                    <div style="clear:both"></div>
+                                    <p><input class="form-control" type="email" name="email" id="email" placeholder="Email"><span style="float:left; color: red;" class="error_msg" id="email_id"></span></p>
+                                    <div style="clear:both"></div>
+                                    <p><input class="form-control" type="text" name="mobile_phone" id="mobile_phone" placeholder="Mobile Phone(optional)"></p>
+                                    <div style="clear:both"></div>
+                                    <p style="margin-bottom:15px;">
+                                        <select class="styled" name="about" id="what_about">
+                                            <option id="dis_able" disabled selected style="color:#A6BAC9" >What is this about?</option>
+                                            <option>Instant Prospect Qualification</option>
+                                            <option>Instant Prospect Qualification</option>
+                                            <option>Instant 3D Home</option>
+                                            <option>Data behind WattSun</option>
+                                            <option>Bug!</option>
+                                            <option>Pricing</option>
+                                            <option>Something else</option>
+                                        </select>
+                                    <span style="color: red;" class="error_msg" id="wabout"></span></p>
+                                    <div style="clear:both"></div>
+                                    <p><textarea id="message" class="form-control" name="message" id="message" rows="8" placeholder="Message"></textarea> <span style="float:left; color: red;" class="error_msg" id="msg"></span></p>
+									<div style="clear:both"></div>
+                                    <input id="sub_mit"type="submit" class="btn btn-embossed btn-primary" value="Submit">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--End #content_wrapper-->
+
+        </div>
+        <!--End #bg_wrapper-->
+
+
+    </body>
+
+</html>

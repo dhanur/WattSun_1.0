@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>
+            ProspectZen
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link rel="icon" href="/assets/favicon.ico" type="image/x-icon"> 
+        <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+        <link href="/assets/bootstrap.css" rel="stylesheet">
+        <link href="/assets/flat-ui.css" rel="stylesheet">
+        <link href="/assets/reset.css" rel="stylesheet">
+        <link href="/assets/style_userlogin.css" rel="stylesheet">
+
+        <link href="/assets/mediaqueries_userlogin.css" rel="stylesheet">
+        <script src="/assets/jquery.js"></script>
+        <script src="/assets/bootstrap.min.js"></script>
+        
+	    <script>
+                  
+          
+       
+			$( document ).ready(function() {
+				    
+                    <% if session[:errormessage] %>      
+		         
+		              $('#data_match').html( "Your email or password does not match."); 
+                  
+                       
+                    <%end%>						
+										
+					<% session[:errormessage]=nil %>
+										
+					$('#emailid').focusin(function() { 
+					  $('#email_id').html(''); 
+					  $('#data_match').html(''); 
+					});
+					
+					
+					$('#password').focusin(function() { 
+					  $('#passwd').html(''); 
+					  $('#data_match').html(''); 
+					});
+                
+                     al_common();
+                
+                $(window).resize(function(){
+                    al_common();
+                });  
+					
+			});
+            
+            function al_common(){
+                    
+                if($(window).width()>767){
+               
+                    var cla=$("#side_scroll").attr('class');
+                    if(cla=="navbar-collapse no-transition collapse in"){
+                        $("#side_scroll").removeClass('navbar-collapse no-transition collapse in');
+                        $("#side_scroll").addClass("collapse navbar-collapse no-transition");
+                    }
+                }
+                else{
+                
+                   $("#side_scroll").addClass("collapse navbar-collapse no-transition");
+                }
+                
+                           
+  }		
+				
+					
+			function dataValidation()
+			{
+								
+					var flag=0;
+				 
+					if ($('#emailid').val() == '' || $('#emailid').val() == null)
+					{
+						$('#email_id').html("Email id can't be blank.");
+						
+						flag=1;
+					}
+					
+					else
+				   	{
+						    $('#email_id').html("");
+					}
+					
+				   if ($('#password').val() == '' || $('#password').val() == null)
+						{
+							$('#passwd').html("Password can't be blank.");
+							
+							flag=1;
+						}
+						
+					else
+				   	{
+						    $('#passwd').html("");
+					}
+						
+				   
+					if (flag==1)
+					{
+						return false;
+						
+					}
+					else{		
+						return true;
+					}
+			}
+	   
+	     </script>
+        
+        
+        
+    </head>
+    <body>
+
+        <div class="container">
+            <div id="bgnav" class="navbar navbar-fixed-top navbar-inverse">
+                <div id="navigation" role="navigation">
+
+                    <div class="navbar-header">
+
+                        <button id="btn_collapse" type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        
+                        <% if session[:current_user_id] %>      
+		         
+		                <a class="navlink" style="color: white;" href='/homes/viewmap'> 
+                            <div id="logo"><p class="logo_txt">ProspectZen </p></div> </a>
+                        
+                       <%else%>	
+                        <a class="navlink" style="color: white;" href='/homes/index'> 
+                            <div id="logo"><p class="logo_txt">ProspectZen </p></div> </a>
+
+                       <%end%>	
+
+                       
+
+                    </div>
+                    <div class="collapse navbar-collapse no-transition" id="side_scroll">
+                        <ul id="pull_right" class="nav navbar-nav">
+
+                            <li id="else" class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">What else does ProspectZen do? <b style="color:#fff" class="caret"></b></a>
+                                <ul class="dropdown-menu" id="submenu">
+                                    <li><a href="#">Instant Prospect Generator <br />Coming soon!</a></li>
+                                    <li><a href="#">Instant 3D Home <br />Coming soon!</a></li>
+                                </ul>
+                            </li>
+                            <li><a class="navlink" href="/homes/faq">FAQs</a></li>
+                            <li><a class="navlink" href="/homes/contact">Contact</a></li>
+                            <li><a id="login" class="button" href="/homes/userlogin">LOGIN</a>
+
+                        </ul>
+
+                    </div><!-- /.nav-collapse -->
+
+                </div><!-- /.navbar -->
+            </div>
+        </div>
+        <!--End .container-->
+
+        <div id="bg_wrapper">
+            <div id="content_wrapper">
+                <div id="user_login">
+                    <div id="user_login_header">
+                        Login
+                    </div>
+                    
+                    <div id="user_login_form">
+                        <div class="row">
+
+                            <form action="/homes/login" method="post" onsubmit="return dataValidation()">
+                            	
+                            	<p><input class="form-control" type="email" name="emailid" id="emailid" placeholder="Email ID" style="margin-right:10px;"><span style="float:left; color: red;" class="error_msg" id="email_id"></span> </p>
+                                <div style="clear:both"></div>
+                                <p><input class="form-control" type="password" name="password" id="password" placeholder="Password" style="margin-right:10px;"><span style="float:left; color: red;" class="error_msg" id="passwd"></span> </p>
+                                <div style="clear:both"></div>
+							    <p><span style="color: red;" class="error_msg" id="data_match"></span></p>
+                                <div style="clear:both"></div> 
+                                <input id="usr_login"type="submit" class="btn btn-embossed btn-primary" value="Login">
+                                <div id="apply"><a href="/homes/signup">New User? Apply for access here</a></div>
+                                <div id="for_pass"><a href="/homes/forgotpassword">Forgot Password?</div>
+                            
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--End #content_wrapper-->
+
+        </div>
+        <!--End #bg_wrapper-->
+
+
+    </body>
+
+</html>

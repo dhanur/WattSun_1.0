@@ -1,0 +1,188 @@
+@font-face {
+    font-family:'latobold';
+    src: url('../assets/Lato-Bold.ttf') format('truetype');
+}
+@font-face {
+    font-family:'latolig';
+    src: url('../assets/Lato-Lig.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'latoreg';
+    src: url('../assets/Lato-Regular.ttf') format('truetype');
+}
+body{
+    font-family:arial;
+    background:transparent;
+    letter-spacing: .8px;
+}
+
+/*
+navigation start
+*/
+#pull_right{
+    float:right;
+}
+div.navbar-collapse.collapse.in{
+    background:#5cb85c;
+    margin-top:4px;
+    margin-bottom:10px;
+    color:#fff;
+
+}
+#btn_collapse{
+    background:#23A204;
+    border-radius: 0px;
+    border: 0px;
+    margin-top:30px;
+}
+.navlink{
+    font-family:'latoreg';
+    margin-top:20px;
+}
+#login{
+    margin-top:20px;
+    color:#fff;
+    background:#5cb85c;
+    border:2px solid #fff;
+}
+#login:hover{
+    background-color: #fff;
+    color:#23A204; 
+}
+.navbar-collapse{
+    border:none;
+}
+.navbar{
+    border-bottom:none;
+}
+#bgnav{
+    width:100%;
+    background: #5cb85c;
+    padding:6px 0px 4px 0px;
+    
+}
+#navigation{
+    background: #5cb85c;
+    width:92%;
+    margin:0 auto;
+
+
+}
+.navbar-inverse .navbar-nav>li>a{
+    color:#fff;
+}
+.navbar-inverse .navbar-nav>li>a:hover{
+    color:#fff;
+}
+#logo{
+    width:100px;
+    height: 100px;
+    background:url('../assets/wattsun_logo.png');
+    background-size: 100px 100px;
+}
+.logo_txt{
+    color:#fff;
+    font-size: 34px;
+    font-family: 'latoreg';
+    font-weight:200;
+    padding-top:30px;
+    padding-left: 115px;
+}
+#else{
+    margin-top:20px;
+    font-family: 'latoreg';
+}
+.navbar-inverse .navbar-nav > .dropdown > a .caret {
+    border-top-color: #FFFFFF;
+    border-bottom-color: #fff;
+}
+.navbar-inverse .navbar-nav > .dropdown > a .caret:hover {
+    border-top-color: #FFFFFF;
+    border-bottom-color: #fff;
+}
+
+.navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
+    background-color:transparent;
+}
+.navbar-nav > li > .dropdown-menu {
+
+    border-radius: 0px;
+}
+.open > .dropdown-menu {
+    margin-top: 31px !important;
+}
+.navbar-inverse .navbar-nav > .open > .dropdown-menu > li > a {
+    color: #e1e4e7;
+    border-radius: 0px;
+    font-size: 17px;
+}
+.navbar-inverse .navbar-nav > .open > .dropdown-menu {
+    background-color: #000;
+}
+.navbar-inverse .navbar-nav > .open > .dropdown-menu > li > a:hover, .navbar-inverse .navbar-nav > .open > .dropdown-menu > li > a:focus {
+    color: #ffffff;
+    background-color:#5cb85c;
+}
+.navbar-inverse .navbar-nav > .open > .dropdown-menu{
+    padding:10px 0 10px 0px;
+}
+.dropdown-menu{
+-webkit-transition: 0;
+transition: 0;
+}
+b .caret:focus{
+background:#fff;
+}
+/*
+wrappers
+*/
+#bg_wrapper{
+    width:100%;
+}
+#content_wrapper{
+    width:92%;
+    margin:0 auto;
+}
+
+#admin_login{
+    width:100%;
+}
+#admin_login{
+    margin-top:145px;
+    font-family:'latoreg';
+    font-size:18px;
+    line-height: 22px;
+}
+
+#admin_login_header{
+    font-size:24px;
+    margin-bottom:20px;
+}
+
+#admin_login_form{
+
+    margin-left:18px;
+}
+
+.form-control{
+    margin-bottom:10px;
+    width:250px;
+    float: left;
+    border-radius: 0px;
+    border-color: #5cb85c;
+}
+.error_msg{
+    padding-left: 10px;
+    font-size:17px;
+    padding-top: 10px;
+}
+
+#adm_login{
+    width: 110px;
+    background-color: #5cb85c;
+    border-radius: 0px;
+}
+
+#already a{
+    color:#5cb85c;
+}

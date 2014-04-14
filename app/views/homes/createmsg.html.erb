@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>
+           ProspectZen
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link rel="icon" href="/assets/favicon.ico" type="image/x-icon"> 
+        <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+        <link href="/assets/bootstrap.min.css" rel="stylesheet">
+        <link href="/assets/flat-ui.css" rel="stylesheet">
+        <link href="/assets/reset.css" rel="stylesheet">
+        <link href="/assets/style_apply_confirm.css" rel="stylesheet">
+
+        <link href="/assets/mediaqueries_apply_confirm.css" rel="stylesheet">
+        <script src="/assets/jquery.js"></script>
+        <script src="/assets/bootstrap.min.js"></script>
+    </head>
+    <body>
+
+       <div class="container">
+            <div id="bgnav" class="navbar navbar-fixed-top navbar-inverse">
+                <div id="navigation" role="navigation">
+
+                    <div class="navbar-header">
+
+                        <button id="btn_collapse" type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+
+                        <a class="navlink" style="color: white;" href='/homes/index'> 
+                            <div id="logo"><p class="logo_txt">ProspectZen</p></div>
+
+
+
+                        </a>
+
+                    </div>
+                    <div class="collapse navbar-collapse no-transition">
+                        <ul id="pull_right" class="nav navbar-nav">
+
+                            <li id="else" class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">What else does ProspectZen do? <b style="color:#fff" class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Instant Prospect Generator<br />Coming soon!</a></li>
+                                    <li><a href="#">Instant 3D Home <br />Coming soon!</a></li>
+                                </ul>
+                            </li>
+                            <li><a class="navlink" href="/homes/faq">FAQs</a></li>
+                            <li><a class="navlink" href="/homes/contact">Contact</a></li>
+                            <li><a id="login" class="button" href="/homes/userlogin">LOGIN</a>
+
+                        </ul>
+
+                    </div><!-- /.nav-collapse -->
+
+                </div><!-- /.navbar -->
+            </div>
+        </div>
+        <!--End .container-->
+        <div id="bg_wrapper">
+            <div id="content_wrapper">
+
+                <div id="apply_con">
+                    <div id="apply_con_header">
+                        Thank you!
+                    </div>
+                    <div id="apply_con_body">
+                        We have received your information and will be in touch.
+                        <br/>
+                        To prevent misuse of ProspectZen, we require that users register with solar company-issued email ids. If you have used a personal email id, you will be asked to re-apply. You can save time by re-applying right now with your company-issues email id.
+
+                    </div>
+
+                    <div id="contact_form">
+                        <div class="row">
+                            <form action="/homes/signup" method="get">
+                                <input id="re_apply"type="submit" class="btn btn-embossed btn-primary" value="Re-apply?">
+                            </form>
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <!--End #content_wrapper-->
+
+        </div>
+        <!--End #bg_wrapper-->
+
+
+    </body>
+
+</html>

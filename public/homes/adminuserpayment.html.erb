@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>
+            Wattsun
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link href="/assets/bootstrap.css" rel="stylesheet">
+        <link href="/assets/flat-ui.css" rel="stylesheet">
+        <link href="/assets/reset.css" rel="stylesheet">
+        <link href="/assets/style_admin_user_payment.css" rel="stylesheet">
+
+        <link href="/assets/mediaqueries_admin_user_payment.css" rel="stylesheet">
+        <link rel="stylesheets" type="text/css" href="/assets/dataTables.bootstrap.css">
+        <script src="/assets/jquery.js"></script>
+        
+
+        <script src="/assets/bootstrap.min.js"></script>
+        <script src="/assets/jquery.dataTables.min.js"></script>
+        <script src="/assets/dataTables.bootstrap.js"></script>
+ 	<script>
+			$(document).ready(function() {
+
+				$('#example').dataTable();
+
+				$('.dataTables_filter input').attr("placeholder", "Search by address, name, city, zip, anything!");
+				$('.dataTables_filter input').attr("class", "form-control");
+				$('#example_paginate').css({
+					"width" : "423px",
+					"font-size" : "14px",
+					"float" : "right",
+					"margin-bottom" : "25px"
+				});
+				$('.dataTables_filter input').css({
+					"width" : "90%",
+					"margin-top" : "-10px",
+					"position" : "absolute",
+					"right" : "22px"
+				});
+				//                $('.dataTables_filter input').css("margin-top", "5px");
+				$('table').css({
+					"width" : "100%"
+				});
+				$('#example_length select.form-control').css("height", "46px");
+				$('#example_length').css({
+					"margin-left" : "5px",
+					"padding" : "5px 0px"
+				});
+				$('#example_info.dataTables_info').css({
+					"display" : "none"
+				});
+
+			});
+		</script>
+
+		<script>
+		
+			function abc(id) {
+				
+				$.ajax({
+					url : "/homes/singleusercredits",
+					type : "POST",
+					dataType : 'JSON',
+					data : {
+						'user_id' : id
+					},
+					success : function(response) {
+						
+						window.location.href='/homes/adminusernumber'	
+						
+					}
+				});
+			}
+			
+
+		</script>
+	</head>
+
+	<style>
+		#leftcolumn {
+			height: 100%;
+			width: 15%;
+			background-color: grey;
+			float: left;
+		}
+
+		input.form-control.input-sm {
+			width: 600px;
+		}
+
+		#usertable {
+			height: 100%;
+			width: 85%;
+			float: left;
+		}
+	</style>
+
+
+    </head>
+    <body>
+
+        <div class="container">
+            <div id="bgnav" class="navbar navbar-fixed-top navbar-inverse">
+                <div id="navigation" role="navigation">
+
+                    <div class="navbar-header">
+
+                        <button id="btn_collapse" type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+
+                        <a class="navlink" style="color: white;" href='#Top'> 
+                            <div id="logo"></div>
+
+
+
+                        </a>
+
+                    </div>
+                    <div class="collapse navbar-collapse no-transition">
+                        <ul id="pull_right" class="nav navbar-nav">
+
+
+                           <li>
+								<form action="../homes/logout" method="post">
+									<input id="login" class="form-control" type="submit" value="Logout"/>
+
+								</form>
+							</li>
+
+                        </ul>
+
+                    </div><!-- /.nav-collapse -->
+
+                </div><!-- /.navbar -->
+            </div>
+        </div>
+        <!--End .container-->
+
+        <div id="bg_wrapper">
+            <div id="content_wrapper">
+                <div id="sidebar_menu" style="float:left;">
+                    <ul id="menu_list" class="nav nav-pills nav-stacked">
+                        <li id="usr_status"><a href="/homes/adminuserstatus">User Statuses</a></li>
+                        <li id="usr_profile"><a href="/homes/adminuserprofile">User Profiles</a></li>
+                        <li id="usr_payment"><a href="#">User Payment</a></li>
+                        <li id="usr_purchases"  class="panel">
+
+                            <a  class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">User Purchases</a>
+                            <div id="collapseOne" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <ul>
+                                        <li id="admn_itq_panel"><a href="/homes/adminuserpurchase" style="color:#000">Instant Target Qualification</a></li>
+                                        <li id="admn_itm_panel"><a href="#" style="color:#000">Instant Target Map</a></li>
+                                        <li id="admn_ih_panel"><a href="#" style="color:#000">Instant 3D Home</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li id="usr_sales">
+
+                            <a href="#">Sales</a>
+
+                        </li>
+                    </ul>
+                </div>
+                <div id="menu_content" style="float:right;">
+                   
+                    <div id="menu_content_header">
+                       Manage user payment and credits here
+                    </div>
+
+                    <div id="menu_content_profile_set">
+                        
+                       <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="example">
+                            <thead>
+                                <tr>
+                                    <th>NAME</th>
+                                    <th>USER NAME</th>
+                                    <th>COMPANY</th>
+                                    <th>ROLE</th>
+                                    <th>STATUS</th>
+                                    <th>LAST ACTIVITY</th>
+                                    <th>VIEW PAYMENT</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                               
+                                                               
+                                <% @allusers.each do |user| %>
+								 <tr class="odd gradeX">
+									<td><%= user.first_name %> <%= user.last_name %></td>
+									<td><%= user.company_email_id %></td>
+									<td><%= user.company_name %></td>
+									<td><% if user.role=='0' %>
+									User
+									<% else %>
+									Super user
+									<% end %> </td>
+									<td id="modified_status<%= user.id%>"><% if user.active_status=='0' %>
+									Applied
+									<% elsif user.active_status=='1' %>
+									Approved
+									<% elsif user.active_status=='2' %>
+									Waitlisted
+									<% elsif user.active_status=='3'%>
+									Denied
+									<% else %>
+									Blocked
+									<% end %> </td>
+									<td><%= user.last_activity %></td>
+
+									<td>
+									
+									<input type='hidden'   value='<%= user.id%>' name='id'>
+									<a style="cursor: pointer; margin-left: 10px"   onclick='abc(<%= user.id %>)'>View</a></td>
+
+								</tr>
+								<% end %>    
+                                                               
+                            </tbody>
+                        </table>
+                        
+                    </div>
+                </div>
+                <div style="clear:left;"></div>
+
+            </div>
+            <!--End #content_wrapper-->
+        </div>
+        <!--End #bg_wrapper-->
+
+
+    </body>
+
+</html>

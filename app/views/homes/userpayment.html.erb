@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>ProspectZen</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+                <link rel="icon" href="/assets/favicon.ico" type="image/x-icon"> 
+        <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+		<link href="/assets/bootstrap.css" rel="stylesheet">
+		<link href="/assets/flat-ui.css" rel="stylesheet">
+		<link href="/assets/reset.css" rel="stylesheet">
+		<link href="/assets/style_payment.css" rel="stylesheet">
+
+		<link href="/assets/mediaqueries_payment.css" rel="stylesheet">
+		<script src="/assets/jquery.js"></script>
+		<script src="/assets/bootstrap.min.js"></script>
+
+	</head>
+	<body>
+
+		<div class="container">
+			<div id="bgnav" class="navbar navbar-fixed-top navbar-inverse">
+				<div id="navigation" role="navigation">
+
+					<div class="navbar-header">
+
+						<button id="btn_collapse" type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+
+                     
+		         
+		                <a class="navlink" style="color: white;" href='../homes/viewmap'> 
+                             <div id="logo"></div></a>
+            
+    
+					</div>
+					<div id="top_menu_scroll" class="collapse navbar-collapse no-transition">
+						<ul id="pull_right" class="nav navbar-nav">
+
+							<li id="else" class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">What else does ProspectZen do? <b style="color:#fff" class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li>
+										<a href="#">Instant Prospect Generator
+										<br />
+										Coming soon!</a>
+									</li>
+									<li>
+										<a href="#">Instant 3D Home
+										<br />
+										Coming soon!</a>
+									</li>
+								</ul>
+							</li>
+							<li id="faq">
+								<a class="navlink" href="/homes/faq">FAQs</a>
+							</li>
+
+							<li id="setn" class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" >Settings<b style="color:#fff" class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li>
+										<a href="/homes/userprofile">Profile</a>
+									</li>
+									<li>
+										<a href="/homes/userpayment">Payment</a>
+									</li>
+									<li>
+										<a href="/homes/purchaseitq">Purchases</a>
+									</li>
+									<li>
+										<a href="/homes/userproblem">Problem?</a>
+									</li>
+								</ul>
+							</li>
+							<li>
+								<form action="../homes/logout" method="post">
+									<input id="login" class="form-control" type="submit" value="LOGOUT"/>
+
+								</form>
+							</li>
+
+						</ul>
+
+					</div><!-- /.nav-collapse -->
+
+				</div><!-- /.navbar -->
+			</div>
+		</div>
+		<!--End .container-->
+
+		<div id="bg_wrapper">
+			<div id="content_wrapper">
+				<div id="sidebar_menu" style="float:left;">
+					<ul id="menu_list" class="nav nav-pills nav-stacked">
+						
+                        
+                        
+                        <li id="profile"><a href="/homes/userprofile"><span style="margin-right:3px;font-size:13px;" class="glyphicon glyphicon-user"></span>Profile</a></li>
+                        <li id="payment"><a href="/homes/userpayment"><span style="margin-right:3px;font-size:13px;" class="glyphicon glyphicon-credit-card"></span>Payment</a></li>
+                        <li id="purchases"><a  class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><span style="margin-right:3px;font-size:12px;" class="glyphicon glyphicon-list"></span>Purchases</a>
+							<div id="collapseOne" class="panel-collapse collapse">
+								<div class="panel-body">
+									<ul>
+										<li id="itq_panel">
+											<a href="/homes/purchaseitq">Instant Prospect Qualifier</a>
+										</li>
+										<li id="itm_panel">
+											<a href="#">Instant Prospect Generator</a>
+										</li>
+										<li id="ih_panel">
+											<a href="#">Instant 3D Home</a>
+										</li>
+									</ul>
+								</div>
+							</div></li>
+                        <li id="problem"><a href="/homes/userproblem"><span style="margin-right:3px;font-size:13px;" class="glyphicon glyphicon-question-sign"></span>Problem?</a></li>
+					</ul>
+				</div>
+				<div id="menu_content" style="float:right;">
+					<div id="menu_content_header">
+						Update your credit card, view pricing and credit balance here
+					</div>
+
+					<div id="menu_content_credit_card">
+						<div id="menu_content_credit_card_header" style="margin-bottom: 8px;font-family:'latobold'">
+							Billing Credit Card
+						</div>
+						<div>
+							<div>
+								<div style="font-family:'latoreg'" class="col-sm-4">
+									Credit Card
+								</div>
+								<div class="col-sm-8">
+									XXXX-XXXX-XXXX-<%= @user.first['card_no'] %>
+									
+                                    <div>
+										<a href="#" style="color:#5cb85c;text-decoration: underline;">update</a>
+																				
+											<div id='paymentdiv' style='width: 60px; margin-top: -28px;	opacity: 0;	display: block;'>
+												<form class="form-signin" action="/homes/updatecardnumber" method="post">
+													<script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+					
+													data-key="pk_live_frgzJTSq0tizdpyJCJli9bgN"
+													
+													data-email=<%= @user.first['company_email_id'] %>
+					
+													data-name="Demo Site"
+					
+													data-description="change your credit card info"
+					
+													data-image="/assets/wattsun_logo1.png"
+													
+					                                data-panel-label="change">
+					                                </script>
+												</form>
+											</div>
+										
+										
+									</div>
+								</div>
+								<div class="clearfix"></div>
+                                
+                                
+							</div>
+							
+							<div>
+								<div style="font-family:'latoreg'" class="col-sm-4">Expiry</div>
+								<div class="col-sm-8"><%= @user.first['card_exp_month'] %>/<%= @user.first['card_exp_year'] %></div>
+								<div class="clearfix"></div>
+							</div>
+							
+						</div>
+					</div>
+					<div id="menu_content_pricing">
+
+						<div id="menu_content_price_header" style="margin-bottom: 8px;font-family:'latobold';">
+							Pricing
+						</div>
+						<div class="leftpad">
+
+							<div>
+								<div style="font-family:'latoreg'" class="col-sm-4">
+									Monthly Access Fee
+								</div>
+								<div  class="col-sm-8">
+									$<%= @user.first['monthly_charge']%>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							
+							<div>
+								<div style="font-family:'latoreg'" class="col-sm-4">Next charge</div>
+								<div class="col-sm-8"><%= Date.strptime(@user.first['current_period_end'],'%s') %></div>
+								<div class="clearfix"></div>
+							</div>
+							
+							<div>
+								<div style="font-family:'latoreg'" class="col-sm-4">Instant Prospect Qualifier</div>
+								<div class="col-sm-8">$<%= @user.first['house_charge'] %> per prospect</div>
+								<div class="clearfix"></div>
+							</div>
+							
+							<div>
+								<div style="font-family:'latoreg'" class="col-sm-4">Instant Target Map</div>
+								<div class="col-sm-8">-</div>
+								<div class="clearfix"></div>
+							</div>
+							
+							<div>
+								<div style="font-family:'latoreg'" class="col-sm-4">Instant 3D Home</div>
+								<div class="col-sm-8">-</div>
+								<div class="clearfix"></div>
+							</div>
+							
+						</div>
+						
+						
+					</div>
+					
+					<div id="menu_content_credits">
+
+						<div id="menu_content_credits_header" style="margin-bottom: 8px;font-family:'latobold';">
+							Credits
+						</div>
+						<div class="leftpad">
+
+							<div>
+								<div style="font-family:'latoreg'" class="col-sm-4">
+									Instant Prospect Qualifier
+								</div>
+								<div class="col-sm-8">
+									<%= @user.first['credits']%>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							
+                            <div>
+								<div style="font-family:'latoreg'" class="col-sm-4">
+									Instant Target Map
+								</div>
+								<div class="col-sm-8">
+									-
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							
+                            <div>
+								<div style="font-family:'latoreg'" class="col-sm-4">
+									Instant 3D Home
+								</div>
+								<div class="col-sm-8">
+									-
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							
+						</div>
+	
+					</div>
+					
+				</div>
+
+			</div>
+			<!--End #content_wrapper-->
+		</div>
+		<!--End #bg_wrapper-->
+
+	</body>
+
+</html>

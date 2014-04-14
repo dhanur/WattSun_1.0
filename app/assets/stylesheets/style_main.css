@@ -1,0 +1,261 @@
+html {
+-webkit-font-smoothing: antialiased;
+}
+@font-face {
+    font-family:'latobold';
+    src: url('../assets/Lato-Bold.ttf') format('truetype');
+}
+@font-face {
+    font-family:'latolig';
+    src: url('../assets/Lato-Lig.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'latoreg';
+    src: url('../assets/Lato-Regular.ttf') format('truetype');
+}
+
+
+body{
+    font-family:arial;
+    color: #fff;
+    background:transparent;
+    letter-spacing: .8px;
+    
+}
+
+/*
+navigation start
+*/
+
+div.navbar-collapse.collapse.in{
+    background:#5cb85c;
+    margin-top:10px;
+    margin-bottom:10px;
+    color:#fff;
+
+}
+#btn_collapse{
+    background:#23A204;
+    border-radius: 0px;
+    border: 0px;
+    margin-top:30px;
+}
+.navlink{
+    font-family:'latoreg';
+    margin-top:20px;
+}
+#login{
+    margin-top:26px;
+    color:#fff;
+    background:#5cb85c;
+    border:2px solid #fff;
+    height: 41px;
+line-height: 5px;
+font-size: 15px;
+}
+#pull_right{
+
+        float:right !important;
+    }
+#login:hover{
+    background-color: #fff;
+    color:#5cb85c;
+    border:2px solid #fff;
+}
+.navbar-collapse{
+    border:none;
+}
+.navbar{
+    border-bottom:none;
+}
+#bgnav{
+    width:100%;
+    background: #5cb85c;
+    padding:6px 0px 4px 0px;
+    box-shadow:0 2px 6px rgba(0,0,0,.5);
+}
+#navigation{
+    background: #5cb85c;
+    width:92%;
+    margin:0 auto;
+
+
+}
+.navbar-inverse .navbar-nav>li>a{
+    color:#fff;
+font-family:'latobold';
+font-weight: 100;
+letter-spacing:0;
+font-size: 15px
+}
+.caret {
+border-width: 5px 5px;
+margin-top:-2px;
+}
+.nav > li > a {
+padding: 16px 16px;
+}
+.navbar-inverse .navbar-nav>li>a:hover{
+    color:#fff;
+}
+#logo{
+    width:100px;
+    height: 100px;
+    background:url('../assets/wattsun_logo.png');
+    background-size: 100px 100px;
+}
+.logo_txt{
+    color:#fff;
+    font-size: 34px;
+    font-family: 'latoreg';
+    font-weight:200;
+    padding-top:30px;
+    padding-left: 115px;
+}
+#else{
+    margin-top:20px;
+    font-family: 'latoreg';
+}
+.navbar-inverse .navbar-nav > .dropdown > a .caret {
+    border-top-color: #FFFFFF;
+    border-bottom-color: #fff;
+}
+.navbar-inverse .navbar-nav > .dropdown > a .caret:hover {
+    border-top-color: #FFFFFF;
+    border-bottom-color: #fff;
+}
+
+.navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
+    background-color:transparent;
+}
+.navbar-nav > li > .dropdown-menu {
+
+    border-radius: 0px;
+    width:100%;
+}
+.open > .dropdown-menu {
+    margin-top: 29px !important;
+}
+.navbar-inverse .navbar-nav > .open > .dropdown-menu > li > a {
+    color: #e1e4e7;
+    border-radius: 0px;
+    font-size: 17px;
+}
+.navbar-inverse .navbar-nav > .open > .dropdown-menu {
+    background-color: #000;
+}
+.navbar-inverse .navbar-nav > .open > .dropdown-menu > li > a:hover, .navbar-inverse .navbar-nav > .open > .dropdown-menu > li > a:focus {
+    color: #ffffff;
+    background-color:#5cb85c;
+}
+.navbar-inverse .navbar-nav > .open > .dropdown-menu{
+    padding:10px 0 10px 0px;
+}
+
+/*
+wrappers
+*/
+#bg_wrapper{
+    width:100%;
+   -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background: -webkit-linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url(../assets/bg_background.jpg);
+background: -moz-linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url(../assets/bg_background.jpg);
+background: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url(../assets/bg_background.jpg);
+}
+
+#content_wrapper{
+    width:92%;
+    margin:0 auto;
+    
+}
+
+/*
+#about start
+*/
+
+#about{
+
+    
+    font-size: 31px;
+    line-height: 68px;
+    font-family: 'latoreg';
+    font-weight:200;
+    color:#fff;
+
+}
+
+
+
+/*buttons*/
+
+
+#all_buttons{
+    margin-top:30px;
+    width:428px;
+    height:52px;
+}
+#apply{
+    float:left;
+
+}
+#apply a{
+    
+    background:#850003;
+    letter-spacing: .8px;
+}
+
+#circle{
+    width:30px;
+    height: 30px;
+    border-radius:50%;
+    background-color: #fff;
+    float:left;
+    position:relative;
+    margin-top:10px;
+    margin-left:-12px;
+}
+#c_text{
+    position:absolute;
+    color:#000;
+    padding-top:20%;
+    left:25%;
+
+}
+#demo{
+    float:left;
+    margin-left:-12px;
+}
+#demo a{
+   
+    background: #5cb85c;
+    letter-spacing: .8px;
+}
+
+.ui-group-buttons .or{position:relative;float:left;width:.3em;height:1.3em;z-index:3;font-size:12px}
+.ui-group-buttons .or:before{position:absolute;top:50%;left:50%;content:'or';background-color:#fff;margin-top:-.1em;margin-left:-.9em;width:1.8em;height:1.8em;line-height:1.55;color:#000;font-style:normal;font-weight:400;text-align:center;border-radius:500px;-webkit-box-shadow:0 0 0 1px rgba(0,0,0,0.1);box-shadow:0 0 0 1px rgba(0,0,0,0.1);-webkit-box-sizing:border-box;-moz-box-sizing:border-box;-ms-box-sizing:border-box;box-sizing:border-box}
+.ui-group-buttons .or:after{position:absolute;top:0;left:0;content:' ';width:.3em;height:2.84em;background-color:rgba(0,0,0,0);border-top:.6em solid #5a5a5a;border-bottom:.6em solid #5a5a5a}
+.ui-group-buttons .or.or-lg{height:1.3em;font-size:16px}
+.ui-group-buttons .or.or-lg:after{height:2.85em}
+.ui-group-buttons .or.or-sm{height:1em}
+.ui-group-buttons .or.or-sm:after{height:2.5em}
+.ui-group-buttons .or.or-xs{height:.25em}
+.ui-group-buttons .or.or-xs:after{height:1.84em;z-index:-1000}
+.ui-group-buttons{display:inline-block;vertical-align:middle}
+.ui-group-buttons:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+.ui-group-buttons .btn{float:left;border-radius:0}
+.ui-group-buttons .btn:first-child{margin-left:0;border-top-left-radius:.25em;border-bottom-left-radius:.25em;padding-right:15px}
+.ui-group-buttons .btn:last-child{border-top-right-radius:.25em;border-bottom-right-radius:.25em;padding-left:15px}
+
+
+
+.no-transition {
+        -webkit-transition: height .0001s;
+        -moz-transition: height .0001s;
+        -ms-transition: height .0001s;
+        -o-transition: height .0001s;
+        transition: height .0001s;
+    }
+

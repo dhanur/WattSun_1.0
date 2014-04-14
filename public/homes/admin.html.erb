@@ -1,0 +1,58 @@
+<h1 style='color:black'>All users</h1>
+
+<table style='color:black; border-color: black ' border="1">
+  <tr>
+    <th>First name</th> 
+    <th >Last name</th>
+    <th>Company name</th>
+    <th >Title</th>
+    <th>Work email</th>
+    <th >Phone</th>
+    <th>Verification token</th>
+    <th >Status</th>
+    <th >Last activity</th>
+    <th>Registration date</th>
+     
+     
+  </tr>
+ 
+  <% @users.each do |user| %>
+    <tr>      
+      <td><%= user.first_name %></td>
+      <td><%= user.last_name %></td>
+      <td><%= user.company_name %></td>
+      <td><%= user.title %></td>
+      <td><%= user.work_email %></td>
+      <td><%= user.mobile %></td>
+      <td><%= user.verification_token %></td>
+      <td><%= user.active_status %></td>
+      <td><%= user.last_activity %></td>
+      <td><%= user.registration_date %></td>
+      
+      
+      <td>
+      	<form action='/homes/approve' method='post'>
+      		
+      		<input type='hidden'   value='<%= user.id%>' name='id'>
+      		<input type='submit'   value='Approve'>
+      	</form>
+     </td>
+      	
+      <td>
+      	<form action='/homes/decline' method='post'>
+      		
+      		<input type='hidden'   value='<%= user.id%>' name='id'>
+      		<input type='submit'   value='Decline'>
+      	</form>
+     </td>	
+     <td>
+      	<form action='/homes/waitlist' method='post'>
+      		
+      		<input type='hidden'   value='<%= user.id%>' name='id'>
+      		<input type='submit'   value='Waitlist'>
+      	</form>
+     </td>	
+     
+    </tr>
+   <% end %>
+</table>

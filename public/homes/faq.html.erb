@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title> Wattsun </title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<link href="/assets/bootstrap.min.css" rel="stylesheet">
+		<link href="/assets/flat-ui.css" rel="stylesheet">
+		<link href="/assets/reset.css" rel="stylesheet">
+		<link href="/assets/style_faq.css" rel="stylesheet">
+
+		<link href="/assets/mediaqueries_faq.css" rel="stylesheet">
+		<script src="/assets/jquery.js"></script>
+		<script src="/assets/bootstrap.min.js"></script>
+	</head>
+	<body>
+
+		<div class="container">
+			<div id="bgnav" class="navbar navbar-fixed-top navbar-inverse">
+				<div id="navigation" role="navigation">
+
+					<div class="navbar-header">
+
+						<button id="btn_collapse" type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+
+						<a class="navlink" style="color: white;" href='#Top'>
+						<div id="logo">
+							<p class="logo_txt">
+								Wattsun
+							</p>
+						</div> </a>
+
+					</div>
+					
+					<% if session[:current_user_id] %>
+					
+					<div id="top_menu_scroll" class="collapse navbar-collapse no-transition">
+						<ul id="pull_right" class="nav navbar-nav">
+
+							<li id="else" class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">What else does WattSun do? <b style="color:#fff" class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li>
+										<a href="#">Instant Target Map
+										<br />
+										Coming soon!</a>
+									</li>
+									<li>
+										<a href="#">Instant 3D Home
+										<br />
+										Coming soon!</a>
+									</li>
+								</ul>
+							</li>
+							<li id="faq">
+								<a class="navlink" href="#">FAQs</a>
+							</li>
+
+							<li id="setn" class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" >Settings<b style="color:#fff" class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li>
+										<a href="/homes/userprofile">Profile</a>
+									</li>
+									<li>
+										<a href="/homes/userpayment">Payment</a>
+									</li>
+									<li>
+										<a href="/homes/purchaseitq">Purchases</a>
+									</li>
+									<li>
+										<a href="/homes/userproblem">Problem?</a>
+									</li>
+								</ul>
+							</li>
+							<li>
+								<form action="../homes/logout" method="post">
+									<input id="login" class="form-control" type="submit" value="Logout"/>
+
+								</form>
+							</li>
+
+						</ul>
+
+					</div><!-- /.nav-collapse -->
+					
+					<% else %>
+					
+					<div class="collapse navbar-collapse">
+								<ul class="nav navbar-nav pull-right">
+
+									<li id="else" class="dropdown">
+										<a href="#" class="dropdown-toggle" data-toggle="dropdown">What else does WattSun do? <b class="caret"></b></a>
+										<ul class="dropdown-menu">
+											<li>
+												<a href="#">Instant Target Map
+												<br />
+												Coming soon!</a>
+											</li>
+											<li>
+												<a href="#">Instant 3D Home
+												<br />
+												Coming soon!</a>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<a class="navlink" href="#">FAQs</a>
+									</li>
+									<li>
+										<a class="navlink" href="/homes/contact">Contact</a>
+									</li>
+									<li>
+										<a id="login" class="button" href="/homes/userlogin">LOGIN</a>
+
+								</ul>
+
+							</div><!-- /.nav-collapse -->
+							
+					<% end %>		
+
+				</div><!-- /.navbar -->
+			</div>
+		</div>
+		<!--End .container-->
+
+		<div id="bg_wrapper">
+			<div id="content_wrapper">
+
+				<div id="faq_container">
+					<p id="faq_container_heading">
+						Frequently Asked Questions
+					</p>
+					<div id="qstn_srch">
+						<form>
+							<input type="text" class="form-control" placeholder="Search FAQs">
+						</form>
+					</div>
+					<div id="categories">
+						<div class="col-sm-6 single_cat">
+							<p class="category_head">
+								Category One
+							</p>
+							<ul>
+								<li>
+									<a href="#">Question1</a>
+								</li>
+								<li>
+									<a href="#">Question2</a>
+								</li>
+								<li>
+									<a href="#">Question3</a>
+								</li>
+								<li>
+									<a href="#">Question4</a>
+								</li>
+								<li>
+									<a href="#">Question5</a>
+								</li>
+							</ul>
+						</div>
+						<div class="col-sm-6 single_cat">
+							<p class="category_head">
+								Category Two
+							</p>
+							<ul>
+								<li>
+									<a href="#">Question1</a>
+								</li>
+								<li>
+									<a href="#">Question2</a>
+								</li>
+								<li>
+									<a href="#">Question3</a>
+								</li>
+								<li>
+									<a href="#">Question4</a>
+								</li>
+								<li>
+									<a href="#">Question5</a>
+								</li>
+							</ul>
+						</div>
+						<div class="col-sm-6 single_cat">
+							<p class="category_head">
+								Category Three
+							</p>
+							<ul>
+								<li>
+									<a href="#">Question1</a>
+								</li>
+								<li>
+									<a href="#">Question2</a>
+								</li>
+								<li>
+									<a href="#">Question3</a>
+								</li>
+								<li>
+									<a href="#">Question4</a>
+								</li>
+								<li>
+									<a href="#">Question5</a>
+								</li>
+							</ul>
+						</div>
+						<div class="col-sm-6 single_cat">
+							<p class="category_head">
+								Category Four
+							</p>
+							<ul>
+								<li>
+									<a href="#">Question1</a>
+								</li>
+								<li>
+									<a href="#">Question2</a>
+								</li>
+								<li>
+									<a href="#">Question3</a>
+								</li>
+								<li>
+									<a href="#">Question4</a>
+								</li>
+								<li>
+									<a href="#">Question5</a>
+								</li>
+							</ul>
+						</div>
+						<div class="col-sm-6 single_cat">
+							<p class="category_head">
+								Category Five
+							</p>
+							<ul>
+								<li>
+									<a href="#">Question1</a>
+								</li>
+								<li>
+									<a href="#">Question2</a>
+								</li>
+								<li>
+									<a href="#">Question3</a>
+								</li>
+								<li>
+									<a href="#">Question4</a>
+								</li>
+								<li>
+									<a href="#">Question5</a>
+								</li>
+							</ul>
+						</div>
+						<div class="col-sm-6 single_cat">
+							<p class="category_head">
+								Category Six
+							</p>
+							<ul>
+								<li>
+									<a href="#">Question1</a>
+								</li>
+								<li>
+									<a href="#">Question2</a>
+								</li>
+								<li>
+									<a href="#">Question3</a>
+								</li>
+								<li>
+									<a href="#">Question4</a>
+								</li>
+								<li>
+									<a href="#">Question5</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div id="contact_us_foot">
+						If your question is not answered here, please <a href="/homes/contact">contact us</a>
+					</div>
+					<hr class="style_hr"/>
+
+					<div id="big_qstn">
+						<div class="big_qstn_head">
+							Question One
+						</div>
+						<div class="big_qstn_body">
+							Loreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsum
+						</div>
+
+						<div class="back_top">
+							<a  href="#">back to top</a>
+						</div>
+
+						<div class="big_qstn_head">
+							Question One
+						</div>
+						<div class="big_qstn_body">
+							Loreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsum
+						</div>
+
+						<div class="back_top">
+							<a  href="#">back to top</a>
+						</div>
+
+						<div class="big_qstn_head">
+							Question One
+						</div>
+						<div class="big_qstn_body">
+							Loreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsum
+						</div>
+
+						<div class="back_top">
+							<a  href="#">back to top</a>
+						</div>
+
+						<div class="big_qstn_head">
+							Question One
+						</div>
+						<div class="big_qstn_body">
+							Loreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsum
+						</div>
+
+						<div class="back_top">
+							<a  href="#">back to top</a>
+						</div>
+
+						<div class="big_qstn_head">
+							Question One
+						</div>
+						<div class="big_qstn_body">
+							Loreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsumLoreum ipsum
+						</div>
+
+						<div class="back_top">
+							<a  href="#">back to top</a>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+			<!--End #content_wrapper-->
+
+		</div>
+		<!--End #bg_wrapper-->
+
+	</body>
+
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>
+            Wattsun
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link href="/assets/bootstrap.min.css" rel="stylesheet">
+        <link href="/assets/flat-ui.css" rel="stylesheet">
+        <link href="/assets/reset.css" rel="stylesheet">
+        <link href="/assets/style_main.css" rel="stylesheet">
+
+        <link href="/assets/mediaqueries_main.css" rel="stylesheet">
+        <script src="/assets/jquery.js"></script>
+        <script src="/assets/bootstrap.min.js"></script>
+        <script src="/assets/jquery.nicescroll.js"></script>
+        <script>
+            $(document).ready(function(){
+                $("#side_scroll").niceScroll({
+					styler : "fb",
+					cursorcolor : "#23a204",
+					cursorwidth : '6',
+					cursorborderradius : '10px',
+					background : '#404040',
+					spacebarenabled : false,
+					cursorborder : '',
+					zindex : '1000'
+                });
+            });
+        </script>
+    </head>
+    <body>
+
+        <div class="container">
+            <div id="bgnav" class="navbar navbar-fixed-top navbar-inverse">
+                <div id="navigation" role="navigation">
+
+                    <div class="navbar-header">
+
+                        <button id="btn_collapse" type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+
+                        <a class="navlink" style="color: white;" href='#Top'> 
+                            <div id="logo"><p class="logo_txt">WattSun</p></div>
+
+
+
+                        </a>
+
+                    </div>
+                    <div class="collapse navbar-collapse no-transition" id="side_scroll">
+                        <ul class="nav navbar-nav" id="pull_right">
+
+                            <li id="else" class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">What else does WattSun do? <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Instant Target Map <br />Coming soon!</a></li>
+                                    <li><a href="#">Instant 3D Home <br />Coming soon!</a></li>
+                                </ul>
+                            </li>
+                            <li><a class="navlink" href="/homes/faq">FAQs</a></li>
+                            <li><a class="navlink" href="/homes/contact">Contact</a></li>
+                            <li><a id="login" class="button" href="/homes/userlogin">LOGIN</a>
+
+                        </ul>
+
+                    </div><!-- /.nav-collapse -->
+
+                </div><!-- /.navbar -->
+            </div>
+        </div>
+        <!--End .container-->
+
+        <div id="bg_wrapper">
+            <div id="content_wrapper">
+                <div id="about">
+                    <div id="p1">Qualify your solar prospects with one click.</div>
+
+                    <div id="p2">Up to 60 points of qualification including estimated credit score, roof type and heat source.</div>
+
+                    <div id="p3">All you need is an address.</div>
+                </div>
+                <!--End #about-->
+
+
+                <!--Buttons start-->
+                <div id="all_buttons">
+                    <!-- <div class="ui-group-buttons">
+                    	<form action="/homes/signup" method="get">                    	
+                        <button type="submit" class="btn btn-primary btn-lg" style="background:#990000">Apply for access</button>
+                        </form>
+                        <div class="or or-lg"></div>
+                        
+                        <form action="/homes/example" method="get">
+                        <button type="submit" class="btn btn-success btn-lg" style="background:#219506">See an example</button>
+                        </form>
+                    </div> -->
+                    <div id="apply">
+                    	
+                    	 <a class="btn btn-hg btn-embossed btn-primary" style="border-radius:0px; background-color: #850003" href="/homes/signup">
+                            Apply for access
+                        </a>
+                       
+                    </div>
+
+                    <div id="circle"><div id="c_text">or</div></div>
+
+                    <div id="demo">
+                        <a class="btn btn-hg btn-embossed btn-primary" style="border-radius:0px; background-color: #5cb85c" href="/homes/example">
+                            See an example
+                        </a>
+                    </div>
+
+
+
+                </div>
+
+            </div>
+            <!--End #content_wrapper-->
+
+        </div>
+        <!--End #bg_wrapper-->
+
+
+    </body>
+
+</html>

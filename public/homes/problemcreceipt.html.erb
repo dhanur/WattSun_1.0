@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title> Wattsun </title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<link href="/assets/bootstrap.min.css" rel="stylesheet">
+		<link href="/assets/flat-ui.css" rel="stylesheet">
+		<link href="/assets/reset.css" rel="stylesheet">
+		<link href="/assets/style_problem_receipt.css" rel="stylesheet">
+
+		<link href="/assets/mediaqueries_problem_receipt.css" rel="stylesheet">
+		<script src="/assets/jquery.js"></script>
+		<script src="/assets/bootstrap.min.js"></script>
+
+	</head>
+	<body>
+
+		<div class="container">
+			<div id="bgnav" class="navbar navbar-fixed-top navbar-inverse">
+				<div id="navigation" role="navigation">
+
+					<div class="navbar-header">
+
+						<button id="btn_collapse" type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+
+						<a class="navlink" style="color: white;" href='#Top'>
+						<div id="logo">
+							<p class="logo_txt">
+								Wattsun
+							</p>
+						</div> </a>
+
+					</div>
+					<div id="top_menu_scroll" class="collapse navbar-collapse no-transition">
+						<ul id="pull_right" class="nav navbar-nav">
+
+							<li id="else" class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">What else does WattSun do? <b style="color:#fff" class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li>
+										<a href="#">Instant Target Map
+										<br />
+										Coming soon!</a>
+									</li>
+									<li>
+										<a href="#">Instant 3D Home
+										<br />
+										Coming soon!</a>
+									</li>
+								</ul>
+							</li>
+							<li id="faq">
+								<a class="navlink" href="/homes/faq">FAQs</a>
+							</li>
+
+							<li id="setn" class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" >Settings<b style="color:#fff" class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li>
+										<a href="/homes/userprofile">Profile</a>
+									</li>
+									<li>
+										<a href="/homes/userpayment">Payment</a>
+									</li>
+									<li>
+										<a href="/homes/purchaseitq">Purchases</a>
+									</li>
+									<li>
+										<a href="/homes/userproblem">Problem?</a>
+									</li>
+								</ul>
+							</li>
+							<li>
+								<form action="../homes/logout" method="post">
+									<input id="login" class="form-control" type="submit" value="Logout"/>
+
+								</form>
+							</li>
+
+						</ul>
+
+					</div><!-- /.nav-collapse -->
+
+				</div><!-- /.navbar -->
+			</div>
+		</div>
+		<!--End .container-->
+
+		<div id="bg_wrapper">
+			<div id="content_wrapper">
+				<div id="sidebar_menu" style="float:left;">
+					<ul id="menu_list" class="nav nav-pills nav-stacked">
+						<li id="profile">
+							<a href="/homes/userprofile">Profile</a>
+						</li>
+						<li id="payment">
+							<a href="/homes/userpayment">Payment</a>
+						</li>
+						<li id="purchases">
+							<a href="/homes/purchaseitq">Purchases</a>
+						</li>
+						<li id="problem">
+							<a href="/homes/userproblem">Problem?</a>
+						</li>
+					</ul>
+				</div>
+				<div id="menu_content" style="float:right;">
+					<div id="menu_content_header">
+						Tell us how we can help
+					</div>
+
+					<div id="menu_content_footer">
+						Message received!
+						<br />
+						We will get back to you within 24 hours
+						<br />
+						You can also call us on 1800-123-456-7890 from Mon-Fri between 9am-5pm PST
+					</div>
+				</div>
+				<div style="clear:left;"></div>
+
+			</div>
+			<!--End #content_wrapper-->
+		</div>
+		<!--End #bg_wrapper-->
+
+	</body>
+
+</html>

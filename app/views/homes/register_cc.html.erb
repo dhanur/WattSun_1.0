@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title> ProspectZen </title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link rel="icon" href="/assets/favicon.ico" type="image/x-icon"> 
+        <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+		<link href="/assets/bootstrap.min.css" rel="stylesheet">
+		<link href="/assets/flat-ui.css" rel="stylesheet">
+		<link href="/assets/reset.css" rel="stylesheet">
+		<link href="/assets/style_register_cc.css" rel="stylesheet">
+
+		<link href="/assets/mediaqueries_register_cc.css" rel="stylesheet">
+
+		<script src="/assets/jquery.js"></script>
+		<script src="/assets/bootstrap.min.js"></script>
+		
+		<script>
+		
+			
+				$(document).ready(function(){
+					
+					
+				$("#box").click(function(){
+					  $("#policy_error").hide();
+			
+					if($("#box").prop("checked")==true)
+					{
+					 $("#paymentdiv").css("display","block");  // checked
+					}
+					else
+					{
+						 $("#paymentdiv").css("display","none"); 
+					}
+					});	
+					
+				
+				$("#reg_cc").click(function(){
+					
+				
+				
+				
+				if($("#box").prop("checked")==true)
+				{
+				    $("#paymentdiv").css("display","block");  // checked
+				       $("#policy_error").hide();
+				}
+				else
+				{
+				    $("#policy_error").show(); // unchecked
+				}
+				});
+				
+				
+				
+				
+			
+				
+				
+				
+			});
+			
+		</script>
+		
+
+	</head>
+	<body>
+
+		<div class="container">
+			<div id="bgnav" class="navbar navbar-fixed-top navbar-inverse">
+				<div id="navigation" role="navigation">
+
+					<div class="navbar-header">
+
+						<button id="btn_collapse" type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+
+						<a class="navlink" style="color: white;" href='/homes/index'>
+						<div id="logo">
+							<p class="logo_txt">
+								ProspectZen
+							</p>
+						</div> </a>
+
+					</div>
+					<div class="collapse navbar-collapse no-transition" id="side_scroll">
+						<ul class="nav navbar-nav" id="pull_right">
+
+							<li id="else" class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">What else does ProspectZen do? <b class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li>
+										<a href="#">Instant Prospect Generator
+										<br />
+										Coming soon!</a>
+									</li>
+									<li>
+										<a href="#">Instant 3D Home
+										<br />
+										Coming soon!</a>
+									</li>
+								</ul>
+							</li>
+							<li>
+								<a class="navlink" href="/homes/faq">FAQs</a>
+							</li>
+							<li>
+								<a class="navlink" href="/homes/contact">Contact</a>
+							</li>
+							<li>
+								<a id="login" class="button" href="/homes/userlogin">LOGIN</a>
+
+						</ul>
+
+					</div><!-- /.nav-collapse -->
+
+				</div><!-- /.navbar -->
+			</div>
+		</div>
+		<!--End .container-->
+
+		<div id="bg_wrapper">
+			<div id="content_wrapper">
+				<div id="register_cc">
+					<div id="tegister_cc_header" style="font-family:'latobold';margin-bottom:15px;">
+						Register credit card
+					</div>
+					<div id="register_cc_body" style="margin-left:15px;line-height:28px;margin-bottom:20px;">
+						<p>
+							-Your monthly access fee will be charged immediately and every 30 days thereafter
+						</p>
+						<p>
+							-You will be asked to confim each purchase before your card is charged
+						</p>
+						<p>
+							-If you're not happy with a purchase, you can request for a refund within 7 days
+						</p>
+					</div>
+					<div id="register_cc_form">
+
+						<p style="margin-bottom:12px;">
+							
+							
+							<input type="checkbox" id="box"   style="margin-right:10px;">
+							
+							
+							
+							
+							<span>I understand the above, and have read and accepted WattSun's Terms of Service and Payment</span>
+						</p>
+						<div style="color: red;margin-left:22px;margin-bottom:15px;display:none" class="error_msg" id="policy_error">
+					 	You must have to accept our policy.
+						</div>
+                        
+						<input id="reg_cc" type="button"  class="btn btn-embossed btn-primary" value="Register credit card" >
+
+						<div id='paymentdiv' style='margin-left:26px;width: 161px;margin-top: -35px;opacity: 0;display: none'>
+							<form class="form-signin" action="/homes/entercreditinfo" method="post">
+								
+								<script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+
+								data-key="pk_live_frgzJTSq0tizdpyJCJli9bgN"
+
+								data-amount="<%= (@user.first['monthly_charge']*100).to_i %> "
+								
+								data-email=<%= @user.first['company_email_id'] %>
+
+								data-name="ProspectZen"
+
+								data-description="Pay $<%= @user.first['monthly_charge'] %> - Monthly Access Fee"
+                               
+								data-image="/assets/wattsun_logo1.png"></script>
+
+							</form>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<!--End #content_wrapper-->
+
+		</div>
+		<!--End #bg_wrapper-->
+
+	</body>
+
+</html>

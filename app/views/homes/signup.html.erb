@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>
+            ProspectZen
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link rel="icon" href="/assets/favicon.ico" type="image/x-icon"> 
+        <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+        <link href="/assets/bootstrap.min.css" rel="stylesheet">
+        <link href="/assets/flat-ui.css" rel="stylesheet">
+        <link href="/assets/reset.css" rel="stylesheet">
+        <link href="/assets/style_signup.css" rel="stylesheet">
+
+        <link href="/assets/mediaqueries_signup.css" rel="stylesheet">
+       <!-- <script wget https://github.com/igorescobar/jQuery-Mask-Plugin/blob/master/jquery.mask.min.js></script> -->
+        
+        <script src="/assets/jquery.js"></script>
+        <script src="/assets/bootstrap.min.js"></script>
+        <script src="/assets/field_validation.js"></script>
+        <script type="text/javascript" src="/assets/jquery.customSelect.js"></script>
+        <!-- <script src="https://github.com/RobinHerbots/jquery.inputmask/blob/3.x/js/jquery.inputmask.js"></script> -->
+         <script type="text/javascript" src="/assets/jquery.inputmask.js"></script>
+       
+        <script type="text/javascript">
+        
+        
+        
+			$(function() {
+                  $("#mobile_phone").inputmask("999-999-9999");
+                  $("#office_phone").inputmask("999-999-9999");
+				$('select.styled').customSelect();
+				
+				
+
+					 $("#zip").keyup(function() {
+						
+						var value = $('#zip').val();
+						if (!$.isNumeric(value)) {
+							
+							$('#zp').html("zip can't be characters.");
+							$("#zip").val('');
+							
+						} else
+						 {
+							
+							$('#zp').html("");	
+						}
+					
+					var myLength = $("#zip").val().length;
+					if (myLength!=5) {	
+						
+					$('#zp').html("write full zip  ");	
+					}
+					else
+					{
+					$('#zp').html("");		
+					}
+				
+					});
+					
+					
+			al_common();
+                
+                $(window).resize(function(){
+                    al_common();
+                });  
+					
+			});
+				
+			
+            function al_common(){
+                    
+                if($(window).width()>767){
+               
+                    var cla=$("#side_scroll").attr('class');
+                    if(cla=="navbar-collapse no-transition collapse in"){
+                        $("#side_scroll").removeClass('navbar-collapse no-transition collapse in');
+                        $("#side_scroll").addClass("collapse navbar-collapse no-transition");
+                    }
+                }
+                else{
+                
+                   $("#side_scroll").addClass("collapse navbar-collapse no-transition");
+                }
+                
+                           
+  }		
+					
+		function abc(){
+			check = formValidation(); 
+			if (check == '1')
+			$.ajax({
+					type : "POST",
+					url : "/homes/create",
+					dataType : "JSON",
+					data : {
+						'first_name' : $("#first_name").val(),
+						'last_name' : $("#last_name").val(),
+						'title' : $("#title").val(),
+						'company_name' : $("#company_name").val(),
+						'company_address' : $("#company_address").val(),
+						'zip' : $("#zip").val(),
+						'state' : $("#state").val(),
+						'city' : $("#city").val(),
+						'mobile_phone' : $("#mobile_phone").val(),
+						'office_phone' : $("#office_phone").val(),
+						'company_email_id' : $("#company_email_id").val(),
+					},
+					success : function(response) {
+					
+						if (response['results'] == 1)
+						
+						{
+							window.location.href="/homes/createmsg";							
+						}
+												
+						else if (response['results'] == 2)
+						{
+						 $('#comp_id').html( "Someone has already applied with this email. Please wait for approval or apply with a different email id."); 
+                         $("#company_email_id").val('');
+                        }
+		           }
+		       });
+		  
+		  else
+		  
+		  {	
+		  	
+		  }	
+		}
+		
+		
+		</script>
+        <style type="text/css">
+			.styled {
+				margin-left: 0px;
+				margin-top: 0px;
+			}
+			span.customSelect {
+				font-size: 15px;
+				background-color: #fff;
+				color: #7c7c7c;
+				padding: 10px 10px;
+				border: 2px solid #5cb85c;
+				-moz-border-radius: 0px;
+				-webkit-border-radius: 0px;
+				border-radius:0px;
+			}
+			span.customSelect.changed {
+				background-color: #fff;
+			}
+			.customSelectInner {
+				background: url(/assets/customSelect-arrow.gif) no-repeat center right;
+				width: 174px !important;
+            }
+            span.customSelect{
+                color: #bdc3c7;
+			
+            }
+		</style>
+		
+		
+    </head>
+    <body>
+
+        <div class="container">
+            <div id="bgnav" class="navbar navbar-fixed-top navbar-inverse">
+                <div id="navigation" role="navigation">
+
+                    <div class="navbar-header">
+
+                        <button id="btn_collapse" type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+
+                        <a class="navlink" style="color: white;" href=<% if session[:current_user_id]%> '/homes/viewmap' <%else%> '/homes/index' <%end%>> 
+                            <div id="logo"><p class="logo_txt">ProspectZen</p></div>
+
+                        </a>
+
+                    </div>
+                    <div class="collapse navbar-collapse no-transition" id="side_scroll">
+                        <ul class="nav navbar-nav" id="pull_right">
+
+                            <li id="else" class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">What else does ProspectZen do? <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Instant Prospect Generator <br />Coming soon!</a></li>
+                                    <li><a href="#">Instant 3D Home <br />Coming soon!</a></li>
+                                </ul>
+                            </li>
+                            <li><a class="navlink" href="/homes/faq">FAQs</a></li>
+                            <li><a class="navlink" href="/homes/contact">Contact</a></li>
+                            <li><a id="login" class="button" href="/homes/userlogin">LOGIN</a>
+
+                        </ul>
+
+                    </div><!-- /.nav-collapse -->
+                    
+
+                </div><!-- /.navbar -->
+            </div>
+        </div>
+        <!--End .container-->
+
+        <div id="bg_wrapper">
+            <div id="content_wrapper">
+                <div id="apply">
+                    <div id="apply_header">
+                        Apply for Access
+                    </div>
+                    <div id="apply_body">
+                        ProspectZen is available for use by approved solar companies.
+                        <br />
+                        Please tell us who you are and we will be in touch.
+                    </div>
+                    <div id="apply_form">
+                        <div class="row">
+                            <div>
+                                 <!-- <form action='/homes/create' method='post' onsubmit="return formValidation()"> -->
+                                                                  
+                                 <p><input class="form-control" name="first_name" id="first_name" type="text" placeholder="First Name"><span style="float:left; color: red;" class="error_msg" id="fname"></span></p>
+                                    <div style="clear:both"></div>
+                                    <p><input class="form-control" name="last_name" id="last_name" type="text" placeholder="Last Name"><span style="float:left; color: red;" class="error_msg" id="lname"></span></p>
+                                    <div style="clear:both"></div>
+                                    <p><input class="form-control"name="title" id="title" type="text" placeholder="Title"><span style="float:left; color: red;" class="error_msg" id="tt"></span></p>
+                                    <div style="clear:both"></div>
+                                    <p><input class="form-control" name="company_name" id="company_name" type="text" placeholder="Company Name"><span style="float:left; color: red;" class="error_msg" id="comp_name"></span></p>
+                                    <div style="clear:both"></div>
+                                    <p><input class="form-control" name="company_address" id="company_address" type="text" placeholder="Company Address"><span style="float:left; color: red;" class="error_msg" id="comp_add"></span></p>
+                                    <div style="clear:both"></div>
+                                    <p><input class="form-control" name="zip" id="zip" type="text" placeholder="Zip" maxlength="5" minlength="5"><span style="float:left; color: red;" class="error_msg" id="zp"></span></p>
+                                    <div style="clear:both"></div>
+                                    <p><input class="form-control"  name="city" id="city" type="text" placeholder="City"><span style="float:left; color: red;" class="error_msg" id="cty"></span></p>
+                                    <div style="clear:both"></div>
+                               
+                                    <p> 
+										<select class="form-control styled" name="state" id="state">
+										<option value='' disabled selected style='display:none;'>State</option> 
+											<option value="Alabama">Alabama</option>
+											<option value="Alaska">Alaska</option>
+											<option value="American Samoa">American Samoa</option>
+											<option value="Arizona">Arizona</option>
+											<option value="Arkansas">Arkansas</option>
+											<option value="California">California</option>
+											<option value="Colorado">Colorado</option>
+											<option value="Connecticut">Connecticut</option>
+											<option value="Delaware">Delaware</option>
+											<option value="District Of Columbia">District Of Columbia</option>
+											<option value="Florida">Florida</option>
+											<option value="Georgia">Georgia</option>
+											<option value="Guam">Guam</option>
+											<option value="Hawaii">Hawaii</option>
+											<option value="Idaho">Idaho</option>
+											<option value="Illinois">Illinois</option>
+											<option value="Indiana">Indiana</option>
+											<option value="Iowa">Iowa</option>
+											<option value="Kansas">Kansas</option>
+											<option value="Kentucky">Kentucky</option>
+											<option value="Louisiana">Louisiana</option>
+											<option value="Maine">Maine</option>
+											<option value="Maryland">Maryland</option>
+											<option value="Massachusetts">Massachusetts</option>
+											<option value="Michigan">Michigan</option>
+											<option value="Minnesota">Minnesota</option>
+											<option value="Mississippi">Mississippi</option>
+											<option value="Missouri">Missouri</option>
+											<option value="Montana">Montana</option>
+											<option value="Nebraska">Nebraska</option>
+											<option value="Nevada">Nevada</option>
+											<option value="New Hampshire">New Hampshire</option>
+											<option value="New Jersey">New Jersey</option>
+											<option value="New Mexico">New Mexico</option>
+											<option value="New York">New York</option>
+											<option value="North Carolina">North Carolina</option>
+											<option value="North Dakota">North Dakota</option>
+											<option value="Northern Mariana Islands">Northern Mariana Islands</option>
+											<option value="Ohio">Ohio</option> 
+											<option value="Oklahoma">Oklahoma</option>
+											<option value="Oregon">Oregon</option>
+											<option value="Pennsylvania">Pennsylvania</option>
+											<option value="Puerto Rico">Puerto Rico</option>
+											<option value="Rhode Island">Rhode Island</option>
+											<option value="South Carolina">South Carolina</option>
+											<option value="South Dakota">South Dakota</option>
+											<option value="Tennessee">Tennessee</option>
+											<option value="Texas">Texas</option>
+											<option value="United States Minor Outlying Islands">United States Minor Outlying Islands</option>
+											<option value="Utah">Utah</option>
+											<option value="Vermont">Vermont</option>
+											<option value="Virginia">Virginia</option>
+											<option value="Virgin Islands">Virgin Islands</option>	
+											<option value="Washington">Washington</option>
+											<option value="West Virginia">West Virginia</option>
+											<option value="Wisconsin">Wisconsin</option>
+											<option value="Wyoming">Wyoming</option>											
+															
+										</select> 
+										<span style="float:left" class="error_msg"></span>
+									</p> 
+									                                                                 
+                                    <div style="clear:both"></div>
+                                    <p><input class="form-control" type="text" name="mobile_phone" id="mobile_phone" placeholder="Mobile Phone"    ><span style="float:left; color: red;" class="error_msg" id="mphone"></span></p>
+                                    <div style="clear:both"></div>
+                                    <p><input class="form-control" type="text" name="office_phone" id="office_phone" placeholder="Office Phone"  ><span style="float:left; color: red;" class="error_msg" id="ophone"></span></p>
+                                    <div style="clear:both"></div>
+                                    <div id="email_txt">
+                                        To prevent misuse of ProspectZen, we require that you apply with your solar company issued email id.
+                                        Once approved, this email will be your user name.
+                                    </div>
+                                    <p><input class="form-control" type="email" name="company_email_id" id="company_email_id" placeholder="Company Email ID"><span style="float:left; color: red;" class="error_msg" id="comp_id"></span></p>
+                                    <div style="clear:both"></div>
+                                    <input id="app_ly" type="button"  class="btn btn-embossed btn-primary" value="Apply" onclick="abc()">
+                                    <div id="already"><a href="/homes/userlogin">Already approved? Login here</a></div>
+                                
+                                                        
+                                <!-- </form> -->
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <!--End #content_wrapper-->
+
+            </div>
+            <!--End #bg_wrapper-->
+
+
+    </body>
+
+</html>

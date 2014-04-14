@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+  	
+  	<% if (@user.first['active_status']=='1') %>
+  	
+    <p>Welcome to WattSun, Dear <%= @user.first['first_name'] %>, you have been approved.</p>
+       ==========================================
+    <p>
+        Your email id is: <%= @user.first['company_email_id'] %>.
+    </p>
+    <p>
+      To activate your account, just follow this link: <a href="http://54.85.147.244:3000/homes/activate?id=<%= @user.first['company_email_id'] %>&vt=<%=@user.first['verification_token']%>" >click here</a>
+    </p>
+    <p>Thanks for joining and have a great day!</p>
+    
+    <% elsif @user.first['active_status']=='2' %>
+    
+    <p> Hi, </p> <br>
+   
+    <p> You have been added in waitlist. </p> <br>
+    
+    <p> See you soon! </p> <br>
+
+    <p> Team WattSun </p> 
+
+    
+    <% elsif @user.first['active_status']=='3' %>
+    
+    <p> Hi, </p> <br>
+   
+    <p> You have been declined. </p> <br>
+    
+    <p> See you soon! </p> <br>
+
+    <p> Team WattSun </p> 
+    
+  
+    <% elsif @user.first['active_status']=='4' %>
+    
+    <p> Hi, </p> <br>
+   
+    <p> You have been blocked. </p> <br>
+    
+    <p> See you soon! </p> <br>
+
+    <p> Team WattSun </p>     
+   
+    <% end %>
+    
+  </body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>
+            Wattsun
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link href="/assets/bootstrap.min.css" rel="stylesheet">
+        <link href="/assets/flat-ui.css" rel="stylesheet">
+        <link href="/assets/reset.css" rel="stylesheet">
+        <link href="/assets/style_payment.css" rel="stylesheet">
+
+        <link href="/assets/mediaqueries_payment.css" rel="stylesheet">
+        <script src="/assets/jquery.js"></script>
+        <script src="/assets/bootstrap.min.js"></script>
+        
+        
+        <script>
+        	
+        	
+            function updateMa()
+            {
+            	 
+            	
+                	$("#mabtn").val('Updating...');	
+                				        	
+	            	$.ajax({
+	            	url: "/homes/updateplan",
+	        	    type: "POST",
+	            	dataType: 'JSON',
+	            	data: { 'ma' : $("#monthlyacc").val() }, 
+	            
+	            	success: function(response){
+	            		     			                           
+	     			                          
+	     			                           $("#mabtn").val('Updated');
+	     			                           
+	        	        }
+	            	 });              	
+              }
+              
+              
+              
+               function updateHc()
+            {
+            	 
+            	
+                	$("#hcbtn").val('Updating...');	
+                				        	
+	            	$.ajax({
+	            	url: "/homes/updatechrg",
+	        	    type: "POST",
+	            	dataType: 'JSON',
+	            	data: { 'hc' : $("#house_chrg").val() }, 
+	            
+	            	success: function(response){
+	            		     			            $("#hcbtn").val('Updated');
+	     			                           
+	        	        }
+	            	 });              	
+              }
+            
+        </script>
+
+
+    </head>
+    <body>
+
+        <div class="container">
+            <div id="bgnav" class="navbar navbar-fixed-top navbar-inverse">
+                <div id="navigation" role="navigation">
+
+                    <div class="navbar-header">
+
+                        <button id="btn_collapse" type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+
+                        <a class="navlink" style="color: white;" href='#Top'> 
+                            <div id="logo"><p class="logo_txt">Wattsun</p></div>
+
+
+
+                        </a>
+
+                    </div>
+                   					<div id="top_menu_scroll" class="collapse navbar-collapse no-transition">
+						<ul id="pull_right" class="nav navbar-nav">
+
+							<li id="else" class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">What else does WattSun do? <b style="color:#fff" class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li>
+										<a href="#">Instant Target Map
+										<br />
+										Coming soon!</a>
+									</li>
+									<li>
+										<a href="#">Instant 3D Home
+										<br />
+										Coming soon!</a>
+									</li>
+								</ul>
+							</li>
+							<li id="faq">
+								<a class="navlink" href="#">FAQs</a>
+							</li>
+
+							<li id="setn" class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" >Settings<b style="color:#fff" class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li>
+										<a href="/homes/userprofile">Profile</a>
+									</li>
+									<li>
+										<a href="#">Payment</a>
+									</li>
+									<li>
+										<a href="/homes/purchaseitq">Purchases</a>
+									</li>
+									<li>
+										<a href="/homes/userproblem">Problem?</a>
+									</li>
+								</ul>
+							</li>
+							<li>
+								<form action="../homes/logout" method="post">
+									<input id="login" class="form-control" type="submit" value="Logout"/>
+
+								</form>
+							</li>
+
+						</ul>
+
+					</div><!-- /.nav-collapse -->
+
+                </div><!-- /.navbar -->
+            </div>
+        </div>
+        <!--End .container-->
+
+        <div id="bg_wrapper">
+            <div id="content_wrapper">
+                <div id="sidebar_menu" style="float:left;">
+                    <ul id="menu_list" class="nav nav-pills nav-stacked">
+                        <li id="profile"><a href="/homes/userprofile">Profile</a></li>
+                        <li id="payment"><a href="#">Payment</a></li>
+                        <li id="purchases"><a href="/homes/purchaseitq">Purchases</a></li>
+                        <li id="problem"><a href="/homes/userproblem">Problem?</a></li>
+                    </ul>
+                </div>
+                <div id="menu_content" style="float:right;">
+                    <div id="menu_content_header">
+                        Payment settings for John Smith @ Big Bob Solar Inc.
+                    </div>
+
+                    <div id="menu_content_credit_card">
+                        <div id="menu_content_credit_card_header" style="margin-bottom: 15px;">Billing Credit Card</div>
+                        <div style="margin-left: 20px;">
+                            <div><div style="float:left" class="left_info">Card Number</div><div style="float:left" class="right_info">XXXX-XXXX-XXXX-1234</div><div style="float:left;margin-left:15px;"><a href="#" style="color:#0C2D6F;text-decoration: underline;">update</a></div></div>
+                            <div style="clear:both"></div>
+                            <div><span style="float:left" class="left_info">Expiry</span><span style="float:left" class="right_info">2/2015</span></div>
+                            <div style="clear:both;"></div>
+
+                        </div>
+                    </div>
+                    <div id="menu_content_pricing">
+
+                        <div id="menu_content_price_header" style="margin-bottom: 15px;">Pricing</div>
+                        <div style="margin-left: 20px;">
+
+                            <div><div style="float:left" class="left_info">Monthly access</div><div style="float:left" class="right_info">$99.00</div>  <div style="float:left" class="right_info"><input type="text" class="form-control" id="monthlyacc"> </div>
+                             <input type="button" class="form-control" style="width: 100px;" id="mabtn" onclick="updateMa()" value="Update"> </input> </div>
+                            <div style="clear:both"></div>
+                            <div><span style="float:left" class="left_info">Next charge</span><span style="float:left" class="right_info">01/4/2014</span></div>
+                            <div style="clear:both;"></div>
+                            <div><span style="float:left" class="left_info">Instant Target Qualification</span><span style="float:left" class="right_info">$3 per prospect</span>  <div style="float:left" class="right_info"><input type="text" class="form-control" id="house_chrg"> </div>
+                            <input type="button" class="form-control" style="width: 100px;" id="hcbtn" onclick="updateHc()" value="Update"> </input></div>
+                            <div style="clear:both;"></div>
+                            <div><span style="float:left" class="left_info">Instant Target Map</span><span style="float:left" class="right_info">-</span></div>
+                            <div style="clear:both;"></div>
+                            <div><span style="float:left" class="left_info">Instant 3D Home</span><span style="float:left" class="right_info">-</span></div>
+                            <div style="clear:both;"></div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <!--End #content_wrapper-->
+        </div>
+        <!--End #bg_wrapper-->
+
+
+    </body>
+
+</html>

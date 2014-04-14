@@ -1,0 +1,117 @@
+@font-face {
+    font-family:'latobold';
+    src: url('../assets/Lato-Bold.ttf') format('truetype');
+}
+@font-face {
+    font-family:'latolig';
+    src: url('../assets/Lato-Lig.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'latoreg';
+    src: url('../assets/Lato-Regular.ttf') format('truetype');
+}
+/*
+#tog_less{
+   background:#23A204;
+   width: 22px;
+}
+#tog_more{
+   background:#23A204;
+   width:22px;
+   position:fixed;
+   top:110px;
+   cursor:pointer;
+}
+*/
+#content{
+   margin-top:-20px;
+   width:28%;
+   font-family: 'latoreg';
+   position:fixed;
+   top:212px;
+   bottom:0;
+   overflow-y:scroll;
+	background:rgba(0,0,0,.5);
+   
+   
+}
+#menu {
+background: rgba(0,0,0,.8);
+width: 28%;
+margin-top: -3px;
+padding:10px 10px;
+font-family: 'latoreg';
+word-break: break-all;
+
+}
+#mobile_content{
+   
+
+    overflow-x:hidden;
+    
+        padding:16px;
+        word-wrap:break-word;
+        border-top:1px solid rgba(0,0,0,.2);
+		overflow-y:hidden;
+
+}
+#mar_int{
+	 overflow-x:hidden;
+
+        padding:16px;
+        word-wrap:break-word;
+        border-top:1px solid rgba(0,0,0,.2);
+overflow-y:hidden;
+}
+
+#web_content{
+
+ overflow-x:hidden;
+    
+        padding:16px;
+        word-wrap:break-word;
+        border-top:1px solid rgba(0,0,0,.2);
+overflow-y:hidden;
+}
+
+
+.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+color: #ffffff;
+background-color: #23A204;
+}
+.nav-pills > li > a{
+color: #000;
+background-color:#fff;
+border-radius:5px;
+margin-top:6px;
+margin-bottom:6px;
+height:19px;
+margin-left:10px;
+margin-right:0px;
+font-size:12px; 
+padding-top: 4px;
+
+}
+.nav-pills > li > a:hover{
+color: #fff;
+background-color:#23A204;
+
+}
+
+
+.capt{
+    text-align:left;
+    padding-top:10px;
+}
+#bordr{
+    border-top:1px solid rgba(0,0,0,.2);
+}
+div.table-responsive{
+    padding-left:12px;
+}
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td{
+    border:0px;
+}
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td{
+    line-height: 1.1;
+}

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>
+            ProspectZen
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link rel="icon" href="/assets/favicon.ico" type="image/x-icon"> 
+        <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+        <link href="/assets/bootstrap.min.css" rel="stylesheet">
+        <link href="/assets/flat-ui.css" rel="stylesheet">
+        <link href="/assets/reset.css" rel="stylesheet">
+        <link href="/assets/style_adminlogin.css" rel="stylesheet">
+
+        <link href="/assets/mediaqueries_adminlogin.css" rel="stylesheet">
+        <script src="/assets/jquery.js"></script>
+        <script src="/assets/bootstrap.min.js"></script>
+        
+        
+        	        
+	    <script>
+				
+			$( document ).ready(function() {
+										
+					<% if session[:admin_errormessage] %>      
+		         
+		              $('#data_match').html( "Your email or password does not match."); 
+                  
+                    <%end%>	
+                    
+                     
+                    <% if session[:admin_approval_error] %>      
+		         
+		              $('#data_match').html( "You have not been approved yet."); 
+                  
+                    <%end%>					
+					
+					<% session[:admin_errormessage]=nil %>
+					
+					<% session[:admin_approval_error]=nil %>
+										
+					$('#emailid').focusin(function() { 
+					  $('#email_id').html(''); 
+					  $('#data_match').html(''); 
+					});
+					
+					
+					$('#password').focusin(function() { 
+					  $('#passwd').html(''); 
+					  $('#data_match').html(''); 
+					});
+					
+			});
+				
+					
+			function dataValidation()
+			{
+								
+					var flag=0;
+				 
+					if ($('#emailid').val() == '' || $('#emailid').val() == null)
+					{
+						$('#email_id').html("Email id can't be blank.");
+						
+						flag=1;
+					}
+					
+					else
+				   	{
+						    $('#email_id').html("");
+					}
+					
+				   if ($('#password').val() == '' || $('#password').val() == null)
+						{
+							$('#passwd').html("Password can't be blank.");
+							
+							flag=1;
+						}
+						
+					else
+				   	{
+						    $('#passwd').html("");
+					}
+						
+				   
+					if (flag==1)
+					{
+						return false;
+						
+					}
+					else{		
+						return true;
+					}
+			}
+	   
+	     </script>
+        
+        
+    </head>
+    <body>
+
+        <div class="container">
+            <div id="bgnav" class="navbar navbar-fixed-top navbar-inverse">
+                <div id="navigation" role="navigation">
+
+                    <div class="navbar-header">
+                        <a class="navlink" style="color: white;" href='/homes/adminlogin'> 
+                            <div id="logo"><p class="logo_txt">ProspectZen</p></div>
+                       </a>
+
+                    </div>
+                 </div><!-- /.navbar -->
+            </div>
+        </div>
+        <!--End .container-->
+
+        <div id="bg_wrapper">
+            <div id="content_wrapper">
+                <div id="admin_login">
+                    <div id="admin_login_header">
+                        Admin Login
+                    </div>
+                    
+                    <div id="admin_login_form">
+                        <div class="row">
+
+                            <form class="form-signin" action="/homes/adminsignin" method="post" onsubmit="return dataValidation()" role="form">
+                                <p><input class="form-control" type="text" placeholder="Email ID" name="emailid" id="emailid"><span style="float:left; color: red;" class="error_msg" id="email_id"></span></p>
+                                <div style="clear:both"></div>
+                                <p><input class="form-control" type="password" placeholder="Password" name="password" id="password"><span style="float:left; color: red;" class="error_msg" id="passwd"> </span></p>
+                                <div style="clear:both"></div>
+							    <p><span style="color: red;" class="error_msg" id="data_match"></span></p>
+                                <div style="clear:both"></div>
+
+                                <input id="adm_login"type="submit" class="btn btn-embossed btn-primary" value="Login">
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--End #content_wrapper-->
+
+        </div>
+        <!--End #bg_wrapper-->
+
+
+    </body>
+
+</html>
+
+ 

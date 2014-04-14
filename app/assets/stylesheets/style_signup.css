@@ -1,0 +1,223 @@
+@font-face {
+    font-family:'latobold';
+    src: url('../assets/Lato-Bold.ttf') format('truetype');
+}
+@font-face {
+    font-family:'latolig';
+    src: url('../assets/Lato-Lig.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'latoreg';
+    src: url('../assets/Lato-Regular.ttf') format('truetype');
+}
+
+
+
+body{
+    font-family:arial;
+    background:transparent;
+    letter-spacing: .8px;
+}
+
+/*
+navigation start
+*/
+div.navbar-collapse.collapse.in{
+    background:#5cb85c;
+    margin-top:10px;
+    margin-bottom:10px;
+    color:#fff;
+
+}
+#btn_collapse{
+    background:#23A204;
+    border-radius: 0px;
+    border: 0px;
+    margin-top:30px;
+}
+.navlink{
+    font-family:'latoreg';
+    margin-top:20px;
+}
+#login{
+    margin-top:26px;
+    color:#fff;
+    background:#5cb85c;
+    border:2px solid #fff;
+    height: 41px;
+line-height: 5px;
+font-size: 15px;
+}
+#pull_right{
+
+        float:right !important;
+    }
+#login:hover{
+    background-color: #fff;
+    color:#5cb85c;
+    border:2px solid #fff;
+}
+.navbar-collapse{
+    border:none;
+}
+.navbar{
+    border-bottom:none;
+}
+#bgnav{
+    width:100%;
+    background: #5cb85c;
+    padding:6px 0px 4px 0px;
+    
+}
+#navigation{
+    background: #5cb85c;
+    width:92%;
+    margin:0 auto;
+
+
+}
+html {
+-webkit-font-smoothing: antialiased;
+}
+
+.navbar-inverse .navbar-nav>li>a{
+    color:#fff;
+font-family:'latobold';
+font-weight: 100;
+letter-spacing:0;
+font-size: 15px
+}
+.caret {
+border-width: 5px 5px;
+margin-top:-2px;
+}
+.nav > li > a {
+padding: 16px 16px;
+}
+.navbar-inverse .navbar-nav>li>a:hover{
+    color:#fff;
+}
+#logo{
+    width:100px;
+    height: 100px;
+    background:url('../assets/wattsun_logo.png');
+    background-size: 100px 100px;
+}
+.logo_txt{
+    color:#fff;
+    font-size: 34px;
+    font-family: 'latoreg';
+    font-weight:200;
+    padding-top:30px;
+    padding-left: 115px;
+}
+#else{
+    margin-top:20px;
+    font-family: 'latoreg';
+}
+.navbar-inverse .navbar-nav > .dropdown > a .caret {
+    border-top-color: #FFFFFF;
+    border-bottom-color: #fff;
+}
+.navbar-inverse .navbar-nav > .dropdown > a .caret:hover {
+    border-top-color: #FFFFFF;
+    border-bottom-color: #fff;
+}
+
+.navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
+    background-color:transparent;
+}
+.navbar-nav > li > .dropdown-menu {
+
+    border-radius: 0px;
+    width:100%;
+}
+.open > .dropdown-menu {
+    margin-top: 29px !important;
+}
+.navbar-inverse .navbar-nav > .open > .dropdown-menu > li > a {
+    color: #e1e4e7;
+    border-radius: 0px;
+    font-size: 17px;
+}
+.navbar-inverse .navbar-nav > .open > .dropdown-menu {
+    background-color: #000;
+}
+.navbar-inverse .navbar-nav > .open > .dropdown-menu > li > a:hover, .navbar-inverse .navbar-nav > .open > .dropdown-menu > li > a:focus {
+    color: #ffffff;
+    background-color:#5cb85c;
+}
+.navbar-inverse .navbar-nav > .open > .dropdown-menu{
+    padding:10px 0 10px 0px;
+}
+
+
+/*
+wrappers
+*/
+#bg_wrapper{
+    width:100%;
+}
+#content_wrapper{
+    width:92%;
+    margin:0 auto;
+}
+
+
+#apply{
+    margin-top:145px;
+    font-family:'latoreg';
+    font-size:18px;
+    line-height: 22px;
+}
+
+#apply_header{
+    font-size:24px;
+    margin-bottom:10px;
+}
+#apply_body{
+    margin-bottom:10px;
+}
+#apply_form{
+
+    margin-left:18px;
+}
+#apply_form .form-control{
+    border-radius: 0px;
+}
+.form-control{
+   margin-bottom:10px;
+   width:200px;
+   float: left;
+    border-radius:0px !important;
+    margin-right: 10px;
+    border-color:#5cb85c;
+}
+.error_msg{
+   font-size:17px;
+   padding-top: 10px;
+    font-family: 'latolig';
+}
+#email_txt{
+   margin-top: 20px;
+   margin-bottom: 20px;
+}
+#app_ly{
+    width: 120px;
+    background-color: #5cb85c;
+    border-radius:0px;
+}
+#already a{
+    color:#5cb85c;
+    text-decoration: underline;
+    font-size: 15px;
+}
+#already{
+    margin-bottom:100px;
+}
+
+.styled{
+    margin-top:30px;
+    margin-right: 10px;
+    margin-left:0px;
+}

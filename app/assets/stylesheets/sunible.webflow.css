@@ -1,0 +1,49 @@
+
+.address-button {
+  position: relative;
+  display: inline;
+  width: 200px;
+  height: 50px;
+  background-color: #22a301;
+  box-shadow: rgba(255, 255, 255, 0.49) 0px 1px 0px 0px inset;
+  font-family: Lato, sans-serif;
+  font-size: 24px;
+  line-height: 20px;
+  font-weight: 300;
+  text-align: center;
+}
+.address-button.apply-button {
+  position: relative;
+  display: block;
+  margin-top: 24px;
+}
+.apply-form {
+  width: 100%;
+  height: 50px;
+  margin-top: 24px;
+  margin-bottom: 24px;
+  font-family: Lato, sans-serif;
+  font-size: 24px;
+  font-weight: 300;
+}
+.green-space {
+  min-width: 0px;
+  padding-bottom: 0px;
+}
+@media (max-width: 991px) {
+ 
+  .apply-form {
+    width: 100%;
+  }
+}
+@media (max-width: 767px) {
+  h1 {
+    width: 100%;
+    height: 100%;
+  }
+}
+@media (max-width: 479px) {
+   .apply-form {
+    height: 27.8%;
+  }
+}

@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title> Wattsun </title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<link href="/assets/bootstrap.css" rel="stylesheet">
+		<link href="/assets/flat-ui.css" rel="stylesheet">
+		<link href="/assets/reset.css" rel="stylesheet">
+		<link href="/assets/style_admin_user_number.css" rel="stylesheet">
+
+		<link href="/assets/mediaqueries_admin_user_number.css" rel="stylesheet">
+		<link rel="stylesheets" type="text/css" href="/assets/dataTables.bootstrap.css">
+		<script src="/assets/jquery.js"></script>
+
+		<script src="/assets/bootstrap.min.js"></script>
+		<script src="/assets/jquery.dataTables.min.js"></script>
+		<script src="/assets/dataTables.bootstrap.js"></script>
+		<script>
+			$(document).ready(function() {
+
+				$('#example').dataTable();
+
+				$('.dataTables_filter input').attr("placeholder", "Search by address, name, city, zip, anything!");
+				$('.dataTables_filter input').attr("class", "form-control");
+				$('#example_paginate').css({
+					"width" : "423px",
+					"font-size" : "14px",
+					"float" : "right",
+					"margin-bottom" : "25px"
+				});
+				$('.dataTables_filter input').css({
+					"width" : "90%",
+					"margin-top" : "-10px",
+					"position" : "absolute",
+					"right" : "22px"
+				});
+				//                $('.dataTables_filter input').css("margin-top", "5px");
+				$('table').css({
+					"width" : "100%"
+				});
+				$('#example_length select.form-control').css("height", "46px");
+				$('#example_length').css({
+					"margin-left" : "5px",
+					"padding" : "5px 0px"
+				});
+				$('#example_info.dataTables_info').css({
+					"display" : "none"
+				});
+
+			});
+		</script>
+
+		<script>
+			function updateMa() {
+
+				$("#mabtn").val('Changing...');
+
+				$.ajax({
+					url : "/homes/updateplan",
+					type : "POST",
+					dataType : 'JSON',
+					data : {
+						'ma' : $("#monthlyacc").val()
+					},
+
+					success : function(response) {
+
+						$("#updatedma").html('$' + $("#monthlyacc").val());
+						$("#mabtn").val('Changed');
+
+					}
+				});
+			}
+
+			function updateHc() {
+
+				$("#hcbtn").val('Changing...');
+
+				$.ajax({
+					url : "/homes/updatechrg",
+					type : "POST",
+					dataType : 'JSON',
+					data : {
+						'hc' : $("#house_chrg").val()
+					},
+
+					success : function(response) {
+
+						$("#hcbtn").val('Changed');
+						$("#updatedhc").html('$' + $("#house_chrg").val() + 'per prospect');
+
+					}
+				});
+			}
+
+         
+         
+         
+         function abc() {
+				
+						$("#old_credits").html("No. of credits: " + $("#prev_credits").html());
+						$("#new_credits").html("New credit balance: " +  $("#cur_credits").val());
+
+						
+						$("#basicModal").modal();
+					
+		             	}
+		             	
+         function updatecredits() {
+             	
+				$('#basicModal').modal('hide');
+				$.ajax({
+					url : "/homes/updatecredits",
+					type : "POST",
+					dataType : 'JSON',
+					data : { 
+						'cur_credits': $("#cur_credits").val()						
+					},
+
+					success : function(response) {
+						 
+						 $("#creditsbtn").val('added');
+						 $("#prev_credits").html($("#cur_credits").val());
+						 $("#cur_credits").val('');				
+
+					}
+				});
+
+			}
+
+
+       
+		</script>
+
+	</head>
+	<body>
+
+		<div class="container">
+			<div id="bgnav" class="navbar navbar-fixed-top navbar-inverse">
+				<div id="navigation" role="navigation">
+
+					<div class="navbar-header">
+
+						<button id="btn_collapse" type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+
+						<a class="navlink" style="color: white;" href='#Top'> <div id="logo"></div> </a>
+
+					</div>
+					<div class="collapse navbar-collapse no-transition">
+						<ul id="pull_right" class="nav navbar-nav">
+
+							<li>
+								<form action="../homes/logout" method="post">
+									<input id="login" class="form-control" type="submit" value="Logout"/>
+
+								</form>
+							</li>
+
+						</ul>
+
+					</div><!-- /.nav-collapse -->
+
+				</div><!-- /.navbar -->
+			</div>
+		</div>
+		<!--End .container-->
+
+		<div id="bg_wrapper">
+			<div id="content_wrapper">
+				<div id="sidebar_menu" style="float:left;">
+					<ul id="menu_list" class="nav nav-pills nav-stacked">
+						<li id="usr_status">
+							<a href="/homes/adminuserstatus">User Statuses</a>
+						</li>
+						<li id="usr_profile">
+							<a href="/homes/adminuserprofile">User Profiles</a>
+						</li>
+						<li id="usr_payment">
+							<a href="/homes/adminuserpayment">User Payment</a>
+						</li>
+						<li id="usr_purchases"  class="panel">
+
+							<a  class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">User Purchases</a>
+							<div id="collapseOne" class="panel-collapse collapse">
+								<div class="panel-body">
+									<ul>
+										<li id="admn_itq_panel">
+											<a href="/homes/adminuserpurchase" style="color:#000">Instant Target Qualification</a>
+										</li>
+										<li id="admn_itm_panel">
+											<a href="#" style="color:#000">Instant Target Map</a>
+										</li>
+										<li id="admn_ih_panel">
+											<a href="#" style="color:#000">Instant 3D Home</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</li>
+
+						<li id="usr_sales">
+
+							<a href="#">Sales</a>
+
+						</li>
+					</ul>
+				</div>
+				<div id="menu_content" style="float:right;">
+					<a href="/homes/adminuserpayment" style="font-size:16px;color:#000;margin-left:15px;">&lt;Back to list</a>
+					<div id="menu_content_header">
+						Payment settings for <%= @user.first['first_name'] %> <%= @user.first['last_name'] %> @ <%= @user.first['company_name'] %>.
+					</div>
+
+					<div id="menu_content_admin_user_number">
+
+						<div class="col-sm-12" style="font-family:'latobold'">
+							Billing Credit Card
+						</div>
+						<div class="col-sm-4" style="margin-left: 20px;">
+							Credit Card
+						</div>
+						<div class="col-sm-4">
+							Registered
+						</div>
+
+						<div class="col-sm-12" style="font-family:'latobold'">
+							Pricing
+						</div>
+
+						<div style="margin-left:20px;">
+							<div class="col-sm-4">
+								Monthly access
+							</div>
+							<div class="col-sm-4" id="updatedma">
+								$<%= @user.first['monthly_charge']%>
+							</div>
+							<div class="col-sm-4">
+								<input class="form-control" type="text" name="pricing_mnth_acs"  id="monthlyacc" style="width:100px;float:left;margin-right: 10px;">
+								<input type="button" class="form-control" style="width: 100px;" id="mabtn" onclick="updateMa()" value="Change">
+								</input>
+
+							</div>
+							<div style="clear:both"></div>
+							<div class="col-sm-4">
+								Next charge
+							</div>
+							<div class="col-sm-4">
+								<%= @user.first['current_period_end'] %>
+							</div>
+							<div style="clear:both"></div>
+							<div class="col-sm-4">
+								Instant Target Qualification
+							</div>
+							<div class="col-sm-4" id="updatedhc">
+								$<%= @user.first['house_charge'] %> per prospect
+							</div>
+							<div class="col-sm-4">
+								<input class="form-control" type="text"  id="house_chrg" name="pricing_itq" style="width:100px;float:left;margin-right: 10px;">
+								<input type="button" class="form-control" style="width: 100px;" id="hcbtn" onclick="updateHc()" value="Change">
+								</input>
+							</div>
+							<div style="clear:both"></div>
+							<div class="col-sm-4">
+								Instant Target Map
+							</div>
+							<div class="col-sm-4">
+								-
+							</div>
+							<div class="col-sm-4">
+								<input class="form-control" type="text" name="pricing_it," style="width:100px;float:left;margin-right: 10px;">
+								<input class="form-control" type="submit" value="change" style="width:100px;">
+							</div>
+							<div style="clear:both"></div>
+							<div class="col-sm-4">
+								Instant 3D Home
+							</div>
+							<div class="col-sm-4">
+								-
+							</div>
+							<div class="col-sm-4">
+								<input class="form-control" type="text" name="pricing_h" style="width:100px;float:left;margin-right: 10px;">
+								<input class="form-control" type="submit" value="change" style="width:100px;">
+							</div>
+							<div style="clear:both"></div>
+						</div>
+
+						<div class="col-sm-12" style="font-family:'latobold'">
+							Credits
+						</div>
+						<div style="margin-left:20px;">
+
+							<div class="col-sm-4">
+								Instant Target Qualification
+							</div>
+							<div class="col-sm-4" id="prev_credits">
+								<%= @user.first['credits'] %> 
+							</div>
+							<div class="col-sm-4">
+								<input class="form-control" type="text" name="pricing_itq" id="cur_credits" style="width:100px;float:left;margin-right: 10px;">
+								<input class="form-control" type="button" id="creditsbtn" value="add" style="width:100px;" onclick='abc()'>
+
+							</div>
+							<div style="clear:both"></div>
+							<div class="col-sm-4">
+								Instant Target Map
+							</div>
+							<div class="col-sm-4">
+								-
+							</div>
+							<div class="col-sm-4">
+								<input class="form-control" type="text" name="pricing_it," style="width:100px;float:left;margin-right: 10px;">
+								<input class="form-control" type="submit" value="add" style="width:100px;">
+							</div>
+							<div style="clear:both"></div>
+							<div class="col-sm-4">
+								Instant 3D Home
+							</div>
+							<div class="col-sm-4">
+								-
+							</div>
+							<div class="col-sm-4">
+								<input class="form-control" type="text" name="pricing_h" style="width:100px;float:left;margin-right: 10px;">
+								<input class="form-control" type="submit" value="add" style="width:100px;">
+							</div>
+							<div style="clear:both"></div>
+						</div>
+
+						<div class="modal" id="basicModal">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close fui-cross" data-dismiss="modal" aria-hidden="true"></button>
+										<h4 class="modal-title">You are awarding credits to a user!</h4>
+									</div>
+
+									<div class="modal-body">
+										<p>
+											Type of Credit: Instant Target Qualification
+										</p>
+										<p id="old_credits">
+											
+										</p>
+										<p id="new_credits">
+											
+										</p>
+									</div>
+
+									<div class="modal-footer">
+										<!-- <a  >Confirm</a><a href="#" class="btn">Cancel</a> -->
+										<a class="btn" style=" cursor: pointer;" onclick="updatecredits()" >Confirm</a>
+					                 										
+										<a class="btn"  data-dismiss="modal" style=" cursor: pointer;">Cancel</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div style="clear:left;"></div>
+
+			</div>
+			<!--End #content_wrapper-->
+		</div>
+		<!--End #bg_wrapper-->
+
+	</body>
+
+</html>
