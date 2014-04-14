@@ -780,10 +780,10 @@ class HomesController < ApplicationController
       @ztp=ZipTopInstaller.select("*").where("zip = ?",params[:zip]).order('no_of_solar_homes desc').limit(5)
       @ztp = @ztp.to_a.map(&:serializable_hash)
 
-      @zpb=ZipPanelBrand.select("*").where("zip = ?",params[:zip]).order('no_of_solar_homes desc').limit(5)
+      @zpb=ZipPanelBrand.select("*").where("zip = ?",params[:zip]).order('no_of_solar_homes desc').limit(3)
       @zpb = @zpb.to_a.map(&:serializable_hash)
 
-      @zib=ZipInverterBrand.select("*").where("zip = ?",params[:zip]).order('no_of_solar_homes desc').limit(5)
+      @zib=ZipInverterBrand.select("*").where("zip = ?",params[:zip]).order('no_of_solar_homes desc').limit(3)
       @zib = @zib.to_a.map(&:serializable_hash)
 
       @utility= Utilitytable.select("utility").where("zip = ?",params[:zip])
@@ -799,10 +799,10 @@ class HomesController < ApplicationController
       @ztp=CityTopInstaller.select("*").where("city = ?",params[:citycode]).order('no_of_solar_homes desc').limit(5)
       @ztp = @ztp.to_a.map(&:serializable_hash)
 
-      @zpb=CityPanelBrand.select("*").where("city = ?",params[:citycode]).order('no_of_solar_homes desc').limit(5)
+      @zpb=CityPanelBrand.select("*").where("city = ?",params[:citycode]).order('no_of_solar_homes desc').limit(3)
       @zpb = @zpb.to_a.map(&:serializable_hash)
 
-      @zib=CityInverterBrand.select("*").where("city = ?",params[:citycode]).order('no_of_solar_homes desc').limit(5)
+      @zib=CityInverterBrand.select("*").where("city = ?",params[:citycode]).order('no_of_solar_homes desc').limit(3)
       @zib = @zib.to_a.map(&:serializable_hash)
 
       @utility= Utilitytable.select("utility").where("zip = ?",params[:zip])
@@ -845,10 +845,10 @@ class HomesController < ApplicationController
       @ztp=ZipTopInstaller.select("*").where("zip = ?",params[:zip]).order('no_of_solar_homes desc').limit(5)
       @ztp = @ztp.to_a.map(&:serializable_hash)
 
-      @zpb=ZipPanelBrand.select("*").where("zip = ?",params[:zip]).order('no_of_solar_homes desc').limit(5)
+      @zpb=ZipPanelBrand.select("*").where("zip = ?",params[:zip]).order('no_of_solar_homes desc').limit(3)
       @zpb = @zpb.to_a.map(&:serializable_hash)
 
-      @zib=ZipInverterBrand.select("*").where("zip = ?",params[:zip]).order('no_of_solar_homes desc').limit(5)
+      @zib=ZipInverterBrand.select("*").where("zip = ?",params[:zip]).order('no_of_solar_homes desc').limit(3)
       @zib = @zib.to_a.map(&:serializable_hash)
 
       @utility= Utilitytable.select("utility").where("zip = ?",params[:zip])
@@ -889,10 +889,10 @@ class HomesController < ApplicationController
       @ztp=ZipTopInstaller.select("*").where("zip = ?",params[:zip]).order('no_of_solar_homes desc').limit(5)
       @ztp = @ztp.to_a.map(&:serializable_hash)
 
-      @zpb=ZipPanelBrand.select("*").where("zip = ?",params[:zip]).order('no_of_solar_homes desc').limit(5)
+      @zpb=ZipPanelBrand.select("*").where("zip = ?",params[:zip]).order('no_of_solar_homes desc').limit(3)
       @zpb = @zpb.to_a.map(&:serializable_hash)
 
-      @zib=ZipInverterBrand.select("*").where("zip = ?",params[:zip]).order('no_of_solar_homes desc').limit(5)
+      @zib=ZipInverterBrand.select("*").where("zip = ?",params[:zip]).order('no_of_solar_homes desc').limit(3)
       @zib = @zib.to_a.map(&:serializable_hash)
 
       @utility= Utilitytable.select("utility").where("zip = ?",params[:zip])
@@ -1082,10 +1082,10 @@ class HomesController < ApplicationController
       @ztp=ZipTopInstaller.select("*").where("zip = ?",params[:zip]).order('no_of_solar_homes desc').limit(5)
       @ztp = @ztp.to_a.map(&:serializable_hash)
 
-      @zpb=ZipPanelBrand.select("*").where("zip = ?",params[:zip]).order('no_of_solar_homes desc').limit(5)
+      @zpb=ZipPanelBrand.select("*").where("zip = ?",params[:zip]).order('no_of_solar_homes desc').limit(3)
       @zpb = @zpb.to_a.map(&:serializable_hash)
 
-      @zib=ZipInverterBrand.select("*").where("zip = ?",params[:zip]).order('no_of_solar_homes desc').limit(5)
+      @zib=ZipInverterBrand.select("*").where("zip = ?",params[:zip]).order('no_of_solar_homes desc').limit(3)
       @zib = @zib.to_a.map(&:serializable_hash)
 
       @utility= Utilitytable.select("utility").where("zip = ?",params[:zip])
@@ -1867,7 +1867,22 @@ class HomesController < ApplicationController
     end
    
   end
+  
+    def viewmap_copy
+    
+    session[:new_marker]=nil    
+    if !session[:current_user_id]
+       redirect_to :action => "index"
+    else    
+         @address= UserPurchase.select("address").where("user_id = ? and status = 1",session[:current_user_id])
+         @address = @address.to_a.map(&:address)
+       
+         @address1= UserPurchase.select("transaction_id").where("user_id = ? and status = 1",session[:current_user_id])
+         @transaction = @address1.to_a.map(&:transaction_id)
+    end
    
+  end
+    
 
 
 

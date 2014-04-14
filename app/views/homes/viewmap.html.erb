@@ -90,7 +90,7 @@
 							if (response['topinstaller'].length > 0) {
 								for ( i = 0; i < response['topinstaller'].length; i++) {
 
-									$("#installer1" + i).html(response['topinstaller'][i]['installers']);
+									$("#installer1" + i).html((i+1)+'. '+response['topinstaller'][i]['installers']);
 
 								}
 							} else {
@@ -110,7 +110,7 @@
 
 								for ( i = 0; i < response['toppanelbrands'].length; i++) {
 
-									$("#panel1" + i).html(response['toppanelbrands'][i]['panel_brands']);
+									$("#panel1" + i).html((i+1)+'. '+response['toppanelbrands'][i]['panel_brands']);
 
 								}
 							} else {
@@ -129,7 +129,7 @@
 
 								for ( i = 0; i < response['topinverterbrands'].length; i++) {
 
-									$("#inverter1" + i).html(response['topinverterbrands'][i]['inverter_brands']);
+									$("#inverter1" + i).html((i+1)+'. '+response['topinverterbrands'][i]['inverter_brands']);
 
 								}
 							} else {
@@ -181,7 +181,7 @@
 							if (response['topinstaller'].length > 0) {
 								for ( i = 0; i < response['topinstaller'].length; i++) {
 
-									$("#installer2" + i).html(response['topinstaller'][i]['installers']);
+									$("#installer2" + i).html((i+1)+'. '+ response['topinstaller'][i]['installers']);
 
 								}
 							} else {
@@ -200,7 +200,7 @@
 
 								for ( i = 0; i < response['toppanelbrands'].length; i++) {
 
-									$("#panel2" + i).html(response['toppanelbrands'][i]['panel_brands']);
+									$("#panel2" + i).html((i+1)+'. '+response['toppanelbrands'][i]['panel_brands']);
 
 								}
 							} else {
@@ -219,7 +219,7 @@
 
 								for ( i = 0; i < response['topinverterbrands'].length; i++) {
 
-									$("#inverter2" + i).html(response['topinverterbrands'][i]['inverter_brands']);
+									$("#inverter2" + i).html((i+1)+'. '+response['topinverterbrands'][i]['inverter_brands']);
 
 								}
 							} else {
@@ -1387,8 +1387,8 @@
 											check_flag=1;
 											for ( i = 0; i < response['topinstaller'].length; i++) {
 									
-											$("#installer1" + i).html(response['topinstaller'][i]['installers']);
-											$("#installer2" + i).html(response['topinstaller'][i]['installers']);
+											$("#installer1" + i).html((i+1)+'. '+response['topinstaller'][i]['installers']);
+											$("#installer2" + i).html((i+1)+'. '+response['topinstaller'][i]['installers']);
 									
 											}
 										}
@@ -1415,8 +1415,8 @@
 											check_flag=1;											
 											for ( i = 0; i < response['toppanelbrands'].length; i++) {
 									
-											$("#panel1" + i).html(response['toppanelbrands'][i]['panel_brands']);
-											$("#panel2" + i).html(response['toppanelbrands'][i]['panel_brands']);
+											$("#panel1" + i).html((i+1)+'. '+response['toppanelbrands'][i]['panel_brands']);
+											$("#panel2" + i).html((i+1)+'. '+response['toppanelbrands'][i]['panel_brands']);
 									
 											}
 										} 
@@ -1443,8 +1443,8 @@
 									        check_flag=1;
 											for ( i = 0; i < response['topinverterbrands'].length; i++) {
 									
-											$("#inverter1" + i).html(response['topinverterbrands'][i]['inverter_brands']);
-											$("#inverter2" + i).html(response['topinverterbrands'][i]['inverter_brands']);
+											$("#inverter1" + i).html((i+1)+'. '+response['topinverterbrands'][i]['inverter_brands']);
+											$("#inverter2" + i).html((i+1)+'. '+response['topinverterbrands'][i]['inverter_brands']);
 									
 											}
 										} 
@@ -2650,8 +2650,8 @@
 											check_flag=1;
 											for ( i = 0; i < response['topinstaller'].length; i++) {
 									
-											$("#installer1" + i).html(response['topinstaller'][i]['installers']);
-											$("#installer2" + i).html(response['topinstaller'][i]['installers']);
+											$("#installer1" + i).html((i+1)+'. '+response['topinstaller'][i]['installers']);
+											$("#installer2" + i).html((i+1)+'. '+response['topinstaller'][i]['installers']);
 									
 											}
 										}
@@ -2678,8 +2678,8 @@
 											check_flag=1;											
 											for ( i = 0; i < response['toppanelbrands'].length; i++) {
 									
-											$("#panel1" + i).html(response['toppanelbrands'][i]['panel_brands']);
-											$("#panel2" + i).html(response['toppanelbrands'][i]['panel_brands']);
+											$("#panel1" + i).html((i+1)+'. '+response['toppanelbrands'][i]['panel_brands']);
+											$("#panel2" + i).html((i+1)+'. '+response['toppanelbrands'][i]['panel_brands']);
 									
 											}
 										} 
@@ -2706,8 +2706,8 @@
 									        check_flag=1;
 											for ( i = 0; i < response['topinverterbrands'].length; i++) {
 									
-											$("#inverter1" + i).html(response['topinverterbrands'][i]['inverter_brands']);
-											$("#inverter2" + i).html(response['topinverterbrands'][i]['inverter_brands']);
+											$("#inverter1" + i).html((i+1)+'. '+response['topinverterbrands'][i]['inverter_brands']);
+											$("#inverter2" + i).html((i+1)+'. '+response['topinverterbrands'][i]['inverter_brands']);
 									
 											}
 										} 
@@ -3651,8 +3651,8 @@
 											check_flag=1;
 											for ( i = 0; i < response['topinstaller'].length; i++) {
 									
-											$("#installer1" + i).html(response['topinstaller'][i]['installers']);
-											$("#installer2" + i).html(response['topinstaller'][i]['installers']);
+											$("#installer1" + i).html((i+1)+'. '+response['topinstaller'][i]['installers']);
+											$("#installer2" + i).html((i+1)+'. '+response['topinstaller'][i]['installers']);
 									
 											}
 										}
@@ -3679,8 +3679,8 @@
 											check_flag=1;											
 											for ( i = 0; i < response['toppanelbrands'].length; i++) {
 									
-											$("#panel1" + i).html(response['toppanelbrands'][i]['panel_brands']);
-											$("#panel2" + i).html(response['toppanelbrands'][i]['panel_brands']);
+											$("#panel1" + i).html((i+1)+'. '+response['toppanelbrands'][i]['panel_brands']);
+											$("#panel2" + i).html((i+1)+'. '+response['toppanelbrands'][i]['panel_brands']);
 									
 											}
 										} 
@@ -3707,8 +3707,8 @@
 									        check_flag=1;
 											for ( i = 0; i < response['topinverterbrands'].length; i++) {
 									
-											$("#inverter1" + i).html(response['topinverterbrands'][i]['inverter_brands']);
-											$("#inverter2" + i).html(response['topinverterbrands'][i]['inverter_brands']);
+											$("#inverter1" + i).html((i+1)+'. '+response['topinverterbrands'][i]['inverter_brands']);
+											$("#inverter2" + i).html((i+1)+'. '+response['topinverterbrands'][i]['inverter_brands']);
 									
 											}
 										} 
@@ -4216,19 +4216,19 @@
 							                  
                  								<tr>
 													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Number of solar companies that have qualified this address, updated in real time" class="tool_tips green-tooltip">No. of checks on this address</span></div></td>
-													<td class="right_data"><span id='prev_checks1'>  </span></td>
+													<td class="right_data"><span id='prev_checks1' data-toggle="tooltip" data-original-title="Number of solar companies that have qualified this address, updated in real time" class="tool_tips green-tooltip">  </span></td>
 												</tr>
 							                   
 												<tr id="own1" style="display: none;">
 												
 												<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Name(s) on property title" class="tool_tips green-tooltip">Name of Owner(s)</span></div></td>
-												<td class="right_data"><span id='owner_name1'></span></td>
+												<td class="right_data"><span id='owner_name1' data-toggle="tooltip" data-original-title="Name(s) on property title" class="tool_tips green-tooltip"></span></td>
 													
 												</tr>
 												<tr id="ma1" style="display: none;">
 												
 													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Contact property owner at this mailing address" class="tool_tips green-tooltip">Full Mailing Address</span></div></td>
-													<td class="right_data"><span id='mailing_address1'></span></td>
+													<td class="right_data"><span id='mailing_address1' data-toggle="tooltip" data-original-title="Contact property owner at this mailing address" class="tool_tips green-tooltip"></span></td>
 											
 												</tr>
 											
@@ -4260,7 +4260,7 @@
 							                      </div>
 							                    </td>
 							                    <td class="right_data">
-							                      <span id='last_sale_date1'>
+							                      <span id='last_sale_date1' data-toggle="tooltip" data-original-title="Time since last property sale" class="tool_tips green-tooltip">
 							                          
 							                      </span>
 							                    </td>
@@ -4314,14 +4314,17 @@
 							                  
 							                  
 												<tr id="ht1" style="display: none;">
-													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="How the house is heated" class="tool_tips green-tooltip">Heat Type</span></div></td><td class="right_data"><span id='heat_type1'></span></td>
+													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="How the house is heated" class="tool_tips green-tooltip">Heat Type</span></div></td>
+													<td class="right_data">	<span id='heat_type1' data-toggle="tooltip" data-original-title="How the house is heated" class="tool_tips green-tooltip"></span></td>
 												</tr>
 												<tr id="hf1" style="display: none;">
-													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Energy source for heating" class="tool_tips green-tooltip">Heat Fuel</span></div></td><td class="right_data"><span id='heat_fuel1'></span></td>
+													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Energy source for heating" class="tool_tips green-tooltip">Heat Fuel</span></div></td>
+													<td class="right_data"><span id='heat_fuel1' data-toggle="tooltip" data-original-title="Energy source for heating" class="tool_tips green-tooltip"></span></td>
 												</tr>
 					
 												<tr id="aoh1" style="display: none;">
-													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="If building was demolished, age since reconstruction" class="tool_tips green-tooltip">Age of Home</span></div></td><td class="right_data"><span id='age_of_home1'></span></td>
+													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="If building was demolished, age since reconstruction" class="tool_tips green-tooltip">Age of Home</span></div></td>
+													<td class="right_data"><span id='age_of_home1' data-toggle="tooltip" data-original-title="If building was demolished, age since reconstruction" class="tool_tips green-tooltip"></span></td>
 												</tr>
 																									
 										
@@ -4332,7 +4335,8 @@
 
 
 												<tr id="ga1" style="display: none;">
-													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Total area of built structure(s) on property" class="tool_tips green-tooltip">Gross Area</span></div></td><td class="right_data"><span id='gross_area1'></span></td>
+													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Total area of built structure(s) on property" class="tool_tips green-tooltip">Gross Area</span></div></td>
+													<td class="right_data"><span id='gross_area1' data-toggle="tooltip" data-original-title="Total area of built structure(s) on property" class="tool_tips green-tooltip"></span></td>
 												</tr>
 
 												<tr id="nobed1" style="display: none;">
@@ -4382,12 +4386,7 @@
 							                  
 	    										<tr id="ecs1" style="display: none;" >
 													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Homeowner's estimated credit score based on anonymized credit data at a Zip+4 level, which typically consists of 8 homes." class="tool_tips green-tooltip">Estimated Credit Score</span></div></td>
-													<td class="right_data"><span id='est_credit_score1'>  </span></td>
-												</tr>
-		
-												
-												<tr id="eai1" style="display: none;">
-													<td><div><span data-toggle="tooltip" data-original-title="Homeowner's estimated credit score for Zip+4 area, typically 8 homes " class="tool_tips green-tooltip">Estimated Annual Income<span></div></td><td><span id='est_annual_income1'></span></td>
+													<td class="right_data"><span id='est_credit_score1' data-toggle="tooltip" data-original-title="Homeowner's estimated credit score based on anonymized credit data at a Zip+4 level, which typically consists of 8 homes." class="tool_tips green-tooltip">  </span></td>
 												</tr>
                   
  												<tr id="i1" style="display: none;" >
@@ -4398,7 +4397,7 @@
  												
 												<tr id="hethvr1" style="display: none;" >
 													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Ratio of home equity to home value" class="tool_tips green-tooltip">Estimated Home Equity</span></div></td>
-													<td class="right_data"><span id='home_equity_to_home_value_ratio1'>  </span></td>
+													<td class="right_data"><span id='home_equity_to_home_value_ratio1' data-toggle="tooltip" data-original-title="Ratio of home equity to home value" class="tool_tips green-tooltip">  </span></td>
 												</tr>
 	
 												<tr id="dtir1" style="display: none;" >
@@ -4407,7 +4406,8 @@
 												</tr>
 
 												<tr id="lsp1" style="display: none;">
-													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Price of last recorded property sale" class="tool_tips green-tooltip">Last Sale Price of Home</span></div></td><td class="right_data"><span id='last_sale_price1'></span></td>
+													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Price of last recorded property sale" class="tool_tips green-tooltip">Last Sale Price of Home</span></div></td>
+													<td class="right_data"><span id='last_sale_price1' data-toggle="tooltip" data-original-title="Price of last recorded property sale" class="tool_tips green-tooltip"></span></td>
 												</tr>
  
                 </table>
@@ -4445,7 +4445,8 @@
 												</tr>							                  
 
 				    							<tr id="z1" style="display: none;">
-													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Based on zoning system used by county" class="tool_tips green-tooltip green-tooltip">Zoning</span></div></td><td class="right_data"><span id='zoning1'></span></td>
+													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Based on zoning system used by county" class="tool_tips green-tooltip green-tooltip">Zoning</span></div></td>
+													<td class="right_data"><span id='zoning1' data-toggle="tooltip" data-original-title="Based on zoning system used by county" class="tool_tips green-tooltip green-tooltip"></span></td>
 												</tr>
 							                  
                 </table>
@@ -4465,12 +4466,12 @@
     
           										<tr id="d1" style="display: none;" >
 													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Based on 1500 demographic, psychographic, attitudinal, econometric and credit attributes." class="tool_tips green-tooltip">Segmentation</span></div></td>
-													<td class="right_data"><span id='delineate1'></span></td>
+													<td class="right_data"><span id='delineate1' data-toggle="tooltip" data-original-title="Based on 1500 demographic, psychographic, attitudinal, econometric and credit attributes." class="tool_tips green-tooltip"></span></td>
 												</tr>
 		
 												<tr id="glm1" style="display: none;" >
 													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Based on values and purchasing habits" class="tool_tips green-tooltip">How Green?</span></div></td>
-													<td class="right_data"><span id='green_living_model1'>  </span></td>
+													<td class="right_data"><span id='green_living_model1' data-toggle="tooltip" data-original-title="Based on values and purchasing habits" class="tool_tips green-tooltip">  </span></td>
 												</tr>
 
 												<tr id="hp1" style="display: none;" >
@@ -4511,24 +4512,24 @@
                       </div>
                     </td>
                     <br>
-                    <td style="padding-left:22px;">
-                      <input type="radio" name="type1" id="changetype-city" value="city" data-toggle="radio" >
-                      <label for="changetype-city" class="radio" style='display: inline'>
-                        City
-                      </label>
+                    <td style="padding-left:22px;">                      
                       
                       <input type="radio" name="type1" id="changetype-zip" checked='checked' value="zip" >
                       <label for="changetype-zip" style='display: inline'>
                         Zip
                       </label>
+                        
+                        <input type="radio" name="type1" id="changetype-city" value="city" data-toggle="radio" >
+                      <label for="changetype-city" class="radio" style='display: inline'>
+                        City
+                      </label>
                       
-                    </td>
-                    
+                    </td>                    
                     
                   </tr>
                   
                   <tr>
-                    <td class="mi_tab_result_pad" style="padding:15px;width:33%">
+                    <td class="mi_tab_result_pad" style="padding:15px;width:33%;padding-left:0px">
                       <div>
                         <span>
                           Solar Homes
@@ -4538,17 +4539,17 @@
                        
                       </div>
                     </td>
-                    <td class="mi_tab_result_pad" style="padding:15px;width:33%">
+                    <td class="mi_tab_result_pad" style="padding:15px;width:33%;padding-left:0px;">
                       <div>
                         <span data-toggle="tooltip" data-original-title="% of systems financed by lease or PPA " class="tool_tips green-tooltip">
                          3rd Party
                         </span>
                       </div>
-                      <div id='3rd_party1' class="mi_tab_result">
+                      <div id='3rd_party1' data-toggle="tooltip" data-original-title="% of systems financed by lease or PPA " class="mi_tab_result tool_tips green-tooltip">
                        
                       </div>
                     </td>
-                    <td class="mi_tab_result_pad" style="padding:15px;width:33%">
+                    <td class="mi_tab_result_pad" style="padding:15px;width:33%;padding-left:0px;">
                       <div>
                         <span>
                           Avg. System
@@ -4608,9 +4609,11 @@
                  
                 
                  
-                 
                  <tr>
-                    <td class="left_data" rowspan="5">
+                    <td style="padding-bottom:15px;"></td>    
+                </tr>
+                 <tr>
+                    <td class="left_data" rowspan="3">
                       <div>
                          <span data-toggle="tooltip" data-original-title="Ranked by number of installations" class="tool_tips green-tooltip">
                          Top Panel Brands
@@ -4635,22 +4638,13 @@
                     </td>
                     
                   </tr>
-                  <tr>
-                    <td class="right_data">
-                     <span id='panel13'></span>
-                    </td>
-                    
-                  </tr>
-                  <tr>
-                    <td class="right_data">
-                     <span id='panel14'></span>
-                    </td>
-                    
-                  </tr>                 
-                  
+                 
                   
                   <tr>
-                    <td class="left_data" rowspan="5">
+                    <td style="padding-bottom:15px;"></td>    
+                </tr>
+                  <tr>
+                    <td class="left_data" rowspan="3">
                       <div>
                         <span data-toggle="tooltip" data-original-title="Ranked by number of installations" class="tool_tips green-tooltip">
                           Top Inverter Brands
@@ -4675,19 +4669,7 @@
                     </td>
                     
                   </tr>
-                  <tr>
-                    <td class="right_data">
-                     <span id='inverter13'></span>
-                    </td>
-                    
-                  </tr>
-                  <tr>
-                    <td class="right_data">
-                     <span id='inverter14'></span>
-                    </td>
-                    
-                  </tr>
-                  
+                      
                   
                 </table>
                </div>         
@@ -4728,8 +4710,7 @@
                 
             </div>
             <!--end everything-->
-            
-  
+              
   
             
             <div class="tab-pane" id="solaradoption">
@@ -4747,14 +4728,16 @@
                     </td>
                     <br>
                     <td style="padding-left:22px;">
-                      <input type="radio" name="type2" id="changetype-city" value="city" data-toggle="radio" >
-                      <label for="changetype-city" class="radio" style='display: inline'>
-                        City
-                      </label>
+                      
                       
                       <input type="radio" name="type2" id="changetype-zip" checked='checked' value="zip" >
                       <label for="changetype-zip" style='display: inline'>
                         Zip
+                      </label>
+                        
+                        <input type="radio" name="type2" id="changetype-city" value="city" data-toggle="radio" >
+                      <label for="changetype-city" class="radio" style='display: inline'>
+                        City
                       </label>
                       
                     </td>
@@ -4763,7 +4746,7 @@
                   </tr>
                   
                   <tr>
-                    <td class="mi_tab_result_pad" style="padding:15px;width:33%">
+                    <td class="mi_tab_result_pad" style="padding:15px;width:33%;padding-left:0px;">
                       <div>
                         <span>
                           Solar Homes
@@ -4773,17 +4756,17 @@
                        
                       </div>
                     </td>
-                    <td class="mi_tab_result_pad" style="padding:15px;width:33%">
+                    <td class="mi_tab_result_pad" style="padding:15px;width:33%;padding-left:0px;">
                       <div>
                         <span data-toggle="tooltip" data-original-title="% of systems financed by lease or PPA " class="tool_tips green-tooltip">
                           3rd Party
                         </span>
                       </div>
-                      <div id='3rd_party2' class="mi_tab_result">
+                      <div id='3rd_party2' data-toggle="tooltip" data-original-title="% of systems financed by lease or PPA " class="mi_tab_result tool_tips green-tooltip">
                        
                       </div>
                     </td>
-                    <td class="mi_tab_result_pad" style="padding:15px;width:33%">
+                    <td class="mi_tab_result_pad" style="padding:15px;width:33%;padding-left:0px;">
                       <div>
                         <span>
                           Avg. System
@@ -4842,10 +4825,12 @@
                   </tr>
                  
                  
-                 
+                 <tr>
+                    <td style="padding-bottom:15px;"></td>    
+                </tr>
                  
                  <tr>
-                    <td class="left_data" rowspan="5">
+                    <td class="left_data" rowspan="3">
                       <div>
                         <span data-toggle="tooltip" data-original-title="Ranked by number of installations" class="tool_tips green-tooltip">
                          Top Panel Brands
@@ -4870,22 +4855,13 @@
                     </td>
                     
                   </tr>
-                  <tr>
-                    <td class="right_data">
-                     <span id='panel23'></span>
-                    </td>
-                    
-                  </tr>
-                  <tr>
-                    <td class="right_data">
-                     <span id='panel24'></span>
-                    </td>
-                    
-                  </tr>                 
-                  
+              
                   
                   <tr>
-                    <td class="left_data" rowspan="5">
+                    <td style="padding-bottom:15px;"></td>    
+                </tr>
+                  <tr>
+                    <td class="left_data" rowspan="3">
                       <div>
                          <span data-toggle="tooltip" data-original-title="Ranked by number of installations" class="tool_tips green-tooltip">
                           Top Inverter Brands
@@ -4910,19 +4886,7 @@
                     </td>
                     
                   </tr>
-                  <tr>
-                    <td class="right_data">
-                     <span id='inverter23'></span>
-                    </td>
                     
-                  </tr>
-                  <tr>
-                    <td class="right_data">
-                     <span id='inverter24'></span>
-                    </td>
-                    
-                  </tr>
-                  
                   
                 </table>          
           
@@ -4947,7 +4911,7 @@
 													<div>
 														<span data-toggle="tooltip" data-original-title="Number of solar companies that have qualified this address, updated in real time" class="tool_tips green-tooltip">No. of checks on this address</span>
 													</div></td>
-													<td class="right_data"><span id='prev_checks2'> </span></td>
+													<td class="right_data"><span id='prev_checks2' data-toggle="tooltip" data-original-title="Number of solar companies that have qualified this address, updated in real time" class="tool_tips green-tooltip"> </span></td>
 												</tr>
 			
 												<tr id="own2" style="display: none;">
@@ -4955,14 +4919,14 @@
 													<div>
 														<span data-toggle="tooltip" data-original-title="Name(s) on property title" class="tool_tips green-tooltip">Name of Owner(s)</span>
 													</div></td>
-													<td class="right_data"><span id='owner_name2'> </span></td>
+													<td class="right_data"><span id='owner_name2' data-toggle="tooltip" data-original-title="Name(s) on property title" class="tool_tips green-tooltip"> </span></td>
 												</tr>
 												<tr id="ma2" style="display: none;">
 													<td class="left_data">
 													<div>
 														<span data-toggle="tooltip" data-original-title="Contact property owner at this mailing address" class="tool_tips green-tooltip">Full Mailing Address</span>
 													</div></td>
-													<td class="right_data"><span id='mailing_address2'> </span></td>
+													<td class="right_data"><span id='mailing_address2' data-toggle="tooltip" data-original-title="Contact property owner at this mailing address" class="tool_tips green-tooltip"> </span></td>
 												</tr>
 												<tr id="oo2" style="display: none;">
 													<td class="left_data">
@@ -5012,7 +4976,7 @@
 							                      </div>
 							                    </td>
 							                    <td class="right_data">
-							                      <span id='last_sale_date2'>
+							                      <span id='last_sale_date2' data-toggle="tooltip" data-original-title="Time since last property sale" class="tool_tips green-tooltip">
 							                          
 							                      </span>
 							                    </td>
@@ -5065,7 +5029,7 @@
 							                  
 										    	<tr id="ecs2" style="display: none;" >
 														<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Homeowner's estimated credit score for Zip+4 area, typically 8 homes " class="tool_tips green-tooltip">Estimated Credit Score</span></div></td>
-														<td class="right_data"><span id='est_credit_score2'> </span></td>
+														<td class="right_data"><span id='est_credit_score2' data-toggle="tooltip" data-original-title="Homeowner's estimated credit score for Zip+4 area, typically 8 homes " class="tool_tips green-tooltip"> </span></td>
 												</tr>
 									
 									
@@ -5076,7 +5040,7 @@
 							
 												<tr id="hethvr2" style="display: none;" >
 													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Ratio of home equity to home value" class="tool_tips green-tooltip">Estimated Home Equity</span></div></td>
-													<td class="right_data"><span id='home_equity_to_home_value_ratio2'>  </span></td>
+													<td class="right_data"><span id='home_equity_to_home_value_ratio2' data-toggle="tooltip" data-original-title="Ratio of home equity to home value" class="tool_tips green-tooltip">  </span></td>
 												</tr>
 																																										
 												<tr id="dtir2" style="display: none;" >
@@ -5091,7 +5055,7 @@
 							                      </div>
 							                    </td>
 							                    <td class="right_data">
-							                      <span id='last_sale_price2'>
+							                      <span id='last_sale_price2' data-toggle="tooltip" data-original-title="Price of last recorded property sale" class="tool_tips green-tooltip">
 							                          
 							                      </span>
 							                    </td>
@@ -5119,7 +5083,7 @@
                       </div>
                     </td>
                     <td class="right_data">
-                      <span id='heat_type2'>
+                      <span id='heat_type2' data-toggle="tooltip" data-original-title="How the house is heated" class="tool_tips green-tooltip">
                       </span>
                     </td>
                   </tr>
@@ -5133,7 +5097,7 @@
                       </div>
                     </td>
                     <td class="right_data">
-                      <span id='heat_fuel2'>
+                      <span id='heat_fuel2' data-toggle="tooltip" data-original-title="Energy source for heating" class="tool_tips green-tooltip">
                       </span>
                     </td>
                   </tr>
@@ -5145,7 +5109,7 @@
                       </div>
                     </td>
                     <td class="right_data">
-                      <span id='age_of_home2'>
+                      <span id='age_of_home2' data-toggle="tooltip" data-original-title="If building was demolished, age since reconstruction" class="tool_tips green-tooltip">
                       </span>
                     </td>
                   </tr>
@@ -5167,7 +5131,7 @@
                       </div>
                     </td>
                     <td class="right_data">
-                      <span id='gross_area2'>
+                      <span id='gross_area2' data-toggle="tooltip" data-original-title="Total area of built structure(s) on property" class="tool_tips green-tooltip">
                       </span>
                     </td>
                   </tr>
@@ -5316,7 +5280,7 @@
                       </div>
                     </td>
                     <td class="right_data">
-                      <span id='zoning2'>
+                      <span id='zoning2' data-toggle="tooltip" data-original-title="Based on zoning system used by county" class="tool_tips green-tooltip">
                           
                       </span>
                     </td>
@@ -5340,12 +5304,12 @@
                   
           										<tr id="d2" style="display: none;" >
 													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Based on 1500 demographic, psychographic, attitudinal, econometric and credit attributes." class="tool_tips green-tooltip">Segmentation</span></div></td>
-													<td class="right_data"><span id='delineate2'></span></td>
+													<td class="right_data"><span id='delineate2' data-toggle="tooltip" data-original-title="Based on 1500 demographic, psychographic, attitudinal, econometric and credit attributes." class="tool_tips green-tooltip"></span></td>
 												</tr>
 		
 												<tr id="glm2" style="display: none;" >
 													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Based on values and purchasing habits" class="tool_tips green-tooltip">How Green?</span></div></td>
-													<td class="right_data"><span id='green_living_model2'>  </span></td>
+													<td class="right_data"><span id='green_living_model2' data-toggle="tooltip" data-original-title="Based on values and purchasing habits" class="tool_tips green-tooltip">  </span></td>
 												</tr>
 
 												<tr id="hp2" style="display: none;" >
