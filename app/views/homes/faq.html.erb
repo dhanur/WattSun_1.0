@@ -33,9 +33,14 @@
                 
 		                
 		        $('a[href*=#]:not([href=#])').click(function() {
+		        	
+		        	
 			    if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
 		
 			      var target = $(this.hash);
+			      
+			     
+			      
 			      target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
 			      if (target.length) {
 			        $('html,body').animate({
@@ -44,6 +49,9 @@
 			        return false;
 			      }
 			    }
+			    
+			    
+			    
 			  });
             });
         </script>
@@ -96,12 +104,39 @@
 								</ul>
 							</li>
 							<li id="faq">
-								<a class="navlink" href="#">FAQs</a>
+								<a class="navlink" href="/homes/faq">FAQs</a>
 							</li>
 
-							<li id="conta">
-								<a class="navlink" href="/homes/contact">Contact</a>
-							</li>
+							<li id="setn" class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                  Settings
+                                  <b style="color:#fff" class="caret">
+                                  </b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                  <li>
+                                    <a href="/homes/userprofile">
+                                      Profile
+                                    </a>
+                                  </li>
+                                  <li>
+                                    <a href="/homes/userpayment">
+                                      Payment
+                                    </a>
+                                  </li>
+                                  <li>
+                                    <a href="/homes/purchaseitq">
+                                      Purchases
+                                    </a>
+                                  </li>
+                                  <li>
+                                    <a href="/homes/userproblem">
+                                      Problem?
+                                    </a>
+                                  </li>
+                                </ul>
+                              </li>
+              <li>
 							<li>
 								<form action="../homes/logout" method="post">
 									<input id="login" class="form-control" type="submit" value="LOGOUT"/>
@@ -119,10 +154,10 @@
 								<ul class="nav navbar-nav" id="pull_right">
 
 									<li id="else" class="dropdown">
-										<a href="#" class="dropdown-toggle" data-toggle="dropdown">What else does WattSun do? <b class="caret"></b></a>
+										<a href="#" class="dropdown-toggle" data-toggle="dropdown">What else does ProspectZen do? <b class="caret"></b></a>
 										<ul class="dropdown-menu">
 											<li>
-												<a href="#">Instant Target Map
+												<a href="#">Instant Prospect Generator 
 												<br />
 												Coming soon!</a>
 											</li>
@@ -134,7 +169,7 @@
 										</ul>
 									</li>
 									<li>
-										<a class="navlink" href="#">FAQs</a>
+										<a class="navlink" href="/homes/faq">FAQs</a>
 									</li>
 									<li>
 										<a class="navlink" href="/homes/contact">Contact</a>
@@ -378,15 +413,26 @@
         <script type="text/javascript" src="/assets/hilitor.js"></script>
 		<script type="text/javascript">
 		
-		  var myInput2;
+		
+		
+		 
+		
 		
 		  document.addEventListener("DOMContentLoaded", function() {
 		    myHilitor2 = new Hilitor("content_wrapper");
-		    myHilitor2.setMatchType("right");
+		    myHilitor2.setMatchType("left");
 		  }, false);
 		
 		  document.getElementById("ask_qstn").addEventListener("keyup", function() {
-		    myHilitor2.apply(this.value);
+		  
+		  
+	
+		
+           
+            		    myHilitor2.apply(this.value);
+		    
+		 
+		    
 		  }, false);
 		
 		</script>

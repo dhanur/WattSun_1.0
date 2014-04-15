@@ -56,20 +56,6 @@
 
 				$("input[type='radio'][name='type1']").click(function() {
 					
-				for ( i = 0; i < 5; i++) {
-	
-				$("#installer1" + i).html("");
-				$("#installer2" + i).html("");
-			    }
-			    for ( i = 0; i < 3; i++) {
-				$("#panel1" + i).html("");
-				$("#panel2" + i).html("");
-				
-				$("#inverter1" + i).html("");
-				$("#inverter2" + i).html("");
-									
-				}
-				
 										
 					$.ajax({
 						url : "/homes/datafetch",
@@ -128,7 +114,7 @@
 
 								}
 							} else {
-								for ( i = 0; i < 3; i++) {
+								for ( i = 0; i < 5; i++) {
 
 									$("#panel1" + i).html("");
 
@@ -147,7 +133,7 @@
 
 								}
 							} else {
-								for ( i = 0; i < 3; i++) {
+								for ( i = 0; i < 5; i++) {
 
 									$("#inverter1" + i).html("");
 
@@ -164,21 +150,6 @@
 				});
 
 				$("input[type='radio'][name='type2']").click(function() {
-				
-				for ( i = 0; i < 5; i++) {
-	
-				$("#installer1" + i).html("");
-				$("#installer2" + i).html("");
-			    }
-			    for ( i = 0; i < 3; i++) {
-				$("#panel1" + i).html("");
-				$("#panel2" + i).html("");
-				
-				$("#inverter1" + i).html("");
-				$("#inverter2" + i).html("");
-									
-				}
-
 					$.ajax({
 						url : "/homes/datafetch",
 						type : "POST",
@@ -233,7 +204,7 @@
 
 								}
 							} else {
-								for ( i = 0; i < 3; i++) {
+								for ( i = 0; i < 5; i++) {
 
 									$("#panel2" + i).html("");
 
@@ -252,7 +223,7 @@
 
 								}
 							} else {
-								for ( i = 0; i < 3; i++) {
+								for ( i = 0; i < 5; i++) {
 
 									$("#inverter2" + i).html("");
 
@@ -318,8 +289,8 @@
 			function init() {
 			
 				input = document.getElementById('loc_search').value;
-				
-				google.earth.createInstance('map-canvas', initCallback, failureCallback);
+				var mapi=$('#map-canvas').contents();
+				google.earth.createInstance('mapi', initCallback, failureCallback);
 				}
 		
 		
@@ -493,12 +464,11 @@
           
        function makemake()
         {      
-				for ( i = 0; i < 5; i++) {
+          		for ( i = 0; i < 5; i++) {
 	
 				$("#installer1" + i).html("");
 				$("#installer2" + i).html("");
-			    }
-			    for ( i = 0; i < 3; i++) {
+			
 				$("#panel1" + i).html("");
 				$("#panel2" + i).html("");
 				
@@ -506,6 +476,7 @@
 				$("#inverter2" + i).html("");
 									
 				}
+				
 				
 		      	
    		input1 = formatted_address.split(",");							
@@ -1451,7 +1422,7 @@
 										} 
 										
 										else {
-										for ( i = 0; i < 3; i++) {
+										for ( i = 0; i < 5; i++) {
 									
 											$("#panel1" + i).html("");
 											$("#panel2" + i).html("");
@@ -1478,7 +1449,7 @@
 											}
 										} 
 										else {
-											for ( i = 0; i < 3; i++) {
+											for ( i = 0; i < 5; i++) {
 									
 											$("#inverter1" + i).html("");
 											$("#inverter2" + i).html("");
@@ -1779,19 +1750,19 @@
    function setValueNewTranscation(input){
    	
    	   
-				for ( i = 0; i < 5; i++) {
+   	     
+   		for ( i = 0; i < 5; i++) {
 	
 				$("#installer1" + i).html("");
 				$("#installer2" + i).html("");
-			    }
-			    for ( i = 0; i < 3; i++) {
+			
 				$("#panel1" + i).html("");
 				$("#panel2" + i).html("");
 				
 				$("#inverter1" + i).html("");
 				$("#inverter2" + i).html("");
 									
-				}
+		}
    	
    		input1 = formatted_address.split(",");							
 		var secondline=''
@@ -2714,7 +2685,7 @@
 										} 
 										
 										else {
-										for ( i = 0; i < 3; i++) {
+										for ( i = 0; i < 5; i++) {
 									
 											$("#panel1" + i).html("");
 											$("#panel2" + i).html("");
@@ -2741,7 +2712,7 @@
 											}
 										} 
 										else {
-											for ( i = 0; i < 3; i++) {
+											for ( i = 0; i < 5; i++) {
 									
 											$("#inverter1" + i).html("");
 											$("#inverter2" + i).html("");
@@ -2781,21 +2752,19 @@
        {
        	
       
-				for ( i = 0; i < 5; i++) {
+   		for ( i = 0; i < 5; i++) {
 	
 				$("#installer1" + i).html("");
 				$("#installer2" + i).html("");
-			    }
-			    
-			    for ( i = 0; i < 3; i++) {
+			
 				$("#panel1" + i).html("");
 				$("#panel2" + i).html("");
 				
 				$("#inverter1" + i).html("");
 				$("#inverter2" + i).html("");
 									
-				}
-				
+		}
+       	
        	$.ajax({
 					url : "/homes/alldatafetchonmarkerclick",
 					type : "POST",
@@ -3717,7 +3686,7 @@
 										} 
 										
 										else {
-										for ( i = 0; i < 3; i++) {
+										for ( i = 0; i < 5; i++) {
 									
 											$("#panel1" + i).html("");
 											$("#panel2" + i).html("");
@@ -3744,7 +3713,7 @@
 											}
 										} 
 										else {
-											for ( i = 0; i < 3; i++) {
+											for ( i = 0; i < 5; i++) {
 									
 											$("#inverter1" + i).html("");
 											$("#inverter2" + i).html("");
@@ -3803,18 +3772,7 @@
 							var icon = ge.createIcon('');
 					
 							//designing of placemark
-							
-							  var image1 = {
-								    url: '/assets/red-circle.png',
-								    // This marker is 20 pixels wide by 32 pixels tall.
-								    size: new google.maps.Size(20, 32),
-								    // The origin for this image is 0,0.
-								    origin: new google.maps.Point(0,0),
-								    // The anchor for this image is the base of the flagpole at 0,32.
-								    anchor: new google.maps.Point(0, 32)
-								  };
-															
-							icon.setHref('http://beta.prospectzen.com/assets/red_circle.png');
+							icon.setHref('http://maps.google.com/mapfiles/kml/paddle/red-circle.png');
 							var style = ge.createStyle('');
 							style.getIconStyle().setIcon(icon);
 							style.getIconStyle().setScale(1.0);
@@ -3828,30 +3786,7 @@
 					
 							google.earth.addEventListener(placemark2[x], 'click', function(event) {
 							remove(addresses);
-
 					        placemark2[x].setName(data.results[0].formatted_address); 
-// 							
-							// var balloon = ge.createHtmlStringBalloon('');
-							     // balloon.setBackgroundColor("red");
-// 							     
- 								 // balloon.setFeature(placemark[x]); // optional
-  								 // balloon.setContentString('<div style="background-color:red;">"data.results[0].formatted_address)" </div>') ;
-// 
- 								 // ge.setBalloon(balloon);
-							
-							
-							
-							
-								
-							// var balloon = ge.createHtmlDivBalloon('');
-							// var div = document.createElement('DIV');
-							// balloon.setFeature(placemark[x]);
-						    // // balloon.style.background = 'red';
-							// div.innerHTML = ""+data.results[0].formatted_address;
-							// balloon.setContentDiv(div);
-							// balloon.setBackgroundColor("red");
-							// ge.setBalloon(balloon);	
-// 								
 																																
 							var length = data.results[0]["address_components"].length;
 					
@@ -4035,7 +3970,9 @@
           
   </head>
   <body  onload="init()">
-    
+    <div id="whole_page">
+	
+	<iframe id='map-canvas' style="position:fixed;width:100%;"></iframe>
     <div class="container" id="menu_navigation">
       <div id="bgnav" class="navbar navbar-fixed-top navbar-inverse">
         
@@ -4180,13 +4117,11 @@
     
     
  
-	<div id="abc" style="position: fixed;width: 100%;">
-			<div id='map-canvas'></div>
-	</div>
+			
 		
 
 
-    <div id="panel_container" style="position: relative; display: none;">
+    <div id="panel_container" style="position:relative">
       <div id="panel_container_content">
         
         <div id="panel_search_result">
@@ -5443,17 +5378,28 @@
       </div>
     </div>
     <!--            End panel container                               -->
+	
     
     <div width="32px">
     <img id="loadingimage" style="display:none;width:32px;position:absolute;top:100px;left:0;right:0;bottom:0;margin:0 auto;z-index: 100000000000" src = "http://www.google.com/earth/plugin/images/loading.gif" >
     </div>
+
+	
+		
+	</div>
+	<!--end whole page-->
+	
+
+	
+	
+	
     <script>
       $(document).ready(function(){
           
           //        content table starts  
           $('body').css("overflowY","hidden");
           
-          $("#map-canvas").css("height", $(window).height());
+          $("#map-canvas").contents().css("height", $(window).height());
           
     
           
@@ -5517,7 +5463,7 @@
       $(window).resize(function(){
         
           
-          $("#map-canvas").css("height", $(window).height());
+          $("#map-canvas").contents().css("height", $(window).height());
         var win_width=$(window).width();
         if(win_width>942){
           

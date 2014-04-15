@@ -256,53 +256,82 @@
 					</div>
 
 					<div id="menu_content_profile_set">
-						<div id="static_info">
-                                <div>
-                                    <div class="col-sm-4">Name</div><div class="col-sm-8"><%=@user.first['first_name']+' '+@user.first['last_name'] %></div>
-                                </div>
+						
+                                
+					
+						<div id="change_info">
+                            
+                            <div class="chnginf">
+								<form class="form-horizontal" role="form">
 
-                                <div style="clear:both;margin-bottom:25px;"></div>
-                             
-                                <div>
-                                 <form class="form-horizontal" role="form" style="line-height:20px;">
+									<div class="form-group">
+                                    <div class="col-sm-6">Name</div><div class="col-sm-6"><%=@user.first['first_name']+' '+@user.first['last_name'] %></div>
+                                    </div>
+                                    
+                                    
+                                    
+
+								</form>
+							</div>
+                            
+                            
+                            <div class="chnginf">
+								
+                                
+                                
+                                <form class="form-horizontal" role="form" style="line-height:20px;">
 									
 									<div class="form-group">
-                                        <label style="text-align: left;" class="col-sm-4 control-label">Title</label>
-                                        <div class="col-sm-4">
+                                        <label style="text-align: left;" class="col-sm-6 control-label">Title</label>
+                                        <div class="col-sm-6">
                                             <p class="form-control-static" id="cur_title"><%=@user.first['title'] %></p>
                                         </div>
                                     </div>
                                     
                                     <div class="form-group">
-                                        <label style="text-align: left;" for="new_title" class="col-sm-4 control-label">New Title</label>
-                                        <div class="col-sm-4">
+                                        <label style="text-align: left;" for="new_title" class="col-sm-6 control-label">New Title</label>
+                                        <div class="col-sm-6">
                                             <input style="width: 251px;border: 0;border-bottom: 1px dashed #5cb85c;border-radius: 0px;
 height: 35px;padding: 8px 0px;" type="text" class="form-control" id="new_title"  placeholder="Enter New Title">
-                                            <span style="color: red;" class="error_msg" id="e_title"></span>                                            
+                                            <span style="color: red;" class="error_msg" id="e_title"></span>                                                                        <br />
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="mobile_btn" class="col-sm-4 control-label"></label>
-                                        <div class="col-sm-8">
+                                        <label for="mobile_btn" class="col-sm-6 control-label"></label>
+                                        <div class="col-sm-6">
                                             <input type="button" class="form-control" id="title_btn" onclick="updateTitle()" value="Update"> </input>
                                         </div>
                                     </div>
                                     <div style="clear:both;margin-bottom:25px;"></div>
 
                                  </form>
-                                </div>
-                                <div>
-                                    <div class="col-sm-4 ">Company</div><div class="col-sm-8"><%=@user.first['company_name'] %></div>
+							</div>
+                            
+                            
+                        
+                        
+                        <div class="chnginf">
+								<form class="form-horizontal" role="form">
 
-                                </div>
-                                <div>
-                                    <div class="col-sm-4 ">Address</div><div class="col-sm-8"><%=@user.first['company_address'] %></div>
+									<div class="form-group">
+                                        <div class="col-sm-6">Company</div><div class="col-sm-6"><%=@user.first['company_name'] %></div>
 
-                                </div>
-						</div>
+                                        <div class="col-sm-6 ">Address</div><div class="col-sm-6"><%=@user.first['company_address'] %></div>
 
-						<div id="change_info">
+                                    </div>
+                                    
+                                    
+                                    
+
+								</form>
+							</div>
+                        
+                        
+                        
+                        
+                        
+                            
 							<div id="change_info_username" class="chnginf">
 								<form class="form-horizontal" role="form">
 

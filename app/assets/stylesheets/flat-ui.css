@@ -5184,7 +5184,8 @@ select[multiple].navbar-form .btn {
 .navbar-inverse .navbar-nav > .open > .dropdown-menu > li > a {
   color: #e1e4e7;
   border-radius: 4px;
-  padding: 6px 9px;
+  padding: 6px 20px;
+    
 }
 .navbar-inverse .navbar-nav > .open > .dropdown-menu > li > a:hover,
 .navbar-inverse .navbar-nav > .open > .dropdown-menu > li > a:focus {

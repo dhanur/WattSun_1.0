@@ -98,7 +98,9 @@ function Hilitor(id, tag)
     if(input == undefined || !input) return;
     this.remove();
     this.setRegex(input);
+
     this.hiliteWords(targetNode);
+
   };
 
 }

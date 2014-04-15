@@ -227,6 +227,7 @@ font-size:20px;
     color: #e1e4e7;
     border-radius: 0px;
     font-size: 17px;
+    letter-spacing: 0px;
 }
 .navbar-inverse .navbar-nav > .open > .dropdown-menu {
     background-color: #000;
