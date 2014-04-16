@@ -117,8 +117,6 @@ class HomesController < ApplicationController
     
   end
   
- 
- 
   
   
   def updateplan
@@ -302,8 +300,6 @@ class HomesController < ApplicationController
     if ((session[:admin_user_id] || session[:super_admin_user_id]))
           
       @alltransactions=User.joins(:user_purchases).select("users.id, users.first_name, users.last_name, users.company_name, user_purchases.transaction_id, user_purchases.address, user_purchases.last_purchase_date")   
-    #  render :json  => @alltransactions and return
-      
     else
       redirect_to :action => "adminlogin"
     end
@@ -618,6 +614,42 @@ class HomesController < ApplicationController
     end
 
   end
+  
+  def profileupdatebyadmin
+     
+    @user=User.select("*").where("id = ?",session[:admin_userview_id]).limit(1)
+
+    if @user.blank?
+      redirect_to :action => "adminlogin"
+    else
+      
+      if params[:ntitle]
+
+        User.where(:id=>@user.first['id']).update_all(:last_activity => Time.now, :title => params[:ntitle])
+        render :json => {:status =>"done" }
+  
+      elsif params[:mphone]
+
+        User.where(:id=>@user.first['id']).update_all(:last_activity => Time.now, :mobile_phone => params[:mphone])
+        render :json => {:status =>"done" }
+
+      elsif params[:ophone]
+
+        User.where(:id=>@user.first['id']).update_all(:last_activity => Time.now, :office_phone => params[:ophone])
+        render :json => {:status =>"done" }
+
+      elsif (@user.first['password']==params[:cur_psd])
+
+        User.where(:id=>@user.first['id']).update_all(:last_activity => Time.now, :password => params[:new_psd])
+        render :json => {:status =>"done" }
+      else
+        render :json => {:status =>"not" }
+      end
+
+    end
+    
+  end
+
 
   def problemcreceipt
 
@@ -816,10 +848,7 @@ class HomesController < ApplicationController
 
 
   def alldatafetchonmarkerclick    
-    
-            
-   #   @transaction= UserPurchase.select("*").where("transaction_id = ?",params[:tranc]).limit(1) 
-   #   UserPurchase.where("address ='"+@transaction.first['address']+"'").update_all(:prev_check=>(@transaction.first['prev_check']+1)) 
+
       @transaction= UserPurchase.select("*").where("transaction_id = ?",params[:tranc]).limit(1) 
       @transaction = @transaction.to_a.map(&:serializable_hash)
       
@@ -834,8 +863,7 @@ class HomesController < ApplicationController
       if @transaction.first['last_sale_date'].blank?
           owned =''               
       else         
-     #     owned =(Time.now.year - @transaction.first['last_sale_date'].to_time.year).to_s+' years, ' + (Time.now.month - @transaction.first['last_sale_date'].to_time.month).to_s+ ' months'
-            owned=Time.diff(Time.now, Time.parse(@transaction.first['last_sale_date']),'%y, %M')[:diff]
+          owned=Time.diff(Time.now, Time.parse(@transaction.first['last_sale_date']),'%y, %M')[:diff]
       end     
       
       
@@ -862,9 +890,7 @@ class HomesController < ApplicationController
 
 
   def alldatafetchonmarkernewtrans
-    
-    #  @transaction= UserPurchase.select("*").where("user_id = ? and status = 1 and address='"+params[:address]+"'",session[:current_user_id]).limit(1) 
-    #  UserPurchase.where("address ='"+params[:address]+"'").update_all(:prev_check=>(@transaction.first['prev_check']+1)) 
+
       @transaction= UserPurchase.select("*").where("user_id = ? and status = 1 and address='"+params[:address]+"'",session[:current_user_id]).limit(1)
       @transaction = @transaction.to_a.map(&:serializable_hash)
     
@@ -932,6 +958,7 @@ class HomesController < ApplicationController
     end
   end
   
+ 
   def register_cc
     
     if session[:cust_user_id]  
@@ -944,11 +971,9 @@ class HomesController < ApplicationController
     else
        redirect_to :action => "index"
     end   
-    
-
-   # render :json => session[:cust_user_id] and return
-    
+     
   end
+
 
   def logout
       session[:cust_user_id]=nil
@@ -1060,7 +1085,7 @@ class HomesController < ApplicationController
     
         # render :json => {"data"=> amount}
     
-        #  # Amount in cents
+         # Amount in cents
     
         User.where(:id=>session[:cust_user_id]).limit(1).update_all(:last_activity => Time.now, :cust_id=>customer_id,:payment_status=>1,:house_charge=>3,:subscription_id=>subscription.id,:credits=>0,:card_exp_year=> customer.cards.data[0]['exp_year'],:card_exp_month=>customer.cards.data[0]['exp_month'],:current_period_end=>subscription.current_period_end,:card_no=>customer.cards.data[0]['last4'])
     
@@ -1092,7 +1117,7 @@ class HomesController < ApplicationController
       @utility = @utility.to_a.map(&:serializable_hash)
 
           
-     customer = User.select('credits,cust_id,house_charge').where("id=?", session[:current_user_id])
+     customer = User.select('company_name,credits,cust_id,house_charge').where("id=?", session[:current_user_id])
      
      addressexist= UserPurchase.select("*").where("user_id = ? and status = 1 and address='"+params[:address]+"'",session[:current_user_id]).limit(1) 
      
@@ -1100,9 +1125,13 @@ class HomesController < ApplicationController
      @prev_check_address=UserPurchase.select("*").where("address ='"+params[:address]+"'").limit(1) 
      
      if @prev_check_address.blank?
-        @prev_chks=0
+          @prev_chks=0
      else
-        @prev_chks=@prev_check_address.first['prev_check']  
+          if customer.first['company_name']=='ProspectZen'
+              @prev_chks=@prev_check_address.first['prev_check']
+          else
+              @prev_chks=@prev_check_address.first['prev_check']+1
+          end
      end
      
   
@@ -1739,7 +1768,7 @@ class HomesController < ApplicationController
                          
                   if  @speedon.nil? || @speedon.blank?
                     
-                      @userpurchase=UserPurchase.new(:transaction_id=>transaction_id, :user_id =>session[:current_user_id],:address=> params[:address],:prev_check =>(@prev_chks+1), :zip =>zip,:city =>city, :zip4 =>zip4, :owner_name =>_OwnerName.titleize, :mailing_address =>mailing_address.titleize,
+                      @userpurchase=UserPurchase.new(:transaction_id=>transaction_id, :user_id =>session[:current_user_id],:address=> params[:address],:prev_check =>@prev_chks, :zip =>zip,:city =>city, :zip4 =>zip4, :owner_name =>_OwnerName.titleize, :mailing_address =>mailing_address.titleize,
                       :owner_occupied_indicator=>_OwnerOccupiedIndicator,:last_sale_date=>_LastSalesDate , :last_sale_price =>_LastSalesPriceAmount,:last_sale_price_per_sqr_ft =>_PricePerSquareFootAmount,
                       :land_use_code=>_LandUseDescription.titleize, :zoning=>_ClassificationIdentifier, :no_of_residential_per_common_units=> _TotalUnitNumber,:gross_area=>_GrossLivingAreaSquareFeetNumber,:living_area=>_TotalLivingAreaSquareFeetNumber,
                       :no_of_bedrooms=>_TotalBedroomsCount,:no_of_bathrooms=>_TotalBathsCount, :year_built=>_YearBuiltDateIdentifier,:pool=>_HasFeatureIndicator,
@@ -1749,7 +1778,7 @@ class HomesController < ApplicationController
                   else              
                      
                       
-                      @userpurchase=UserPurchase.new(:transaction_id=>transaction_id, :user_id =>session[:current_user_id],:address=> params[:address],:prev_check =>(@prev_chks+1), :zip =>zip,:city =>city, :zip4 =>zip4, :owner_name =>_OwnerName.titleize, :mailing_address =>mailing_address.titleize,
+                      @userpurchase=UserPurchase.new(:transaction_id=>transaction_id, :user_id =>session[:current_user_id],:address=> params[:address],:prev_check =>@prev_chks, :zip =>zip,:city =>city, :zip4 =>zip4, :owner_name =>_OwnerName.titleize, :mailing_address =>mailing_address.titleize,
                       :owner_occupied_indicator=>_OwnerOccupiedIndicator,:last_sale_date=>_LastSalesDate , :last_sale_price =>_LastSalesPriceAmount,:last_sale_price_per_sqr_ft =>_PricePerSquareFootAmount,
                       :land_use_code=>_LandUseDescription.titleize, :zoning=>_ClassificationIdentifier, :no_of_residential_per_common_units=> _TotalUnitNumber,:gross_area=>_GrossLivingAreaSquareFeetNumber,:living_area=>_TotalLivingAreaSquareFeetNumber,
                       :no_of_bedrooms=>_TotalBedroomsCount,:no_of_bathrooms=>_TotalBathsCount, :year_built=>_YearBuiltDateIdentifier,:pool=>_HasFeatureIndicator,
@@ -1764,7 +1793,7 @@ class HomesController < ApplicationController
              
                else
                    
-                      @userpurchase=UserPurchase.new(:transaction_id=>transaction_id, :user_id =>session[:current_user_id],:address=> params[:address],:prev_check =>(@prev_chks+1), :zip =>zip,:city =>city, :zip4 =>zip4, :owner_name =>_OwnerName.titleize, :mailing_address =>mailing_address.titleize,
+                      @userpurchase=UserPurchase.new(:transaction_id=>transaction_id, :user_id =>session[:current_user_id],:address=> params[:address],:prev_check =>@prev_chks, :zip =>zip,:city =>city, :zip4 =>zip4, :owner_name =>_OwnerName.titleize, :mailing_address =>mailing_address.titleize,
                       :owner_occupied_indicator=>_OwnerOccupiedIndicator,:last_sale_date=>_LastSalesDate , :last_sale_price =>_LastSalesPriceAmount,:last_sale_price_per_sqr_ft =>_PricePerSquareFootAmount,
                       :land_use_code=>_LandUseDescription.titleize, :zoning=>_ClassificationIdentifier, :no_of_residential_per_common_units=> _TotalUnitNumber,:gross_area=>_GrossLivingAreaSquareFeetNumber,:living_area=>_TotalLivingAreaSquareFeetNumber,
                       :no_of_bedrooms=>_TotalBedroomsCount,:no_of_bathrooms=>_TotalBathsCount, :year_built=>_YearBuiltDateIdentifier,:pool=>_HasFeatureIndicator,
@@ -1774,7 +1803,7 @@ class HomesController < ApplicationController
                end 
          
             if @userpurchase.save
-                      UserPurchase.where("address ='"+params[:address]+"'").update_all(:prev_check=>(@prev_chks+1)) 
+                      UserPurchase.where("address ='"+params[:address]+"'").update_all(:prev_check=>@prev_chks) 
                       session[:new_marker]=session[:current_user_id]
                       @userpurchase = UserPurchase.select("*").where("user_id = ? and status = 1 and address='"+params[:address]+"'",session[:current_user_id]).limit(1)
                       @userpurchase = @userpurchase.to_a.map(&:serializable_hash)

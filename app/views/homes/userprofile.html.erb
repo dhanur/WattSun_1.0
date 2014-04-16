@@ -48,8 +48,8 @@
 					  $('#e_wphone').html('');					  
 					});
 					
-					$("#newmobilephn").inputmask("999-999-9999");
-                    $("#newworkphn").inputmask("999-999-9999");
+					$("#newmobilephn").mask("999-999-9999");
+                    $("#newworkphn").mask("999-999-9999");
 					
 			});
 				
@@ -314,7 +314,7 @@
                                 <div style="clear:both;margin-bottom:25px;"></div>
                              
                                 <div>
-                                 <form class="form-horizontal" role="form" style="line-height:20px;">
+                                 <div class="form-horizontal" style="line-height:20px;">
 									
 									<div class="form-group">
                                         <label style="text-align: left;" class="col-sm-4 control-label">Title</label>
@@ -339,7 +339,7 @@
                                     </div>
                                     <div style="clear:both;margin-bottom:25px;"></div>
 
-                                 </form>
+                                 </div>
                                 </div>
                                 <div>
                                     <div class="col-sm-4 ">Company</div><div class="col-sm-8"><%=@user.first['company_name'] %></div>
@@ -354,7 +354,7 @@
 
                         <div id="change_info">
                             <div id="change_info_username" class="chnginf">
-                                <form class="form-horizontal" role="form">
+                                <div class="form-horizontal">
 
                                     <div class="form-group">
                                         <label style="text-align: left;" class="col-sm-4 control-label">Username</label>
@@ -363,10 +363,10 @@
                                         </div>
                                     </div>
                                                                                                     
-                                </form>
+                                </div>
                             </div>
                             <div id="change_info_mobile_phn" class="chnginf">
-                                <form class="form-horizontal" role="form">
+                                <div class="form-horizontal">
 									
 									<div class="form-group">
                                         <label style="text-align: left;" class="col-sm-4 control-label">Mobile phone</label>
@@ -392,10 +392,10 @@
                                     </div>
 
 
-                                </form>
+                                </div>
                             </div>
                             <div id="change_info_work_phn" class="chnginf">
-                                <form class="form-horizontal" role="form">
+                                <div class="form-horizontal">
                                    
                                     <div class="form-group">
                                         <label style="text-align: left;" class="col-sm-4 control-label">Work phone</label>
@@ -418,13 +418,11 @@
                                             <input type="button" class="form-control" id="work_btn" onclick="updateOfficePhone()" value="Update"> </input>
                                         </div>
                                     </div>
-
-
-
-                                </form>
+                                </div>
                             </div>
+                      
                             <div id="change_password" class="chnginf">
-                                <form class="form-horizontal" role="form">
+                                <div class="form-horizontal">
 
                                     <div class="form-group">
                                         <label style="text-align: left;" for="cur_psd" class="col-sm-4 control-label">Current password</label>
@@ -464,7 +462,7 @@
                                         </div>
                                     </div>
 
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>

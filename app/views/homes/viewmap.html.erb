@@ -20,17 +20,18 @@
     </script>
     
     
-    <style>
+    <style>      
        
             #myModal{
                 overflow-y:hidden;
             }
     </style>
     
-    
- 		<script src="//www.google.com/jsapi?key=ABQIAAAAuPsJpk3MBtDpJ4G8cqBnjRRaGTYH6UMl8mADNa0YKuWNNa8VNxQCzVBXTx2DYyXGsTOxpWhvIG7Djw" type="text/javascript"></script>
-		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
 
+	
+    	<script src="//www.google.com/jsapi?key=595146919660-rou65rsr0k1efgse3kgflrt6a713h4rd.apps.googleusercontent.com" type="text/javascript"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+	
 		<script type="text/javascript">
 			var input;
 			var radiovalue = 'zip';
@@ -39,7 +40,7 @@
 			var ge;
 			var placeSearch, autocomplete;
 			var x, y;
-			
+			var infobox;
 			
 			// var transcationid;
 			
@@ -55,21 +56,6 @@
 
 
 				$("input[type='radio'][name='type1']").click(function() {
-					
-				for ( i = 0; i < 5; i++) {
-	
-				$("#installer1" + i).html("");
-				$("#installer2" + i).html("");
-			    }
-			    for ( i = 0; i < 3; i++) {
-				$("#panel1" + i).html("");
-				$("#panel2" + i).html("");
-				
-				$("#inverter1" + i).html("");
-				$("#inverter2" + i).html("");
-									
-				}
-				
 										
 					$.ajax({
 						url : "/homes/datafetch",
@@ -164,20 +150,7 @@
 				});
 
 				$("input[type='radio'][name='type2']").click(function() {
-				
-				for ( i = 0; i < 5; i++) {
-	
-				$("#installer1" + i).html("");
-				$("#installer2" + i).html("");
-			    }
-			    for ( i = 0; i < 3; i++) {
-				$("#panel1" + i).html("");
-				$("#panel2" + i).html("");
-				
-				$("#inverter1" + i).html("");
-				$("#inverter2" + i).html("");
-									
-				}
+
 
 					$.ajax({
 						url : "/homes/datafetch",
@@ -271,7 +244,9 @@
 			var geocoder;
 			var placemark;
 			var placemark2 = new Array;
-			google.load("earth", "1");
+		
+			google.load("earth", "1", {"other_params":"sensor=true"});
+           
             var check2 = 0;
 			var componentForm = {
 				street_number : 'short_name',
@@ -353,7 +328,7 @@
 				
 						0, // straight-down tilt
 				
-						80// range (inverse of zoom)
+						90// range (inverse of zoom)
 				
 						);
 						
@@ -428,7 +403,7 @@
 				
 						0, // straight-down tilt
 				
-						80// range (inverse of zoom)
+						90// range (inverse of zoom)
 				
 						);
 						
@@ -635,7 +610,7 @@
 		                        	   $("#luc1").show();
 		                               $("#luc2").show();
 		                               
-		                               if (response['results'][0]['land_use_code']=='SFR')
+		                               if (response['results'][0]['land_use_code']=='SFR' || response['results'][0]['land_use_code']=='Sfr')
 		                               {
 		                          	   $("#land_use_code1").html('Single Family Home');
 							           $("#land_use_code2").html('Single Family Home'); 	
@@ -1906,7 +1881,7 @@
 		                        else{
 		                        	   $("#luc1").show();
 		                               $("#luc2").show();
-		                               if (response['transaction'][0]['land_use_code']=='SFR')
+		                               if (response['transaction'][0]['land_use_code']=='SFR' || response['transaction'][0]['land_use_code']=='Sfr')
 		                               {
 		                          	   $("#land_use_code1").html('Single Family Home');
 							           $("#land_use_code2").html('Single Family Home'); 	
@@ -2900,7 +2875,7 @@
 		                        	
 		                        	   $("#luc1").show();
 		                               $("#luc2").show();
-		                               if (response['transaction'][0]['land_use_code']=='SFR')
+		                               if (response['transaction'][0]['land_use_code']=='SFR' || response['transaction'][0]['land_use_code']=='Sfr')
 		                               {
 		                          	   $("#land_use_code1").html('Single Family Home');
 							           $("#land_use_code2").html('Single Family Home'); 	
@@ -3785,6 +3760,9 @@
 			}
 	}
 	
+	
+	
+	
 
 	function call(x)
 		{      check2 = check2+1 
@@ -3800,20 +3778,7 @@
 							var q = p.lat;
 							var r = p.lng;
 							placemark2[x] = ge.createPlacemark('');
-							var icon = ge.createIcon('');
-					
-							//designing of placemark
-							
-							  var image1 = {
-								    url: '/assets/red-circle.png',
-								    // This marker is 20 pixels wide by 32 pixels tall.
-								    size: new google.maps.Size(20, 32),
-								    // The origin for this image is 0,0.
-								    origin: new google.maps.Point(0,0),
-								    // The anchor for this image is the base of the flagpole at 0,32.
-								    anchor: new google.maps.Point(0, 32)
-								  };
-															
+							var icon = ge.createIcon('');	
 							icon.setHref('http://beta.prospectzen.com/assets/red_circle.png');
 							var style = ge.createStyle('');
 							style.getIconStyle().setIcon(icon);
@@ -3829,30 +3794,9 @@
 							google.earth.addEventListener(placemark2[x], 'click', function(event) {
 							remove(addresses);
 
+
 					        placemark2[x].setName(data.results[0].formatted_address); 
-// 							
-							// var balloon = ge.createHtmlStringBalloon('');
-							     // balloon.setBackgroundColor("red");
-// 							     
- 								 // balloon.setFeature(placemark[x]); // optional
-  								 // balloon.setContentString('<div style="background-color:red;">"data.results[0].formatted_address)" </div>') ;
-// 
- 								 // ge.setBalloon(balloon);
 							
-							
-							
-							
-								
-							// var balloon = ge.createHtmlDivBalloon('');
-							// var div = document.createElement('DIV');
-							// balloon.setFeature(placemark[x]);
-						    // // balloon.style.background = 'red';
-							// div.innerHTML = ""+data.results[0].formatted_address;
-							// balloon.setContentDiv(div);
-							// balloon.setBackgroundColor("red");
-							// ge.setBalloon(balloon);	
-// 								
-																																
 							var length = data.results[0]["address_components"].length;
 					
 							for (var i = 0; i < length; i++)

@@ -83,8 +83,8 @@
 					  $('#e_wphone').html('');					  
 					});
 					
-					$("#newmobilephn").inputmask("999-999-9999");
-                    $("#newworkphn").inputmask("999-999-9999");
+					$("#newmobilephn").mask("999-999-9999");
+                    $("#newworkphn").mask("999-999-9999");
 					
 			});
 				
@@ -100,7 +100,7 @@
             	else{
             			    $("#title_btn").val('Updating...');
 	    	            	$.ajax({
-			            	url: "/homes/profileupdate",
+			            	url: "/homes/profileupdatebyadmin",
 			        	    type: "POST",
 			            	dataType: 'JSON',
 			            	data: { 'ntitle' : $("#new_title").val() }, 
@@ -130,7 +130,7 @@
                 	$("#mobile_btn").val('Updating...');	
                 				        	
 	            	$.ajax({
-	            	url: "/homes/profileupdate",
+	            	url: "/homes/profileupdatebyadmin",
 	        	    type: "POST",
 	            	dataType: 'JSON',
 	            	data: { 'mphone' : $("#newmobilephn").val() }, 
@@ -164,7 +164,7 @@
 					$("#work_btn").val('Updating...');  
             	             	          	
 	            	$.ajax({
-	            	url: "/homes/profileupdate",
+	            	url: "/homes/profileupdatebyadmin",
 	        	    type: "POST",
 	            	dataType: 'JSON',
 	            	data: { 'ophone' : $("#newworkphn").val() }, 
@@ -217,8 +217,7 @@
 		<div id="bg_wrapper">
 			<div id="content_wrapper">
 				<div id="sidebar_menu" style="float:left;">
-					<ul id="menu_list" class="nav nav-pills nav-stacked">
-						
+					<ul id="menu_list" class="nav nav-pills nav-stacked">			
                         
                         
                         <li id="usr_status">
@@ -255,23 +254,19 @@
 						Profile of <%= @user.first['first_name'] %> <%= @user.first['last_name'] %> @ <%= @user.first['company_name'] %>
 					</div>
 
-					<div id="menu_content_profile_set">
-						
+					<div id="menu_content_profile_set">						
                                 
 					
 						<div id="change_info">
                             
                             <div class="chnginf">
-								<form class="form-horizontal" role="form">
+								<div class="form-horizontal">
 
 									<div class="form-group">
                                     <div class="col-sm-6">Name</div><div class="col-sm-6"><%=@user.first['first_name']+' '+@user.first['last_name'] %></div>
-                                    </div>
-                                    
-                                    
-                                    
+                                    </div>                                                                
 
-								</form>
+								</div>
 							</div>
                             
                             
@@ -279,7 +274,7 @@
 								
                                 
                                 
-                                <form class="form-horizontal" role="form" style="line-height:20px;">
+                                <div class="form-horizontal" style="line-height:20px;">
 									
 									<div class="form-group">
                                         <label style="text-align: left;" class="col-sm-6 control-label">Title</label>
@@ -305,26 +300,23 @@ height: 35px;padding: 8px 0px;" type="text" class="form-control" id="new_title" 
                                     </div>
                                     <div style="clear:both;margin-bottom:25px;"></div>
 
-                                 </form>
+                                 </div>
 							</div>
                             
                             
                         
                         
                         <div class="chnginf">
-								<form class="form-horizontal" role="form">
+								<div class="form-horizontal">
 
 									<div class="form-group">
                                         <div class="col-sm-6">Company</div><div class="col-sm-6"><%=@user.first['company_name'] %></div>
 
                                         <div class="col-sm-6 ">Address</div><div class="col-sm-6"><%=@user.first['company_address'] %></div>
 
-                                    </div>
-                                    
-                                    
-                                    
+                                    </div>                                  
 
-								</form>
+								</div>
 							</div>
                         
                         
@@ -333,7 +325,7 @@ height: 35px;padding: 8px 0px;" type="text" class="form-control" id="new_title" 
                         
                             
 							<div id="change_info_username" class="chnginf">
-								<form class="form-horizontal" role="form">
+								<div class="form-horizontal">
 
 									<div class="form-group">
 										<label style="text-align: left;" class="col-sm-6 control-label">Username</label>
@@ -344,10 +336,10 @@ height: 35px;padding: 8px 0px;" type="text" class="form-control" id="new_title" 
 										</div>
 									</div>
 
-								</form>
+								</div>
 							</div>
 							<div id="change_info_mobile_phn" class="chnginf">
-								<form class="form-horizontal" role="form">
+								<div class="form-horizontal">
 
 									<div class="form-group">
 										<label style="text-align: left;" class="col-sm-6 control-label">Mobile phone</label>
@@ -376,10 +368,11 @@ height: 35px;padding: 8px 0px;" type="text" class="form-control" id="newmobileph
 										</div>
 									</div>
 
-								</form>
+								</div>
 							</div>
+
 							<div id="change_info_work_phn" class="chnginf">
-								<form class="form-horizontal" role="form">
+								<div class="form-horizontal">
 
 									<div class="form-group">
 										<label style="text-align: left;" class="col-sm-6 control-label">Work phone</label>
@@ -407,7 +400,7 @@ height: 35px;padding: 8px 0px;"type="text" class="form-control" id="newworkphn" 
 										</div>
 									</div>
 
-								</form>
+								</div>
 							</div>
 
 						</div>

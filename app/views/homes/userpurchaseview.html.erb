@@ -499,7 +499,7 @@
                        <div style="clear:both;"></div>
                         <div id="owner_occupied"> <div class="col-sm-4 main_heading">Owner Occupied?</div><div class="col-sm-8"><% if @transction.first['owner_occupied_indicator']=='1' %> Yes <% elsif @transction.first['owner_occupied_indicator']=='0' %> No <% end %></div></div>
                        <div style="clear:both;"></div>
-                        <div id="land_use_code"> <div class="col-sm-4 main_heading">Property Type</div><div class="col-sm-8"><% if @transction.first['land_use_code']=='SFR' %>Single Family Home <% else %><%= @transction.first['land_use_code'].titleize %><% end %></div></div>
+                        <div id="land_use_code"> <div class="col-sm-4 main_heading">Property Type</div><div class="col-sm-8"><% if @transction.first['land_use_code']=='SFR' || @transction.first['land_use_code']=='Sfr' %>Single Family Home <% else %><%= @transction.first['land_use_code'].titleize %><% end %></div></div>
                        <div style="clear:both;"></div>
                         <div id="no_of_residential_per_common_units"> <div class="col-sm-4 main_heading">No. of Units</div><div class="col-sm-8"><%= @transction.first['no_of_residential_per_common_units'] %></div></div>
                        <div style="clear:both;"></div>

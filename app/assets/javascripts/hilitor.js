@@ -100,7 +100,7 @@ function Hilitor(id, tag)
     this.setRegex(input);
 
     this.hiliteWords(targetNode);
-
+   
   };
 
 }

@@ -16,6 +16,8 @@ Wattsun::Application.routes.draw do
    
    get '/homes/resetpasswordmessage' => 'homes#resetpasswordmessage'
    
+   get '/homes/ifr' => 'homes#ifr' 
+   
    post '/homes/checkuserexist' => 'homes#checkuserexist' 
    get '/homes/register_cc' => 'homes#register_cc' 
    get '/homes/passwordreset' => 'homes#passwordreset' 
@@ -35,7 +37,7 @@ Wattsun::Application.routes.draw do
    post '/homes/login' => 'homes#login'
    post '/homes/logout' => 'homes#logout'   
    post '/homes/adminlogout' => 'homes#adminlogout'
-      
+   get '/homes/viewmap_copy' => 'homes#viewmap_copy'   
    get  '/homes/example' => 'homes#example'
    post '/homes/changestatus' => 'homes#changestatus'
   
@@ -63,7 +65,8 @@ Wattsun::Application.routes.draw do
    post '/homes/problemcreceipt' => 'homes#problemcreceipt'
    
    get '/homes/userprofile' => 'homes#userprofile'
-   post '/homes/profileupdate' => 'homes#profileupdate'   
+   post '/homes/profileupdate' => 'homes#profileupdate' 
+  
    get '/homes/userpayment' => 'homes#userpayment' 
    get '/homes/faq' => 'homes#faq'    
    
@@ -80,7 +83,8 @@ Wattsun::Application.routes.draw do
    post '/homes/singleuserview' => 'homes#singleuserview'
    
    get '/homes/adminuserprofile' => 'homes#adminuserprofile'
-   
+   post '/homes/profileupdatebyadmin' => 'homes#profileupdatebyadmin' 
+  
    get '/homes/adminuserpayment' => 'homes#adminuserpayment'  
    post '/homes/singleusercredits' => 'homes#singleusercredits'   
    get '/homes/adminusernumber' => 'homes#adminusernumber'

@@ -8,18 +8,19 @@
 		<link href="/assets/bootstrap.min.css" rel="stylesheet">
 		<link href="/assets/flat-ui.css" rel="stylesheet">
 		<link href="/assets/reset.css" rel="stylesheet">
-		<link href="/assets/style_faq.css" rel="stylesheet">
-
+		<link href="/assets/style_faq.css" rel="stylesheet">        
 		<link href="/assets/mediaqueries_faq.css" rel="stylesheet">
-        <style>
-        #ask_qstn{
-            border-color:#5cb85c !important;
-            border-radius:0px !important;
-        }
-        
-        </style>
+	    	
 		<script src="/assets/jquery.js"></script>
 		<script src="/assets/bootstrap.min.js"></script>
+
+        <style>
+	        #ask_qstn{
+	            border-color:#5cb85c !important;
+	            border-radius:0px !important;
+	        }        
+        </style>
+	
         <script>
             $(function() {
               $('.back_top a').click(function() {
@@ -38,9 +39,6 @@
 			    if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
 		
 			      var target = $(this.hash);
-			      
-			     
-			      
 			      target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
 			      if (target.length) {
 			        $('html,body').animate({
@@ -196,7 +194,7 @@
 						Frequently Asked Questions
 					</p>
 					<div id="qstn_srch">
-											<input id="ask_qstn" type="text" class="form-control" placeholder="Search FAQs">
+											<input id="ask_qstn" type="text" class="textSearchvalue_h form-control" placeholder="Search FAQs">
 					</div>
 					<div id="categories">
 						<div class="col-sm-6 single_cat">
@@ -410,13 +408,9 @@
 
 
 
-        <script type="text/javascript" src="/assets/hilitor.js"></script>
-		<script type="text/javascript">
+        <script type="text/javascript" src="/assets/hilitor.js"></script> 
 		
-		
-		
-		 
-		
+		<script type="text/javascript">	
 		
 		  document.addEventListener("DOMContentLoaded", function() {
 		    myHilitor2 = new Hilitor("content_wrapper");
@@ -424,17 +418,16 @@
 		  }, false);
 		
 		  document.getElementById("ask_qstn").addEventListener("keyup", function() {
-		  
-		  
-	
-		
-           
-            		    myHilitor2.apply(this.value);
-		    
-		 
-		    
+            		    myHilitor2.apply(this.value); 
 		  }, false);
-		
+ 		 
+ 		   		  
+ 		  document.getElementById("ask_qstn").addEventListener('keypress', function(e) {
+ 		  	               	               	
+				if (e.keyCode == 13) {
+				    $(window).scrollTop(arr[0].position().top);
+				}
+			}, false);
 		</script>
 	</body>
 
