@@ -83,7 +83,7 @@
 
 								$("#solar_homes1").html(response['zipeverythingelse'][0]['no_of_solar_homes']);
 								$("#3rd_party1").html(response['zipeverythingelse'][0]['3rd_party_owned_system']+'%');
-								$("#average_system1").html(response['zipeverythingelse'][0]['average_system_size']+'kW');
+								$("#average_system1").html(parseFloat(response['zipeverythingelse'][0]['average_system_size']).toFixed(2)+'kW');
 
 							}
 
@@ -94,7 +94,7 @@
 
 								}
 							} else {
-								for ( i = 0; i < 5; i++) {
+								for ( i = 0; i < 5; i++) {	
 
 									$("#installer1" + i).html("");
 
@@ -177,7 +177,7 @@
 							if (response['zipeverythingelse'].length > 0) {
 								$("#solar_homes2").html(response['zipeverythingelse'][0]['no_of_solar_homes']);
 								$("#3rd_party2").html(response['zipeverythingelse'][0]['3rd_party_owned_system']+'%');
-								$("#average_system2").html(response['zipeverythingelse'][0]['average_system_size']+'kW');
+								$("#average_system2").html(parseFloat(response['zipeverythingelse'][0]['average_system_size']).toFixed(2)+'kW');
 							}
 
 							if (response['topinstaller'].length > 0) {
@@ -509,6 +509,7 @@
 						'county' : componentForm1['administrative_area_level_2'],
 						'country' : componentForm1['country'],
 						'address' : formatted_address
+					
 					},
  
                     
@@ -525,7 +526,7 @@
 									        
 						        var check_flag=0;
 					          
-					            if(response['results'][0]['prev_check']==1)
+					            if(response['results'][0]['prev_check']==0)
 					            {					            						            	
 					            	 $("#prev_checks1").html("You're the first");
 					            	 $("#prev_checks2").html("You're the first");
@@ -534,7 +535,7 @@
                               
                                 else
                                 {
-                                	 var  ipq_check=response['results'][0]['prev_check']-1;                            	
+                                	 var  ipq_check=response['results'][0]['prev_check'];                            	
                                 	 $("#prev_checks1").html(ipq_check);
                                 	 $("#prev_checks2").html(ipq_check);
                                 	 check_flag=1;
@@ -834,8 +835,8 @@
 		                        	// alert(response['age']);
 		                        	   $("#aoh1").show();
 		                               $("#aoh2").show();
-									   $("#age_of_home1").html(response['age']);
-							           $("#age_of_home2").html(response['age']);
+									   $("#age_of_home1").html(response['age']+' years');
+							           $("#age_of_home2").html(response['age']+' years');
 							           check_flag=1;
 								}
 								
@@ -866,8 +867,8 @@
 		                        	
 		                        	   $("#ga1").show();
 		                               $("#ga2").show();
-									   $("#gross_area1").html(response['results'][0]['gross_area']+'sqft');
-							           $("#gross_area2").html(response['results'][0]['gross_area']+'sqft');
+									   $("#gross_area1").html(response['results'][0]['gross_area']+' sqft');
+							           $("#gross_area2").html(response['results'][0]['gross_area']+' sqft');
 							           check_flag=1;
 								}
 
@@ -1380,11 +1381,11 @@
 									
 											$("#solar_homes1").html(response['zipeverythingelse'][0]['no_of_solar_homes']);
 											$("#3rd_party1").html(response['zipeverythingelse'][0]['3rd_party_owned_system']+'%');
-											$("#average_system1").html(response['zipeverythingelse'][0]['average_system_size']+'kW');
+											$("#average_system1").html(parseFloat(response['zipeverythingelse'][0]['average_system_size']).toFixed(2)+'kW');
 									
 											$("#solar_homes2").html(response['zipeverythingelse'][0]['no_of_solar_homes']);
 											$("#3rd_party2").html(response['zipeverythingelse'][0]['3rd_party_owned_system']+'%');
-											$("#average_system2").html(response['zipeverythingelse'][0]['average_system_size']+'kW');
+											$("#average_system2").html(parseFloat(response['zipeverythingelse'][0]['average_system_size']).toFixed(2)+'kW');
 										}
 								
 										if (response['topinstaller'].length > 0) {
@@ -1799,7 +1800,7 @@
                               
                               
                                                      
- 				            if(response['transaction'][0]['prev_check']==1)
+ 				            if(response['transaction'][0]['prev_check']==0)
 					            {					            						            	
 					            	 $("#prev_checks1").html("You're the first");
 					            	 $("#prev_checks2").html("You're the first");
@@ -1808,7 +1809,7 @@
                               
                                 else
                                 {
-                                	 var  ipq_check=response['transaction'][0]['prev_check']-1;                            	
+                                	 var  ipq_check=response['transaction'][0]['prev_check'];                            	
                                 	 $("#prev_checks1").html(ipq_check);
                                 	 $("#prev_checks2").html(ipq_check);
                                 	 check_flag=1;
@@ -2103,8 +2104,8 @@
 		                        	// alert(response['age']);
 		                        	   $("#aoh1").show();
 		                               $("#aoh2").show();
-									   $("#age_of_home1").html(response['age']);
-							           $("#age_of_home2").html(response['age']);
+									   $("#age_of_home1").html(response['age']+' years');
+							           $("#age_of_home2").html(response['age']+' years');
 							           check_flag=1;
 								}
 									
@@ -2136,8 +2137,8 @@
 		                        	
 		                        	   $("#ga1").show();
 		                               $("#ga2").show();
-									   $("#gross_area1").html(response['transaction'][0]['gross_area']+'sqft');
-							           $("#gross_area2").html(response['transaction'][0]['gross_area']+'sqft');
+									   $("#gross_area1").html(response['transaction'][0]['gross_area']+' sqft');
+							           $("#gross_area2").html(response['transaction'][0]['gross_area']+' sqft');
 							           check_flag=1;
 								}
 						
@@ -2643,11 +2644,11 @@
 									
 											$("#solar_homes1").html(response['zipeverythingelse'][0]['no_of_solar_homes']);
 											$("#3rd_party1").html(response['zipeverythingelse'][0]['3rd_party_owned_system']+'%');
-											$("#average_system1").html(response['zipeverythingelse'][0]['average_system_size']+'kW');
+											$("#average_system1").html(parseFloat(response['zipeverythingelse'][0]['average_system_size']).toFixed(2)+'kW');
 									
 											$("#solar_homes2").html(response['zipeverythingelse'][0]['no_of_solar_homes']);
 											$("#3rd_party2").html(response['zipeverythingelse'][0]['3rd_party_owned_system']+'%');
-											$("#average_system2").html(response['zipeverythingelse'][0]['average_system_size']+'kW');
+											$("#average_system2").html(parseFloat(response['zipeverythingelse'][0]['average_system_size']).toFixed(2)+'kW');
 										}
 								
 										if (response['topinstaller'].length > 0) {
@@ -2790,7 +2791,7 @@
                      
                            	// placemark2.setName(response['transaction'][0]['address']);
                                                      
- 				            if(response['transaction'][0]['prev_check']==1)
+ 				            if(response['transaction'][0]['prev_check']==0)
 					            {					            						            	
 					            	 $("#prev_checks1").html("You're the first");
 					            	 $("#prev_checks2").html("You're the first");
@@ -2799,7 +2800,7 @@
                               
                                 else
                                 {
-                                	 var  ipq_check=response['transaction'][0]['prev_check']-1;                            	
+                                	 var  ipq_check=response['transaction'][0]['prev_check'];                            	
                                 	 $("#prev_checks1").html(ipq_check);
                                 	 $("#prev_checks2").html(ipq_check);
                                 	 check_flag=1;
@@ -3096,8 +3097,8 @@
 		                        	// alert(response['age']);
 		                        	   $("#aoh1").show();
 		                               $("#aoh2").show();
-									   $("#age_of_home1").html(response['age']);
-							           $("#age_of_home2").html(response['age']);
+									   $("#age_of_home1").html(response['age']+' years');
+							           $("#age_of_home2").html(response['age']+' years');
 							           check_flag=1;
 								}
 								
@@ -3129,8 +3130,8 @@
 		                        	
 		                        	   $("#ga1").show();
 		                               $("#ga2").show();
-									   $("#gross_area1").html(response['transaction'][0]['gross_area']+'sqft');
-							           $("#gross_area2").html(response['transaction'][0]['gross_area']+'sqft');
+									   $("#gross_area1").html(response['transaction'][0]['gross_area']+' sqft');
+							           $("#gross_area2").html(response['transaction'][0]['gross_area']+' sqft');
 							           check_flag=1;
 								}
 						
@@ -3646,11 +3647,11 @@
 									
 											$("#solar_homes1").html(response['zipeverythingelse'][0]['no_of_solar_homes']);
 											$("#3rd_party1").html(response['zipeverythingelse'][0]['3rd_party_owned_system']+'%');
-											$("#average_system1").html(response['zipeverythingelse'][0]['average_system_size']+'kW');
+											$("#average_system1").html(parseFloat(response['zipeverythingelse'][0]['average_system_size']).toFixed(2)+'kW');
 									
 											$("#solar_homes2").html(response['zipeverythingelse'][0]['no_of_solar_homes']);
 											$("#3rd_party2").html(response['zipeverythingelse'][0]['3rd_party_owned_system']+'%');
-											$("#average_system2").html(response['zipeverythingelse'][0]['average_system_size']+'kW');
+											$("#average_system2").html(parseFloat(response['zipeverythingelse'][0]['average_system_size']).toFixed(2)+'kW');
 										}
 								
 										if (response['topinstaller'].length > 0) {

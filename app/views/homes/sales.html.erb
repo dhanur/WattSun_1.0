@@ -233,7 +233,7 @@
 						         <td><%= tranc.address %></td>
 						         <td><%= tranc.first_name %> <%= tranc.last_name %></td>
 						         <td><%= tranc.company_name %></td>
-						         <td><%= tranc.last_purchase_date %></td>
+						         <td><%= (tranc.last_purchase_date).strftime('%d %b, %I:%M%p') %></td>
 						         <td class="center"><a style="cursor: pointer" onclick='abc("<%= tranc.transaction_id %>")'>View</a></td>
 							    </tr>
 						   	  <% end %>							

@@ -7,7 +7,7 @@ class HomesController < ApplicationController
   require 'time_diff'
   
   def index
-
+          
   end
 
   def adminlogin

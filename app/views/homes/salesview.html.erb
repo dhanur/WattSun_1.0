@@ -420,6 +420,8 @@ padding-bottom: 0px;
               $('#zee').show(); 
               $('#3rd_party_owned_system').show(); 
               $('#average_system').show(); 
+              $('#assz').html(parseFloat(<% if !@zee.blank? %> <%= @zee.first["average_system_size"] %> <% end %>).toFixed(2)+' kW');
+              $('#assc').html(parseFloat(<% if !@cee.blank? %> <%= @cee.first["average_system_size"] %> <% end %>).toFixed(2)+' kW');
               $('#smi').show();
          <% end %>
         
@@ -521,7 +523,7 @@ padding-bottom: 0px;
                            NEED TO KNOW
                        </div>
                         <div style="clear:both;"></div>
-                        <div id="prev_check"> <div class="col-sm-4 main_heading">No. of checks on this address</div><div class="col-sm-8"><% if @transction.first['prev_check']==1 %> You're the first <% else %>  <%= @transction.first['prev_check'] %> <% end %> </div></div>
+                        <div id="prev_check"> <div class="col-sm-4 main_heading">No. of checks on this address</div><div class="col-sm-8"><% if @transction.first['prev_check']==0 %> You're the first <% else %>  <%= @transction.first['prev_check'] %> <% end %> </div></div>
                         <div style="clear:both;"></div>
                         <div id="owner_name"> <div class="col-sm-4 main_heading">Name of Owner(s)</div><div class="col-sm-8"><%= @transction.first['owner_name'].titleize %></div></div>
                         <div style="clear:both;"></div>
@@ -558,11 +560,11 @@ padding-bottom: 0px;
                         <div style="clear:both;"></div>
                         <div id="heat_fuel"> <div class="col-sm-4 main_heading">Heat Fuel</div><div class="col-sm-8"><%= @transction.first['heat_fuel'].titleize %></div></div>
                         <div style="clear:both;"></div>
-                        <div id="age_of_home"> <div class="col-sm-4 main_heading">Age of Home</div><div class="col-sm-8"><%= @age%></div></div>
+                        <div id="age_of_home"> <div class="col-sm-4 main_heading">Age of Home</div><div class="col-sm-8"><%= @age%> years</div></div>
                         <div style="clear:both;"></div>
                         <div id="persons_living"> <div class="col-sm-4 main_heading">Approximate no. of people living here</div><div class="col-sm-8"><%= @transction.first['PersonsatResidence_z4'] %></div></div>
                         <div style="clear:both;"></div>
-                        <div id="gross_area"> <div class="col-sm-4 main_heading">Gross Area</div><div class="col-sm-8"><%= @transction.first['gross_area'] %>sqft</div></div>
+                        <div id="gross_area"> <div class="col-sm-4 main_heading">Gross Area</div><div class="col-sm-8"><%= @transction.first['gross_area'] %>&nbsp;sqft</div></div>
                         <div style="clear:both;"></div>
                         <div id="no_of_bedrooms"> <div class="col-sm-4 main_heading">No. of Bed/Baths</div><div class="col-sm-8"><%= @transction.first['no_of_bedrooms'] %>/<%= @transction.first['no_of_bathrooms'] %></div></div>
                         <div style="clear:both;"></div>
@@ -651,11 +653,10 @@ padding-bottom: 0px;
 	                          <%end%>
 	                         </div>
 	                     </div>
-                            <div style="clear:both;margin-bottom:20px;"></div>
+                         <div style="clear:both;"></div>
+	                 
 	                     <div id="green_living_model">
-							<div class="col-sm-4 main_heading">
-								GREEN OF LIVING MODEL
-							</div>
+	                     	<div class="col-sm-4 main_heading">How Green?</div>
 							<div class="col-sm-8">
 								<%if @transction.first['AIQ_Green'].to_i < 25 %>
 								Hardly
@@ -667,8 +668,9 @@ padding-bottom: 0px;
 								very
 								<% end %>
 							</div>
-							</div>
+                      
                             <div style="clear:both;"></div>
+							</div>
 							<div id="homeowner_penetration">
 								<div class="col-sm-4 main_heading">
 									% homes owned (vs. rented)
@@ -706,20 +708,20 @@ padding-bottom: 0px;
 
 									<tr id="zee">
 										<td class="main_heading">Solar Homes</td>
-										<td><% if @zee.blank? %> <% else %> <%= @zee.first["no_of_solar_homes"] %>kW <% end %></td>
-										<td><% if @cee.blank? %> <% else %> <%= @cee.first["no_of_solar_homes"] %>kW <% end %></td>
+										<td><% if @zee.blank? %> <% else %> <%= @zee.first["no_of_solar_homes"] %> <% end %></td>
+										<td><% if @cee.blank? %> <% else %> <%= @cee.first["no_of_solar_homes"] %> <% end %></td>
 									</tr>
 
 									<tr id="3rd_party_owned_system">
 										<td class="main_heading">3rd Party</td>
 										<td><% if !@zee.blank? %> <%= @zee.first["3rd_party_owned_system"] %> % <% end %></td>
-										<td><% if !@cee.blank? %> <%= @cee.first["3rd_party_owned_system"] %><% end %></td>
+										<td><% if !@cee.blank? %> <%= @cee.first["3rd_party_owned_system"] %> % <% end %></td>
 									</tr>
 
 									<tr id="average_system">
 										<td class="main_heading">Avg. System </td>
-										<td><% if !@zee.blank? %> <%= @zee.first["average_system_size"] %> % <% end %></td>
-										<td><% if !@cee.blank? %> <%= @cee.first["average_system_size"] %> % <% end %></td>
+										<td id="assz"></td>
+										<td id="assc"></td>
 									</tr>
                                     
                                     <tr>
