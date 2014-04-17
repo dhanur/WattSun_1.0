@@ -5,6 +5,7 @@ gem 'rails', '4.0.2'
 
 # Use sqlite3 as the database for Active Record
 
+gem 'local_time'
 gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
 
 gem 'rest-client', '~> 1.6.7'

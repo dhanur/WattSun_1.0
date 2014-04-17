@@ -25,6 +25,22 @@
             #myModal{
                 overflow-y:hidden;
             }
+         #qualify_search{
+            height: 41px;
+            font-family: latolig;
+            font-size: 19px;
+            background: #5cb85c;
+            color: #fff;
+            border-radius: 0px;
+            border: 0px;
+             width:100px;
+             
+            }
+         #search_bar span{
+            position: absolute;
+            top: 4px;
+            right: 2px;
+         }
     </style>
     
 
@@ -289,6 +305,26 @@
 
 				}
 			});
+			
+			
+	    function qualifyclick()
+		    {
+		    	input = document.getElementById('loc_search').value;
+	
+						componentForm1 = {
+							street_number : '',
+							route : '',
+							locality : '',
+							country : '',
+							postal_code : '',
+							administrative_area_level_1: '',
+			                administrative_area_level_2: '',
+						};
+	
+						check();
+		    	
+		    }
+
 
 			function init() {
 			
@@ -494,6 +530,7 @@
    //     console.log(secondline)
 		
 		$("#panel_search_result").html(input1[0]+'<br>'+secondline);	
+        	
         	
         	$.ajax({
 					url : "/homes/checkpurchase",
@@ -4004,8 +4041,13 @@
                 <img class="brand" src="/assets/wattsun_logo.png" width="100%" alt="wattsun">
               </a>
             </div>
-            <div id="search_bar">
-              <input id="loc_search" class="form-control" type="text" autocomplete="on" autofocus="autofocus" jstcache="0" placeholder="Enter residential street address" >
+            <div id="search_bar">             
+                <input style="float:left;position:relative;" id="loc_search" class="form-control" type="text" autocomplete="on" autofocus="autofocus" jstcache="0" placeholder="Enter residential street address" >
+                <span>
+                    <button class="btn btn-default" type="button" id="qualify_search" onclick="qualifyclick()">Qualify</button>
+                </span>
+                
+                
               <div id="search_error" style="font-family:'latoreg';padding-top:2px;color:#fff" >
                <span style="visibility:hidden">No error</span>
               </div>
@@ -4111,7 +4153,7 @@
 						<h4 id="address_display_on_popup" class="modal-title" style="text-align: center;margin-bottom:18px;"></h4>
                         <div style="clear:both;"></div>
   						<div style="width:171px;margin:0 auto;">
-                            <input id="itq_qualify" class="w-button address-button apply-button btn btn-primary btn-sm" type="button" style="float: left; display: inline;margin-right:15px;" onclick="makepurchase()" value="Qualify" >
+                            <input id="itq_qualify" class="w-button address-button apply-button btn btn-primary btn-sm" type="button" style="float: left; display: inline;margin-right:15px;background:#C0392B;" onclick="makepurchase()" value="Qualify" >
                             </input>
                             <input id="itq_cancel" type="submit" class="w-button address-button apply-button btn btn-primary btn-sm" data-dismiss="modal" style=" float:left;" value="Cancel" onclick="clearbox()">
                             </input>

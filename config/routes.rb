@@ -110,7 +110,8 @@ Wattsun::Application.routes.draw do
    get '/homes/salesview' => 'homes#salesview'
    post '/homes/salesviewtransaction' => 'homes#salesviewtransaction'
    
-   
+   post '/homes/viewmap_copy' => 'homes#viewmap_copy'
+   get '/homes/viewmap_copy' => 'homes#viewmap_copy'
    
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

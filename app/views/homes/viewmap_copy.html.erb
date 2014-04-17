@@ -20,17 +20,18 @@
     </script>
     
     
-    <style>
+    <style>      
        
             #myModal{
                 overflow-y:hidden;
             }
     </style>
     
-    
- 		<script src="//www.google.com/jsapi?key=ABQIAAAAuPsJpk3MBtDpJ4G8cqBnjRRaGTYH6UMl8mADNa0YKuWNNa8VNxQCzVBXTx2DYyXGsTOxpWhvIG7Djw" type="text/javascript"></script>
-		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
 
+	
+    	<script src="//www.google.com/jsapi?key=595146919660-rou65rsr0k1efgse3kgflrt6a713h4rd.apps.googleusercontent.com" type="text/javascript"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+	
 		<script type="text/javascript">
 			var input;
 			var radiovalue = 'zip';
@@ -39,7 +40,7 @@
 			var ge;
 			var placeSearch, autocomplete;
 			var x, y;
-			
+			var infobox;
 			
 			// var transcationid;
 			
@@ -55,7 +56,6 @@
 
 
 				$("input[type='radio'][name='type1']").click(function() {
-					
 										
 					$.ajax({
 						url : "/homes/datafetch",
@@ -83,7 +83,7 @@
 
 								$("#solar_homes1").html(response['zipeverythingelse'][0]['no_of_solar_homes']);
 								$("#3rd_party1").html(response['zipeverythingelse'][0]['3rd_party_owned_system']+'%');
-								$("#average_system1").html(response['zipeverythingelse'][0]['average_system_size']+'kW');
+								$("#average_system1").html(parseFloat(response['zipeverythingelse'][0]['average_system_size']).toFixed(2)+'kW');
 
 							}
 
@@ -94,7 +94,7 @@
 
 								}
 							} else {
-								for ( i = 0; i < 5; i++) {
+								for ( i = 0; i < 5; i++) {	
 
 									$("#installer1" + i).html("");
 
@@ -114,7 +114,7 @@
 
 								}
 							} else {
-								for ( i = 0; i < 5; i++) {
+								for ( i = 0; i < 3; i++) {
 
 									$("#panel1" + i).html("");
 
@@ -133,7 +133,7 @@
 
 								}
 							} else {
-								for ( i = 0; i < 5; i++) {
+								for ( i = 0; i < 3; i++) {
 
 									$("#inverter1" + i).html("");
 
@@ -150,6 +150,8 @@
 				});
 
 				$("input[type='radio'][name='type2']").click(function() {
+
+
 					$.ajax({
 						url : "/homes/datafetch",
 						type : "POST",
@@ -175,7 +177,7 @@
 							if (response['zipeverythingelse'].length > 0) {
 								$("#solar_homes2").html(response['zipeverythingelse'][0]['no_of_solar_homes']);
 								$("#3rd_party2").html(response['zipeverythingelse'][0]['3rd_party_owned_system']+'%');
-								$("#average_system2").html(response['zipeverythingelse'][0]['average_system_size']+'kW');
+								$("#average_system2").html(parseFloat(response['zipeverythingelse'][0]['average_system_size']).toFixed(2)+'kW');
 							}
 
 							if (response['topinstaller'].length > 0) {
@@ -204,7 +206,7 @@
 
 								}
 							} else {
-								for ( i = 0; i < 5; i++) {
+								for ( i = 0; i < 3; i++) {
 
 									$("#panel2" + i).html("");
 
@@ -223,7 +225,7 @@
 
 								}
 							} else {
-								for ( i = 0; i < 5; i++) {
+								for ( i = 0; i < 3; i++) {
 
 									$("#inverter2" + i).html("");
 
@@ -242,7 +244,9 @@
 			var geocoder;
 			var placemark;
 			var placemark2 = new Array;
-			google.load("earth", "1");
+		
+			google.load("earth", "1", {"other_params":"sensor=true"});
+           
             var check2 = 0;
 			var componentForm = {
 				street_number : 'short_name',
@@ -289,8 +293,8 @@
 			function init() {
 			
 				input = document.getElementById('loc_search').value;
-				var mapi=$('#map-canvas').contents();
-				google.earth.createInstance('mapi', initCallback, failureCallback);
+				
+				google.map.createInstance('map-canvas', initCallback, failureCallback);
 				}
 		
 		
@@ -324,7 +328,7 @@
 				
 						0, // straight-down tilt
 				
-						80// range (inverse of zoom)
+						90// range (inverse of zoom)
 				
 						);
 						
@@ -399,7 +403,7 @@
 				
 						0, // straight-down tilt
 				
-						80// range (inverse of zoom)
+						90// range (inverse of zoom)
 				
 						);
 						
@@ -464,11 +468,12 @@
           
        function makemake()
         {      
-          		for ( i = 0; i < 5; i++) {
+				for ( i = 0; i < 5; i++) {
 	
 				$("#installer1" + i).html("");
 				$("#installer2" + i).html("");
-			
+			    }
+			    for ( i = 0; i < 3; i++) {
 				$("#panel1" + i).html("");
 				$("#panel2" + i).html("");
 				
@@ -476,7 +481,6 @@
 				$("#inverter2" + i).html("");
 									
 				}
-				
 				
 		      	
    		input1 = formatted_address.split(",");							
@@ -505,6 +509,7 @@
 						'county' : componentForm1['administrative_area_level_2'],
 						'country' : componentForm1['country'],
 						'address' : formatted_address
+					
 					},
  
                     
@@ -521,7 +526,7 @@
 									        
 						        var check_flag=0;
 					          
-					            if(response['results'][0]['prev_check']==1)
+					            if(response['results'][0]['prev_check']==0)
 					            {					            						            	
 					            	 $("#prev_checks1").html("You're the first");
 					            	 $("#prev_checks2").html("You're the first");
@@ -530,7 +535,7 @@
                               
                                 else
                                 {
-                                	 var  ipq_check=response['results'][0]['prev_check']-1;                            	
+                                	 var  ipq_check=response['results'][0]['prev_check'];                            	
                                 	 $("#prev_checks1").html(ipq_check);
                                 	 $("#prev_checks2").html(ipq_check);
                                 	 check_flag=1;
@@ -606,7 +611,7 @@
 		                        	   $("#luc1").show();
 		                               $("#luc2").show();
 		                               
-		                               if (response['results'][0]['land_use_code']=='SFR')
+		                               if (response['results'][0]['land_use_code']=='SFR' || response['results'][0]['land_use_code']=='Sfr')
 		                               {
 		                          	   $("#land_use_code1").html('Single Family Home');
 							           $("#land_use_code2").html('Single Family Home'); 	
@@ -830,8 +835,8 @@
 		                        	// alert(response['age']);
 		                        	   $("#aoh1").show();
 		                               $("#aoh2").show();
-									   $("#age_of_home1").html(response['age']);
-							           $("#age_of_home2").html(response['age']);
+									   $("#age_of_home1").html(response['age']+' years');
+							           $("#age_of_home2").html(response['age']+' years');
 							           check_flag=1;
 								}
 								
@@ -862,8 +867,8 @@
 		                        	
 		                        	   $("#ga1").show();
 		                               $("#ga2").show();
-									   $("#gross_area1").html(response['results'][0]['gross_area']+'sqft');
-							           $("#gross_area2").html(response['results'][0]['gross_area']+'sqft');
+									   $("#gross_area1").html(response['results'][0]['gross_area']+' sqft');
+							           $("#gross_area2").html(response['results'][0]['gross_area']+' sqft');
 							           check_flag=1;
 								}
 
@@ -1376,11 +1381,11 @@
 									
 											$("#solar_homes1").html(response['zipeverythingelse'][0]['no_of_solar_homes']);
 											$("#3rd_party1").html(response['zipeverythingelse'][0]['3rd_party_owned_system']+'%');
-											$("#average_system1").html(response['zipeverythingelse'][0]['average_system_size']+'kW');
+											$("#average_system1").html(parseFloat(response['zipeverythingelse'][0]['average_system_size']).toFixed(2)+'kW');
 									
 											$("#solar_homes2").html(response['zipeverythingelse'][0]['no_of_solar_homes']);
 											$("#3rd_party2").html(response['zipeverythingelse'][0]['3rd_party_owned_system']+'%');
-											$("#average_system2").html(response['zipeverythingelse'][0]['average_system_size']+'kW');
+											$("#average_system2").html(parseFloat(response['zipeverythingelse'][0]['average_system_size']).toFixed(2)+'kW');
 										}
 								
 										if (response['topinstaller'].length > 0) {
@@ -1422,7 +1427,7 @@
 										} 
 										
 										else {
-										for ( i = 0; i < 5; i++) {
+										for ( i = 0; i < 3; i++) {
 									
 											$("#panel1" + i).html("");
 											$("#panel2" + i).html("");
@@ -1449,7 +1454,7 @@
 											}
 										} 
 										else {
-											for ( i = 0; i < 5; i++) {
+											for ( i = 0; i < 3; i++) {
 									
 											$("#inverter1" + i).html("");
 											$("#inverter2" + i).html("");
@@ -1750,19 +1755,19 @@
    function setValueNewTranscation(input){
    	
    	   
-   	     
-   		for ( i = 0; i < 5; i++) {
+				for ( i = 0; i < 5; i++) {
 	
 				$("#installer1" + i).html("");
 				$("#installer2" + i).html("");
-			
+			    }
+			    for ( i = 0; i < 3; i++) {
 				$("#panel1" + i).html("");
 				$("#panel2" + i).html("");
 				
 				$("#inverter1" + i).html("");
 				$("#inverter2" + i).html("");
 									
-		}
+				}
    	
    		input1 = formatted_address.split(",");							
 		var secondline=''
@@ -1795,7 +1800,7 @@
                               
                               
                                                      
- 				            if(response['transaction'][0]['prev_check']==1)
+ 				            if(response['transaction'][0]['prev_check']==0)
 					            {					            						            	
 					            	 $("#prev_checks1").html("You're the first");
 					            	 $("#prev_checks2").html("You're the first");
@@ -1804,7 +1809,7 @@
                               
                                 else
                                 {
-                                	 var  ipq_check=response['transaction'][0]['prev_check']-1;                            	
+                                	 var  ipq_check=response['transaction'][0]['prev_check'];                            	
                                 	 $("#prev_checks1").html(ipq_check);
                                 	 $("#prev_checks2").html(ipq_check);
                                 	 check_flag=1;
@@ -1877,7 +1882,7 @@
 		                        else{
 		                        	   $("#luc1").show();
 		                               $("#luc2").show();
-		                               if (response['transaction'][0]['land_use_code']=='SFR')
+		                               if (response['transaction'][0]['land_use_code']=='SFR' || response['transaction'][0]['land_use_code']=='Sfr')
 		                               {
 		                          	   $("#land_use_code1").html('Single Family Home');
 							           $("#land_use_code2").html('Single Family Home'); 	
@@ -2099,8 +2104,8 @@
 		                        	// alert(response['age']);
 		                        	   $("#aoh1").show();
 		                               $("#aoh2").show();
-									   $("#age_of_home1").html(response['age']);
-							           $("#age_of_home2").html(response['age']);
+									   $("#age_of_home1").html(response['age']+' years');
+							           $("#age_of_home2").html(response['age']+' years');
 							           check_flag=1;
 								}
 									
@@ -2132,8 +2137,8 @@
 		                        	
 		                        	   $("#ga1").show();
 		                               $("#ga2").show();
-									   $("#gross_area1").html(response['transaction'][0]['gross_area']+'sqft');
-							           $("#gross_area2").html(response['transaction'][0]['gross_area']+'sqft');
+									   $("#gross_area1").html(response['transaction'][0]['gross_area']+' sqft');
+							           $("#gross_area2").html(response['transaction'][0]['gross_area']+' sqft');
 							           check_flag=1;
 								}
 						
@@ -2639,11 +2644,11 @@
 									
 											$("#solar_homes1").html(response['zipeverythingelse'][0]['no_of_solar_homes']);
 											$("#3rd_party1").html(response['zipeverythingelse'][0]['3rd_party_owned_system']+'%');
-											$("#average_system1").html(response['zipeverythingelse'][0]['average_system_size']+'kW');
+											$("#average_system1").html(parseFloat(response['zipeverythingelse'][0]['average_system_size']).toFixed(2)+'kW');
 									
 											$("#solar_homes2").html(response['zipeverythingelse'][0]['no_of_solar_homes']);
 											$("#3rd_party2").html(response['zipeverythingelse'][0]['3rd_party_owned_system']+'%');
-											$("#average_system2").html(response['zipeverythingelse'][0]['average_system_size']+'kW');
+											$("#average_system2").html(parseFloat(response['zipeverythingelse'][0]['average_system_size']).toFixed(2)+'kW');
 										}
 								
 										if (response['topinstaller'].length > 0) {
@@ -2685,7 +2690,7 @@
 										} 
 										
 										else {
-										for ( i = 0; i < 5; i++) {
+										for ( i = 0; i < 3; i++) {
 									
 											$("#panel1" + i).html("");
 											$("#panel2" + i).html("");
@@ -2712,7 +2717,7 @@
 											}
 										} 
 										else {
-											for ( i = 0; i < 5; i++) {
+											for ( i = 0; i < 3; i++) {
 									
 											$("#inverter1" + i).html("");
 											$("#inverter2" + i).html("");
@@ -2752,19 +2757,21 @@
        {
        	
       
-   		for ( i = 0; i < 5; i++) {
+				for ( i = 0; i < 5; i++) {
 	
 				$("#installer1" + i).html("");
 				$("#installer2" + i).html("");
-			
+			    }
+			    
+			    for ( i = 0; i < 3; i++) {
 				$("#panel1" + i).html("");
 				$("#panel2" + i).html("");
 				
 				$("#inverter1" + i).html("");
 				$("#inverter2" + i).html("");
 									
-		}
-       	
+				}
+				
        	$.ajax({
 					url : "/homes/alldatafetchonmarkerclick",
 					type : "POST",
@@ -2784,7 +2791,7 @@
                      
                            	// placemark2.setName(response['transaction'][0]['address']);
                                                      
- 				            if(response['transaction'][0]['prev_check']==1)
+ 				            if(response['transaction'][0]['prev_check']==0)
 					            {					            						            	
 					            	 $("#prev_checks1").html("You're the first");
 					            	 $("#prev_checks2").html("You're the first");
@@ -2793,7 +2800,7 @@
                               
                                 else
                                 {
-                                	 var  ipq_check=response['transaction'][0]['prev_check']-1;                            	
+                                	 var  ipq_check=response['transaction'][0]['prev_check'];                            	
                                 	 $("#prev_checks1").html(ipq_check);
                                 	 $("#prev_checks2").html(ipq_check);
                                 	 check_flag=1;
@@ -2869,7 +2876,7 @@
 		                        	
 		                        	   $("#luc1").show();
 		                               $("#luc2").show();
-		                               if (response['transaction'][0]['land_use_code']=='SFR')
+		                               if (response['transaction'][0]['land_use_code']=='SFR' || response['transaction'][0]['land_use_code']=='Sfr')
 		                               {
 		                          	   $("#land_use_code1").html('Single Family Home');
 							           $("#land_use_code2").html('Single Family Home'); 	
@@ -3090,8 +3097,8 @@
 		                        	// alert(response['age']);
 		                        	   $("#aoh1").show();
 		                               $("#aoh2").show();
-									   $("#age_of_home1").html(response['age']);
-							           $("#age_of_home2").html(response['age']);
+									   $("#age_of_home1").html(response['age']+' years');
+							           $("#age_of_home2").html(response['age']+' years');
 							           check_flag=1;
 								}
 								
@@ -3123,8 +3130,8 @@
 		                        	
 		                        	   $("#ga1").show();
 		                               $("#ga2").show();
-									   $("#gross_area1").html(response['transaction'][0]['gross_area']+'sqft');
-							           $("#gross_area2").html(response['transaction'][0]['gross_area']+'sqft');
+									   $("#gross_area1").html(response['transaction'][0]['gross_area']+' sqft');
+							           $("#gross_area2").html(response['transaction'][0]['gross_area']+' sqft');
 							           check_flag=1;
 								}
 						
@@ -3640,11 +3647,11 @@
 									
 											$("#solar_homes1").html(response['zipeverythingelse'][0]['no_of_solar_homes']);
 											$("#3rd_party1").html(response['zipeverythingelse'][0]['3rd_party_owned_system']+'%');
-											$("#average_system1").html(response['zipeverythingelse'][0]['average_system_size']+'kW');
+											$("#average_system1").html(parseFloat(response['zipeverythingelse'][0]['average_system_size']).toFixed(2)+'kW');
 									
 											$("#solar_homes2").html(response['zipeverythingelse'][0]['no_of_solar_homes']);
 											$("#3rd_party2").html(response['zipeverythingelse'][0]['3rd_party_owned_system']+'%');
-											$("#average_system2").html(response['zipeverythingelse'][0]['average_system_size']+'kW');
+											$("#average_system2").html(parseFloat(response['zipeverythingelse'][0]['average_system_size']).toFixed(2)+'kW');
 										}
 								
 										if (response['topinstaller'].length > 0) {
@@ -3686,7 +3693,7 @@
 										} 
 										
 										else {
-										for ( i = 0; i < 5; i++) {
+										for ( i = 0; i < 3; i++) {
 									
 											$("#panel1" + i).html("");
 											$("#panel2" + i).html("");
@@ -3713,7 +3720,7 @@
 											}
 										} 
 										else {
-											for ( i = 0; i < 5; i++) {
+											for ( i = 0; i < 3; i++) {
 									
 											$("#inverter1" + i).html("");
 											$("#inverter2" + i).html("");
@@ -3754,6 +3761,9 @@
 			}
 	}
 	
+	
+	
+	
 
 	function call(x)
 		{      check2 = check2+1 
@@ -3769,10 +3779,8 @@
 							var q = p.lat;
 							var r = p.lng;
 							placemark2[x] = ge.createPlacemark('');
-							var icon = ge.createIcon('');
-					
-							//designing of placemark
-							icon.setHref('http://maps.google.com/mapfiles/kml/paddle/red-circle.png');
+							var icon = ge.createIcon('');	
+							icon.setHref('http://beta.prospectzen.com/assets/red_circle.png');
 							var style = ge.createStyle('');
 							style.getIconStyle().setIcon(icon);
 							style.getIconStyle().setScale(1.0);
@@ -3786,8 +3794,10 @@
 					
 							google.earth.addEventListener(placemark2[x], 'click', function(event) {
 							remove(addresses);
+
+
 					        placemark2[x].setName(data.results[0].formatted_address); 
-																																
+							
 							var length = data.results[0]["address_components"].length;
 					
 							for (var i = 0; i < length; i++)
@@ -3970,9 +3980,7 @@
           
   </head>
   <body  onload="init()">
-    <div id="whole_page">
-	
-	<iframe id='map-canvas' style="position:fixed;width:100%;"></iframe>
+    
     <div class="container" id="menu_navigation">
       <div id="bgnav" class="navbar navbar-fixed-top navbar-inverse">
         
@@ -4117,11 +4125,13 @@
     
     
  
-			
+	<div id="abc" style="position: fixed;width: 100%;">
+			<div id='map-canvas'></div>
+	</div>
 		
 
 
-    <div id="panel_container" style="position:relative">
+    <div id="panel_container" style="position: relative; display: none;">
       <div id="panel_container_content">
         
         <div id="panel_search_result">
@@ -5378,28 +5388,17 @@
       </div>
     </div>
     <!--            End panel container                               -->
-	
     
     <div width="32px">
     <img id="loadingimage" style="display:none;width:32px;position:absolute;top:100px;left:0;right:0;bottom:0;margin:0 auto;z-index: 100000000000" src = "http://www.google.com/earth/plugin/images/loading.gif" >
     </div>
-
-	
-		
-	</div>
-	<!--end whole page-->
-	
-
-	
-	
-	
     <script>
       $(document).ready(function(){
           
           //        content table starts  
           $('body').css("overflowY","hidden");
           
-          $("#map-canvas").contents().css("height", $(window).height());
+          $("#map-canvas").css("height", $(window).height());
           
     
           
@@ -5463,7 +5462,7 @@
       $(window).resize(function(){
         
           
-          $("#map-canvas").contents().css("height", $(window).height());
+          $("#map-canvas").css("height", $(window).height());
         var win_width=$(window).width();
         if(win_width>942){
           

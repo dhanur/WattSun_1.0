@@ -4,7 +4,8 @@ class HomesController < ApplicationController
   require 'stripe'
   require "rexml/document"
   require 'rest_client'
-  require 'time_diff'
+  require 'time_diff'  
+  require 'local_time'
   
   def index
           
@@ -1099,6 +1100,7 @@ class HomesController < ApplicationController
 
    def checkpurchase
     
+          
       session[:last_viewed_address]=params[:address]  
      
       @zee=ZipEverythingElse.select("*").where("zip = ?",params[:zip]).limit(1)
@@ -1117,7 +1119,7 @@ class HomesController < ApplicationController
       @utility = @utility.to_a.map(&:serializable_hash)
 
           
-     customer = User.select('company_name,credits,cust_id,house_charge').where("id=?", session[:current_user_id])
+     customer = User.select('company_email_id,credits,cust_id,house_charge').where("id=?", session[:current_user_id])
      
      addressexist= UserPurchase.select("*").where("user_id = ? and status = 1 and address='"+params[:address]+"'",session[:current_user_id]).limit(1) 
      
@@ -1127,7 +1129,8 @@ class HomesController < ApplicationController
      if @prev_check_address.blank?
           @prev_chks=0
      else
-          if customer.first['company_name']=='ProspectZen'
+          arr = customer.first['company_email_id'].split("@")
+          if arr[1]=='prospectzen.com'
               @prev_chks=@prev_check_address.first['prev_check']
           else
               @prev_chks=@prev_check_address.first['prev_check']+1
@@ -1773,7 +1776,7 @@ class HomesController < ApplicationController
                       :land_use_code=>_LandUseDescription.titleize, :zoning=>_ClassificationIdentifier, :no_of_residential_per_common_units=> _TotalUnitNumber,:gross_area=>_GrossLivingAreaSquareFeetNumber,:living_area=>_TotalLivingAreaSquareFeetNumber,
                       :no_of_bedrooms=>_TotalBedroomsCount,:no_of_bathrooms=>_TotalBathsCount, :year_built=>_YearBuiltDateIdentifier,:pool=>_HasFeatureIndicator,
                       :heat_type=>_HeatingTypeDescription.titleize, :heat_fuel=>_HeatFuel.titleize,:roof_type=>_RoofTypeDescription.titleize,:roof_shape=>_RoofShape.titleize,:roof_material=>_RoofSurfaceDescription.titleize,:roof_frame=>_RoofFrame.titleize,
-                      :condition=> _ConditionsDescription.titleize,:no_of_stories=>_TotalStoriesNumber,:last_purchase_date=>Time.now,:status=>1);
+                      :condition=> _ConditionsDescription.titleize,:no_of_stories=>_TotalStoriesNumber,:last_purchase_date=>Time.now.localtime,:status=>1);
                     
                   else              
                      
@@ -1783,7 +1786,7 @@ class HomesController < ApplicationController
                       :land_use_code=>_LandUseDescription.titleize, :zoning=>_ClassificationIdentifier, :no_of_residential_per_common_units=> _TotalUnitNumber,:gross_area=>_GrossLivingAreaSquareFeetNumber,:living_area=>_TotalLivingAreaSquareFeetNumber,
                       :no_of_bedrooms=>_TotalBedroomsCount,:no_of_bathrooms=>_TotalBathsCount, :year_built=>_YearBuiltDateIdentifier,:pool=>_HasFeatureIndicator,
                       :heat_type=>_HeatingTypeDescription.titleize, :heat_fuel=>_HeatFuel.titleize,:roof_type=>_RoofTypeDescription.titleize,:roof_shape=>_RoofShape.titleize,:roof_material=>_RoofSurfaceDescription.titleize,:roof_frame=>_RoofFrame.titleize,
-                      :condition=> _ConditionsDescription.titleize,:no_of_stories=>_TotalStoriesNumber,:last_purchase_date=>Time.now,:status=>1, :riskiq3 => @speedon.first['riskiq3'], :delineate =>@speedon.first['delineate'],
+                      :condition=> _ConditionsDescription.titleize,:no_of_stories=>_TotalStoriesNumber,:last_purchase_date=>Time.now.localtime,:status=>1, :riskiq3 => @speedon.first['riskiq3'], :delineate =>@speedon.first['delineate'],
                       :AIQ_Green => @speedon.first['AIQ_Green'], :IncomeIQ_Dol =>@speedon.first['IncomeIQ_Dol'], :DebtRatio =>@speedon.first['DebtRatio'], :Premoves =>@speedon.first['Premoves'], :Age_z4 =>@speedon.first['Age_z4'], 
                       :ResidenceTime_z4=>@speedon.first['ResidenceTime_z4'], :MortgageAmount_z4 =>@speedon.first['MortgageAmount_z4'], :PersonsatResidence_z4 =>@speedon.first['PersonsatResidence_z4'],
                       :HomeOwner_pct_z4 =>@speedon.first['HomeOwner_pct_z4'], :LoantoValue_z4=>@speedon.first['LoantoValue_z4'],:IncomeIQ_plus_z4=>@speedon.first['IncomeIQ_plus_z4'], :AIQ_Green_plus_z4=>@speedon.first['AIQ_Green_plus_z4'],
@@ -1798,7 +1801,7 @@ class HomesController < ApplicationController
                       :land_use_code=>_LandUseDescription.titleize, :zoning=>_ClassificationIdentifier, :no_of_residential_per_common_units=> _TotalUnitNumber,:gross_area=>_GrossLivingAreaSquareFeetNumber,:living_area=>_TotalLivingAreaSquareFeetNumber,
                       :no_of_bedrooms=>_TotalBedroomsCount,:no_of_bathrooms=>_TotalBathsCount, :year_built=>_YearBuiltDateIdentifier,:pool=>_HasFeatureIndicator,
                       :heat_type=>_HeatingTypeDescription.titleize, :heat_fuel=>_HeatFuel.titleize,:roof_type=>_RoofTypeDescription.titleize,:roof_shape=>_RoofShape.titleize,:roof_material=>_RoofSurfaceDescription.titleize,:roof_frame=>_RoofFrame.titleize,
-                      :condition=> _ConditionsDescription.titleize,:no_of_stories=>_TotalStoriesNumber,:last_purchase_date=>Time.now,:status=>1);
+                      :condition=> _ConditionsDescription.titleize,:no_of_stories=>_TotalStoriesNumber,:last_purchase_date=>Time.now.localtime,:status=>1);
                     
                end 
          
