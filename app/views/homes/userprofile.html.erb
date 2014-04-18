@@ -58,7 +58,7 @@
             	
                	if ($('#new_title').val() == '' || $('#new_title').val() == null )
 				{
-							$('#e_title').html("Title can't be blank.");
+							$('#e_title').html("Title can't be blank");
 				}
             	
             	else{
@@ -85,7 +85,7 @@
             	 
             	if ($('#newmobilephn').val() == '' || $('#newmobilephn').val() == null )
 				{
-							$('#e_mphone').html("Mobile phone can't be blank.");
+							$('#e_mphone').html("Needs to be a 10 digit number");
 				}
 						
 				else 
@@ -117,7 +117,7 @@
             	            	 
             	if ($('#newworkphn').val() == '' || $('#newworkphn').val() == null)
 				{
-							$('#e_wphone').html("Work phone can't be blank.");
+							$('#e_wphone').html("Needs to be a 10 digit number");
 				}
 				
 				else 
@@ -148,7 +148,7 @@
               
               if ($('#new_psd').val() == '' || $('#new_psd').val() == null)
 						{
-							$('#npass').html("New password can't be blank.");
+							$('#npass').html("New password can't be blank");
 							
 							flag=1;
 						}
@@ -161,7 +161,7 @@
 				
 			 if ($('#con_new_psd').val() == '' || $('#con_new_psd').val() == null)
 						{
-							$('#conpass').html("Confirm new password can't be blank.");
+							$('#conpass').html("Confirm new password can't be blank");
 							
 							flag=1;
 						}
@@ -176,7 +176,7 @@
 						{
 							if ($('#new_psd').val() != $('#con_new_psd').val())	
 					           {
-					    	       $('#passwd_match').html("Your password does not match.");
+					    	       $('#passwd_match').html("Your password does not match");
 					    	    }	
 				    
 				    
@@ -203,7 +203,7 @@
 							     			    } 							     			    
 								     		   else
 								     		   {
-								     			  $('#cpass').html("Your current password does not match.");
+								     			  $('#cpass').html("Your current password does not match");
 								     			  $("#psd_btn").val('Update');							     			   	
 								     		   } 
 					        	        }
@@ -326,7 +326,7 @@
                                     <div class="form-group">
                                         <label style="text-align: left;" for="new_title" class="col-sm-4 control-label">New Title</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" id="new_title"  placeholder="Enter New Title">
+                                            <input type="text" class="form-control" id="new_title"  placeholder="Update title">
                                             <span style="color: red;" class="error_msg" id="e_title"></span>                                            
                                         </div>
                                     </div>
@@ -378,7 +378,7 @@
                                     <div class="form-group">
                                         <label style="text-align: left;" for="newmobilephn" class="col-sm-4 control-label">New mobile phone</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" id="newmobilephn" placeholder="555-555-5555">
+                                            <input type="text" class="form-control" id="newmobilephn" placeholder="Update mobile phone">
                                             <span style="color: red;" class="error_msg" id="e_mphone"></span>
                                             
                                         </div>
@@ -406,7 +406,7 @@
                                     <div class="form-group">
                                         <label style="text-align: left;" for="newworkphn" class="col-sm-4 control-label">New work phone</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" id="newworkphn" placeholder="123-555-7890" >
+                                            <input type="text" class="form-control" id="newworkphn" placeholder="Update work phone" >
                                             <span style="color: red;" class="error_msg" id="e_wphone"></span>
                                             
                                         </div>

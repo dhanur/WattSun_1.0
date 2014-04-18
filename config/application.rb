@@ -1,5 +1,6 @@
 require File.expand_path('../boot', __FILE__)
 
+require 'csv'
 require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
@@ -21,7 +22,7 @@ module Wattsun
     # config.i18n.default_locale = :de
     
     
-     ActionMailer::Base.delivery_method = :smtp
+  ActionMailer::Base.delivery_method = :smtp
   ActionMailer::Base.smtp_settings = {
   :authentication => 'plain',
   :address => "smtp.sendgrid.net",

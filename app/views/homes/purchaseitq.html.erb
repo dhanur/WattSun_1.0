@@ -152,7 +152,20 @@
         	 });          	
           }
 			
-			
+		function setthisaddress(address)
+		{
+	       $.ajax({
+        	url: "/homes/particularaddressview",
+        	type: "POST",
+        	dataType: 'JSON',
+        	data: { 'address' : address }, 
+        	success: function(response){
+        			  
+        			        window.location.href='/homes/viewmap'	
+        			       
+        			    	}
+        	 });        
+		}	
 			
 			
 			
@@ -286,7 +299,7 @@
 						      <% @transctions.each do |tranc| %>
 						        <tr class="odd gradeX">     
 						         <td><%= tranc.transaction_id %> </td>
-						         <td><%= tranc.address %></td>
+						         <td><a style="cursor: pointer" onclick='setthisaddress("<%= tranc.address %>")'> <%= tranc.address %></td>
 						         <td><%= (tranc.last_purchase_date).strftime('%d %b, %I:%M%p') %></td>
 						         <td class="center"><a style="cursor: pointer" onclick='abc("<%= tranc.transaction_id %>")'>View</a></td>
 							    </tr>

@@ -316,7 +316,7 @@
 									<% else %>
 									<span class="label mylabel">Blocked</span>
 									<% end %> </td>
-									<td><%= user.last_purchase_date %></td>
+									<td><% if !user.last_purchase_date.nil? %> <%= (user.last_purchase_date).strftime('%d %b, %I:%M%p') %> <%end%></td>
 
 									<td>
 									

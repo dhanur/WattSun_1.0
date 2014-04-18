@@ -32,7 +32,7 @@
             background: #5cb85c;
             color: #fff;
             border-radius: 0px;
-            border: 0px;
+            border: 2px solid #5cb85c;
              width:100px;
              
             }
@@ -41,7 +41,19 @@
             top: 4px;
             right: 2px;
          }
+        #qualify_search:hover {
+            background: #fff;
+            color: #5cb85c;
+            border: 2px solid #5cb85c;
+        }
+        #search_error{
+            visibility:hidden;
+        }
+        
+       
     </style>
+      
+      
     
 
 	
@@ -1056,11 +1068,12 @@
 		                        }
 		                        
 		                        else{
+		                        
 		                        	
 		                        	   $("#i1").show();
 		                               $("#i2").show();
-									   $("#income1").html('$'+response['results'][0]['IncomeIQ_Dol']);
-									   $("#income2").html('$'+response['results'][0]['IncomeIQ_Dol']);
+									   $("#income1").html('$'+parseFloat(response['results'][0]['IncomeIQ_Dol']).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+									   $("#income2").html('$'+parseFloat(response['results'][0]['IncomeIQ_Dol']).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
 									   check_flag=1;
 								}
 		     
@@ -1108,8 +1121,8 @@
 		                        	
 		                        	   $("#lsp1").show();
 		                               $("#lsp2").show();
-									   $("#last_sale_price1").html('$'+response['results'][0]['last_sale_price']);
-							           $("#last_sale_price2").html('$'+response['results'][0]['last_sale_price']);
+									   $("#last_sale_price1").html('$'+parseFloat(response['results'][0]['last_sale_price']).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+							           $("#last_sale_price2").html('$'+parseFloat(response['results'][0]['last_sale_price']).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
 							           check_flag=1;
 								}
 								
@@ -2331,8 +2344,8 @@
 		                        	
 		                        	   $("#i1").show();
 		                               $("#i2").show();
-									   $("#income1").html('$'+response['transaction'][0]['IncomeIQ_Dol']);
-									   $("#income2").html('$'+response['transaction'][0]['IncomeIQ_Dol']);
+									   $("#income1").html('$'+parseFloat(response['transaction'][0]['IncomeIQ_Dol']).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+									   $("#income2").html('$'+parseFloat(response['transaction'][0]['IncomeIQ_Dol']).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
 									   check_flag=1;
 								}
 	
@@ -2379,8 +2392,8 @@
 		                        	
 		                        	   $("#lsp1").show();
 		                               $("#lsp2").show();
-									   $("#last_sale_price1").html('$'+response['transaction'][0]['last_sale_price']);
-							           $("#last_sale_price2").html('$'+response['transaction'][0]['last_sale_price']);
+									   $("#last_sale_price1").html('$'+parseFloat(response['transaction'][0]['last_sale_price']).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+							           $("#last_sale_price2").html('$'+parseFloat(response['transaction'][0]['last_sale_price']).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
 							           check_flag=1;
 								}
 								
@@ -3327,8 +3340,8 @@
 		                        	
 		                        	   $("#i1").show();
 		                               $("#i2").show();
-									   $("#income1").html('$'+response['transaction'][0]['IncomeIQ_Dol']);
-									   $("#income2").html('$'+response['transaction'][0]['IncomeIQ_Dol']);
+									   $("#income1").html('$'+parseFloat(response['transaction'][0]['IncomeIQ_Dol']).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+									   $("#income2").html('$'+parseFloat(response['transaction'][0]['IncomeIQ_Dol']).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
 									   check_flag=1;
 								}
 		     
@@ -3375,8 +3388,8 @@
 		                        	
 		                        	   $("#lsp1").show();
 		                               $("#lsp2").show();
-									   $("#last_sale_price1").html('$'+response['transaction'][0]['last_sale_price']);
-							           $("#last_sale_price2").html('$'+response['transaction'][0]['last_sale_price']);
+									   $("#last_sale_price1").html('$'+parseFloat(response['transaction'][0]['last_sale_price']).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+							           $("#last_sale_price2").html('$'+parseFloat(response['transaction'][0]['last_sale_price']).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
 							           check_flag=1;
 								}
 			                      		                      
@@ -4043,14 +4056,14 @@
             </div>
             <div id="search_bar">             
                 <input style="float:left;position:relative;" id="loc_search" class="form-control" type="text" autocomplete="on" autofocus="autofocus" jstcache="0" placeholder="Enter residential street address" >
+
                 <span>
                     <button class="btn btn-default" type="button" id="qualify_search" onclick="qualifyclick()">Qualify</button>
                 </span>
-                
-                
-              <div id="search_error" style="font-family:'latoreg';padding-top:2px;color:#fff" >
-               <span style="visibility:hidden">No error</span>
-              </div>
+                <div style="clear:both"></div>
+                <div id="search_error" style="font-family:'latoreg';padding-top:2px;color:#fff" >
+                    No error
+                </div>
             </div>
             <div style="clear:both">
             </div>           
@@ -5432,7 +5445,7 @@
     <!--            End panel container                               -->
     
     <div width="32px">
-    <img id="loadingimage" style="display:none;width:32px;position:absolute;top:100px;left:0;right:0;bottom:0;margin:0 auto;z-index: 100000000000" src = "http://www.google.com/earth/plugin/images/loading.gif" >
+    <img id="loadingimage" style="display:none;width:50px;height:50px;position:absolute;top:50%;left:50%;auto;z-index: 100000000000" src = "/assets/greenloader.gif" >
     </div>
     <script>
       $(document).ready(function(){

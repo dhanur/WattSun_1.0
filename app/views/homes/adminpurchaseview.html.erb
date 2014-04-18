@@ -225,6 +225,7 @@ padding-bottom: 0px;
               $('#income').css("display","none");
          <% else %>
               $('#income').css("display","block");
+              $('#income1').html('$'+parseFloat(<%= @transction.first['IncomeIQ_Dol'] %>).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
                flag = 1;
          <% end %> 
          
@@ -246,6 +247,7 @@ padding-bottom: 0px;
               $('#last_sale_price').css("display","none");
          <% else %>
               $('#last_sale_price').css("display","block");
+              $("#last_sale_price1").html('$'+parseFloat(<%= @transction.first['last_sale_price'] %>).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
               flag = 1;
          <% end %>
          
@@ -589,14 +591,14 @@ padding-bottom: 0px;
 	                         </div>
 	                     </div>
                             <div style="clear:both;"></div>
-                        <div id="income"> <div class="col-sm-4 main_heading">Estimated Household Income</div><div class="col-sm-8">$<%= @transction.first['IncomeIQ_Dol'] %></div></div>
+                        <div id="income"> <div class="col-sm-4 main_heading">Estimated Household Income</div><div class="col-sm-8" id="income1"></div></div>
                             <div style="clear:both;"></div>
                         <!-- <div id="est_annual_income"> <div class="col-sm-4 main_heading">Income Score</div><div class="col-sm-8"><%= @transction.first['IncomeIQ_plus_z4']%></div></div>                   -->
                         <div id="home_equity_to_home_value_ratio"> <div class="col-sm-4 main_heading">Estimated Home Equity</div><div class="col-sm-8"><%= @transction.first['Homeequity_pc_z4'] %></div></div>
                             <div style="clear:both;"></div>
                         <div id="debt_to_income_ratio"> <div class="col-sm-4 main_heading">Estimated Debt to Income</div><div class="col-sm-8"><%= @transction.first['DebtRatio'] %></div></div>
                             <div style="clear:both;"></div>
-                        <div id="last_sale_price"> <div class="col-sm-4 main_heading">Last Sale Price</div><div class="col-sm-8"><%= @transction.first['last_sale_price'] %></div></div>
+                        <div id="last_sale_price"> <div class="col-sm-4 main_heading">Last Sale Price</div><div class="col-sm-8" id="last_sale_price1"></div></div>
                         <div style="clear:both;margin-bottom:20px;"></div> 
 
                         <div id="installation_head" class="col-sm-12 main_heading">

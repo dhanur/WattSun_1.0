@@ -6,6 +6,7 @@ class HomesController < ApplicationController
   require 'rest_client'
   require 'time_diff'  
   require 'local_time'
+  require 'csv'
   
   def index
           
@@ -222,6 +223,31 @@ class HomesController < ApplicationController
     
   end
   
+ 
+ def usersalescsv
+   
+       if ((session[:admin_user_id] || session[:super_admin_user_id]) && session[:admin_user_transaction_view_id])
+          
+           @usersalestranc=User.joins(:user_purchases).select("users.id, users.first_name, users.last_name, users.company_name, user_purchases.transaction_id, user_purchases.address, user_purchases.last_purchase_date").where("users.id = ? and user_purchases.status = 1",session[:admin_user_transaction_view_id])
+            
+          
+           @usersalestranc_csv = CSV.generate do |csv|
+               csv << ["Transaction Id", "Address", "Name", "Company Name", "On"]
+   
+               @usersalestranc.each do |tranc|
+                   csv << [tranc.transaction_id, tranc.address, tranc.first_name+' '+tranc.last_name, tranc.company_name, (tranc.last_purchase_date).strftime('%d %b, %I:%M%p')]  
+               end
+           end
+             
+           send_data(@usersalestranc_csv, :type => 'text/csv', :filename => 'user_salestranc.csv')
+ 
+   
+      else
+        redirect_to :action => "adminlogin"
+      end
+   
+ end
+ 
   
   def viewtransctionbyadmin
   
@@ -307,6 +333,30 @@ class HomesController < ApplicationController
     
     
   end
+
+
+  def allsalescsv
+    
+    if ((session[:admin_user_id] || session[:super_admin_user_id]))
+          
+      @allsalestranc=User.joins(:user_purchases).select("users.id, users.first_name, users.last_name, users.company_name, user_purchases.transaction_id, user_purchases.address, user_purchases.last_purchase_date")   
+  
+           @allsalestranc_csv = CSV.generate do |csv|
+               csv << ["Transaction Id", "Address", "Name", "Company Name", "On"]
+   
+               @allsalestranc.each do |tranc|
+                   csv << [tranc.transaction_id, tranc.address, tranc.first_name+' '+tranc.last_name, tranc.company_name, (tranc.last_purchase_date).strftime('%d %b, %I:%M%p')]  
+               end
+           end
+      
+        send_data(@allsalestranc_csv, :type => 'text/csv', :filename => 'all_salestranc.csv')
+ 
+    else
+      redirect_to :action => "adminlogin"
+    end
+    
+  end
+
 
 
   def salesviewtransaction
@@ -508,6 +558,16 @@ class HomesController < ApplicationController
     
   end
 
+  def particularaddressview
+      
+      if session[:current_user_id]
+         session[:last_viewed_address]=params[:address]
+         render :json => {:status =>"done" }
+     
+      else
+         redirect_to :action => "userlogin"
+      end
+  end
 
   def viewtransction
   
@@ -1043,7 +1103,9 @@ class HomesController < ApplicationController
   def entercreditinfo
    
         token = params[:stripeToken]
-    
+        
+        
+          
         customer = Stripe::Customer.create(
     
         :email => "neha@clicklabs.in",
@@ -1051,7 +1113,7 @@ class HomesController < ApplicationController
         :card  => token,
     
         )
-    
+        
         @amount = User.select('monthly_charge').where("id=?", session[:cust_user_id])
     
         if ( !@amount.first['monthly_charge'].nil?)
@@ -1081,18 +1143,23 @@ class HomesController < ApplicationController
         :id => customer_id,
     
         )
-    
-        subscription= customer.subscriptions.create(:plan => plan)
+          subscription = customer.subscriptions.create(:plan => plan)
+                
+        
     
         # render :json => {"data"=> amount}
     
          # Amount in cents
-    
-        User.where(:id=>session[:cust_user_id]).limit(1).update_all(:last_activity => Time.now, :cust_id=>customer_id,:payment_status=>1,:house_charge=>3,:subscription_id=>subscription.id,:credits=>0,:card_exp_year=> customer.cards.data[0]['exp_year'],:card_exp_month=>customer.cards.data[0]['exp_month'],:current_period_end=>subscription.current_period_end,:card_no=>customer.cards.data[0]['last4'])
-    
-        redirect_to :action => "userlogin"
-    
-    
+         # if(!subscription.blank?)
+#     
+         User.where(:id=>session[:cust_user_id]).limit(1).update_all(:last_activity => Time.now, :cust_id=>customer_id,:payment_status=>1,:house_charge=>3,:subscription_id=>subscription.id,:credits=>0,:card_exp_year=> customer.cards.data[0]['exp_year'],:card_exp_month=>customer.cards.data[0]['exp_month'],:current_period_end=>subscription.current_period_end,:card_no=>customer.cards.data[0]['last4'])
+#     
+         redirect_to :action => "userlogin"
+#         
+        # else 
+          # render :json => {'data' => "error"}
+        # end
+        
     end
     
     
@@ -1402,15 +1469,18 @@ class HomesController < ApplicationController
           
           end
           
-     if  !root.elements["//_GENERAL_DESCRIPTION"].nil?
+   
+       if  !root.elements["//_GENERAL_DESCRIPTION"].nil?
 
-        if !root.elements["//_GENERAL_DESCRIPTION"].attributes["_EffectiveYearBuiltDateIdentifier"].nil?
+       if !root.elements["//_GENERAL_DESCRIPTION"].attributes["_EffectiveYearBuiltDateIdentifier"].nil?
+        
+        if !root.elements["//_GENERAL_DESCRIPTION"].attributes["_EffectiveYearBuiltDateIdentifier"].blank?
 
           _YearBuiltDateIdentifier = root.elements["//_GENERAL_DESCRIPTION"].attributes["_EffectiveYearBuiltDateIdentifier"]
 
         else
 
-          if !root.elements["//_GENERAL_DESCRIPTION"].attributes["_YearBuiltDateIdentifier"].nil?
+          if  !root.elements["//_GENERAL_DESCRIPTION"].attributes["_YearBuiltDateIdentifier"].nil?
 
             _YearBuiltDateIdentifier = root.elements["//_GENERAL_DESCRIPTION"].attributes["_YearBuiltDateIdentifier"]
 
@@ -1421,12 +1491,27 @@ class HomesController < ApplicationController
           end
 
         end
+      else
+        
+          if  !root.elements["//_GENERAL_DESCRIPTION"].attributes["_YearBuiltDateIdentifier"].nil?
 
+            _YearBuiltDateIdentifier = root.elements["//_GENERAL_DESCRIPTION"].attributes["_YearBuiltDateIdentifier"]
+
+          else
+
+            _YearBuiltDateIdentifier = ''
+
+          end
+        
+      end  
       else
 
         _YearBuiltDateIdentifier = ''
 
       end
+
+   #   render :json => {"tf"=>!root.elements["//_GENERAL_DESCRIPTION"].attributes["_EffectiveYearBuiltDateIdentifier"].blank?, "efd"=>_YearBuiltDateIdentifier} and return 
+
 
            if  !root.elements["//_GENERAL_DESCRIPTION"].nil?
           
@@ -1747,7 +1832,13 @@ class HomesController < ApplicationController
               :currency => "usd",
               :description => "Charge for test@example.com"
               )
-                                
+              
+           if(charge.failure_code=='1')
+                  render :json => JSON.pretty_generate('data' =>charge.failure_message)
+           else
+                  render :json => JSON.pretty_generate('data' =>charge)
+           end
+                                    
            else    
                   
               User.where(:id=>session[:current_user_id]).limit(1).update_all(:last_purchase_date => Time.now, :credits=>customer.first['credits']-1) 
