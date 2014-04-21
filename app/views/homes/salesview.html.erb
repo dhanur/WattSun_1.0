@@ -229,8 +229,14 @@ padding-bottom: 0px;
          <% if @transction.first['IncomeIQ_Dol'].blank? %>
               $('#income').css("display","none");
          <% else %>
-              $('#income').css("display","block");
-              $('#income1').html('$'+parseFloat(<%= @transction.first['IncomeIQ_Dol'] %>).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+               $('#income').css("display","block");              
+              
+               var str="";
+		       str='$'+<%=@transction.first['IncomeIQ_Dol']%>;
+		       str=str.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");	
+              
+              
+              $('#income1').html(str);
                flag = 1;
          <% end %> 
          
@@ -252,7 +258,12 @@ padding-bottom: 0px;
               $('#last_sale_price').css("display","none");
          <% else %>
               $('#last_sale_price').css("display","block")
-              $("#last_sale_price1").html('$'+parseFloat(<%= @transction.first['last_sale_price'] %>).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+          
+               var str="";
+		       str='$'+<%=@transction.first['last_sale_price'] %>;
+		       str=str.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");	
+              
+               $("#last_sale_price1").html(str);
               flag = 1;
          <% end %>
          

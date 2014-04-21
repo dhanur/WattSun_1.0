@@ -512,8 +512,16 @@
                     
 		}
         
-   
+
+	   function pad(number, length){
+		    var str = "" + number;
+		    while (str.length < length) {
+		        str = '0'+str;
+		    }
+		    return str;
+		}
           
+
        function makemake()
         {      
 				for ( i = 0; i < 5; i++) {
@@ -541,7 +549,12 @@
 		
    //     console.log(secondline)
 		
-		$("#panel_search_result").html(input1[0]+'<br>'+secondline);	
+		$("#panel_search_result").html(input1[0]+'<br>'+secondline);
+		    	
+       		var offset = new Date().getTimezoneOffset();
+			
+			offset = ((offset<0? '+':'-')+ pad(parseInt(Math.abs(offset/60)), 2)+":"+pad(Math.abs(offset%60), 2));
+			//alert(offset);
         	
         	
         	$.ajax({
@@ -557,8 +570,8 @@
 						'state' : componentForm1['administrative_area_level_1'],
 						'county' : componentForm1['administrative_area_level_2'],
 						'country' : componentForm1['country'],
-						'address' : formatted_address
-					
+						'address' : formatted_address,
+					    'usertimezone' :offset
 					},
  
                     
@@ -1072,8 +1085,13 @@
 		                        	
 		                        	   $("#i1").show();
 		                               $("#i2").show();
-									   $("#income1").html('$'+parseFloat(response['results'][0]['IncomeIQ_Dol']).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-									   $("#income2").html('$'+parseFloat(response['results'][0]['IncomeIQ_Dol']).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+	              
+	                                    var str="";
+		                                str='$'+response['results'][0]['IncomeIQ_Dol'];
+		                                str=str.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");		                              
+									    $("#income1").html(str);
+									    $("#income2").html(str);		                               
+									 
 									   check_flag=1;
 								}
 		     
@@ -1121,9 +1139,15 @@
 		                        	
 		                        	   $("#lsp1").show();
 		                               $("#lsp2").show();
-									   $("#last_sale_price1").html('$'+parseFloat(response['results'][0]['last_sale_price']).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-							           $("#last_sale_price2").html('$'+parseFloat(response['results'][0]['last_sale_price']).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-							           check_flag=1;
+		                               
+		                               var str="";
+     	                                                           
+     	                                str='$'+response['results'][0]['last_sale_price'];
+		                                str=str.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");		                              
+									    $("#last_sale_price1").html(str);
+									    $("#last_sale_price2").html(str);
+		 
+		    				            check_flag=1;
 								}
 								
 		
@@ -2344,9 +2368,14 @@
 		                        	
 		                        	   $("#i1").show();
 		                               $("#i2").show();
-									   $("#income1").html('$'+parseFloat(response['transaction'][0]['IncomeIQ_Dol']).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-									   $("#income2").html('$'+parseFloat(response['transaction'][0]['IncomeIQ_Dol']).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-									   check_flag=1;
+		                               
+		                                var str="";
+		                                str='$'+response['transaction'][0]['IncomeIQ_Dol'];
+		                                str=str.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+		                                $("#income1").html(str);
+									    $("#income2").html(str);
+	   		         
+	   		          				    check_flag=1;
 								}
 	
 		                      	if(response['transaction'][0]['Homeequity_pc_z4']=='' || response['transaction'][0]['Homeequity_pc_z4']==null )
@@ -2392,9 +2421,15 @@
 		                        	
 		                        	   $("#lsp1").show();
 		                               $("#lsp2").show();
-									   $("#last_sale_price1").html('$'+parseFloat(response['transaction'][0]['last_sale_price']).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-							           $("#last_sale_price2").html('$'+parseFloat(response['transaction'][0]['last_sale_price']).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-							           check_flag=1;
+		                               
+		                               
+		                                var str="";
+		                                str='$'+response['transaction'][0]['last_sale_price'];
+		                                str=str.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+		                                $("#last_sale_price1").html(str);
+									    $("#last_sale_price2").html(str);
+		                               
+									   check_flag=1;
 								}
 								
 								
@@ -3340,8 +3375,13 @@
 		                        	
 		                        	   $("#i1").show();
 		                               $("#i2").show();
-									   $("#income1").html('$'+parseFloat(response['transaction'][0]['IncomeIQ_Dol']).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-									   $("#income2").html('$'+parseFloat(response['transaction'][0]['IncomeIQ_Dol']).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+	                               
+		                                var str="";
+		                                str='$'+response['transaction'][0]['IncomeIQ_Dol'];
+		                                str=str.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");		                              
+									    $("#income1").html(str);
+									    $("#income2").html(str);
+		                               
 									   check_flag=1;
 								}
 		     
@@ -3387,9 +3427,14 @@
 		                        else{
 		                        	
 		                        	   $("#lsp1").show();
-		                               $("#lsp2").show();
-									   $("#last_sale_price1").html('$'+parseFloat(response['transaction'][0]['last_sale_price']).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-							           $("#last_sale_price2").html('$'+parseFloat(response['transaction'][0]['last_sale_price']).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+		                               $("#lsp2").show();		                               
+		                               
+		                               var str="";
+		                               str='$'+response['transaction'][0]['last_sale_price'];
+		                               str=str.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+									   $("#last_sale_price1").html(str);
+									   $("#last_sale_price2").html(str);
+									 
 							           check_flag=1;
 								}
 			                      		                      

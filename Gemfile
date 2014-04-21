@@ -8,6 +8,7 @@ gem 'rails', '4.0.2'
 gem 'local_time'
 gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
 
+gem 'stripe_event'
 gem 'rest-client', '~> 1.6.7'
 
 gem 'time_difference', '~> 0.3.2'

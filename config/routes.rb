@@ -48,7 +48,8 @@ Wattsun::Application.routes.draw do
    
    get '/homes/superadmin' => 'homes#superadmin' 
    post '/homes/changeadminstatus' => 'homes#changeadminstatus' 
-   
+   post '/homes/test' => 'homes#test' 
+  
     
    
    get '/homes/adminsignup' => 'homes#adminsignup'
