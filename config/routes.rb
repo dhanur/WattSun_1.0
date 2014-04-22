@@ -15,7 +15,7 @@ Wattsun::Application.routes.draw do
    post '/homes/checkpurchase' => 'homes#checkpurchase' 
    
    get '/homes/resetpasswordmessage' => 'homes#resetpasswordmessage'
-   
+   get '/homes/carddeclinemsg' => 'homes#carddeclinemsg'
    get '/homes/ifr' => 'homes#ifr' 
    
    post '/homes/checkuserexist' => 'homes#checkuserexist' 
@@ -104,6 +104,7 @@ Wattsun::Application.routes.draw do
    post '/homes/alldatafetchonmarkerclick' => 'homes#alldatafetchonmarkerclick'
    post '/homes/alldatafetchonmarkernewtrans' => 'homes#alldatafetchonmarkernewtrans'  
    
+   post '/homes/viewmap_test' => 'homes#viewmap_test'
    get '/homes/viewmap_test' => 'homes#viewmap_test'
    
          

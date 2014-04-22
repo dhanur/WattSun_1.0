@@ -1087,7 +1087,7 @@
 		                               $("#i2").show();
 	              
 	                                    var str="";
-		                                str='$'+response['results'][0]['IncomeIQ_Dol'];
+		                                str='$'+(response['results'][0]['IncomeIQ_Dol']*1000);
 		                                str=str.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");		                              
 									    $("#income1").html(str);
 									    $("#income2").html(str);		                               
@@ -2370,7 +2370,7 @@
 		                               $("#i2").show();
 		                               
 		                                var str="";
-		                                str='$'+response['transaction'][0]['IncomeIQ_Dol'];
+		                                str='$'+(response['transaction'][0]['IncomeIQ_Dol']*1000);
 		                                str=str.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 		                                $("#income1").html(str);
 									    $("#income2").html(str);
@@ -3377,7 +3377,7 @@
 		                               $("#i2").show();
 	                               
 		                                var str="";
-		                                str='$'+response['transaction'][0]['IncomeIQ_Dol'];
+		                                str='$'+(response['transaction'][0]['IncomeIQ_Dol']*1000);
 		                                str=str.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");		                              
 									    $("#income1").html(str);
 									    $("#income2").html(str);
@@ -5490,7 +5490,8 @@
     <!--            End panel container                               -->
     
     <div width="32px">
-    <img id="loadingimage" style="display:none;width:50px;height:50px;position:absolute;top:50%;left:50%;auto;z-index: 100000000000" src = "/assets/greenloader.gif" >
+    <img id="loadingimage" style="display:none;width:50px;height:50px;position:absolute;top:50%;left:50%;auto;z-index: 100000000000" src = "/assets/green_loader.gif" >
+        
     </div>
     <script>
       $(document).ready(function(){

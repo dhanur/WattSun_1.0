@@ -25,10 +25,38 @@
             #myModal{
                 overflow-y:hidden;
             }
+         #qualify_search{
+            height: 41px;
+            font-family: latolig;
+            font-size: 19px;
+            background: #5cb85c;
+            color: #fff;
+            border-radius: 0px;
+            border: 2px solid #5cb85c;
+             width:100px;
+             
+            }
+         #search_bar span{
+            position: absolute;
+            top: 4px;
+            right: 2px;
+         }
+        #qualify_search:hover {
+            background: #fff;
+            color: #5cb85c;
+            border: 2px solid #5cb85c;
+        }
+        #search_error{
+            visibility:hidden;
+        }
+        
+       
     </style>
+      
+      
     
 
-	
+	    <!-- <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script> -->
     	<script src="//www.google.com/jsapi?key=595146919660-rou65rsr0k1efgse3kgflrt6a713h4rd.apps.googleusercontent.com" type="text/javascript"></script>
 		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
 	
@@ -244,8 +272,8 @@
 			var geocoder;
 			var placemark;
 			var placemark2 = new Array;
+		    var map;
 		
-			google.load("earth", "1", {"other_params":"sensor=true"});
            
             var check2 = 0;
 			var componentForm = {
@@ -289,14 +317,33 @@
 
 				}
 			});
-
-			function init() {
 			
-				input = document.getElementById('loc_search').value;
-				
-				google.map.createInstance('map-canvas', initCallback, failureCallback);
-				}
-		
+			
+	    function qualifyclick()
+		    {
+		    	input = document.getElementById('loc_search').value;
+	
+						componentForm1 = {
+							street_number : '',
+							route : '',
+							locality : '',
+							country : '',
+							postal_code : '',
+							administrative_area_level_1: '',
+			                administrative_area_level_2: '',
+						};
+	
+						check();
+		    	
+		    }
+
+
+			// function init() {
+// 			
+				// input = document.getElementById('loc_search').value;
+// 				
+				// google.earth.createInstance('map-canvas', initCallback, failureCallback);
+				// }
 		
 		
 		    function camerapositionpurchase()
@@ -464,8 +511,16 @@
                     
 		}
         
-   
+
+	   function pad(number, length){
+		    var str = "" + number;
+		    while (str.length < length) {
+		        str = '0'+str;
+		    }
+		    return str;
+		}
           
+
        function makemake()
         {      
 				for ( i = 0; i < 5; i++) {
@@ -493,7 +548,13 @@
 		
    //     console.log(secondline)
 		
-		$("#panel_search_result").html(input1[0]+'<br>'+secondline);	
+		$("#panel_search_result").html(input1[0]+'<br>'+secondline);
+		    	
+       		var offset = new Date().getTimezoneOffset();
+			
+			offset = ((offset<0? '+':'-')+ pad(parseInt(Math.abs(offset/60)), 2)+":"+pad(Math.abs(offset%60), 2));
+			//alert(offset);
+        	
         	
         	$.ajax({
 					url : "/homes/checkpurchase",
@@ -508,8 +569,8 @@
 						'state' : componentForm1['administrative_area_level_1'],
 						'county' : componentForm1['administrative_area_level_2'],
 						'country' : componentForm1['country'],
-						'address' : formatted_address
-					
+						'address' : formatted_address,
+					    'usertimezone' :offset
 					},
  
                     
@@ -1019,11 +1080,17 @@
 		                        }
 		                        
 		                        else{
+		                        
 		                        	
 		                        	   $("#i1").show();
 		                               $("#i2").show();
-									   $("#income1").html('$'+response['results'][0]['IncomeIQ_Dol']);
-									   $("#income2").html('$'+response['results'][0]['IncomeIQ_Dol']);
+	              
+	                                    var str="";
+		                                str='$'+(response['results'][0]['IncomeIQ_Dol']*1000);
+		                                str=str.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");		                              
+									    $("#income1").html(str);
+									    $("#income2").html(str);		                               
+									 
 									   check_flag=1;
 								}
 		     
@@ -1071,9 +1138,15 @@
 		                        	
 		                        	   $("#lsp1").show();
 		                               $("#lsp2").show();
-									   $("#last_sale_price1").html('$'+response['results'][0]['last_sale_price']);
-							           $("#last_sale_price2").html('$'+response['results'][0]['last_sale_price']);
-							           check_flag=1;
+		                               
+		                               var str="";
+     	                                                           
+     	                                str='$'+response['results'][0]['last_sale_price'];
+		                                str=str.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");		                              
+									    $("#last_sale_price1").html(str);
+									    $("#last_sale_price2").html(str);
+		 
+		    				            check_flag=1;
 								}
 								
 		
@@ -2294,9 +2367,14 @@
 		                        	
 		                        	   $("#i1").show();
 		                               $("#i2").show();
-									   $("#income1").html('$'+response['transaction'][0]['IncomeIQ_Dol']);
-									   $("#income2").html('$'+response['transaction'][0]['IncomeIQ_Dol']);
-									   check_flag=1;
+		                               
+		                                var str="";
+		                                str='$'+(response['transaction'][0]['IncomeIQ_Dol']*1000);
+		                                str=str.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+		                                $("#income1").html(str);
+									    $("#income2").html(str);
+	   		         
+	   		          				    check_flag=1;
 								}
 	
 		                      	if(response['transaction'][0]['Homeequity_pc_z4']=='' || response['transaction'][0]['Homeequity_pc_z4']==null )
@@ -2342,9 +2420,15 @@
 		                        	
 		                        	   $("#lsp1").show();
 		                               $("#lsp2").show();
-									   $("#last_sale_price1").html('$'+response['transaction'][0]['last_sale_price']);
-							           $("#last_sale_price2").html('$'+response['transaction'][0]['last_sale_price']);
-							           check_flag=1;
+		                               
+		                               
+		                                var str="";
+		                                str='$'+response['transaction'][0]['last_sale_price'];
+		                                str=str.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+		                                $("#last_sale_price1").html(str);
+									    $("#last_sale_price2").html(str);
+		                               
+									   check_flag=1;
 								}
 								
 								
@@ -3290,8 +3374,13 @@
 		                        	
 		                        	   $("#i1").show();
 		                               $("#i2").show();
-									   $("#income1").html('$'+response['transaction'][0]['IncomeIQ_Dol']);
-									   $("#income2").html('$'+response['transaction'][0]['IncomeIQ_Dol']);
+	                               
+		                                var str="";
+		                                str='$'+(response['transaction'][0]['IncomeIQ_Dol']*1000);
+		                                str=str.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");		                              
+									    $("#income1").html(str);
+									    $("#income2").html(str);
+		                               
 									   check_flag=1;
 								}
 		     
@@ -3337,9 +3426,14 @@
 		                        else{
 		                        	
 		                        	   $("#lsp1").show();
-		                               $("#lsp2").show();
-									   $("#last_sale_price1").html('$'+response['transaction'][0]['last_sale_price']);
-							           $("#last_sale_price2").html('$'+response['transaction'][0]['last_sale_price']);
+		                               $("#lsp2").show();		                               
+		                               
+		                               var str="";
+		                               str='$'+response['transaction'][0]['last_sale_price'];
+		                               str=str.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+									   $("#last_sale_price1").html(str);
+									   $("#last_sale_price2").html(str);
+									 
 							           check_flag=1;
 								}
 			                      		                      
@@ -3774,90 +3868,28 @@
 							dataType : "JSON",
 					        async: false,
 							success : function(data) {
-					       
-							var p = data.results[0].geometry.location
-							var q = p.lat;
-							var r = p.lng;
-							placemark2[x] = ge.createPlacemark('');
-							var icon = ge.createIcon('');	
-							icon.setHref('http://beta.prospectzen.com/assets/red_circle.png');
-							var style = ge.createStyle('');
-							style.getIconStyle().setIcon(icon);
-							style.getIconStyle().setScale(1.0);
-							placemark2[x].setStyleSelector(style);
+								var mapOptions = {
+				            // center: new google.maps.LatLng(t.lat, t.lng),
+				             zoom: 18,
+				             mapTypeId: google.maps.MapTypeId.SATELLITE
+				             }; 
+					       map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
+							var latlong = data.results[0]["geometry"]["location"];
+							console.log(latlong);
+							console.log(map);
+							//latlong = data.results[0]["geometry"]["location"];
+							//placemark2[x] = ge.createPlacemark('');
+						//	var icon = ge.createIcon('');	
+						//	icon.setHref('http://beta.prospectzen.com/assets/red_circle.png');
 						
-							point2 = ge.createPoint('');
-							point2.setLatitude(q);
-							point2.setLongitude(r);
-							placemark2[x].setGeometry(point2);
-							ge.getFeatures().appendChild(placemark2[x]);
-					
-							google.earth.addEventListener(placemark2[x], 'click', function(event) {
-							remove(addresses);
-
-
-					        placemark2[x].setName(data.results[0].formatted_address); 
-							
-							var length = data.results[0]["address_components"].length;
-					
-							for (var i = 0; i < length; i++)
-								{
-							
-									var addressType = data.results[0]["address_components"][i]["types"][0];
-							
-									if (componentForm[addressType])
-							
-									{
-							
-									if (addressType == 'postal_code')
-							
-									{
-							
-									zipcode = data.results[0]["address_components"][i]["long_name"];
-																		
-							
-									}
-							
-									if (addressType == 'locality')
-							
-									{
-							
-									citycode = data.results[0]["address_components"][i]["long_name"];
-							
-									}
-					       
-					    		}
-					    		
-					    	
-					
+					//	alert(x);
+						    marker = new google.maps.Marker({
+				                position: latlong,
+				                map: map,
+				             });	
+					        // markers.push(marker1);
 							}
-							
-							        
-							        
-							        input1=data.results[0].formatted_address;
-							   		input1 = input1.split(",");							
-									var secondline=''
-									
-									for(i=1; i< (input1.length-1); i++)
-									{
-										secondline=secondline+input1[i]+' ';
-									}
-									
-									$("#panel_search_result").html(input1[0]+'<br>'+secondline);	   	    	
-							    								
-					    			setValue(transaction[x]);
-					
-							// Prevent default balloon from popping up for marker placemarks
-					
-							event.preventDefault();
-					
-							});
-					
-							},
-							
-							error : function(error) {
-					
-							}
+
 					});
      }
      
@@ -3866,120 +3898,51 @@
 			function others() {
 				
 	            addresses =<%= raw @address %>
-	        //    console.log(addresses);
-                transaction =<%= raw @transaction %>
+	            transaction =<%= raw @transaction %>
               
 				
 				for (var x = 0; x < addresses.length; x++) {
-					//check2 = check2+1 ;
-					//console.log(check2);
+
 					call(x,addresses);
 				
 				 }
 				
-				if (addresses.length >0)
-				
-				   {
-				 
-				   
-				   	<% if  session[:last_viewed_address] %>				   	
-				   
-				     camerapositionfirsttym('<%= session[:last_viewed_address] %>');
-				   <% else %>
-				    
-				      	var input= "USA"
-				    	
-				    	$.getJSON('http://maps.googleapis.com/maps/api/geocode/json?address='+input+'&sensor=false', null, function (data) {
-				
-		              
-						var p = data.results[0].geometry.location
-						var q = p.lat;
-						var r = p.lng;
-					   
-					   formatted_address= data.results[0].formatted_address;
-							
-								var la = ge.createLookAt('');
-						
-								la.set(q,r,0, // altitude
-						
-								ge.ALTITUDE_RELATIVE_TO_GROUND,
-						
-								0, // heading
-						
-								0, // straight-down tilt
-						
-								4000000// range (inverse of zoom)
-						
-								);
-								
-								ge.getView().setAbstractView(la);
-						
-								});	
-					       				    
-				   <% end %> 
-				   
-					}
-					
-			   else
-			       {
-			       	var input= "USA"
-		    	
-		    	$.getJSON('http://maps.googleapis.com/maps/api/geocode/json?address='+input+'&sensor=false', null, function (data) {
-		
-              
-				var p = data.results[0].geometry.location
-				var q = p.lat;
-				var r = p.lng;
-			   
-			   formatted_address= data.results[0].formatted_address;
-					
-						var la = ge.createLookAt('');
-				
-						la.set(q,r,0, // altitude
-				
-						ge.ALTITUDE_RELATIVE_TO_GROUND,
-				
-						0, // heading
-				
-						0, // straight-down tilt
-				
-						4000000// range (inverse of zoom)
-				
-						);
-						
-						ge.getView().setAbstractView(la);
-				
-						});	
-			       }		
+		      }
+	
 			
-           }
-           
-			function failureCallback(errorCode) {
+	function initialize() {
+	        autocomplete = new google.maps.places.Autocomplete(/** @type {HTMLInputElement} */(document.getElementById('loc_search')), {
+			 types : ['geocode']
+		 });
+		 
+		 $.getJSON('http://maps.googleapis.com/maps/api/geocode/json?address=' + 'USA' + '&sensor=false', null, function(data) {
+							var t = data.results[0].geometry.location;
+							latlong = data.results[0]["geometry"]["location"];
+							var mapOptions = {
+				            center: new google.maps.LatLng(t.lat, t.lng),
+				             zoom: 18,
+				             mapTypeId: google.maps.MapTypeId.SATELLITE
+				             }; 
+				             map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
+				              console.log(map);
+				             
+				               marker = new google.maps.Marker({
+				                position: new google.maps.LatLng("37.7306872","-122.4679486"),
+				                map: map,
+				             });
+                             
+ 
+						}); 
+   
+       others(); 
+    }
 
-			}
 
-		
-	  function initCallback(instance) {
-
-				autocomplete = new google.maps.places.Autocomplete(/** @type {HTMLInputElement} */(document.getElementById('loc_search')), {
-					types : ['geocode']
-				});
-				
-				geocoder = new google.maps.Geocoder();
-
-				ge = instance;
-				ge.getWindow().setVisibility(true);
-
-				others();
-
-			
-			}
-
-		</script>
+</script>
 
           
   </head>
-  <body  onload="init()">
+  <body  onload="initialize()">
     
     <div class="container" id="menu_navigation">
       <div id="bgnav" class="navbar navbar-fixed-top navbar-inverse">
@@ -4004,11 +3967,16 @@
                 <img class="brand" src="/assets/wattsun_logo.png" width="100%" alt="wattsun">
               </a>
             </div>
-            <div id="search_bar">
-              <input id="loc_search" class="form-control" type="text" autocomplete="on" autofocus="autofocus" jstcache="0" placeholder="Enter residential street address" >
-              <div id="search_error" style="font-family:'latoreg';padding-top:2px;color:#fff" >
-               <span style="visibility:hidden">No error</span>
-              </div>
+            <div id="search_bar">             
+                <input style="float:left;position:relative;" id="loc_search" class="form-control" type="text" autocomplete="on" autofocus="autofocus" jstcache="0" placeholder="Enter residential street address" >
+
+                <span>
+                    <button class="btn btn-default" type="button" id="qualify_search" onclick="qualifyclick()">Qualify</button>
+                </span>
+                <div style="clear:both"></div>
+                <div id="search_error" style="font-family:'latoreg';padding-top:2px;color:#fff" >
+                    No error
+                </div>
             </div>
             <div style="clear:both">
             </div>           
@@ -4111,7 +4079,7 @@
 						<h4 id="address_display_on_popup" class="modal-title" style="text-align: center;margin-bottom:18px;"></h4>
                         <div style="clear:both;"></div>
   						<div style="width:171px;margin:0 auto;">
-                            <input id="itq_qualify" class="w-button address-button apply-button btn btn-primary btn-sm" type="button" style="float: left; display: inline;margin-right:15px;" onclick="makepurchase()" value="Qualify" >
+                            <input id="itq_qualify" class="w-button address-button apply-button btn btn-primary btn-sm" type="button" style="float: left; display: inline;margin-right:15px;background:#C0392B;" onclick="makepurchase()" value="Qualify" >
                             </input>
                             <input id="itq_cancel" type="submit" class="w-button address-button apply-button btn btn-primary btn-sm" data-dismiss="modal" style=" float:left;" value="Cancel" onclick="clearbox()">
                             </input>
@@ -5390,7 +5358,7 @@
     <!--            End panel container                               -->
     
     <div width="32px">
-    <img id="loadingimage" style="display:none;width:32px;position:absolute;top:100px;left:0;right:0;bottom:0;margin:0 auto;z-index: 100000000000" src = "http://www.google.com/earth/plugin/images/loading.gif" >
+    <img id="loadingimage" style="display:none;width:50px;height:50px;position:absolute;top:50%;left:50%;auto;z-index: 100000000000" src = "/assets/greenloader.gif" >
     </div>
     <script>
       $(document).ready(function(){

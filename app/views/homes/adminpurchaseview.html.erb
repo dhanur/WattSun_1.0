@@ -227,7 +227,7 @@ padding-bottom: 0px;
               $('#income').css("display","block");
  
                var str="";
-		       str='$'+<%=@transction.first['IncomeIQ_Dol']%>;
+		       str='$'+(<%=@transction.first['IncomeIQ_Dol']%>)*1000;
 		       str=str.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");	
               
               
