@@ -196,7 +196,7 @@ class HomesController < ApplicationController
     if ((session[:admin_user_id] || session[:super_admin_user_id]) && session[:admin_user_transaction_view_id])
 
       @userbyadmin=User.select("*").where("id = ?",session[:admin_user_transaction_view_id]).limit(1)
-      @transctions=UserPurchase.select("address,transaction_id,last_purchase_date,user_zone").where("user_id = ? and status = 1",session[:admin_user_transaction_view_id])
+      @transctions=UserPurchase.select("address,transaction_id,purchase_date,user_zone").where("user_id = ? and status = 1",session[:admin_user_transaction_view_id])
 
     else
       redirect_to :action => "adminlogin"
@@ -208,14 +208,20 @@ class HomesController < ApplicationController
 
     if ((session[:admin_user_id] || session[:super_admin_user_id]) && session[:admin_user_transaction_view_id])
 
-      @usersalestranc=User.joins(:user_purchases).select("users.id, users.first_name, users.last_name, users.company_name, user_purchases.transaction_id, user_purchases.address, user_purchases.last_purchase_date, user_purchases.user_zone").where("users.id = ? and user_purchases.status = 1",session[:admin_user_transaction_view_id])
+ #     @usersalestranc=User.joins(:user_purchases).select("users.id, users.first_name, users.last_name, users.company_name, user_purchases.transaction_id, user_purchases.address, user_purchases.purchase_date, user_purchases.user_zone").where("users.id = ? and user_purchases.status = 1",session[:admin_user_transaction_view_id])
+
+      @usersalestranc=User.joins(:user_purchases).select("users.id, users.first_name, users.last_name, users.company_name, users.credits, users.monthly_charge, user_purchases.*").where("users.id = ? and user_purchases.status = 1",session[:admin_user_transaction_view_id])
 
       @usersalestranc_csv = CSV.generate do |csv|
-               csv << ["Transaction Id", "Address", "Name", "Company Name", "On"]
+               csv << ["Transaction Id", "Address", "Name", "Company Name", "IPQ Checks", "On", "IPQ Valid", "IPQ Active Price", "Active Monthly Access Fee", "Owner Name", "Mailing Address", "Owner occupied",
+                        "Last Sale Date", "Last Sale Price", "Last Sale Price/sqft", "Land Use Code", "Zoning", "No. Of Residential/common units", "Gross Area", "Living Area", "No. of bedrooms", "No. of bathrooms",
+                        "Year Built","Has Pool?", "Heat type", "Heat fuel", "Roof type", "Roof Shape", "Roof material","Roof frame", "Roof conditions", "No. of Stories", "Estimated Credit Score", "Segmentation",
+                        "How Green?","Estimated Household Income", "Estimated Debt to Income", "Premoves","Approximate Head of Household Age", "Approximate no. of people living here", "% homes owned (vs. rented)",
+                        "Estimated Home Equity"]
 
                @usersalestranc.each do |tranc|
 
-                        user_zone_date=tranc.last_purchase_date
+                        user_zone_date=tranc.purchase_date
                         if (tranc.user_zone)[0]=='+'
 
                           user_zone_date=user_zone_date+(tranc.user_zone)[1,3].to_i.hours
@@ -227,9 +233,48 @@ class HomesController < ApplicationController
                           user_zone_date=user_zone_date-(tranc.user_zone)[4,6].to_i.minutes
 
                         end
+            
+            
+                        if tranc.status=='1'
+                          ipq_valid="Yes"
+                        else
+                          ipq_valid="No"
+                        end
+                        
+                        if tranc.owner_occupied_indicator=='1'
+                          ocp="Yes"
+                        elsif tranc.owner_occupied_indicator=='0'
+                          ocp="No"
+                        else
+                          ocp=""
+                        end
+                        
+                        if tranc.pool=='1'
+                          pool="Yes"
+                        elsif tranc.pool=='0'
+                          pool="No"
+                        else
+                          pool=""
+                        end
 
-                        csv << [tranc.transaction_id, tranc.address, tranc.first_name+' '+tranc.last_name, tranc.company_name, (user_zone_date).strftime('%d %b, %H:%M')]
-               end
+                        if !(tranc.IncomeIQ_Dol.nil? || tranc.IncomeIQ_Dol.blank?)
+                           eestimated_income=(tranc.IncomeIQ_Dol).to_i * 1000
+                        else
+                           eestimated_income=''
+                        end
+                           
+                        if !(tranc.last_sale_date.nil? || tranc.last_sale_date.blank?)
+                           last_sale_date=(tranc.last_sale_date.to_datetime).strftime('%d %b, %H:%M')
+                        else
+                           last_sale_date=''
+                        end
+                                                
+                        csv << [tranc.transaction_id, tranc.address, tranc.first_name+' '+tranc.last_name, tranc.company_name, tranc.prev_check, (user_zone_date).strftime('%d %b, %H:%M'), ipq_valid, tranc.credits, tranc.monthly_charge,
+                                tranc.owner_name, tranc.mailing_address,ocp,last_sale_date, tranc.last_sale_price, tranc.last_sale_price_per_sqr_ft, tranc.land_use_code,
+                                tranc.zoning, tranc.no_of_residential_per_common_units, tranc.gross_area, tranc.living_area, tranc.no_of_bedrooms, tranc.no_of_bathrooms, tranc.year_built, pool, tranc.heat_type,
+                                tranc.heat_fuel, tranc.roof_type, tranc.roof_shape, tranc.roof_material, tranc.roof_frame, tranc.condition, tranc.no_of_stories, tranc.riskiq3, tranc.delineate,
+                                tranc.AIQ_Green, eestimated_income, tranc.DebtRatio, tranc.Premoves, tranc.Age_z4, tranc.PersonsatResidence_z4, tranc.HomeOwner_pct_z4, tranc.Homeequity_pc_z4 ]
+                        end
            end
 
       send_data(@usersalestranc_csv, :type => 'text/csv', :filename => 'user_salestranc.csv')
@@ -310,7 +355,7 @@ class HomesController < ApplicationController
 
     if ((session[:admin_user_id] || session[:super_admin_user_id]))
 
-      @alltransactions=User.joins(:user_purchases).select("users.id, users.first_name, users.last_name, users.company_name, user_purchases.transaction_id, user_purchases.address, user_purchases.last_purchase_date, user_purchases.user_zone")
+      @alltransactions=User.joins(:user_purchases).select("users.id, users.first_name, users.last_name, users.company_name, user_purchases.transaction_id, user_purchases.address, user_purchases.purchase_date, user_purchases.user_zone")
     else
       redirect_to :action => "adminlogin"
     end
@@ -321,14 +366,20 @@ class HomesController < ApplicationController
 
     if ((session[:admin_user_id] || session[:super_admin_user_id]))
 
-      @allsalestranc=User.joins(:user_purchases).select("users.id, users.first_name, users.last_name, users.company_name, user_purchases.transaction_id, user_purchases.address, user_purchases.last_purchase_date, user_purchases.user_zone")
+   #   @allsalestranc=User.joins(:user_purchases).select("users.id, users.first_name, users.last_name, users.company_name, user_purchases.transaction_id, user_purchases.address, user_purchases.purchase_date, user_purchases.user_zone")
+       @allsalestranc=User.joins(:user_purchases).select("users.id, users.first_name, users.last_name, users.company_name, users.credits, users.monthly_charge, user_purchases.*")
+       @allsalestranc_csv = CSV.generate do |csv|
 
-      @allsalestranc_csv = CSV.generate do |csv|
-               csv << ["Transaction Id", "Address", "Name", "Company Name", "On"]
+               csv << ["Transaction Id", "Address", "Name", "Company Name", "IPQ Checks", "On", "IPQ Valid", "IPQ Active Price", "Active Monthly Access Fee", "Owner Name", "Mailing Address", "Owner occupied",
+                        "Last Sale Date", "Last Sale Price", "Last Sale Price/sqft", "Land Use Code", "Zoning", "No. Of Residential/common units", "Gross Area", "Living Area", "No. of bedrooms", "No. of bathrooms",
+                        "Year Built","Has Pool?", "Heat type", "Heat fuel", "Roof type", "Roof Shape", "Roof material","Roof frame", "Roof conditions", "No. of Stories", "Estimated Credit Score", "Segmentation",
+                        "How Green?","Estimated Household Income", "Estimated Debt to Income", "Premoves","Approximate Head of Household Age", "Approximate no. of people living here", "% homes owned (vs. rented)",
+                        "Estimated Home Equity"]
+
 
                @allsalestranc.each do |tranc|
 
-                        user_zone_date=tranc.last_purchase_date
+                        user_zone_date=tranc.purchase_date
                         if (tranc.user_zone)[0]=='+'
 
                           user_zone_date=user_zone_date+(tranc.user_zone)[1,3].to_i.hours
@@ -341,8 +392,47 @@ class HomesController < ApplicationController
 
                         end
 
-                        csv << [tranc.transaction_id, tranc.address, tranc.first_name+' '+tranc.last_name, tranc.company_name, (user_zone_date).strftime('%d %b, %H:%M')]
-               end
+
+                        if tranc.status=='1'
+                          ipq_valid="Yes"
+                        else
+                          ipq_valid="No"
+                        end
+                        
+                        if tranc.owner_occupied_indicator=='1'
+                          ocp="Yes"
+                        elsif tranc.owner_occupied_indicator=='0'
+                          ocp="No"
+                        else
+                          ocp=""
+                        end
+                        
+                        if tranc.pool=='1'
+                          pool="Yes"
+                        elsif tranc.pool=='0'
+                          pool="No"
+                        else
+                          pool=""
+                        end
+                        
+                        if !(tranc.IncomeIQ_Dol.nil? || tranc.IncomeIQ_Dol.blank?)
+                           eestimated_income=(tranc.IncomeIQ_Dol).to_i * 1000
+                        else
+                           eestimated_income=''
+                        end
+                           
+                        if !(tranc.last_sale_date.nil? || tranc.last_sale_date.blank?)
+                           last_sale_date=(tranc.last_sale_date.to_datetime).strftime('%d %b, %H:%M')
+                        else
+                           last_sale_date=''
+                        end
+                        
+                        csv << [tranc.transaction_id, tranc.address, tranc.first_name+' '+tranc.last_name, tranc.company_name, tranc.prev_check, (user_zone_date).strftime('%d %b, %H:%M'), ipq_valid, tranc.credits, tranc.monthly_charge,
+                                tranc.owner_name, tranc.mailing_address,ocp,last_sale_date, tranc.last_sale_price, tranc.last_sale_price_per_sqr_ft, tranc.land_use_code,
+                                tranc.zoning, tranc.no_of_residential_per_common_units, tranc.gross_area, tranc.living_area, tranc.no_of_bedrooms, tranc.no_of_bathrooms, tranc.year_built, pool, tranc.heat_type,
+                                tranc.heat_fuel, tranc.roof_type, tranc.roof_shape, tranc.roof_material, tranc.roof_frame, tranc.condition, tranc.no_of_stories, tranc.riskiq3, tranc.delineate,
+                                tranc.AIQ_Green,eestimated_income , tranc.DebtRatio, tranc.Premoves, tranc.Age_z4, tranc.PersonsatResidence_z4, tranc.HomeOwner_pct_z4, tranc.Homeequity_pc_z4 ]
+                              end
            end
 
       send_data(@allsalestranc_csv, :type => 'text/csv', :filename => 'all_salestranc.csv')
@@ -528,7 +618,7 @@ class HomesController < ApplicationController
     if session[:current_user_id]
 
       @user=User.select("first_name,last_name").where("id = ?",session[:current_user_id]).limit(1)
-      @transctions=UserPurchase.select("address,transaction_id,last_purchase_date,user_zone").where("user_id = ? and status = 1",session[:current_user_id])
+      @transctions=UserPurchase.select("address,transaction_id,purchase_date,user_zone").where("user_id = ? and status = 1",session[:current_user_id])
 
     else
       redirect_to :action => "userlogin"
@@ -540,6 +630,9 @@ class HomesController < ApplicationController
 
     if session[:current_user_id]
       session[:last_viewed_address]=params[:address]
+      @latlng = UserPurchase.select("lat,lng").where("user_id = ? and address = ?",session[:current_user_id],params[:address])
+      session[:lat]=@latlng.first['lat']
+      session[:lng]=@latlng.first['lng']
       render :json => {:status =>"done" }
 
     else
@@ -871,7 +964,8 @@ class HomesController < ApplicationController
     @transaction = @transaction.to_a.map(&:serializable_hash)
 
     session[:last_viewed_address]=@transaction.first['address']
-
+    session[:lat]=@transaction.first['lat']
+    session[:lng]=@transaction.first['lng']
     if @transaction.first['year_built'].blank?
       age =''
     else
@@ -909,6 +1003,8 @@ class HomesController < ApplicationController
     @transaction = @transaction.to_a.map(&:serializable_hash)
 
     session[:last_viewed_address]=@transaction.first['address']
+    session[:lat]=@transaction.first['lat']
+    session[:lng]=@transaction.first['lng']
 
     if @transaction.first['year_built'].blank?
       age =''
@@ -921,20 +1017,22 @@ class HomesController < ApplicationController
     else
       owned=Time.diff(Time.now, Time.parse(@transaction.first['last_sale_date']),'%y, %M')[:diff]
     end
+    
+    @zip = @transaction.first['zip']
 
-    @zee=ZipEverythingElse.select("*").where("zip = ?",params[:zip]).limit(1)
+    @zee=ZipEverythingElse.select("*").where("zip = ?",@zip).limit(1)
     @zee = @zee.to_a.map(&:serializable_hash)
 
-    @ztp=ZipTopInstaller.select("*").where("zip = ?",params[:zip]).order('no_of_solar_homes desc').limit(5)
+    @ztp=ZipTopInstaller.select("*").where("zip = ?",@zip).order('no_of_solar_homes desc').limit(5)
     @ztp = @ztp.to_a.map(&:serializable_hash)
 
-    @zpb=ZipPanelBrand.select("*").where("zip = ?",params[:zip]).order('no_of_solar_homes desc').limit(3)
+    @zpb=ZipPanelBrand.select("*").where("zip = ?",@zip).order('no_of_solar_homes desc').limit(3)
     @zpb = @zpb.to_a.map(&:serializable_hash)
 
-    @zib=ZipInverterBrand.select("*").where("zip = ?",params[:zip]).order('no_of_solar_homes desc').limit(3)
+    @zib=ZipInverterBrand.select("*").where("zip = ?",@zip).order('no_of_solar_homes desc').limit(3)
     @zib = @zib.to_a.map(&:serializable_hash)
 
-    @utility= Utilitytable.select("utility").where("zip = ?",params[:zip])
+    @utility= Utilitytable.select("utility").where("zip = ?",@zip)
     @utility = @utility.to_a.map(&:serializable_hash)
 
     render :json=>{:zipeverythingelse=>@zee,:topinstaller=>@ztp,:toppanelbrands=>@zpb,:topinverterbrands=>@zib,:radiotype=>params[:radio],:utility=>@utility,:transaction =>@transaction, :age => age, :owned=> owned}
@@ -986,6 +1084,8 @@ class HomesController < ApplicationController
   def logout
     session[:cust_user_id]=nil
     session[:last_viewed_address]=nil
+    session[:lat]=nil
+    session[:lng]=nil
     session[:errormessage]=nil
     session[:current_user_id] = nil
     session[:payment_flag]= nil
@@ -1116,6 +1216,8 @@ class HomesController < ApplicationController
   def checkpurchase
 
     session[:last_viewed_address]=params[:address]
+    # session[:lat]=params[:lat]
+    # session[:lat]=params[:lng]
 
     @zee=ZipEverythingElse.select("*").where("zip = ?",params[:zip]).limit(1)
     @zee = @zee.to_a.map(&:serializable_hash)
@@ -1157,7 +1259,7 @@ class HomesController < ApplicationController
     flag=1
     else
 
-      purchasedate =  addressexist.first['last_purchase_date']
+      purchasedate =  addressexist.first['purchase_date']
 
       time_diff_components= Date.today - 90.days
       if  time_diff_components > purchasedate
@@ -1780,7 +1882,23 @@ class HomesController < ApplicationController
       purchasecount=(purchasecount+1).to_s
       end
 
-      transaction_id='IPQ-'+ Date.today.strftime("%d%m%y").to_s+'-'+session[:current_user_id].to_s+'-'+purchasecount
+
+      user_zone_date=Time.now
+      
+      if (params[:usertimezone])[0]=='+'
+
+            user_zone_date=user_zone_date+(params[:usertimezone])[1,3].to_i.hours
+            user_zone_date=user_zone_date+(params[:usertimezone])[4,6].to_i.minutes
+
+      elsif  (params[:usertimezone])[0]=='-'
+
+            user_zone_date=user_zone_date-(params[:usertimezone])[1,3].to_i.hours
+            user_zone_date=user_zone_date-(params[:usertimezone])[4,6].to_i.minutes
+
+      end
+                        
+
+      transaction_id='IPQ-'+ user_zone_date.strftime("%d%m%y%H%M%S").to_s+'-'+session[:current_user_id].to_s+'-'+purchasecount
 
       if !(zip=='' || zip4=='' || zip.nil?)
         @speedon = SpeedOnData.select("*").where("ZIP5 = ? and ZIP4 = ?",zip,zip4).limit(1)
@@ -1792,7 +1910,7 @@ class HomesController < ApplicationController
                       :land_use_code=>_LandUseDescription.titleize, :zoning=>_ClassificationIdentifier, :no_of_residential_per_common_units=> _TotalUnitNumber,:gross_area=>_GrossLivingAreaSquareFeetNumber,:living_area=>_TotalLivingAreaSquareFeetNumber,
                       :no_of_bedrooms=>_TotalBedroomsCount,:no_of_bathrooms=>_TotalBathsCount, :year_built=>_YearBuiltDateIdentifier,:pool=>_HasFeatureIndicator,
                       :heat_type=>_HeatingTypeDescription.titleize, :heat_fuel=>_HeatFuel.titleize,:roof_type=>_RoofTypeDescription.titleize,:roof_shape=>_RoofShape.titleize,:roof_material=>_RoofSurfaceDescription.titleize,:roof_frame=>_RoofFrame.titleize,
-                      :condition=> _ConditionsDescription.titleize,:no_of_stories=>_TotalStoriesNumber,:last_purchase_date=>Time.now.localtime,:user_zone=>params[:usertimezone],:status=>1);
+                      :condition=> _ConditionsDescription.titleize,:no_of_stories=>_TotalStoriesNumber,:purchase_date=>Time.now.localtime,:user_zone=>params[:usertimezone],:status=>1);
 
         else
 
@@ -1801,7 +1919,7 @@ class HomesController < ApplicationController
                       :land_use_code=>_LandUseDescription.titleize, :zoning=>_ClassificationIdentifier, :no_of_residential_per_common_units=> _TotalUnitNumber,:gross_area=>_GrossLivingAreaSquareFeetNumber,:living_area=>_TotalLivingAreaSquareFeetNumber,
                       :no_of_bedrooms=>_TotalBedroomsCount,:no_of_bathrooms=>_TotalBathsCount, :year_built=>_YearBuiltDateIdentifier,:pool=>_HasFeatureIndicator,
                       :heat_type=>_HeatingTypeDescription.titleize, :heat_fuel=>_HeatFuel.titleize,:roof_type=>_RoofTypeDescription.titleize,:roof_shape=>_RoofShape.titleize,:roof_material=>_RoofSurfaceDescription.titleize,:roof_frame=>_RoofFrame.titleize,
-                      :condition=> _ConditionsDescription.titleize,:no_of_stories=>_TotalStoriesNumber,:last_purchase_date=>Time.now.localtime,:user_zone=>params[:usertimezone],:status=>1, :riskiq3 => @speedon.first['riskiq3'], :delineate =>@speedon.first['delineate'],
+                      :condition=> _ConditionsDescription.titleize,:no_of_stories=>_TotalStoriesNumber,:purchase_date=>Time.now.localtime,:user_zone=>params[:usertimezone],:status=>1, :riskiq3 => @speedon.first['riskiq3'], :delineate =>@speedon.first['delineate'],
                       :AIQ_Green => @speedon.first['AIQ_Green'], :IncomeIQ_Dol =>@speedon.first['IncomeIQ_Dol'], :DebtRatio =>@speedon.first['DebtRatio'], :Premoves =>@speedon.first['Premoves'], :Age_z4 =>@speedon.first['Age_z4'],
                       :ResidenceTime_z4=>@speedon.first['ResidenceTime_z4'], :MortgageAmount_z4 =>@speedon.first['MortgageAmount_z4'], :PersonsatResidence_z4 =>@speedon.first['PersonsatResidence_z4'],
                       :HomeOwner_pct_z4 =>@speedon.first['HomeOwner_pct_z4'], :LoantoValue_z4=>@speedon.first['LoantoValue_z4'],:IncomeIQ_plus_z4=>@speedon.first['IncomeIQ_plus_z4'], :AIQ_Green_plus_z4=>@speedon.first['AIQ_Green_plus_z4'],
@@ -1816,7 +1934,7 @@ class HomesController < ApplicationController
                       :land_use_code=>_LandUseDescription.titleize, :zoning=>_ClassificationIdentifier, :no_of_residential_per_common_units=> _TotalUnitNumber,:gross_area=>_GrossLivingAreaSquareFeetNumber,:living_area=>_TotalLivingAreaSquareFeetNumber,
                       :no_of_bedrooms=>_TotalBedroomsCount,:no_of_bathrooms=>_TotalBathsCount, :year_built=>_YearBuiltDateIdentifier,:pool=>_HasFeatureIndicator,
                       :heat_type=>_HeatingTypeDescription.titleize, :heat_fuel=>_HeatFuel.titleize,:roof_type=>_RoofTypeDescription.titleize,:roof_shape=>_RoofShape.titleize,:roof_material=>_RoofSurfaceDescription.titleize,:roof_frame=>_RoofFrame.titleize,
-                      :condition=> _ConditionsDescription.titleize,:no_of_stories=>_TotalStoriesNumber,:last_purchase_date=>Time.now.localtime,:user_zone=>params[:usertimezone],:status=>1);
+                      :condition=> _ConditionsDescription.titleize,:no_of_stories=>_TotalStoriesNumber,:purchase_date=>Time.now.localtime,:user_zone=>params[:usertimezone],:status=>1);
 
       end
 
@@ -1888,35 +2006,9 @@ class HomesController < ApplicationController
     end
   end
 
-  # Set your secret key: remember to change this to your live secret key in production
-  # See your keys here https://manage.stripe.com/account
-  # Stripe.api_key = "sk_test_OQBWreqFyNg26SjIeyrjEuND"
-# 
-  # require 'json'
-  # require 'stripe_event'
-# 
-  # # in, e.g. Sinatra
-  # def test
-    # # Retrieve the request's body and parse it as JSON
-# 
-    # event_json = JSON.parse(request.body.read)
-# 
-    # data1= event_json['type']
-    # if data1 == "invoice.payment_succeeded"
-      # customer= event_json['data']['object']['customer']
-      # @user=User.select("company_email_id").where("cust_id = ?",customer).limit(1)
-      # User.where("cust_id = ?",customer).limit(1).update_all(:payment_status => 0)
-# 
-      # @emailid=@user.first['company_email_id']
-      # Emailer.new_record_notification(@emailid).deliver
-# 
-      # # @emailid='neha@clicklabs.in'
-      # # Emailer.new_record_notification(@emailid).deliver
-      # render :json => {"data" => customer}
-# 
-    # end
-# 
-  # end
+ 
+ 
+  
 
   def viewmap
 
@@ -1941,6 +2033,12 @@ class HomesController < ApplicationController
     else
       @address= UserPurchase.select("address").where("user_id = ? and status = 1",session[:current_user_id])
       @address = @address.to_a.map(&:address)
+      
+      @lat= UserPurchase.select("lat").where("user_id = ? and status = 1",session[:current_user_id])
+      @lat = @lat.to_a.map(&:lat)
+      
+      @long= UserPurchase.select("lng").where("user_id = ? and status = 1",session[:current_user_id])
+      @long = @long.to_a.map(&:lng)
 
       @address1= UserPurchase.select("transaction_id").where("user_id = ? and status = 1",session[:current_user_id])
       @transaction = @address1.to_a.map(&:transaction_id)
@@ -1962,6 +2060,8 @@ class HomesController < ApplicationController
     end
    
  end
+ 
+
 
   private
 

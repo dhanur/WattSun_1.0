@@ -55,12 +55,1433 @@
       
       
     
+		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
 
 	    <!-- <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script> -->
-    	<script src="//www.google.com/jsapi?key=595146919660-rou65rsr0k1efgse3kgflrt6a713h4rd.apps.googleusercontent.com" type="text/javascript"></script>
-		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+    	<!-- <script src="//www.google.com/jsapi?key=595146919660-rou65rsr0k1efgse3kgflrt6a713h4rd.apps.googleusercontent.com" type="text/javascript"></script> -->
 	
-		<script type="text/javascript">
+		
+          
+  </head>
+  <body  onload="initialize()">
+    
+    <div class="container" id="menu_navigation">
+      <div id="bgnav" class="navbar navbar-fixed-top navbar-inverse">
+        
+        <div class="navbar-header" id="navigation">
+          
+          <button id="btn_collapse" type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">
+              Toggle navigation
+            </span>
+            <span class="icon-bar">
+            </span>
+            <span class="icon-bar">
+            </span>
+            <span class="icon-bar">
+            </span>
+          </button>
+          
+          <div id="nav_search">
+            <div id="logo_img">
+              <a class="navlink" style="color: white;" href='/homes/viewmap'>
+                <img class="brand" src="/assets/wattsun_logo.png" width="100%" alt="wattsun">
+              </a>
+            </div>
+            <div id="search_bar">             
+                <input style="float:left;position:relative;" id="loc_search" class="form-control" type="text" autocomplete="on" autofocus="autofocus" jstcache="0" placeholder="Enter residential street address" >
+
+                <span>
+                    <button class="btn btn-default" type="button" id="qualify_search" onclick="qualifyclick()">Qualify</button>
+                </span>
+                <div style="clear:both"></div>
+                <div id="search_error" style="font-family:'latoreg';padding-top:2px;color:#fff" >
+                    No error
+                </div>
+            </div>
+            <div style="clear:both">
+            </div>           
+            
+          </div>
+          
+          
+          
+          
+          <div class="collapse navbar-collapse no-transition"  id="pull_right" >
+            <ul class="nav navbar-nav">
+              
+              <li id="else" class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  What else does ProspectZen do? 
+                  <b style="color:#fff" class="caret">
+                  </b>
+                </a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a href="#">
+                      Instant Prospect Generator
+                      <br />
+                      Coming soon!
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      Instant 3D Home
+                      <br />
+                      Coming soon!
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li id="faq">
+                <a class="navlink" href="/homes/faq">
+                  FAQs
+                </a>
+              </li>
+              
+              <li id="setn" class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  Settings
+                  <b style="color:#fff" class="caret">
+                  </b>
+                </a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a href="/homes/userprofile">
+                      Profile
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/homes/userpayment">
+                      Payment
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/homes/purchaseitq">
+                      Purchases
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/homes/userproblem">
+                      Problem?
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <form action="../homes/logout" method="post">
+                  <input id="login" class="form-control" type="submit" value="Logout"/>
+                  
+                </form>
+              </li>
+              
+            </ul>
+            
+          </div>
+          <!-- /.nav-collapse -->
+          <div style="clear:both">
+          </div>
+        </div>
+        <!-- /.nav-collapse -->
+        
+        
+        <div style="clear:both">
+        </div>
+      </div>
+    </div>
+    <!--End .container-->
+    
+      
+    	<div  class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+	    	<div class="modal-dialog">
+				<div class="modal-content" style="">
+					<div class="modal-header" style="min-height: 170px;border-radius:0px;border-bottom:0px;color:#fff;font-family:'latobold'">
+						<h4 class="modal-title" style="text-align: center;font-family:'latoreg'">Qualify</h4>
+						<h4 id="address_display_on_popup" class="modal-title" style="text-align: center;margin-bottom:18px;"></h4>
+                        <div style="clear:both;"></div>
+  						<div style="width:171px;margin:0 auto;">
+                            <input id="itq_qualify" class="w-button address-button apply-button btn btn-primary btn-sm" type="button" style="float: left; display: inline;margin-right:15px;background:#C0392B;" onclick="makepurchase()" value="Qualify" >
+                            </input>
+                            <input id="itq_cancel" type="submit" class="w-button address-button apply-button btn btn-primary btn-sm" data-dismiss="modal" style=" float:left;" value="Cancel" onclick="clearbox()">
+                            </input>
+                        <div style="clear:both;"></div>
+                        </div>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+
+    
+    
+ 
+	<div id="abc" style="position: fixed;width: 100%;">
+			<div id='map-canvas'></div>
+	</div>
+		
+
+
+    <div id="panel_container" style="position: relative; display: none;">
+      <div id="panel_container_content">
+        
+        <div id="panel_search_result">
+         
+        </div>
+        
+        
+        <div id="panel_menu">
+         
+          <div id="panel_menu_content">
+            <ul class="nav nav-pills">
+              
+              <li class="active" id="everything">
+                <a href="#home" data-toggle="tab">
+                  Everything
+                </a>
+              </li> 
+              
+              <li id="check_need_to_know2" style="display: none;">
+                <a href="#needtoknow" data-toggle="tab">
+                 Need to Know
+                </a>
+              </li>
+
+            
+              <li id="check_electricity2" style="display: none;">
+                <a href="#electricity" data-toggle="tab">
+                 Electricity Indicators
+                </a>
+              </li>
+
+ 
+              <li id="check_show_money2" style="display: none;">
+                <a href="#showmoney" data-toggle="tab">
+                 Show Me The Money
+                </a>
+              </li>
+  
+  
+              <li id="check_ease_of_installation2" style="display: none;">
+                <a href="#easeinstallation" data-toggle="tab" >
+                  Ease of Installation
+                </a>
+              </li>
+              
+     
+              <li id="check_area_profile2" style="display: none;">
+                <a href="#areaprofile" data-toggle="tab">
+                 Area Profile
+                </a>
+              </li> 
+              
+              
+               
+              <li id="check_solar_adoption2" style="display: none;">
+                <a href="#solaradoption" data-toggle="tab">
+                 Solar Adoption
+                </a>
+              </li>
+              
+      
+              
+              <li id="check_D_home">
+                <a href="#dhome" data-toggle="tab">
+                  3D Home
+                </a>
+              </li>
+ 
+            </ul>
+ 
+ 
+          </div>
+          <div style="clear:both">
+          </div>
+        </div>
+        
+ 
+ 
+        <div id="panel_table_content">         
+          <!-- Tab panes -->         
+          
+          <div class="tab-content">               
+            
+            <div class="tab-pane active" id="home">
+             
+               
+               <div class="table-responsive" id="check_need_to_know1" style="display: none;">
+              		  <table class="table">
+							                  <caption class="capt">
+							                    Need to Know
+							                  </caption>
+							                  
+                 								<tr>
+													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Number of solar companies that have qualified this address, updated in real time" class="tool_tips green-tooltip">No. of checks on this address</span></div></td>
+													<td class="right_data"><span id='prev_checks1' data-toggle="tooltip" data-original-title="Number of solar companies that have qualified this address, updated in real time" class="tool_tips green-tooltip">  </span></td>
+												</tr>
+							                   
+												<tr id="own1" style="display: none;">
+												
+												<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Name(s) on property title" class="tool_tips green-tooltip">Name of Owner(s)</span></div></td>
+												<td class="right_data"><span id='owner_name1' data-toggle="tooltip" data-original-title="Name(s) on property title" class="tool_tips green-tooltip"></span></td>
+													
+												</tr>
+												<tr id="ma1" style="display: none;">
+												
+													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Contact property owner at this mailing address" class="tool_tips green-tooltip">Full Mailing Address</span></div></td>
+													<td class="right_data"><span id='mailing_address1' data-toggle="tooltip" data-original-title="Contact property owner at this mailing address" class="tool_tips green-tooltip"></span></td>
+											
+												</tr>
+											
+												<tr id="oo1" style="display: none;">
+												
+													<td class="left_data"><div><span>Owner Occupied?</span></div></td>
+													<td class="right_data"><span id='owner_occupied1'></span></td>
+												
+												</tr>
+
+     											<tr id="luc1" style="display: none;">
+													<td class="left_data"><div><span>Property Type</span></div></td><td class="right_data"><span id='land_use_code1'></span></td>
+												</tr>
+ 
+ 						    					<tr id="rpcu1" style="display: none;">
+													<td class="left_data"><div><span>No. of Units</span></div></td><td class="right_data"><span id='residential_per_common_units1'></span></td>
+												</tr>
+
+												
+												<tr id="lor1" style="display: none;" >
+													<td class="left_data"><div><span>How likely to relocate in 3-6 months?</span></div></td>
+													<td class="right_data"><span id='likelihood_of_relocation1'>  </span></td>
+												</tr>
+
+							                  <tr id="lsd1" style="display: none;">
+							                    <td class="left_data">
+							                      <div>
+							                       <span data-toggle="tooltip" data-original-title="Time since last property sale" class="tool_tips green-tooltip">Owned For</span>
+							                      </div>
+							                    </td>
+							                    <td class="right_data">
+							                      <span id='last_sale_date1' data-toggle="tooltip" data-original-title="Time since last property sale" class="tool_tips green-tooltip">
+							                          
+							                      </span>
+							                    </td>
+							                  </tr>
+							                  
+
+												
+												<!-- <tr id="tar1" style="display: none;" >
+													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Self explanatory" class="tool_tips green-tooltip">Time at Residence</span></div></td>
+													<td class="right_data"><span id='time_at_residence1'>  </span></td>
+												</tr>
+												
+												<tr id="aom1" style="display: none;" >
+													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Outstanding home mortgage value" class="tool_tips green-tooltip">Amount of Mortgage</span></div></td>
+													<td class="right_data"><span id='amount_of_mortgage1'>  </span></td>
+												</tr>
+
+												
+    											
+												<tr id="lbthvr1" style="display: none;" >
+													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="owner_text" class="tool_tips green-tooltip">Loan Balance to Home Value Ratio</span></div></td>
+													<td class="right_data"><span id='loan_balance_to_home_value_ratio1'>  </span></td>
+												</tr>
+												
+												<tr id="is1" style="display: none;" >
+													<td class="left_data"><div><span data-toggle="tooltip" data-original-title='This is a relative score, "is he wealthy or not - relative to the rest of the U.S.?"' class="tool_tips green-tooltip">Income Score</span></div></td>
+													<td class="right_data"><span id='income_score1'>  </span></td>
+												</tr>
+												
+												<tr id="aiz1" style="display: none;" >
+													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="owner_text" class="tool_tips green-tooltip">Adults in Zip+4</span></div></td>
+													<td class="right_data"><span id='adults_in_zip1'>  </span></td>
+												</tr> -->
+												
+																																																																																				
+                
+              		  </table>
+                
+               <br>  
+               <hr class="style-one" /> 
+              </div>
+              
+                <!--END  Need to Know-->
+
+                 
+              <div class="table-responsive" id="check_electricity1" style="display: none;">
+                <table class="table">
+							                  <caption class="capt">
+							                    Electricity Indicators
+							                  </caption>
+							                  
+							                  
+												<tr id="ht1" style="display: none;">
+													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="How the house is heated" class="tool_tips green-tooltip">Heat Type</span></div></td>
+													<td class="right_data">	<span id='heat_type1' data-toggle="tooltip" data-original-title="How the house is heated" class="tool_tips green-tooltip"></span></td>
+												</tr>
+												<tr id="hf1" style="display: none;">
+													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Energy source for heating" class="tool_tips green-tooltip">Heat Fuel</span></div></td>
+													<td class="right_data"><span id='heat_fuel1' data-toggle="tooltip" data-original-title="Energy source for heating" class="tool_tips green-tooltip"></span></td>
+												</tr>
+					
+												<tr id="aoh1" style="display: none;">
+													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="If building was demolished, age since reconstruction" class="tool_tips green-tooltip">Age of Home</span></div></td>
+													<td class="right_data"><span id='age_of_home1' data-toggle="tooltip" data-original-title="If building was demolished, age since reconstruction" class="tool_tips green-tooltip"></span></td>
+												</tr>
+																									
+										
+												<tr id="pl1" style="display: none;" >
+													<td class="left_data"><div><span> Approximate no. of people living here<span></div></td>
+													<td class="right_data"><span id='persons_living1'>  </span></td>
+												</tr>
+
+
+												<tr id="ga1" style="display: none;">
+													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Total area of built structure(s) on property" class="tool_tips green-tooltip">Gross Area</span></div></td>
+													<td class="right_data"><span id='gross_area1' data-toggle="tooltip" data-original-title="Total area of built structure(s) on property" class="tool_tips green-tooltip"></span></td>
+												</tr>
+
+												<tr id="nobed1" style="display: none;">
+													<td class="left_data"><div><span>No. of Beds/Baths<span></div></td><td class="right_data"><span id='no_of_bedroom1'></span></td>
+												</tr>
+
+												<tr id="po1" style="display: none;">
+													<td class="left_data"><div><span>Has Pool?<span></div></td><td class="right_data"><span id='pool1'></span></td>
+												</tr>
+	
+						                    	<tr id="utility1" style="display: none;">
+														<td class="left_data">
+															<div>
+															 <span>Utility provider (s)</span>
+															</div>
+														</td>
+														
+														<td class="right_data">
+													    <div>
+															<span id='utilityspan1'></span>
+														</div>
+														</td>
+											   </tr>
+
+
+												<!-- <tr id="lspps1" style="display: none;">
+													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Sale price of the property in terms of dollar amount per square foot of living/building area (lot area if no building is present)." class="tool_tips green-tooltip">Last Sale Price/sqft</span>
+																											</div></td><td class="right_data"><span id='last_sale_price_per_sqrft1'></span></td>
+												</tr> -->
+
+
+
+                </table>
+                
+               <br>  
+               <hr class="style-one" /> 
+              </div>
+              
+              <!--end    Electricity Indicators-->
+           
+                 
+              <div class="table-responsive"  id="check_show_money1" style="display: none;">
+                <table class="table">
+							                  <caption class="capt">
+							                   Show Me The Money
+							                  </caption>
+							                  
+	    										<tr id="ecs1" style="display: none;" >
+													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Homeowner's estimated credit score based on anonymized credit data at a Zip+4 level, which typically consists of 8 homes." class="tool_tips green-tooltip">Estimated Credit Score</span></div></td>
+													<td class="right_data"><span id='est_credit_score1' data-toggle="tooltip" data-original-title="Homeowner's estimated credit score based on anonymized credit data at a Zip+4 level, which typically consists of 8 homes." class="tool_tips green-tooltip">  </span></td>
+												</tr>
+                  
+ 												<tr id="i1" style="display: none;" >
+													<td class="left_data"><div><span>Estimated Household Income</span></div></td>
+													<td class="right_data"><span id='income1'>  </span></td>
+												</tr>
+	
+ 												
+												<tr id="hethvr1" style="display: none;" >
+													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Ratio of home equity to home value" class="tool_tips green-tooltip">Estimated Home Equity</span></div></td>
+													<td class="right_data"><span id='home_equity_to_home_value_ratio1' data-toggle="tooltip" data-original-title="Ratio of home equity to home value" class="tool_tips green-tooltip">  </span></td>
+												</tr>
+	
+												<tr id="dtir1" style="display: none;" >
+													<td class="left_data"><div><span>Estimated Debt to Income</span></div></td>
+													<td class="right_data"><span id='debt_to_income_ratio1'>  </span></td>
+												</tr>
+
+												<tr id="lsp1" style="display: none;">
+													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Price of last recorded property sale" class="tool_tips green-tooltip">Last Sale Price of Home</span></div></td>
+													<td class="right_data"><span id='last_sale_price1' data-toggle="tooltip" data-original-title="Price of last recorded property sale" class="tool_tips green-tooltip"></span></td>
+												</tr>
+ 
+                </table>
+                
+               <br>  
+               <hr class="style-one" /> 
+              </div>
+             <!--end Show Me The Money-->   
+
+              <div class="table-responsive"  id="check_ease_of_installation1" style="display: none;">
+                <table class="table">
+							                  <caption class="capt">
+							                   Ease of Installation
+							                  </caption>
+
+
+												<tr id="rt1" style="display: none;">
+													<td class="left_data"><div><span>Roof Type</span></div></td><td class="right_data"><span id='roof_type1'></span></td>
+												</tr>
+												
+												<tr id="rs1" style="display: none;">
+													<td class="left_data"><div><span>Roof Shape</span></div></td><td class="right_data"><span id='roof_shape1'></span></td>
+												</tr>
+
+												<tr id="rf1" style="display: none;">
+													<td class="left_data"><div><span>Roof Frame</span></div></td><td class="right_data"><span id='roof_frame1'></span></td>
+												</tr>
+												
+												<tr id="rm1" style="display: none;">
+													<td class="left_data"><div><span>Roof Material</span></div></td><td class="right_data"><span id='roof_material1'></span></td>
+												</tr>
+		
+												<tr id="noos1" style="display: none;">
+													<td class="left_data"><div><span>No. of Stories</span></div></td><td class="right_data"><span id='no_of_stories1'></span></td>
+												</tr>							                  
+
+				    							<tr id="z1" style="display: none;">
+													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Based on zoning system used by county" class="tool_tips green-tooltip green-tooltip">Zoning</span></div></td>
+													<td class="right_data"><span id='zoning1' data-toggle="tooltip" data-original-title="Based on zoning system used by county" class="tool_tips green-tooltip green-tooltip"></span></td>
+												</tr>
+							                  
+                </table>
+                
+               <br>  
+               <hr class="style-one" /> 
+              </div>
+              
+              <!--end Ease of Installation-->
+              
+              
+               <div class="table-responsive"  id="check_area_profile1" style="display: none;">
+                   <table class="table">
+			 				                  <caption class="capt">
+							                   Area Profile
+							                  </caption>
+    
+          										<tr id="d1" style="display: none;" >
+													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Based on 1500 demographic, psychographic, attitudinal, econometric and credit attributes." class="tool_tips green-tooltip">Segmentation</span></div></td>
+													<td class="right_data"><span id='delineate1' data-toggle="tooltip" data-original-title="Based on 1500 demographic, psychographic, attitudinal, econometric and credit attributes." class="tool_tips green-tooltip"></span></td>
+												</tr>
+		
+												<tr id="glm1" style="display: none;" >
+													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Based on values and purchasing habits" class="tool_tips green-tooltip">How Green?</span></div></td>
+													<td class="right_data"><span id='green_living_model1' data-toggle="tooltip" data-original-title="Based on values and purchasing habits" class="tool_tips green-tooltip">  </span></td>
+												</tr>
+
+												<tr id="hp1" style="display: none;" >
+													<td class="left_data"><div><span>% homes owned (vs. rented)</span></div></td>
+													<td class="right_data"><span id='homeowner_penetration1'>  </span></td>
+												</tr>
+												
+												<tr id="hoha1" style="display: none;" >
+													<td class="left_data"><div><span>Approximate Head of Household Age</span></div></td>
+													<td class="right_data"><span id='head_of_household_age1'>  </span></td>
+												</tr>
+			
+
+
+							                  
+                   </table>
+                
+               <br>  
+               <hr class="style-one" /> 
+              </div>
+ 
+   
+          <!--end Area Profile-->
+   
+   
+   
+              <div id="check_solar_adoption1" style="display: none;">    
+              <div class="table-responsive">
+                <table class="table">                  
+                  
+                  <tr>
+                    
+                    <td>
+                      <div>
+                        <span style="font-family:'latobold'">
+                          Solar Adoption
+                        </span>
+                      </div>
+                    </td>
+                    <br>
+                    <td style="padding-left:22px;">                      
+                      
+                      <input type="radio" name="type1" id="changetype-zip" checked='checked' value="zip" >
+                      <label for="changetype-zip" style='display: inline'>
+                        Zip
+                      </label>
+                        
+                        <input type="radio" name="type1" id="changetype-city" value="city" data-toggle="radio" >
+                      <label for="changetype-city" class="radio" style='display: inline'>
+                        City
+                      </label>
+                      
+                    </td>                    
+                    
+                  </tr>
+                  
+                  <tr>
+                    <td class="mi_tab_result_pad" style="padding:15px;width:33%;padding-left:0px">
+                      <div>
+                        <span>
+                          Solar Homes
+                        </span>
+                      </div>
+                      <div id='solar_homes1' class="mi_tab_result">
+                       
+                      </div>
+                    </td>
+                    <td class="mi_tab_result_pad" style="padding:15px;width:33%;padding-left:0px;">
+                      <div>
+                        <span data-toggle="tooltip" data-original-title="% of systems financed by lease or PPA " class="tool_tips green-tooltip">
+                         3rd Party
+                        </span>
+                      </div>
+                      <div id='3rd_party1' data-toggle="tooltip" data-original-title="% of systems financed by lease or PPA " class="mi_tab_result tool_tips green-tooltip">
+                       
+                      </div>
+                    </td>
+                    <td class="mi_tab_result_pad" style="padding:15px;width:33%;padding-left:0px;">
+                      <div>
+                        <span>
+                          Avg. System
+                        </span>
+                      </div>
+                      <div id='average_system1' class="mi_tab_result">
+                        
+                      </div>
+                      
+                    </td>
+                  </tr>
+                  
+                </table>
+              </div>
+              
+         
+              <div class="table-responsive">
+                <table class="table">
+                  <tr>
+                    <td class="left_data" rowspan="5">
+                      <div>
+                         <span data-toggle="tooltip" data-original-title="Ranked by number of installations" class="tool_tips green-tooltip">
+                          Top Installers
+                        </span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='installer10'></span>
+                    </td>
+                    
+                  </tr>
+                  
+                  <tr>
+                    <td class="right_data">
+                      <span id='installer11'></span>
+                    </td>
+                    
+                  </tr>
+                  <tr>
+                    <td class="right_data">
+                      <span id='installer12'></span>
+                    </td>
+                    
+                  </tr>
+                  <tr>
+                    <td class="right_data">
+                     <span id='installer13'></span>
+                    </td>
+                    
+                  </tr>
+                  <tr>
+                    <td class="right_data">
+                     <span id='installer14'></span>
+                    </td>
+                    
+                  </tr>
+                 
+                
+                 
+                 <tr>
+                    <td style="padding-bottom:15px;"></td>    
+                </tr>
+                 <tr>
+                    <td class="left_data" rowspan="3">
+                      <div>
+                         <span data-toggle="tooltip" data-original-title="Ranked by number of installations" class="tool_tips green-tooltip">
+                         Top Panel Brands
+                        </span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='panel10'></span>
+                    </td>
+                    
+                  </tr>
+                  
+                  <tr>
+                    <td class="right_data">
+                      <span id='panel11'></span>
+                    </td>
+                    
+                  </tr>
+                  <tr>
+                    <td class="right_data">
+                      <span id='panel12'></span>
+                    </td>
+                    
+                  </tr>
+                 
+                  
+                  <tr>
+                    <td style="padding-bottom:15px;"></td>    
+                </tr>
+                  <tr>
+                    <td class="left_data" rowspan="3">
+                      <div>
+                        <span data-toggle="tooltip" data-original-title="Ranked by number of installations" class="tool_tips green-tooltip">
+                          Top Inverter Brands
+                        </span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='inverter10'></span>
+                    </td>
+                    
+                  </tr>
+                  
+                  <tr>
+                    <td class="right_data">
+                      <span id='inverter11'></span>
+                    </td>
+                    
+                  </tr>
+                  <tr>
+                    <td class="right_data">
+                     <span id='inverter12'></span>
+                    </td>
+                    
+                  </tr>
+                      
+                  
+                </table>
+               </div>         
+              </div>   
+                        
+                        <div style="letter-spacing:1px;">
+                        
+           						<div id="model_avilable" style="line-height:22px;font-size:16px;">
+								<p style="font-family:'latobold';line-height: 24px;font-size:17px;">COMING SOON</p><br />
+                                With ProspectZen's Instant 3D Home, you can instantly view a super high-resolution 3D model of your prospect's home, right in your browser. 
+							</div>
+                            <div id="rooft0p_img" style="width:100%;"><img style="width:100%;margin:0 auto" src="/assets/3D Rooftop2.png"></div>
+							<div id="features" style="line-height:22px;padding-left:8px;font-size:16px;">
+								<ul>
+									<li>
+										<span class="glyphicon glyphicon-ok" style="margin-right:10px;"></span>Inspect each roof plane with 6-inch accuracy.
+									</li>
+									<li>
+										<span class="glyphicon glyphicon-ok" style="margin-right:10px;"></span>Maximize system size by 'seeing more of the roof'
+									</li>
+									
+									<li>
+										<span class="glyphicon glyphicon-ok" style="margin-right:10px;"></span>Shorten or eliminate your preliminary site survey
+									</li>
+									<li>
+										<span class="glyphicon glyphicon-ok" style="margin-right:10px;"></span>Design code compliant systems the very first time
+									</li>
+									<li>
+										<span class="glyphicon glyphicon-ok" style="margin-right:10px;"></span>Include in your quote and impress your customers
+									</li>
+								</ul>
+							</div>
+                        </div>
+
+                        
+                        
+                        
+                
+            </div>
+            <!--end everything-->
+              
+  
+            
+            <div class="tab-pane" id="solaradoption">
+               <div class="table-responsive">
+                <table class="table">                  
+                  
+                  <tr>
+                    
+                    <td>
+                      <div>
+                        <span style="font-family:'latobold'">
+                           Solar Adoption
+                        </span>
+                      </div>
+                    </td>
+                    <br>
+                    <td style="padding-left:22px;">
+                      
+                      
+                      <input type="radio" name="type2" id="changetype-zip" checked='checked' value="zip" >
+                      <label for="changetype-zip" style='display: inline'>
+                        Zip
+                      </label>
+                        
+                        <input type="radio" name="type2" id="changetype-city" value="city" data-toggle="radio" >
+                      <label for="changetype-city" class="radio" style='display: inline'>
+                        City
+                      </label>
+                      
+                    </td>
+                    
+                    
+                  </tr>
+                  
+                  <tr>
+                    <td class="mi_tab_result_pad" style="padding:15px;width:33%;padding-left:0px;">
+                      <div>
+                        <span>
+                          Solar Homes
+                        </span>
+                      </div>
+                      <div id='solar_homes2' class="mi_tab_result">
+                       
+                      </div>
+                    </td>
+                    <td class="mi_tab_result_pad" style="padding:15px;width:33%;padding-left:0px;">
+                      <div>
+                        <span data-toggle="tooltip" data-original-title="% of systems financed by lease or PPA " class="tool_tips green-tooltip">
+                          3rd Party
+                        </span>
+                      </div>
+                      <div id='3rd_party2' data-toggle="tooltip" data-original-title="% of systems financed by lease or PPA " class="mi_tab_result tool_tips green-tooltip">
+                       
+                      </div>
+                    </td>
+                    <td class="mi_tab_result_pad" style="padding:15px;width:33%;padding-left:0px;">
+                      <div>
+                        <span>
+                          Avg. System
+                        </span>
+                      </div>
+                      <div id='average_system2' class="mi_tab_result">
+                        
+                      </div>
+                      
+                    </td>
+                  </tr>
+                  
+                </table>
+              </div>
+              
+         
+              <div class="table-responsive">
+                <table class="table">
+                  <tr>
+                    <td class="left_data" rowspan="5">
+                      <div>
+                        <span data-toggle="tooltip" data-original-title="Ranked by number of installations" class="tool_tips green-tooltip">
+                          Top Installers
+                        </span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='installer20'></span>
+                    </td>
+                    
+                  </tr>
+                  
+                  <tr>
+                    <td class="right_data">
+                      <span id='installer21'></span>
+                    </td>
+                    
+                  </tr>
+                  <tr>
+                    <td class="right_data">
+                      <span id='installer22'></span>
+                    </td>
+                    
+                  </tr>
+                  <tr>
+                    <td class="right_data">
+                     <span id='installer23'></span>
+                    </td>
+                    
+                  </tr>
+                  <tr>
+                    <td class="right_data">
+                     <span id='installer24'></span>
+                    </td>
+                    
+                  </tr>
+                 
+                 
+                 <tr>
+                    <td style="padding-bottom:15px;"></td>    
+                </tr>
+                 
+                 <tr>
+                    <td class="left_data" rowspan="3">
+                      <div>
+                        <span data-toggle="tooltip" data-original-title="Ranked by number of installations" class="tool_tips green-tooltip">
+                         Top Panel Brands
+                        </span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='panel20'></span>
+                    </td>
+                    
+                  </tr>
+                  
+                  <tr>
+                    <td class="right_data">
+                      <span id='panel21'></span>
+                    </td>
+                    
+                  </tr>
+                  <tr>
+                    <td class="right_data">
+                      <span id='panel22'></span>
+                    </td>
+                    
+                  </tr>
+              
+                  
+                  <tr>
+                    <td style="padding-bottom:15px;"></td>    
+                </tr>
+                  <tr>
+                    <td class="left_data" rowspan="3">
+                      <div>
+                         <span data-toggle="tooltip" data-original-title="Ranked by number of installations" class="tool_tips green-tooltip">
+                          Top Inverter Brands
+                        </span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='inverter20'></span>
+                    </td>
+                    
+                  </tr>
+                  
+                  <tr>
+                    <td class="right_data">
+                      <span id='inverter21'></span>
+                    </td>
+                    
+                  </tr>
+                  <tr>
+                    <td class="right_data">
+                     <span id='inverter22'></span>
+                    </td>
+                    
+                  </tr>
+                    
+                  
+                </table>          
+          
+            </div>        
+            
+            
+            </div>
+             <!--end market intelligence -->
+            
+            
+                       
+            <div class="tab-pane" id="needtoknow"> 
+
+               <div class="table-responsive">
+              		  <table class="table">
+							                  <caption class="capt">
+							                    Need to Know
+							                  </caption>
+  
+											   <tr>
+													<td class="left_data">
+													<div>
+														<span data-toggle="tooltip" data-original-title="Number of solar companies that have qualified this address, updated in real time" class="tool_tips green-tooltip">No. of checks on this address</span>
+													</div></td>
+													<td class="right_data"><span id='prev_checks2' data-toggle="tooltip" data-original-title="Number of solar companies that have qualified this address, updated in real time" class="tool_tips green-tooltip"> </span></td>
+												</tr>
+			
+												<tr id="own2" style="display: none;">
+													<td class="left_data">
+													<div>
+														<span data-toggle="tooltip" data-original-title="Name(s) on property title" class="tool_tips green-tooltip">Name of Owner(s)</span>
+													</div></td>
+													<td class="right_data"><span id='owner_name2' data-toggle="tooltip" data-original-title="Name(s) on property title" class="tool_tips green-tooltip"> </span></td>
+												</tr>
+												<tr id="ma2" style="display: none;">
+													<td class="left_data">
+													<div>
+														<span data-toggle="tooltip" data-original-title="Contact property owner at this mailing address" class="tool_tips green-tooltip">Full Mailing Address</span>
+													</div></td>
+													<td class="right_data"><span id='mailing_address2' data-toggle="tooltip" data-original-title="Contact property owner at this mailing address" class="tool_tips green-tooltip"> </span></td>
+												</tr>
+												<tr id="oo2" style="display: none;">
+													<td class="left_data">
+													<div>
+														<span>Owner Occupied?<span>
+													</div></td>
+													<td class="right_data"><span id='owner_occupied2'> </span></td>
+												</tr>
+							
+								   
+							                   <tr id="luc2" style="display: none;">
+							                    <td class="left_data">
+							                      <div>
+							                       <span>Property Type</span>
+							                      </div>
+							                    </td>
+							                    <td class="right_data">
+							                      <span id='land_use_code2'>
+							                          
+							                      </span>
+							                    </td>
+							                  </tr>	
+								
+
+							                  <tr id="rpcu2" style="display: none;">
+							                    <td class="left_data">
+							                      <div>
+							                       <span>No. of Units</span>
+							                      </div>
+							                    </td>
+							                    <td class="right_data">
+							                      <span id='residential_per_common_units2'>
+							                          
+							                      </span>
+							                    </td>
+							                  </tr>	
+							                  
+												<tr id="lor2" style="display: none;" >
+													<td class="left_data"><div><span> How likely to relocate in 3-6 months?</span></div></td>
+													<td class="right_data"><span id='likelihood_of_relocation2'>  </span></td>
+												</tr>
+							
+							                  <tr id="lsd2" style="display: none;">
+							                    <td class="left_data">
+							                      <div>
+							                       <span data-toggle="tooltip" data-original-title="Time since last property sale" class="tool_tips green-tooltip">Owned For</span>
+							                      </div>
+							                    </td>
+							                    <td class="right_data">
+							                      <span id='last_sale_date2' data-toggle="tooltip" data-original-title="Time since last property sale" class="tool_tips green-tooltip">
+							                          
+							                      </span>
+							                    </td>
+							                  </tr>
+        
+											
+												<!-- <tr id="tar2" style="display: none;" >
+													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Self explanatory" class="tool_tips green-tooltip">Time at Residence</span></div></td>
+													<td class="right_data"><span id='time_at_residence2'>  </span></td>
+												</tr>
+												
+												<tr id="aom2" style="display: none;" >
+													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Outstanding home mortgage value" class="tool_tips green-tooltip">Amount of Mortgage</span></div></td>
+													<td class="right_data"><span id='amount_of_mortgage2'>  </span></td>
+												</tr>
+
+
+												
+												<tr id="lbthvr2" style="display: none;" >
+													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="owner_text" class="tool_tips green-tooltip">Loan Balance to Home Value Ratio</span></div></td>
+													<td class="right_data"><span id='loan_balance_to_home_value_ratio2'>  </span></td>
+												</tr>
+												
+												<tr id="is2" style="display: none;" >
+													<td class="left_data"><div><span data-toggle="tooltip" data-original-title='This is a relative score, "is he wealthy or not - relative to the rest of the U.S.?"' class="tool_tips green-tooltip">Income Score</span></div></td>
+													<td class="right_data"><span id='income_score2'>  </span></td>
+												</tr>
+												
+												<tr id="aiz2" style="display: none;" >
+													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="owner_text" class="tool_tips green-tooltip">Adults in Zip+4</span></div></td>
+													<td class="right_data"><span id='adults_in_zip2'>  </span></td>
+												</tr> -->
+												
+																																																																																				
+                
+              		  </table>
+
+              </div>	
+            </div>
+            <!--end demographic -->
+            
+            
+            
+            <div class="tab-pane" id="showmoney">
+              <div class="table-responsive">
+                <table class="table">
+                  <caption class="capt">
+                     Show Me The Money
+                  </caption>         
+							                  
+										    	<tr id="ecs2" style="display: none;" >
+														<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Homeowner's estimated credit score for Zip+4 area, typically 8 homes " class="tool_tips green-tooltip">Estimated Credit Score</span></div></td>
+														<td class="right_data"><span id='est_credit_score2' data-toggle="tooltip" data-original-title="Homeowner's estimated credit score for Zip+4 area, typically 8 homes " class="tool_tips green-tooltip"> </span></td>
+												</tr>
+									
+									
+												<tr id="i2" style="display: none;" >
+														<td class="left_data"><div><span>Estimated Household Income</span></div></td>
+														<td class="right_data"><span id='income2'></span></td>
+												</tr>
+							
+												<tr id="hethvr2" style="display: none;" >
+													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Ratio of home equity to home value" class="tool_tips green-tooltip">Estimated Home Equity</span></div></td>
+													<td class="right_data"><span id='home_equity_to_home_value_ratio2' data-toggle="tooltip" data-original-title="Ratio of home equity to home value" class="tool_tips green-tooltip">  </span></td>
+												</tr>
+																																										
+												<tr id="dtir2" style="display: none;" >
+													<td class="left_data"><div><span>Estimated Debt to Income</span></div></td>
+													<td class="right_data"><span id='debt_to_income_ratio2'>  </span></td>
+												</tr>
+					
+					 		                  <tr id="lsp2" style="display: none;">
+							                    <td class="left_data">
+							                      <div>
+							                       <span data-toggle="tooltip" data-original-title="Price of last recorded property sale" class="tool_tips green-tooltip">Last Sale Price of Home<span>
+							                      </div>
+							                    </td>
+							                    <td class="right_data">
+							                      <span id='last_sale_price2' data-toggle="tooltip" data-original-title="Price of last recorded property sale" class="tool_tips green-tooltip">
+							                          
+							                      </span>
+							                    </td>
+							                  </tr>
+																		
+					
+                  
+                </table>
+              </div>
+              
+              <!--end owner-->
+            </div>
+            
+            <div class="tab-pane" id="electricity">
+              <div class="table-responsive">
+                <table class="table">
+                  <caption class="capt">
+                    Electricity Indicators
+                  </caption>
+
+                   <tr id="ht2">
+                    <td class="left_data">
+                      <div>
+                        <span data-toggle="tooltip" data-original-title="How the house is heated" class="tool_tips green-tooltip">Heat Type</span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='heat_type2' data-toggle="tooltip" data-original-title="How the house is heated" class="tool_tips green-tooltip">
+                      </span>
+                    </td>
+                  </tr>
+                                        
+                
+                  
+                  <tr id="hf2">
+                    <td class="left_data">
+                      <div>
+                        <span data-toggle="tooltip" data-original-title="Energy source for heating" class="tool_tips green-tooltip">Heat Fuel</span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='heat_fuel2' data-toggle="tooltip" data-original-title="Energy source for heating" class="tool_tips green-tooltip">
+                      </span>
+                    </td>
+                  </tr>
+                                     
+                  <tr id="aoh2">
+                    <td class="left_data">
+                      <div>
+                        <span data-toggle="tooltip" data-original-title="If building was demolished, age since reconstruction" class="tool_tips green-tooltip">Age of Home</span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='age_of_home2' data-toggle="tooltip" data-original-title="If building was demolished, age since reconstruction" class="tool_tips green-tooltip">
+                      </span>
+                    </td>
+                  </tr>
+                                  
+ 										
+				<tr id="pl2" style="display: none;" >
+					<td class="left_data">
+						<div>
+							<span> Approximate no. of people living here</span>
+						</div>
+					</td>
+					<td class="right_data"><span id='persons_living2'>  </span></td>
+				</tr>
+                 
+                   <tr id="ga2">
+                    <td class="left_data">
+                      <div>
+ 						<span data-toggle="tooltip" data-original-title="Total area of built structure(s) on property" class="tool_tips green-tooltip">Gross Area</span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='gross_area2' data-toggle="tooltip" data-original-title="Total area of built structure(s) on property" class="tool_tips green-tooltip">
+                      </span>
+                    </td>
+                  </tr>
+                
+ 
+ 				<tr id="nobed2" style="display: none;">
+    				<td class="left_data"><div><span>No. of Beds/Baths<span></div></td><td class="right_data"><span id='no_of_bedroom2'></span></td>
+				</tr>
+
+	                 
+                                    
+                  <tr id="po2">
+                    <td class="left_data">
+                      <div>
+                         <span>Has Pool?</span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='pool2'>
+                      </span>
+                    </td>
+                  </tr>
+                  
+ 				<tr id="utility2" style="display: none;">
+												
+					<td class="left_data">
+						<div>
+						 <span>Utility provider (s)</span>
+						</div>
+					</td>
+												
+					<td class="right_data">
+					    <div>
+							<span id='utilityspan2'></span>
+						</div>
+					</td>
+			    </tr>	
+ 
+               
+
+
+
+                  <!-- <tr id="lspps2" style="display: none;">
+                    <td class="left_data">
+                      <div>
+                       <span data-toggle="tooltip" data-original-title="Sale price of the property in terms of dollar amount per square foot of living/building area (lot area if no building is present)." class="tool_tips green-tooltip">Last Sale Price/sqft<span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='last_sale_price_per_sqrft2'>
+                          
+                      </span>
+                    </td>
+                  </tr> -->
+
+
+                  
+                </table>
+              </div>
+              
+              <!--end property-->
+            </div>
+            
+  
+  
+            <div class="tab-pane" id="easeinstallation">
+              <div class="table-responsive">
+                <table class="table">
+                  <caption class="capt">
+                    Ease of Installation
+                  </caption>
+                  
+                                        
+                    
+                  <tr id="rt2">
+                    <td class="left_data">
+                      <div>
+                       <span>Roof Type<span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='roof_type2'>
+                      </span>
+                    </td>
+                  </tr>
+   
+     
+                       
+                  <tr id="rs2">
+                    <td class="left_data">
+                      <div>
+                       <span>Roof Shape<span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='roof_shape2'>
+                      </span>
+                    </td>
+                  </tr>
+      
+                  
+                  <tr id="rf2">
+                    <td class="left_data">
+                      <div>
+                      <span>Roof Frame<span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='roof_frame2'>
+                      </span>
+                    </td>
+                  </tr>
+         
+       
+              
+                  <tr id="rm2">
+                    <td class="left_data">
+                      <div>
+                    <span>Roof Material<span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='roof_material2'>
+                      </span>
+                    </td>
+                  </tr>
+
+                    
+                  <tr id="noos2">
+                    <td class="left_data">
+                      <div>
+                      <span>No. of Stories<span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='no_of_stories2'>
+                      </span>
+                    </td>
+                  </tr>
+                  
+                  
+                  <tr id="z2" style="display: none;">
+                    <td class="left_data">
+                      <div>
+                      <span data-toggle="tooltip" data-original-title="Based on zoning system used by county" class="tool_tips green-tooltip">Zoning<span>
+                      </div>
+                    </td>
+                    <td class="right_data">
+                      <span id='zoning2' data-toggle="tooltip" data-original-title="Based on zoning system used by county" class="tool_tips green-tooltip">
+                          
+                      </span>
+                    </td>
+                  </tr>
+
+
+            
+                </table>
+              </div>
+              
+              <!--end Ease of Installation-->
+            </div>
+   
+    
+            <div class="tab-pane" id="areaprofile">
+              <div class="table-responsive">
+                <table class="table">
+							                   <caption class="capt">
+							                    Area Profile
+							                   </caption>
+                  
+          										<tr id="d2" style="display: none;" >
+													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Based on 1500 demographic, psychographic, attitudinal, econometric and credit attributes." class="tool_tips green-tooltip">Segmentation</span></div></td>
+													<td class="right_data"><span id='delineate2' data-toggle="tooltip" data-original-title="Based on 1500 demographic, psychographic, attitudinal, econometric and credit attributes." class="tool_tips green-tooltip"></span></td>
+												</tr>
+		
+												<tr id="glm2" style="display: none;" >
+													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Based on values and purchasing habits" class="tool_tips green-tooltip">How Green?</span></div></td>
+													<td class="right_data"><span id='green_living_model2' data-toggle="tooltip" data-original-title="Based on values and purchasing habits" class="tool_tips green-tooltip">  </span></td>
+												</tr>
+
+												<tr id="hp2" style="display: none;" >
+													<td class="left_data"><div><span>% homes owned (vs. rented)</span></div></td>
+													<td class="right_data"><span id='homeowner_penetration2'>  </span></td>
+												</tr>
+												
+												<tr id="hoha2" style="display: none;" >
+													<td class="left_data"><div><span>Approximate Head of Household Age</span></div></td>
+													<td class="right_data"><span id='head_of_household_age2'>  </span></td>
+												</tr>
+			
+
+            
+                </table>
+              </div>
+              
+              <!--end  Area Profile-->
+            </div>
+     
+           
+     
+     
+            <div class="tab-pane" id="dhome" style="letter-spacing:1px;">
+                        
+           						<div id="model_avilable" style="line-height:22px;font-size:16px;">
+								<p style="font-family:'latobold';line-height: 24px;font-size:17px;">COMING SOON</p><br />
+                                With ProspectZen's Instant 3D Home, you can instantly view a super high-resolution 3D model of your prospect's home, right in your browser. 
+							</div>
+                            <div id="rooft0p_img" style="width:100%;"><img style="width:100%;margin:0 auto" src="/assets/3D Rooftop2.png"></div>
+							<div id="features" style="line-height:22px;padding-left:8px;font-size:16px;">
+								<ul>
+									<li>
+										<span class="glyphicon glyphicon-ok" style="margin-right:10px;"></span>Inspect each roof plane with 6-inch accuracy.
+									</li>
+									<li>
+										<span class="glyphicon glyphicon-ok" style="margin-right:10px;"></span>Maximize system size by 'seeing more of the roof'
+									</li>
+									
+									<li>
+										<span class="glyphicon glyphicon-ok" style="margin-right:10px;"></span>Shorten or eliminate your preliminary site survey
+									</li>
+									<li>
+										<span class="glyphicon glyphicon-ok" style="margin-right:10px;"></span>Design code compliant systems the very first time
+									</li>
+									<li>
+										<span class="glyphicon glyphicon-ok" style="margin-right:10px;"></span>Include in your quote and impress your customers
+									</li>
+								</ul>
+							</div>
+                        </div>
+
+                        
+            
+          </div>
+          
+          
+        </div>
+        
+      </div>
+      <div id="panel_container_sidebar">
+        <span id="side" class="glyphicon glyphicon-chevron-left" style="color:#5cb85c">
+        </span>
+      </div>
+      <div style="clear:both">
+      </div>
+    </div>
+    <!--            End panel container                               -->
+    
+    <div width="32px">
+    <img id="loadingimage" style="display:none;width:50px;height:50px;position:absolute;top:50%;left:50%;auto;z-index: 100000000000" src = "/assets/greenloader.gif" >
+    </div>
+    <script type="text/javascript">
 			var input;
 			var radiovalue = 'zip';
 			var citycode = '';
@@ -350,115 +1771,65 @@
 		 	   {
 		 	   	$("#panel_container").show();
 		 	   	
-		    	var lookAt = ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND);		
+		    	// var lookAt = ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND);		
 				var input = document.getElementById('loc_search').value;		
 		
-				ge.getNavigationControl().setVisibility(ge.VISIBILITY_AUTO);
+				
 		    	
-		    	$.getJSON('http://maps.googleapis.com/maps/api/geocode/json?address='+input+'&sensor=false', null, function (data) {
-		
-              
-				var p = data.results[0].geometry.location
-				var q = p.lat;
-				var r = p.lng;
-			   
-			   formatted_address= data.results[0].formatted_address;
-			   setValueNewTranscation(formatted_address);							
-					
-						var la = ge.createLookAt('');
-				
-						la.set(q,r,0, // altitude
-				
-						ge.ALTITUDE_RELATIVE_TO_GROUND,
-				
-						0, // heading
-				
-						0, // straight-down tilt
-				
-						90// range (inverse of zoom)
-				
-						);
-						
-						ge.getView().setAbstractView(la);
-				
-						});				
+                $.ajax({
+							type : "Post",
+							url : "http://maps.googleapis.com/maps/api/geocode/json?address=" + input + "&sensor=false",
+							dataType : "JSON",
+					        async: false,
+							success : function(data) {
+					       
+							var latlong = data.results[0]["geometry"]["location"];
+							
+							formatted_address= data.results[0].formatted_address;	
+					        setValueNewTranscation(formatted_address);
+					        marker = new google.maps.Marker({
+				                position: latlong,
+				                map: map,
+				             });
 
-		    	
+                    	      map.setCenter(latlong);
+						      map.setZoom(20);  // Why 17? Because it looks good.
+						   
+				               
+				             
+
+		    	}
+		    	});
 		    	
 		    }
 		    
 		    
 		     function camerapositionfirsttym(input)
 		 	   {
-		 	   	
+		 	   
 		 	   	$("#panel_container").show();
-		    	var lookAt = ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND);		
-				
-				ge.getNavigationControl().setVisibility(ge.VISIBILITY_AUTO);
-		    	
-		    	$.getJSON('http://maps.googleapis.com/maps/api/geocode/json?address='+input+'&sensor=false', null, function (data) {
-		
-              
-				var p = data.results[0].geometry.location
-				var q = p.lat;
-				var r = p.lng;
-			   
-			   formatted_address= data.results[0].formatted_address;
-			   
-			  		   
-			   							var length = data.results[0]["address_components"].length;
-																			
-										for (var i = 0; i < length; i++)
-										
-										{								
-												
-												var addressType = data.results[0]["address_components"][i]["types"][0];
-												
-												if (componentForm[addressType])
-												
-												{
-													
-													if (addressType == 'postal_code')
-													
-													{
-													
-													zipcode = data.results[0]["address_components"][i]["long_name"];
-													
-													}	
-													
-													
-													if (addressType == 'locality') 
-													
-													{
-													
-													citycode = data.results[0]["address_components"][i]["long_name"];										
-													
-													}								
-										
-												}
-																				
-										}								
-					
+		 	   	
+		 	   	 <% if session[:lat] %>
+		 	   	 
+		 	   	 
+		 	   	 
+		    	      lat = '<%= session[:lat] %>'
+		    	      lng = '<%= session[:lng] %>'
+				      
 				        setValueNewTranscation(formatted_address);	
-						var la = ge.createLookAt('');
-				
-						la.set(q,r,0, // altitude
-				
-						ge.ALTITUDE_RELATIVE_TO_GROUND,
-				
-						0, // heading
-				
-						0, // straight-down tilt
-				
-						90// range (inverse of zoom)
-				
-						);
-						
-						ge.getView().setAbstractView(la);
+				        
+						 marker = new google.maps.Marker({
+				                position: new google.maps.LatLng(lat, lng),
+				                map: map,
+				             });
+                       var position2: new google.maps.LatLng(lat, lng),
+                    	      map.setCenter(position2);
+						      map.setZoom(20);  // Why 17? Because it looks good.
+						   
 				
 						});				
 
-		    	
+		    	<% end %>
 		    	
 		    }
 		    
@@ -466,48 +1837,43 @@
 	 
 	 
 	    	function cameraposition() {
-	    		
-	    		    		
+	    			    		    		
 	    		$("#panel_container").show();
-	 				
-				var lookAt = ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND);
 		
 				var input = document.getElementById('loc_search').value;
-
-		
-				ge.getNavigationControl().setVisibility(ge.VISIBILITY_AUTO);
-		
-				$.getJSON('http://maps.googleapis.com/maps/api/geocode/json?address='+input+'&sensor=false', null, function (data) {
-		
-              
-				var p = data.results[0].geometry.location
-				var q = p.lat;
-				var r = p.lng;
-			    	
-				formatted_address= data.results[0].formatted_address;								
-						
-			    makemake();
-			    
-				$("#loadingimage").hide();
-
-								
-				var la = ge.createLookAt('');
-		
-				la.set(q,r,0, // altitude
-		
-				ge.ALTITUDE_RELATIVE_TO_GROUND,
-		
-				0, // heading
-		
-				0, // straight-down tilt
-		
-				80// range (inverse of zoom)
-		
-				);
 				
-				ge.getView().setAbstractView(la);
-		
-				});				
+				$.ajax({
+							type : "Post",
+							url : "http://maps.googleapis.com/maps/api/geocode/json?address=" + input + "&sensor=false",
+							dataType : "JSON",
+					        async: false,
+							success : function(data) {
+					       
+							var latlong = data.results[0]["geometry"]["location"];
+							console.log("camera");
+							formatted_address= data.results[0].formatted_address;	
+					       makemake();
+					       $("#loadingimage").hide();
+					       
+					        marker = new google.maps.Marker({
+				                position: latlong,
+				                map: map,
+				             });
+
+                    	      map.setCenter(latlong);
+						      map.setZoom(20);  // Why 17? Because it looks good.
+						   
+
+				      }
+				      
+				      });
+				      
+			      
+				 
+		              
+				 google.maps.event.addListener(marker, 'click', function() {
+				             	alert(formatted_address);
+				             });
                     
 		}
         
@@ -579,11 +1945,11 @@
 						      addresses =response['alladdress'] 
 			           	      transaction =response['alltransaction']
 			            
-							for (var x = check2 ; x < addresses.length; x++) {
-								console.log(check2);
-								call(x,addresses);
-							
-							 }
+							// for (var x = check2 ; x < addresses.length; x++) {
+								// console.log("checkpurchase");
+								  // call(x,addresses);
+// 							
+							 // }
 									        
 						        var check_flag=0;
 					          
@@ -1660,7 +3026,7 @@
 						//    console.log(input1[0]);
 						//    console.log(input1[1]);
 						    
-						     				
+						     // alert(formatted_address);				
 					    	$.ajax({
 								url : "/homes/addresspresentcheck",
 								type : "POST",
@@ -1860,7 +3226,6 @@
 					dataType : 'JSON',
 					data : {
 						'address' :input,
-						'zip' : zipcode
 						},
 					success : function(response) {
 					
@@ -3864,30 +5229,31 @@
                var point2 = new Array;
 					$.ajax({
 							type : "Post",
-							url : "http://maps.googleapis.com/maps/api/geocode/json?address=" + addresses[x] + "&sensor=false",
+							url : "http://maps.google.com/maps/api/geocode/json?sensor=false&address" +addresses[x],
 							dataType : "JSON",
-					        async: false,
+					      	async:false,
 							success : function(data) {
-								var mapOptions = {
-				            // center: new google.maps.LatLng(t.lat, t.lng),
-				             zoom: 18,
-				             mapTypeId: google.maps.MapTypeId.SATELLITE
-				             }; 
-					       map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
+					       
 							var latlong = data.results[0]["geometry"]["location"];
-							console.log(latlong);
-							console.log(map);
+							//console.log(latlong);
 							//latlong = data.results[0]["geometry"]["location"];
 							//placemark2[x] = ge.createPlacemark('');
 						//	var icon = ge.createIcon('');	
 						//	icon.setHref('http://beta.prospectzen.com/assets/red_circle.png');
 						
 					//	alert(x);
-						    marker = new google.maps.Marker({
+						    // marker1 = new google.maps.Marker({
+				                // position: latlong,
+				                // map: map,
+				             // });	
+					        // markers.push(marker1);
+					        
+					      
+					           marker = new google.maps.Marker({
 				                position: latlong,
 				                map: map,
-				             });	
-					        // markers.push(marker1);
+				             });
+					        
 							}
 
 					});
@@ -3899,14 +5265,35 @@
 				
 	            addresses =<%= raw @address %>
 	            transaction =<%= raw @transaction %>
-              
-				
+                lat = <%= raw @lat %>
+                lng = <%= raw @long %>
+				console.log(addresses.length);
+				console.log(addresses);
 				for (var x = 0; x < addresses.length; x++) {
-
-					call(x,addresses);
+					
+                         marker = new google.maps.Marker({
+				            position: new google.maps.LatLng(lat[x], lng[x]),
+				            map: map,
+				             });
 				
 				 }
+				 
+				 if (addresses.length >0)
 				
+				   {
+				 
+				   
+				   	<% if session[:last_viewed_address] %>		   	
+				     
+				     console.log('<%= session[:last_viewed_address] %>');
+				   
+				     camerapositionfirsttym('<%= session[:last_viewed_address] %>');
+                       <% else %>		
+					       				    
+				   <% end %> 
+				   
+					}
+
 		      }
 	
 			
@@ -3914,1452 +5301,41 @@
 	        autocomplete = new google.maps.places.Autocomplete(/** @type {HTMLInputElement} */(document.getElementById('loc_search')), {
 			 types : ['geocode']
 		 });
-		 
-		 $.getJSON('http://maps.googleapis.com/maps/api/geocode/json?address=' + 'USA' + '&sensor=false', null, function(data) {
-							var t = data.results[0].geometry.location;
-							latlong = data.results[0]["geometry"]["location"];
-							var mapOptions = {
-				            center: new google.maps.LatLng(t.lat, t.lng),
-				             zoom: 18,
+		 		// geocoder = new google.maps.Geocoder();
+		// http://maps.google.com/maps/api/geocode/json?sensor=false&address" +addresses[x],
+		 // $.ajax({
+							// type : "GET",
+							// url : 'http://maps.googleapis.com/maps/api/geocode/json?sensor=false&address=' + 'USA' ,
+// 							
+					     // async: false,
+							// success : function(data) {
+// 					       
+							// var t = data.results[0].geometry.location;
+							// latlong = data.results[0]["geometry"]["location"];
+							// var mapOptions = {
+				            // center: new google.maps.LatLng(t.lat, t.lng),
+				             // zoom: 5,
+				             // mapTypeId: google.maps.MapTypeId.SATELLITE
+				             // }; 
+				             // map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);					        
+							// }
+// 
+					// });		
+         // autocomplete.bindTo('bounds', map);
+         var mapOptions = {
+				            center: new google.maps.LatLng(37.6,-95.665),
+				             zoom: 5,
 				             mapTypeId: google.maps.MapTypeId.SATELLITE
 				             }; 
-				             map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
-				              console.log(map);
-				             
-				               marker = new google.maps.Marker({
-				                position: new google.maps.LatLng("37.7306872","-122.4679486"),
-				                map: map,
-				             });
-                             
+		map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);	
+
+        others();    
  
-						}); 
-   
-       others(); 
     }
 
 
 </script>
 
-          
-  </head>
-  <body  onload="initialize()">
-    
-    <div class="container" id="menu_navigation">
-      <div id="bgnav" class="navbar navbar-fixed-top navbar-inverse">
-        
-        <div class="navbar-header" id="navigation">
-          
-          <button id="btn_collapse" type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">
-              Toggle navigation
-            </span>
-            <span class="icon-bar">
-            </span>
-            <span class="icon-bar">
-            </span>
-            <span class="icon-bar">
-            </span>
-          </button>
-          
-          <div id="nav_search">
-            <div id="logo_img">
-              <a class="navlink" style="color: white;" href='/homes/viewmap'>
-                <img class="brand" src="/assets/wattsun_logo.png" width="100%" alt="wattsun">
-              </a>
-            </div>
-            <div id="search_bar">             
-                <input style="float:left;position:relative;" id="loc_search" class="form-control" type="text" autocomplete="on" autofocus="autofocus" jstcache="0" placeholder="Enter residential street address" >
-
-                <span>
-                    <button class="btn btn-default" type="button" id="qualify_search" onclick="qualifyclick()">Qualify</button>
-                </span>
-                <div style="clear:both"></div>
-                <div id="search_error" style="font-family:'latoreg';padding-top:2px;color:#fff" >
-                    No error
-                </div>
-            </div>
-            <div style="clear:both">
-            </div>           
-            
-          </div>
-          
-          
-          
-          
-          <div class="collapse navbar-collapse no-transition"  id="pull_right" >
-            <ul class="nav navbar-nav">
-              
-              <li id="else" class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  What else does ProspectZen do? 
-                  <b style="color:#fff" class="caret">
-                  </b>
-                </a>
-                <ul class="dropdown-menu">
-                  <li>
-                    <a href="#">
-                      Instant Prospect Generator
-                      <br />
-                      Coming soon!
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      Instant 3D Home
-                      <br />
-                      Coming soon!
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <li id="faq">
-                <a class="navlink" href="/homes/faq">
-                  FAQs
-                </a>
-              </li>
-              
-              <li id="setn" class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  Settings
-                  <b style="color:#fff" class="caret">
-                  </b>
-                </a>
-                <ul class="dropdown-menu">
-                  <li>
-                    <a href="/homes/userprofile">
-                      Profile
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/homes/userpayment">
-                      Payment
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/homes/purchaseitq">
-                      Purchases
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/homes/userproblem">
-                      Problem?
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <form action="../homes/logout" method="post">
-                  <input id="login" class="form-control" type="submit" value="Logout"/>
-                  
-                </form>
-              </li>
-              
-            </ul>
-            
-          </div>
-          <!-- /.nav-collapse -->
-          <div style="clear:both">
-          </div>
-        </div>
-        <!-- /.nav-collapse -->
-        
-        
-        <div style="clear:both">
-        </div>
-      </div>
-    </div>
-    <!--End .container-->
-    
-      
-    	<div  class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-	    	<div class="modal-dialog">
-				<div class="modal-content" style="">
-					<div class="modal-header" style="min-height: 170px;border-radius:0px;border-bottom:0px;color:#fff;font-family:'latobold'">
-						<h4 class="modal-title" style="text-align: center;font-family:'latoreg'">Qualify</h4>
-						<h4 id="address_display_on_popup" class="modal-title" style="text-align: center;margin-bottom:18px;"></h4>
-                        <div style="clear:both;"></div>
-  						<div style="width:171px;margin:0 auto;">
-                            <input id="itq_qualify" class="w-button address-button apply-button btn btn-primary btn-sm" type="button" style="float: left; display: inline;margin-right:15px;background:#C0392B;" onclick="makepurchase()" value="Qualify" >
-                            </input>
-                            <input id="itq_cancel" type="submit" class="w-button address-button apply-button btn btn-primary btn-sm" data-dismiss="modal" style=" float:left;" value="Cancel" onclick="clearbox()">
-                            </input>
-                        <div style="clear:both;"></div>
-                        </div>
-					</div>
-				</div><!-- /.modal-content -->
-			</div><!-- /.modal-dialog -->
-		</div><!-- /.modal -->
-
-    
-    
- 
-	<div id="abc" style="position: fixed;width: 100%;">
-			<div id='map-canvas'></div>
-	</div>
-		
-
-
-    <div id="panel_container" style="position: relative; display: none;">
-      <div id="panel_container_content">
-        
-        <div id="panel_search_result">
-         
-        </div>
-        
-        
-        <div id="panel_menu">
-         
-          <div id="panel_menu_content">
-            <ul class="nav nav-pills">
-              
-              <li class="active" id="everything">
-                <a href="#home" data-toggle="tab">
-                  Everything
-                </a>
-              </li> 
-              
-              <li id="check_need_to_know2" style="display: none;">
-                <a href="#needtoknow" data-toggle="tab">
-                 Need to Know
-                </a>
-              </li>
-
-            
-              <li id="check_electricity2" style="display: none;">
-                <a href="#electricity" data-toggle="tab">
-                 Electricity Indicators
-                </a>
-              </li>
-
- 
-              <li id="check_show_money2" style="display: none;">
-                <a href="#showmoney" data-toggle="tab">
-                 Show Me The Money
-                </a>
-              </li>
-  
-  
-              <li id="check_ease_of_installation2" style="display: none;">
-                <a href="#easeinstallation" data-toggle="tab" >
-                  Ease of Installation
-                </a>
-              </li>
-              
-     
-              <li id="check_area_profile2" style="display: none;">
-                <a href="#areaprofile" data-toggle="tab">
-                 Area Profile
-                </a>
-              </li> 
-              
-              
-               
-              <li id="check_solar_adoption2" style="display: none;">
-                <a href="#solaradoption" data-toggle="tab">
-                 Solar Adoption
-                </a>
-              </li>
-              
-      
-              
-              <li id="check_D_home">
-                <a href="#dhome" data-toggle="tab">
-                  3D Home
-                </a>
-              </li>
- 
-            </ul>
- 
- 
-          </div>
-          <div style="clear:both">
-          </div>
-        </div>
-        
- 
- 
-        <div id="panel_table_content">         
-          <!-- Tab panes -->         
-          
-          <div class="tab-content">               
-            
-            <div class="tab-pane active" id="home">
-             
-               
-               <div class="table-responsive" id="check_need_to_know1" style="display: none;">
-              		  <table class="table">
-							                  <caption class="capt">
-							                    Need to Know
-							                  </caption>
-							                  
-                 								<tr>
-													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Number of solar companies that have qualified this address, updated in real time" class="tool_tips green-tooltip">No. of checks on this address</span></div></td>
-													<td class="right_data"><span id='prev_checks1' data-toggle="tooltip" data-original-title="Number of solar companies that have qualified this address, updated in real time" class="tool_tips green-tooltip">  </span></td>
-												</tr>
-							                   
-												<tr id="own1" style="display: none;">
-												
-												<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Name(s) on property title" class="tool_tips green-tooltip">Name of Owner(s)</span></div></td>
-												<td class="right_data"><span id='owner_name1' data-toggle="tooltip" data-original-title="Name(s) on property title" class="tool_tips green-tooltip"></span></td>
-													
-												</tr>
-												<tr id="ma1" style="display: none;">
-												
-													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Contact property owner at this mailing address" class="tool_tips green-tooltip">Full Mailing Address</span></div></td>
-													<td class="right_data"><span id='mailing_address1' data-toggle="tooltip" data-original-title="Contact property owner at this mailing address" class="tool_tips green-tooltip"></span></td>
-											
-												</tr>
-											
-												<tr id="oo1" style="display: none;">
-												
-													<td class="left_data"><div><span>Owner Occupied?</span></div></td>
-													<td class="right_data"><span id='owner_occupied1'></span></td>
-												
-												</tr>
-
-     											<tr id="luc1" style="display: none;">
-													<td class="left_data"><div><span>Property Type</span></div></td><td class="right_data"><span id='land_use_code1'></span></td>
-												</tr>
- 
- 						    					<tr id="rpcu1" style="display: none;">
-													<td class="left_data"><div><span>No. of Units</span></div></td><td class="right_data"><span id='residential_per_common_units1'></span></td>
-												</tr>
-
-												
-												<tr id="lor1" style="display: none;" >
-													<td class="left_data"><div><span>How likely to relocate in 3-6 months?</span></div></td>
-													<td class="right_data"><span id='likelihood_of_relocation1'>  </span></td>
-												</tr>
-
-							                  <tr id="lsd1" style="display: none;">
-							                    <td class="left_data">
-							                      <div>
-							                       <span data-toggle="tooltip" data-original-title="Time since last property sale" class="tool_tips green-tooltip">Owned For</span>
-							                      </div>
-							                    </td>
-							                    <td class="right_data">
-							                      <span id='last_sale_date1' data-toggle="tooltip" data-original-title="Time since last property sale" class="tool_tips green-tooltip">
-							                          
-							                      </span>
-							                    </td>
-							                  </tr>
-							                  
-
-												
-												<!-- <tr id="tar1" style="display: none;" >
-													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Self explanatory" class="tool_tips green-tooltip">Time at Residence</span></div></td>
-													<td class="right_data"><span id='time_at_residence1'>  </span></td>
-												</tr>
-												
-												<tr id="aom1" style="display: none;" >
-													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Outstanding home mortgage value" class="tool_tips green-tooltip">Amount of Mortgage</span></div></td>
-													<td class="right_data"><span id='amount_of_mortgage1'>  </span></td>
-												</tr>
-
-												
-    											
-												<tr id="lbthvr1" style="display: none;" >
-													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="owner_text" class="tool_tips green-tooltip">Loan Balance to Home Value Ratio</span></div></td>
-													<td class="right_data"><span id='loan_balance_to_home_value_ratio1'>  </span></td>
-												</tr>
-												
-												<tr id="is1" style="display: none;" >
-													<td class="left_data"><div><span data-toggle="tooltip" data-original-title='This is a relative score, "is he wealthy or not - relative to the rest of the U.S.?"' class="tool_tips green-tooltip">Income Score</span></div></td>
-													<td class="right_data"><span id='income_score1'>  </span></td>
-												</tr>
-												
-												<tr id="aiz1" style="display: none;" >
-													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="owner_text" class="tool_tips green-tooltip">Adults in Zip+4</span></div></td>
-													<td class="right_data"><span id='adults_in_zip1'>  </span></td>
-												</tr> -->
-												
-																																																																																				
-                
-              		  </table>
-                
-               <br>  
-               <hr class="style-one" /> 
-              </div>
-              
-                <!--END  Need to Know-->
-
-                 
-              <div class="table-responsive" id="check_electricity1" style="display: none;">
-                <table class="table">
-							                  <caption class="capt">
-							                    Electricity Indicators
-							                  </caption>
-							                  
-							                  
-												<tr id="ht1" style="display: none;">
-													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="How the house is heated" class="tool_tips green-tooltip">Heat Type</span></div></td>
-													<td class="right_data">	<span id='heat_type1' data-toggle="tooltip" data-original-title="How the house is heated" class="tool_tips green-tooltip"></span></td>
-												</tr>
-												<tr id="hf1" style="display: none;">
-													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Energy source for heating" class="tool_tips green-tooltip">Heat Fuel</span></div></td>
-													<td class="right_data"><span id='heat_fuel1' data-toggle="tooltip" data-original-title="Energy source for heating" class="tool_tips green-tooltip"></span></td>
-												</tr>
-					
-												<tr id="aoh1" style="display: none;">
-													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="If building was demolished, age since reconstruction" class="tool_tips green-tooltip">Age of Home</span></div></td>
-													<td class="right_data"><span id='age_of_home1' data-toggle="tooltip" data-original-title="If building was demolished, age since reconstruction" class="tool_tips green-tooltip"></span></td>
-												</tr>
-																									
-										
-												<tr id="pl1" style="display: none;" >
-													<td class="left_data"><div><span> Approximate no. of people living here<span></div></td>
-													<td class="right_data"><span id='persons_living1'>  </span></td>
-												</tr>
-
-
-												<tr id="ga1" style="display: none;">
-													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Total area of built structure(s) on property" class="tool_tips green-tooltip">Gross Area</span></div></td>
-													<td class="right_data"><span id='gross_area1' data-toggle="tooltip" data-original-title="Total area of built structure(s) on property" class="tool_tips green-tooltip"></span></td>
-												</tr>
-
-												<tr id="nobed1" style="display: none;">
-													<td class="left_data"><div><span>No. of Beds/Baths<span></div></td><td class="right_data"><span id='no_of_bedroom1'></span></td>
-												</tr>
-
-												<tr id="po1" style="display: none;">
-													<td class="left_data"><div><span>Has Pool?<span></div></td><td class="right_data"><span id='pool1'></span></td>
-												</tr>
-	
-						                    	<tr id="utility1" style="display: none;">
-														<td class="left_data">
-															<div>
-															 <span>Utility provider (s)</span>
-															</div>
-														</td>
-														
-														<td class="right_data">
-													    <div>
-															<span id='utilityspan1'></span>
-														</div>
-														</td>
-											   </tr>
-
-
-												<!-- <tr id="lspps1" style="display: none;">
-													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Sale price of the property in terms of dollar amount per square foot of living/building area (lot area if no building is present)." class="tool_tips green-tooltip">Last Sale Price/sqft</span>
-																											</div></td><td class="right_data"><span id='last_sale_price_per_sqrft1'></span></td>
-												</tr> -->
-
-
-
-                </table>
-                
-               <br>  
-               <hr class="style-one" /> 
-              </div>
-              
-              <!--end    Electricity Indicators-->
-           
-                 
-              <div class="table-responsive"  id="check_show_money1" style="display: none;">
-                <table class="table">
-							                  <caption class="capt">
-							                   Show Me The Money
-							                  </caption>
-							                  
-	    										<tr id="ecs1" style="display: none;" >
-													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Homeowner's estimated credit score based on anonymized credit data at a Zip+4 level, which typically consists of 8 homes." class="tool_tips green-tooltip">Estimated Credit Score</span></div></td>
-													<td class="right_data"><span id='est_credit_score1' data-toggle="tooltip" data-original-title="Homeowner's estimated credit score based on anonymized credit data at a Zip+4 level, which typically consists of 8 homes." class="tool_tips green-tooltip">  </span></td>
-												</tr>
-                  
- 												<tr id="i1" style="display: none;" >
-													<td class="left_data"><div><span>Estimated Household Income</span></div></td>
-													<td class="right_data"><span id='income1'>  </span></td>
-												</tr>
-	
- 												
-												<tr id="hethvr1" style="display: none;" >
-													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Ratio of home equity to home value" class="tool_tips green-tooltip">Estimated Home Equity</span></div></td>
-													<td class="right_data"><span id='home_equity_to_home_value_ratio1' data-toggle="tooltip" data-original-title="Ratio of home equity to home value" class="tool_tips green-tooltip">  </span></td>
-												</tr>
-	
-												<tr id="dtir1" style="display: none;" >
-													<td class="left_data"><div><span>Estimated Debt to Income</span></div></td>
-													<td class="right_data"><span id='debt_to_income_ratio1'>  </span></td>
-												</tr>
-
-												<tr id="lsp1" style="display: none;">
-													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Price of last recorded property sale" class="tool_tips green-tooltip">Last Sale Price of Home</span></div></td>
-													<td class="right_data"><span id='last_sale_price1' data-toggle="tooltip" data-original-title="Price of last recorded property sale" class="tool_tips green-tooltip"></span></td>
-												</tr>
- 
-                </table>
-                
-               <br>  
-               <hr class="style-one" /> 
-              </div>
-             <!--end Show Me The Money-->   
-
-              <div class="table-responsive"  id="check_ease_of_installation1" style="display: none;">
-                <table class="table">
-							                  <caption class="capt">
-							                   Ease of Installation
-							                  </caption>
-
-
-												<tr id="rt1" style="display: none;">
-													<td class="left_data"><div><span>Roof Type</span></div></td><td class="right_data"><span id='roof_type1'></span></td>
-												</tr>
-												
-												<tr id="rs1" style="display: none;">
-													<td class="left_data"><div><span>Roof Shape</span></div></td><td class="right_data"><span id='roof_shape1'></span></td>
-												</tr>
-
-												<tr id="rf1" style="display: none;">
-													<td class="left_data"><div><span>Roof Frame</span></div></td><td class="right_data"><span id='roof_frame1'></span></td>
-												</tr>
-												
-												<tr id="rm1" style="display: none;">
-													<td class="left_data"><div><span>Roof Material</span></div></td><td class="right_data"><span id='roof_material1'></span></td>
-												</tr>
-		
-												<tr id="noos1" style="display: none;">
-													<td class="left_data"><div><span>No. of Stories</span></div></td><td class="right_data"><span id='no_of_stories1'></span></td>
-												</tr>							                  
-
-				    							<tr id="z1" style="display: none;">
-													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Based on zoning system used by county" class="tool_tips green-tooltip green-tooltip">Zoning</span></div></td>
-													<td class="right_data"><span id='zoning1' data-toggle="tooltip" data-original-title="Based on zoning system used by county" class="tool_tips green-tooltip green-tooltip"></span></td>
-												</tr>
-							                  
-                </table>
-                
-               <br>  
-               <hr class="style-one" /> 
-              </div>
-              
-              <!--end Ease of Installation-->
-              
-              
-               <div class="table-responsive"  id="check_area_profile1" style="display: none;">
-                   <table class="table">
-			 				                  <caption class="capt">
-							                   Area Profile
-							                  </caption>
-    
-          										<tr id="d1" style="display: none;" >
-													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Based on 1500 demographic, psychographic, attitudinal, econometric and credit attributes." class="tool_tips green-tooltip">Segmentation</span></div></td>
-													<td class="right_data"><span id='delineate1' data-toggle="tooltip" data-original-title="Based on 1500 demographic, psychographic, attitudinal, econometric and credit attributes." class="tool_tips green-tooltip"></span></td>
-												</tr>
-		
-												<tr id="glm1" style="display: none;" >
-													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Based on values and purchasing habits" class="tool_tips green-tooltip">How Green?</span></div></td>
-													<td class="right_data"><span id='green_living_model1' data-toggle="tooltip" data-original-title="Based on values and purchasing habits" class="tool_tips green-tooltip">  </span></td>
-												</tr>
-
-												<tr id="hp1" style="display: none;" >
-													<td class="left_data"><div><span>% homes owned (vs. rented)</span></div></td>
-													<td class="right_data"><span id='homeowner_penetration1'>  </span></td>
-												</tr>
-												
-												<tr id="hoha1" style="display: none;" >
-													<td class="left_data"><div><span>Approximate Head of Household Age</span></div></td>
-													<td class="right_data"><span id='head_of_household_age1'>  </span></td>
-												</tr>
-			
-
-
-							                  
-                   </table>
-                
-               <br>  
-               <hr class="style-one" /> 
-              </div>
- 
-   
-          <!--end Area Profile-->
-   
-   
-   
-              <div id="check_solar_adoption1" style="display: none;">    
-              <div class="table-responsive">
-                <table class="table">                  
-                  
-                  <tr>
-                    
-                    <td>
-                      <div>
-                        <span style="font-family:'latobold'">
-                          Solar Adoption
-                        </span>
-                      </div>
-                    </td>
-                    <br>
-                    <td style="padding-left:22px;">                      
-                      
-                      <input type="radio" name="type1" id="changetype-zip" checked='checked' value="zip" >
-                      <label for="changetype-zip" style='display: inline'>
-                        Zip
-                      </label>
-                        
-                        <input type="radio" name="type1" id="changetype-city" value="city" data-toggle="radio" >
-                      <label for="changetype-city" class="radio" style='display: inline'>
-                        City
-                      </label>
-                      
-                    </td>                    
-                    
-                  </tr>
-                  
-                  <tr>
-                    <td class="mi_tab_result_pad" style="padding:15px;width:33%;padding-left:0px">
-                      <div>
-                        <span>
-                          Solar Homes
-                        </span>
-                      </div>
-                      <div id='solar_homes1' class="mi_tab_result">
-                       
-                      </div>
-                    </td>
-                    <td class="mi_tab_result_pad" style="padding:15px;width:33%;padding-left:0px;">
-                      <div>
-                        <span data-toggle="tooltip" data-original-title="% of systems financed by lease or PPA " class="tool_tips green-tooltip">
-                         3rd Party
-                        </span>
-                      </div>
-                      <div id='3rd_party1' data-toggle="tooltip" data-original-title="% of systems financed by lease or PPA " class="mi_tab_result tool_tips green-tooltip">
-                       
-                      </div>
-                    </td>
-                    <td class="mi_tab_result_pad" style="padding:15px;width:33%;padding-left:0px;">
-                      <div>
-                        <span>
-                          Avg. System
-                        </span>
-                      </div>
-                      <div id='average_system1' class="mi_tab_result">
-                        
-                      </div>
-                      
-                    </td>
-                  </tr>
-                  
-                </table>
-              </div>
-              
-         
-              <div class="table-responsive">
-                <table class="table">
-                  <tr>
-                    <td class="left_data" rowspan="5">
-                      <div>
-                         <span data-toggle="tooltip" data-original-title="Ranked by number of installations" class="tool_tips green-tooltip">
-                          Top Installers
-                        </span>
-                      </div>
-                    </td>
-                    <td class="right_data">
-                      <span id='installer10'></span>
-                    </td>
-                    
-                  </tr>
-                  
-                  <tr>
-                    <td class="right_data">
-                      <span id='installer11'></span>
-                    </td>
-                    
-                  </tr>
-                  <tr>
-                    <td class="right_data">
-                      <span id='installer12'></span>
-                    </td>
-                    
-                  </tr>
-                  <tr>
-                    <td class="right_data">
-                     <span id='installer13'></span>
-                    </td>
-                    
-                  </tr>
-                  <tr>
-                    <td class="right_data">
-                     <span id='installer14'></span>
-                    </td>
-                    
-                  </tr>
-                 
-                
-                 
-                 <tr>
-                    <td style="padding-bottom:15px;"></td>    
-                </tr>
-                 <tr>
-                    <td class="left_data" rowspan="3">
-                      <div>
-                         <span data-toggle="tooltip" data-original-title="Ranked by number of installations" class="tool_tips green-tooltip">
-                         Top Panel Brands
-                        </span>
-                      </div>
-                    </td>
-                    <td class="right_data">
-                      <span id='panel10'></span>
-                    </td>
-                    
-                  </tr>
-                  
-                  <tr>
-                    <td class="right_data">
-                      <span id='panel11'></span>
-                    </td>
-                    
-                  </tr>
-                  <tr>
-                    <td class="right_data">
-                      <span id='panel12'></span>
-                    </td>
-                    
-                  </tr>
-                 
-                  
-                  <tr>
-                    <td style="padding-bottom:15px;"></td>    
-                </tr>
-                  <tr>
-                    <td class="left_data" rowspan="3">
-                      <div>
-                        <span data-toggle="tooltip" data-original-title="Ranked by number of installations" class="tool_tips green-tooltip">
-                          Top Inverter Brands
-                        </span>
-                      </div>
-                    </td>
-                    <td class="right_data">
-                      <span id='inverter10'></span>
-                    </td>
-                    
-                  </tr>
-                  
-                  <tr>
-                    <td class="right_data">
-                      <span id='inverter11'></span>
-                    </td>
-                    
-                  </tr>
-                  <tr>
-                    <td class="right_data">
-                     <span id='inverter12'></span>
-                    </td>
-                    
-                  </tr>
-                      
-                  
-                </table>
-               </div>         
-              </div>   
-                        
-                        <div style="letter-spacing:1px;">
-                        
-           						<div id="model_avilable" style="line-height:22px;font-size:16px;">
-								<p style="font-family:'latobold';line-height: 24px;font-size:17px;">COMING SOON</p><br />
-                                With ProspectZen's Instant 3D Home, you can instantly view a super high-resolution 3D model of your prospect's home, right in your browser. 
-							</div>
-                            <div id="rooft0p_img" style="width:100%;"><img style="width:100%;margin:0 auto" src="/assets/3D Rooftop2.png"></div>
-							<div id="features" style="line-height:22px;padding-left:8px;font-size:16px;">
-								<ul>
-									<li>
-										<span class="glyphicon glyphicon-ok" style="margin-right:10px;"></span>Inspect each roof plane with 6-inch accuracy.
-									</li>
-									<li>
-										<span class="glyphicon glyphicon-ok" style="margin-right:10px;"></span>Maximize system size by 'seeing more of the roof'
-									</li>
-									
-									<li>
-										<span class="glyphicon glyphicon-ok" style="margin-right:10px;"></span>Shorten or eliminate your preliminary site survey
-									</li>
-									<li>
-										<span class="glyphicon glyphicon-ok" style="margin-right:10px;"></span>Design code compliant systems the very first time
-									</li>
-									<li>
-										<span class="glyphicon glyphicon-ok" style="margin-right:10px;"></span>Include in your quote and impress your customers
-									</li>
-								</ul>
-							</div>
-                        </div>
-
-                        
-                        
-                        
-                
-            </div>
-            <!--end everything-->
-              
-  
-            
-            <div class="tab-pane" id="solaradoption">
-               <div class="table-responsive">
-                <table class="table">                  
-                  
-                  <tr>
-                    
-                    <td>
-                      <div>
-                        <span style="font-family:'latobold'">
-                           Solar Adoption
-                        </span>
-                      </div>
-                    </td>
-                    <br>
-                    <td style="padding-left:22px;">
-                      
-                      
-                      <input type="radio" name="type2" id="changetype-zip" checked='checked' value="zip" >
-                      <label for="changetype-zip" style='display: inline'>
-                        Zip
-                      </label>
-                        
-                        <input type="radio" name="type2" id="changetype-city" value="city" data-toggle="radio" >
-                      <label for="changetype-city" class="radio" style='display: inline'>
-                        City
-                      </label>
-                      
-                    </td>
-                    
-                    
-                  </tr>
-                  
-                  <tr>
-                    <td class="mi_tab_result_pad" style="padding:15px;width:33%;padding-left:0px;">
-                      <div>
-                        <span>
-                          Solar Homes
-                        </span>
-                      </div>
-                      <div id='solar_homes2' class="mi_tab_result">
-                       
-                      </div>
-                    </td>
-                    <td class="mi_tab_result_pad" style="padding:15px;width:33%;padding-left:0px;">
-                      <div>
-                        <span data-toggle="tooltip" data-original-title="% of systems financed by lease or PPA " class="tool_tips green-tooltip">
-                          3rd Party
-                        </span>
-                      </div>
-                      <div id='3rd_party2' data-toggle="tooltip" data-original-title="% of systems financed by lease or PPA " class="mi_tab_result tool_tips green-tooltip">
-                       
-                      </div>
-                    </td>
-                    <td class="mi_tab_result_pad" style="padding:15px;width:33%;padding-left:0px;">
-                      <div>
-                        <span>
-                          Avg. System
-                        </span>
-                      </div>
-                      <div id='average_system2' class="mi_tab_result">
-                        
-                      </div>
-                      
-                    </td>
-                  </tr>
-                  
-                </table>
-              </div>
-              
-         
-              <div class="table-responsive">
-                <table class="table">
-                  <tr>
-                    <td class="left_data" rowspan="5">
-                      <div>
-                        <span data-toggle="tooltip" data-original-title="Ranked by number of installations" class="tool_tips green-tooltip">
-                          Top Installers
-                        </span>
-                      </div>
-                    </td>
-                    <td class="right_data">
-                      <span id='installer20'></span>
-                    </td>
-                    
-                  </tr>
-                  
-                  <tr>
-                    <td class="right_data">
-                      <span id='installer21'></span>
-                    </td>
-                    
-                  </tr>
-                  <tr>
-                    <td class="right_data">
-                      <span id='installer22'></span>
-                    </td>
-                    
-                  </tr>
-                  <tr>
-                    <td class="right_data">
-                     <span id='installer23'></span>
-                    </td>
-                    
-                  </tr>
-                  <tr>
-                    <td class="right_data">
-                     <span id='installer24'></span>
-                    </td>
-                    
-                  </tr>
-                 
-                 
-                 <tr>
-                    <td style="padding-bottom:15px;"></td>    
-                </tr>
-                 
-                 <tr>
-                    <td class="left_data" rowspan="3">
-                      <div>
-                        <span data-toggle="tooltip" data-original-title="Ranked by number of installations" class="tool_tips green-tooltip">
-                         Top Panel Brands
-                        </span>
-                      </div>
-                    </td>
-                    <td class="right_data">
-                      <span id='panel20'></span>
-                    </td>
-                    
-                  </tr>
-                  
-                  <tr>
-                    <td class="right_data">
-                      <span id='panel21'></span>
-                    </td>
-                    
-                  </tr>
-                  <tr>
-                    <td class="right_data">
-                      <span id='panel22'></span>
-                    </td>
-                    
-                  </tr>
-              
-                  
-                  <tr>
-                    <td style="padding-bottom:15px;"></td>    
-                </tr>
-                  <tr>
-                    <td class="left_data" rowspan="3">
-                      <div>
-                         <span data-toggle="tooltip" data-original-title="Ranked by number of installations" class="tool_tips green-tooltip">
-                          Top Inverter Brands
-                        </span>
-                      </div>
-                    </td>
-                    <td class="right_data">
-                      <span id='inverter20'></span>
-                    </td>
-                    
-                  </tr>
-                  
-                  <tr>
-                    <td class="right_data">
-                      <span id='inverter21'></span>
-                    </td>
-                    
-                  </tr>
-                  <tr>
-                    <td class="right_data">
-                     <span id='inverter22'></span>
-                    </td>
-                    
-                  </tr>
-                    
-                  
-                </table>          
-          
-            </div>        
-            
-            
-            </div>
-             <!--end market intelligence -->
-            
-            
-                       
-            <div class="tab-pane" id="needtoknow"> 
-
-               <div class="table-responsive">
-              		  <table class="table">
-							                  <caption class="capt">
-							                    Need to Know
-							                  </caption>
-  
-											   <tr>
-													<td class="left_data">
-													<div>
-														<span data-toggle="tooltip" data-original-title="Number of solar companies that have qualified this address, updated in real time" class="tool_tips green-tooltip">No. of checks on this address</span>
-													</div></td>
-													<td class="right_data"><span id='prev_checks2' data-toggle="tooltip" data-original-title="Number of solar companies that have qualified this address, updated in real time" class="tool_tips green-tooltip"> </span></td>
-												</tr>
-			
-												<tr id="own2" style="display: none;">
-													<td class="left_data">
-													<div>
-														<span data-toggle="tooltip" data-original-title="Name(s) on property title" class="tool_tips green-tooltip">Name of Owner(s)</span>
-													</div></td>
-													<td class="right_data"><span id='owner_name2' data-toggle="tooltip" data-original-title="Name(s) on property title" class="tool_tips green-tooltip"> </span></td>
-												</tr>
-												<tr id="ma2" style="display: none;">
-													<td class="left_data">
-													<div>
-														<span data-toggle="tooltip" data-original-title="Contact property owner at this mailing address" class="tool_tips green-tooltip">Full Mailing Address</span>
-													</div></td>
-													<td class="right_data"><span id='mailing_address2' data-toggle="tooltip" data-original-title="Contact property owner at this mailing address" class="tool_tips green-tooltip"> </span></td>
-												</tr>
-												<tr id="oo2" style="display: none;">
-													<td class="left_data">
-													<div>
-														<span>Owner Occupied?<span>
-													</div></td>
-													<td class="right_data"><span id='owner_occupied2'> </span></td>
-												</tr>
-							
-								   
-							                   <tr id="luc2" style="display: none;">
-							                    <td class="left_data">
-							                      <div>
-							                       <span>Property Type</span>
-							                      </div>
-							                    </td>
-							                    <td class="right_data">
-							                      <span id='land_use_code2'>
-							                          
-							                      </span>
-							                    </td>
-							                  </tr>	
-								
-
-							                  <tr id="rpcu2" style="display: none;">
-							                    <td class="left_data">
-							                      <div>
-							                       <span>No. of Units</span>
-							                      </div>
-							                    </td>
-							                    <td class="right_data">
-							                      <span id='residential_per_common_units2'>
-							                          
-							                      </span>
-							                    </td>
-							                  </tr>	
-							                  
-												<tr id="lor2" style="display: none;" >
-													<td class="left_data"><div><span> How likely to relocate in 3-6 months?</span></div></td>
-													<td class="right_data"><span id='likelihood_of_relocation2'>  </span></td>
-												</tr>
-							
-							                  <tr id="lsd2" style="display: none;">
-							                    <td class="left_data">
-							                      <div>
-							                       <span data-toggle="tooltip" data-original-title="Time since last property sale" class="tool_tips green-tooltip">Owned For</span>
-							                      </div>
-							                    </td>
-							                    <td class="right_data">
-							                      <span id='last_sale_date2' data-toggle="tooltip" data-original-title="Time since last property sale" class="tool_tips green-tooltip">
-							                          
-							                      </span>
-							                    </td>
-							                  </tr>
-        
-											
-												<!-- <tr id="tar2" style="display: none;" >
-													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Self explanatory" class="tool_tips green-tooltip">Time at Residence</span></div></td>
-													<td class="right_data"><span id='time_at_residence2'>  </span></td>
-												</tr>
-												
-												<tr id="aom2" style="display: none;" >
-													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Outstanding home mortgage value" class="tool_tips green-tooltip">Amount of Mortgage</span></div></td>
-													<td class="right_data"><span id='amount_of_mortgage2'>  </span></td>
-												</tr>
-
-
-												
-												<tr id="lbthvr2" style="display: none;" >
-													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="owner_text" class="tool_tips green-tooltip">Loan Balance to Home Value Ratio</span></div></td>
-													<td class="right_data"><span id='loan_balance_to_home_value_ratio2'>  </span></td>
-												</tr>
-												
-												<tr id="is2" style="display: none;" >
-													<td class="left_data"><div><span data-toggle="tooltip" data-original-title='This is a relative score, "is he wealthy or not - relative to the rest of the U.S.?"' class="tool_tips green-tooltip">Income Score</span></div></td>
-													<td class="right_data"><span id='income_score2'>  </span></td>
-												</tr>
-												
-												<tr id="aiz2" style="display: none;" >
-													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="owner_text" class="tool_tips green-tooltip">Adults in Zip+4</span></div></td>
-													<td class="right_data"><span id='adults_in_zip2'>  </span></td>
-												</tr> -->
-												
-																																																																																				
-                
-              		  </table>
-
-              </div>	
-            </div>
-            <!--end demographic -->
-            
-            
-            
-            <div class="tab-pane" id="showmoney">
-              <div class="table-responsive">
-                <table class="table">
-                  <caption class="capt">
-                     Show Me The Money
-                  </caption>         
-							                  
-										    	<tr id="ecs2" style="display: none;" >
-														<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Homeowner's estimated credit score for Zip+4 area, typically 8 homes " class="tool_tips green-tooltip">Estimated Credit Score</span></div></td>
-														<td class="right_data"><span id='est_credit_score2' data-toggle="tooltip" data-original-title="Homeowner's estimated credit score for Zip+4 area, typically 8 homes " class="tool_tips green-tooltip"> </span></td>
-												</tr>
-									
-									
-												<tr id="i2" style="display: none;" >
-														<td class="left_data"><div><span>Estimated Household Income</span></div></td>
-														<td class="right_data"><span id='income2'></span></td>
-												</tr>
-							
-												<tr id="hethvr2" style="display: none;" >
-													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Ratio of home equity to home value" class="tool_tips green-tooltip">Estimated Home Equity</span></div></td>
-													<td class="right_data"><span id='home_equity_to_home_value_ratio2' data-toggle="tooltip" data-original-title="Ratio of home equity to home value" class="tool_tips green-tooltip">  </span></td>
-												</tr>
-																																										
-												<tr id="dtir2" style="display: none;" >
-													<td class="left_data"><div><span>Estimated Debt to Income</span></div></td>
-													<td class="right_data"><span id='debt_to_income_ratio2'>  </span></td>
-												</tr>
-					
-					 		                  <tr id="lsp2" style="display: none;">
-							                    <td class="left_data">
-							                      <div>
-							                       <span data-toggle="tooltip" data-original-title="Price of last recorded property sale" class="tool_tips green-tooltip">Last Sale Price of Home<span>
-							                      </div>
-							                    </td>
-							                    <td class="right_data">
-							                      <span id='last_sale_price2' data-toggle="tooltip" data-original-title="Price of last recorded property sale" class="tool_tips green-tooltip">
-							                          
-							                      </span>
-							                    </td>
-							                  </tr>
-																		
-					
-                  
-                </table>
-              </div>
-              
-              <!--end owner-->
-            </div>
-            
-            <div class="tab-pane" id="electricity">
-              <div class="table-responsive">
-                <table class="table">
-                  <caption class="capt">
-                    Electricity Indicators
-                  </caption>
-
-                   <tr id="ht2">
-                    <td class="left_data">
-                      <div>
-                        <span data-toggle="tooltip" data-original-title="How the house is heated" class="tool_tips green-tooltip">Heat Type</span>
-                      </div>
-                    </td>
-                    <td class="right_data">
-                      <span id='heat_type2' data-toggle="tooltip" data-original-title="How the house is heated" class="tool_tips green-tooltip">
-                      </span>
-                    </td>
-                  </tr>
-                                        
-                
-                  
-                  <tr id="hf2">
-                    <td class="left_data">
-                      <div>
-                        <span data-toggle="tooltip" data-original-title="Energy source for heating" class="tool_tips green-tooltip">Heat Fuel</span>
-                      </div>
-                    </td>
-                    <td class="right_data">
-                      <span id='heat_fuel2' data-toggle="tooltip" data-original-title="Energy source for heating" class="tool_tips green-tooltip">
-                      </span>
-                    </td>
-                  </tr>
-                                     
-                  <tr id="aoh2">
-                    <td class="left_data">
-                      <div>
-                        <span data-toggle="tooltip" data-original-title="If building was demolished, age since reconstruction" class="tool_tips green-tooltip">Age of Home</span>
-                      </div>
-                    </td>
-                    <td class="right_data">
-                      <span id='age_of_home2' data-toggle="tooltip" data-original-title="If building was demolished, age since reconstruction" class="tool_tips green-tooltip">
-                      </span>
-                    </td>
-                  </tr>
-                                  
- 										
-				<tr id="pl2" style="display: none;" >
-					<td class="left_data">
-						<div>
-							<span> Approximate no. of people living here</span>
-						</div>
-					</td>
-					<td class="right_data"><span id='persons_living2'>  </span></td>
-				</tr>
-                 
-                   <tr id="ga2">
-                    <td class="left_data">
-                      <div>
- 						<span data-toggle="tooltip" data-original-title="Total area of built structure(s) on property" class="tool_tips green-tooltip">Gross Area</span>
-                      </div>
-                    </td>
-                    <td class="right_data">
-                      <span id='gross_area2' data-toggle="tooltip" data-original-title="Total area of built structure(s) on property" class="tool_tips green-tooltip">
-                      </span>
-                    </td>
-                  </tr>
-                
- 
- 				<tr id="nobed2" style="display: none;">
-    				<td class="left_data"><div><span>No. of Beds/Baths<span></div></td><td class="right_data"><span id='no_of_bedroom2'></span></td>
-				</tr>
-
-	                 
-                                    
-                  <tr id="po2">
-                    <td class="left_data">
-                      <div>
-                         <span>Has Pool?</span>
-                      </div>
-                    </td>
-                    <td class="right_data">
-                      <span id='pool2'>
-                      </span>
-                    </td>
-                  </tr>
-                  
- 				<tr id="utility2" style="display: none;">
-												
-					<td class="left_data">
-						<div>
-						 <span>Utility provider (s)</span>
-						</div>
-					</td>
-												
-					<td class="right_data">
-					    <div>
-							<span id='utilityspan2'></span>
-						</div>
-					</td>
-			    </tr>	
- 
-               
-
-
-
-                  <!-- <tr id="lspps2" style="display: none;">
-                    <td class="left_data">
-                      <div>
-                       <span data-toggle="tooltip" data-original-title="Sale price of the property in terms of dollar amount per square foot of living/building area (lot area if no building is present)." class="tool_tips green-tooltip">Last Sale Price/sqft<span>
-                      </div>
-                    </td>
-                    <td class="right_data">
-                      <span id='last_sale_price_per_sqrft2'>
-                          
-                      </span>
-                    </td>
-                  </tr> -->
-
-
-                  
-                </table>
-              </div>
-              
-              <!--end property-->
-            </div>
-            
-  
-  
-            <div class="tab-pane" id="easeinstallation">
-              <div class="table-responsive">
-                <table class="table">
-                  <caption class="capt">
-                    Ease of Installation
-                  </caption>
-                  
-                                        
-                    
-                  <tr id="rt2">
-                    <td class="left_data">
-                      <div>
-                       <span>Roof Type<span>
-                      </div>
-                    </td>
-                    <td class="right_data">
-                      <span id='roof_type2'>
-                      </span>
-                    </td>
-                  </tr>
-   
-     
-                       
-                  <tr id="rs2">
-                    <td class="left_data">
-                      <div>
-                       <span>Roof Shape<span>
-                      </div>
-                    </td>
-                    <td class="right_data">
-                      <span id='roof_shape2'>
-                      </span>
-                    </td>
-                  </tr>
-      
-                  
-                  <tr id="rf2">
-                    <td class="left_data">
-                      <div>
-                      <span>Roof Frame<span>
-                      </div>
-                    </td>
-                    <td class="right_data">
-                      <span id='roof_frame2'>
-                      </span>
-                    </td>
-                  </tr>
-         
-       
-              
-                  <tr id="rm2">
-                    <td class="left_data">
-                      <div>
-                    <span>Roof Material<span>
-                      </div>
-                    </td>
-                    <td class="right_data">
-                      <span id='roof_material2'>
-                      </span>
-                    </td>
-                  </tr>
-
-                    
-                  <tr id="noos2">
-                    <td class="left_data">
-                      <div>
-                      <span>No. of Stories<span>
-                      </div>
-                    </td>
-                    <td class="right_data">
-                      <span id='no_of_stories2'>
-                      </span>
-                    </td>
-                  </tr>
-                  
-                  
-                  <tr id="z2" style="display: none;">
-                    <td class="left_data">
-                      <div>
-                      <span data-toggle="tooltip" data-original-title="Based on zoning system used by county" class="tool_tips green-tooltip">Zoning<span>
-                      </div>
-                    </td>
-                    <td class="right_data">
-                      <span id='zoning2' data-toggle="tooltip" data-original-title="Based on zoning system used by county" class="tool_tips green-tooltip">
-                          
-                      </span>
-                    </td>
-                  </tr>
-
-
-            
-                </table>
-              </div>
-              
-              <!--end Ease of Installation-->
-            </div>
-   
-    
-            <div class="tab-pane" id="areaprofile">
-              <div class="table-responsive">
-                <table class="table">
-							                   <caption class="capt">
-							                    Area Profile
-							                   </caption>
-                  
-          										<tr id="d2" style="display: none;" >
-													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Based on 1500 demographic, psychographic, attitudinal, econometric and credit attributes." class="tool_tips green-tooltip">Segmentation</span></div></td>
-													<td class="right_data"><span id='delineate2' data-toggle="tooltip" data-original-title="Based on 1500 demographic, psychographic, attitudinal, econometric and credit attributes." class="tool_tips green-tooltip"></span></td>
-												</tr>
-		
-												<tr id="glm2" style="display: none;" >
-													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Based on values and purchasing habits" class="tool_tips green-tooltip">How Green?</span></div></td>
-													<td class="right_data"><span id='green_living_model2' data-toggle="tooltip" data-original-title="Based on values and purchasing habits" class="tool_tips green-tooltip">  </span></td>
-												</tr>
-
-												<tr id="hp2" style="display: none;" >
-													<td class="left_data"><div><span>% homes owned (vs. rented)</span></div></td>
-													<td class="right_data"><span id='homeowner_penetration2'>  </span></td>
-												</tr>
-												
-												<tr id="hoha2" style="display: none;" >
-													<td class="left_data"><div><span>Approximate Head of Household Age</span></div></td>
-													<td class="right_data"><span id='head_of_household_age2'>  </span></td>
-												</tr>
-			
-
-            
-                </table>
-              </div>
-              
-              <!--end  Area Profile-->
-            </div>
-     
-           
-     
-     
-            <div class="tab-pane" id="dhome" style="letter-spacing:1px;">
-                        
-           						<div id="model_avilable" style="line-height:22px;font-size:16px;">
-								<p style="font-family:'latobold';line-height: 24px;font-size:17px;">COMING SOON</p><br />
-                                With ProspectZen's Instant 3D Home, you can instantly view a super high-resolution 3D model of your prospect's home, right in your browser. 
-							</div>
-                            <div id="rooft0p_img" style="width:100%;"><img style="width:100%;margin:0 auto" src="/assets/3D Rooftop2.png"></div>
-							<div id="features" style="line-height:22px;padding-left:8px;font-size:16px;">
-								<ul>
-									<li>
-										<span class="glyphicon glyphicon-ok" style="margin-right:10px;"></span>Inspect each roof plane with 6-inch accuracy.
-									</li>
-									<li>
-										<span class="glyphicon glyphicon-ok" style="margin-right:10px;"></span>Maximize system size by 'seeing more of the roof'
-									</li>
-									
-									<li>
-										<span class="glyphicon glyphicon-ok" style="margin-right:10px;"></span>Shorten or eliminate your preliminary site survey
-									</li>
-									<li>
-										<span class="glyphicon glyphicon-ok" style="margin-right:10px;"></span>Design code compliant systems the very first time
-									</li>
-									<li>
-										<span class="glyphicon glyphicon-ok" style="margin-right:10px;"></span>Include in your quote and impress your customers
-									</li>
-								</ul>
-							</div>
-                        </div>
-
-                        
-            
-          </div>
-          
-          
-        </div>
-        
-      </div>
-      <div id="panel_container_sidebar">
-        <span id="side" class="glyphicon glyphicon-chevron-left" style="color:#5cb85c">
-        </span>
-      </div>
-      <div style="clear:both">
-      </div>
-    </div>
-    <!--            End panel container                               -->
-    
-    <div width="32px">
-    <img id="loadingimage" style="display:none;width:50px;height:50px;position:absolute;top:50%;left:50%;auto;z-index: 100000000000" src = "/assets/greenloader.gif" >
-    </div>
     <script>
       $(document).ready(function(){
           

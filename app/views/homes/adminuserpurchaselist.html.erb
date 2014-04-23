@@ -222,7 +222,7 @@
 						         <td><%= tranc.transaction_id %> </td>
 						         <td><%= tranc.address %></td>
 						         						         
-						         <% user_zone_date=tranc.last_purchase_date
+						         <% user_zone_date=tranc.purchase_date
 						            if (tranc.user_zone)[0]=='+'
 						            	user_zone_date=user_zone_date+(tranc.user_zone)[1,3].to_i.hours
 						            	user_zone_date=user_zone_date+(tranc.user_zone)[4,6].to_i.minutes
