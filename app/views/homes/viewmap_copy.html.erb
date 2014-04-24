@@ -21,7 +21,10 @@
     
     
     <style>      
-       
+       /*div.gm-style>div>div>div>div>div>div>div{
+       		background:red !important;
+       	
+       }*/	
             #myModal{
                 overflow-y:hidden;
             }
@@ -49,6 +52,13 @@
         #search_error{
             visibility:hidden;
         }
+        .gm-style-iw{
+        	background:red;
+        	color:#fff;
+        	font-family:latoreg;
+        	font-size:13px;
+        	
+        }
         
        
     </style>
@@ -63,7 +73,7 @@
 		
           
   </head>
-  <body  onload="initialize()">
+  <body>
     
     <div class="container" id="menu_navigation">
       <div id="bgnav" class="navbar navbar-fixed-top navbar-inverse">
@@ -1482,15 +1492,26 @@
     <img id="loadingimage" style="display:none;width:50px;height:50px;position:absolute;top:50%;left:50%;auto;z-index: 100000000000" src = "/assets/greenloader.gif" >
     </div>
     <script type="text/javascript">
+      var script = '<script type="text/javascript" src="http://google-maps-' +
+          'utility-library-v3.googlecode.com/svn/trunk/infobubble/src/infobubble';
+      if (document.location.search.indexOf('compiled') !== -1) {
+        script += '-compiled';
+      }
+      script += '.js"><' + '/script>';
+      document.write(script);
+    </script>
+    
+    
+    
+    <script type="text/javascript">
 			var input;
 			var radiovalue = 'zip';
 			var citycode = '';
 			var zipcode = '';
-			var ge;
 			var placeSearch, autocomplete;
 			var x, y;
 			var infobox;
-			
+			var length2 = 0;
 			// var transcationid;
 			
 			var geocoder;
@@ -1689,10 +1710,15 @@
 					});
 				});
 			});
-
+            
+            var addresses = new Array;
+            var transaction = new Array;
+            var lat = new Array;
+            var lng = new Array;
 			var geocoder;
-			var placemark;
-			var placemark2 = new Array;
+			var latitude;
+			var longitude;
+			var marker = new Array;
 		    var map;
 		
            
@@ -1757,50 +1783,24 @@
 						check();
 		    	
 		    }
-
-
-			// function init() {
-// 			
-				// input = document.getElementById('loc_search').value;
-// 				
-				// google.earth.createInstance('map-canvas', initCallback, failureCallback);
-				// }
 		
 		
-		    function camerapositionpurchase()
+		    function camerapositionpurchase(latitude,longitude,formatted_address)
 		 	   {
 		 	   	$("#panel_container").show();
 		 	   	
 		    	// var lookAt = ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND);		
-				var input = document.getElementById('loc_search').value;		
-		
-				
-		    	
-                $.ajax({
-							type : "Post",
-							url : "http://maps.googleapis.com/maps/api/geocode/json?address=" + input + "&sensor=false",
-							dataType : "JSON",
-					        async: false,
-							success : function(data) {
-					       
-							var latlong = data.results[0]["geometry"]["location"];
-							
-							formatted_address= data.results[0].formatted_address;	
-					        setValueNewTranscation(formatted_address);
-					        marker = new google.maps.Marker({
-				                position: latlong,
-				                map: map,
-				             });
-
-                    	      map.setCenter(latlong);
-						      map.setZoom(20);  // Why 17? Because it looks good.
-						   
-				               
-				             
-
-		    	}
-		    	});
-		    	
+				var input = document.getElementById('loc_search').value;
+                  
+					marker = new google.maps.Marker({
+						position : new google.maps.LatLng(latitude, longitude),
+						map : map,
+					});
+					setValueNewTranscation(formatted_address);
+					var position2 = new google.maps.LatLng(latitude, longitude);
+					map.setCenter(position2);
+					map.setZoom(20);// Why 17? Because it looks good.
+ 	
 		    }
 		    
 		    
@@ -1810,73 +1810,63 @@
 		 	   	$("#panel_container").show();
 		 	   	
 		 	   	 <% if session[:lat] %>
-		 	   	 
-		 	   	 
-		 	   	 
-		    	      lat = '<%= session[:lat] %>'
-		    	      lng = '<%= session[:lng] %>'
-				      
-				        setValueNewTranscation(formatted_address);	
+		 	   	      lat1 = '<%= session[:lat] %>'
+		    	      lng1 = '<%= session[:lng] %>'
+				     
+				        setValueNewTranscation(input);	
 				        
-						 marker = new google.maps.Marker({
-				                position: new google.maps.LatLng(lat, lng),
-				                map: map,
-				             });
-                       var position2: new google.maps.LatLng(lat, lng),
+
+
+                       var position2 = new google.maps.LatLng(lat1, lng1);
                     	      map.setCenter(position2);
 						      map.setZoom(20);  // Why 17? Because it looks good.
 						   
+				<% end %>
 				
-						});				
-
-		    	<% end %>
-		    	
-		    }
+		}
 		    
 		 
 	 
 	 
 	    	function cameraposition() {
-	    			    		    		
-	    		$("#panel_container").show();
+
+				$("#panel_container").show();
 		
-				var input = document.getElementById('loc_search').value;
+				makemake();
+				var len = length2;
+				addresses[len] = formatted_address;
+				lat[len] = latitude;
+				lng[len] = longitude;
+				$("#loadingimage").hide();
 				
-				$.ajax({
-							type : "Post",
-							url : "http://maps.googleapis.com/maps/api/geocode/json?address=" + input + "&sensor=false",
-							dataType : "JSON",
-					        async: false,
-							success : function(data) {
-					       
-							var latlong = data.results[0]["geometry"]["location"];
-							console.log("camera");
-							formatted_address= data.results[0].formatted_address;	
-					       makemake();
-					       $("#loadingimage").hide();
-					       
-					        marker = new google.maps.Marker({
-				                position: latlong,
-				                map: map,
-				             });
+				
+				 marker[len] = new google.maps.Marker({
+					position: new google.maps.LatLng(latitude,longitude),
+					map: map,
+				});
+		
+				var position2 = new google.maps.LatLng(latitude,longitude);
+				map.setCenter(position2);
+				map.setZoom(20);  // Why 17? Because it looks good.
+				
+				google.maps.event.addListener(marker[len], 'click', function() {
+	
+			
+					setValue(transaction[len]);
+			
+					// Prevent default balloon from popping up for marker placemarks
+			
+					event.preventDefault();
+					
+					});
+				
+				length2 = length2 + 1;
+				
+			
+				
 
-                    	      map.setCenter(latlong);
-						      map.setZoom(20);  // Why 17? Because it looks good.
-						   
-
-				      }
-				      
-				      });
-				      
-			      
-				 
-		              
-				 google.maps.event.addListener(marker, 'click', function() {
-				             	alert(formatted_address);
-				             });
-                    
 		}
-        
+
 
 	   function pad(number, length){
 		    var str = "" + number;
@@ -1936,20 +1926,16 @@
 						'county' : componentForm1['administrative_area_level_2'],
 						'country' : componentForm1['country'],
 						'address' : formatted_address,
+						'lat' : latitude,
+						'lng' : longitude,
 					    'usertimezone' :offset
 					},
  
                     
 					success : function(response) {
 								
-						      addresses =response['alladdress'] 
-			           	      transaction =response['alltransaction']
-			            
-							// for (var x = check2 ; x < addresses.length; x++) {
-								// console.log("checkpurchase");
-								  // call(x,addresses);
-// 							
-							 // }
+						      
+			           	      transaction =response['alltransaction'];
 									        
 						        var check_flag=0;
 					          
@@ -2938,7 +2924,11 @@
 					dataType : "JSON",
 					async : false,
 					success : function(response) {
- 
+                        var latlong = response.results[0]["geometry"]["location"];
+                        
+                        latitude = latlong.lat;
+                        longitude = latlong.lng;
+                        
 						var length = response["results"][0]["address_components"].length;
 						 
  						formatted_address=response["results"][0]["formatted_address"];
@@ -3051,7 +3041,7 @@
 							        else
 							         {
 							    
-							         	camerapositionpurchase();
+							         	camerapositionpurchase(latitude,longitude,formatted_address);
 							         	
 							         }							    
 							    
@@ -3207,8 +3197,9 @@
 				$("#inverter2" + i).html("");
 									
 				}
-   	
-   		input1 = formatted_address.split(",");							
+				
+   	    
+   		input1 = input.split(",");							
 		var secondline=''
 		
 		for(i=1; i< (input1.length-1); i++)
@@ -3228,6 +3219,9 @@
 						'address' :input,
 						},
 					success : function(response) {
+					
+					zipcode = response['transaction'][0]['zip'];
+				    citycode = response['transaction'][0]['city'];
 					
 					  // $("#prev_chk").show();
 					  // $("#prev_checks").html(response['transaction'][0]['prev_check']);	
@@ -4228,18 +4222,30 @@
 					async:false,
 					data : {
 						'tranc' :x,
-						'zip' : zipcode
+						// 'zip' : zipcode
 						},
 					success : function(response) {
+						
+						zipcode = response['transaction'][0]['zip'];
+						citycode = response['transaction'][0]['city'];					
+											        
+							        input1=response['transaction'][0]['address'];
+							   		input1 = input1.split(",");							
+									var secondline=''
+									
+									for(i=1; i< (input1.length-1); i++)
+									{
+										secondline=secondline+input1[i]+' ';
+									}
+									
+									$("#panel_search_result").html(input1[0]+'<br>'+secondline);
+					 
 					
 					  var check_flag=0;
-					  // $("#prev_chk").show();
-					  // $("#prev_checks").html(response['transaction'][0]['prev_check']);
-
+                      
                       if (response['transaction'].length > 0){
                      
-                           	// placemark2.setName(response['transaction'][0]['address']);
-                                                     
+                                                                               
  				            if(response['transaction'][0]['prev_check']==0)
 					            {					            						            	
 					            	 $("#prev_checks1").html("You're the first");
@@ -5211,73 +5217,46 @@
 				});       	
        	
        } 
-           
-	function remove(addresses)
-	{
-		for (var i = 0; i < addresses.length; i++)
-			{
-			   placemark2[i].setName("");	
-			}
-	}
-	
-	
-	
-	
+		var infowindow = new google.maps.InfoWindow();
+		var imageUrl = 'http://beta.prospectzen.com/assets/red_circle.png';
+		var markerImage = new google.maps.MarkerImage(imageUrl);
 
-	function call(x)
-		{      check2 = check2+1 
-               var point2 = new Array;
-					$.ajax({
-							type : "Post",
-							url : "http://maps.google.com/maps/api/geocode/json?sensor=false&address" +addresses[x],
-							dataType : "JSON",
-					      	async:false,
-							success : function(data) {
-					       
-							var latlong = data.results[0]["geometry"]["location"];
-							//console.log(latlong);
-							//latlong = data.results[0]["geometry"]["location"];
-							//placemark2[x] = ge.createPlacemark('');
-						//	var icon = ge.createIcon('');	
-						//	icon.setHref('http://beta.prospectzen.com/assets/red_circle.png');
-						
-					//	alert(x);
-						    // marker1 = new google.maps.Marker({
-				                // position: latlong,
-				                // map: map,
-				             // });	
-					        // markers.push(marker1);
-					        
-					      
-					           marker = new google.maps.Marker({
-				                position: latlong,
-				                map: map,
-				             });
-					        
-							}
+           function call(x,input) {
+           	marker[x] = new google.maps.Marker({
+					position: new google.maps.LatLng(lat[x], lng[x]),
+					map: map,
+					icon: markerImage
+					});
+           
+
+		google.maps.event.addListener(marker[x], 'click', function() {
+
+		setValue(transaction[x]);
+		var data = '<div class="info"  id="info" style="background-Color:#FF0000;"> <p>'+input + '</p></div>';
+        
+		infowindow.setContent(data);
+        infowindow.open(map, marker[x]);
+		
+		event.preventDefault();
 
 					});
-     }
+           }
      
      
      
 			function others() {
-				
+			//	input1 = formatted_address.split(",");
 	            addresses =<%= raw @address %>
 	            transaction =<%= raw @transaction %>
                 lat = <%= raw @lat %>
                 lng = <%= raw @long %>
-				console.log(addresses.length);
-				console.log(addresses);
+				length2 = addresses.length;					
 				for (var x = 0; x < addresses.length; x++) {
-					
-                         marker = new google.maps.Marker({
-				            position: new google.maps.LatLng(lat[x], lng[x]),
-				            map: map,
-				             });
-				
-				 }
-				 
+
+					call(x,addresses[x]);
+
+			}
+
 				 if (addresses.length >0)
 				
 				   {
@@ -5301,27 +5280,7 @@
 	        autocomplete = new google.maps.places.Autocomplete(/** @type {HTMLInputElement} */(document.getElementById('loc_search')), {
 			 types : ['geocode']
 		 });
-		 		// geocoder = new google.maps.Geocoder();
-		// http://maps.google.com/maps/api/geocode/json?sensor=false&address" +addresses[x],
-		 // $.ajax({
-							// type : "GET",
-							// url : 'http://maps.googleapis.com/maps/api/geocode/json?sensor=false&address=' + 'USA' ,
-// 							
-					     // async: false,
-							// success : function(data) {
-// 					       
-							// var t = data.results[0].geometry.location;
-							// latlong = data.results[0]["geometry"]["location"];
-							// var mapOptions = {
-				            // center: new google.maps.LatLng(t.lat, t.lng),
-				             // zoom: 5,
-				             // mapTypeId: google.maps.MapTypeId.SATELLITE
-				             // }; 
-				             // map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);					        
-							// }
-// 
-					// });		
-         // autocomplete.bindTo('bounds', map);
+
          var mapOptions = {
 				            center: new google.maps.LatLng(37.6,-95.665),
 				             zoom: 5,
@@ -5333,7 +5292,7 @@
  
     }
 
-
+google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 
     <script>
