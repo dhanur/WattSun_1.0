@@ -268,6 +268,9 @@
 					});
 				});
 			});
+    
+            var latitude;
+			var longitude;
 
 			var geocoder;
 			var placemark;
@@ -571,6 +574,8 @@
 						'county' : componentForm1['administrative_area_level_2'],
 						'country' : componentForm1['country'],
 						'address' : formatted_address,
+						'lat' : latitude,
+						'lng' : longitude,
 					    'usertimezone' :offset
 					},
  
@@ -1573,7 +1578,11 @@
 					dataType : "JSON",
 					async : false,
 					success : function(response) {
- 
+                        var latlong = response.results[0]["geometry"]["location"];
+                        
+                        latitude = latlong.lat;
+                        longitude = latlong.lng;
+                        
 						var length = response["results"][0]["address_components"].length;
 						 
  						formatted_address=response["results"][0]["formatted_address"];

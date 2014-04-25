@@ -1890,7 +1890,7 @@ class HomesController < ApplicationController
          session[:lat]=params[:lat]
          session[:lng]=params[:lng]
          lat = params[:lat]
-         lng = params[:lat]
+         lng = params[:lng]
      else  
          lat = '0'
          lng = '0'

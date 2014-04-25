@@ -1746,9 +1746,9 @@
 					// overflow: hidden,
 					// backgroundClassName: 'phoney',
 					arrowStyle:0,
-					minWidth: 200,
-					minHeight: 60,
-					maxWidth: 300,
+					minWidth: 250,
+					minHeight: 70,
+					maxWidth: 1000,
 					maxHight: 200,
 				});
 		
@@ -1825,7 +1825,7 @@
 					setValueNewTranscation(formatted_address);
 					var position2 = new google.maps.LatLng(latitude, longitude);
 					map.setCenter(position2);
-					map.setZoom(20);// Why 17? Because it looks good.
+					map.setZoom(22);// Why 17? Because it looks good.
  	
 		    }
 		    
@@ -1845,7 +1845,7 @@
 
                        var position2 = new google.maps.LatLng(lat1, lng1);
                     	      map.setCenter(position2);
-						      map.setZoom(20);  // Why 17? Because it looks good.
+						      map.setZoom(22);  // Why 17? Because it looks good.
 						   
 				<% end %>
 				
@@ -1874,7 +1874,7 @@
 		
 				var position2 = new google.maps.LatLng(latitude,longitude);
 				map.setCenter(position2);
-				map.setZoom(20);  // Why 17? Because it looks good.
+				map.setZoom(22);  // Why 17? Because it looks good.
 				
 				google.maps.event.addListener(marker[len], 'click', function() {
 	
@@ -3236,7 +3236,7 @@
 		}
 		
 		$("#panel_search_result").html(input1[0]+'<br>'+secondline);					   	
-		infoBubble.setContent('<div id="sold_marker" style="color:#fff;font-family:latoreg;font-size:15px;padding:10px;">'+input1[0]+'<br>'+secondline+'</div>');
+		infoBubble.setContent('<div id="sold_marker" style="color:#fff;font-family:latoreg;font-size:17px;line-height:20px;padding-top:5%;padding-bottom:5%;text-align:center;">'+input1[0]+'<br>'+secondline+'</div>');
 			
    	    	
    		$.ajax({
@@ -4267,10 +4267,7 @@
 										secondline=secondline+input1[i]+' ';
 									}
 									
-									$("#panel_search_result").html(input1[0]+'<br>'+secondline);
-									
-									// infoBubble.setContent('<div id="puchased_marker" style="color:#fff;font-family:latoreg;font-size:15px;padding:10px;">'+input1[0]+'<br>'+secondline+'</div>');
-					 
+									$("#panel_search_result").html(input1[0]+'<br>'+secondline);					 
 					
 					  var check_flag=0;
                       
@@ -5277,7 +5274,7 @@
 					
 					$("#panel_search_result").html(input1[0]+'<br>'+secondline);
 					
-					infoBubble.setContent('<div id="puchased_marker" style="color:#fff;font-family:latoreg;font-size:15px;text-align: justify;">'+input1[0]+'<br>'+secondline+'</div>');
+					infoBubble.setContent('<div id="puchased_marker" style="color:#fff;font-family:latoreg;font-size:17px;line-height:20px;padding-top:5%;padding-bottom:5%;text-align:center;">'+input1[0]+'<br>'+secondline+'</div>');
 					infoBubble.open(map, marker[x]);
 					
 					setValue(transaction[x]);			
@@ -5334,10 +5331,11 @@
          var mapOptions = {
 				            center: new google.maps.LatLng(37.6,-95.665),
 				             zoom: 5,
+				             minZoom: 5,
 				             mapTypeId: google.maps.MapTypeId.SATELLITE
 				             }; 
 		map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);	
-
+        // map.mapTypes.satellite.minZoom = 5;
         others();    
  
     }

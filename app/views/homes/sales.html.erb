@@ -84,7 +84,9 @@
         <script src="/assets/dataTables.bootstrap.js"></script>
         <script>
             $(document).ready(function() {
-
+                
+                
+                
                 $('#example').dataTable({
                 	
                 	"aaSorting": [[ 0, "desc" ]],
@@ -97,6 +99,7 @@
 						null
 					]
 			    });
+                $( "#example_length" ).append('<a href="/homes/allsalescsv" style="float:right;font-size:16px;color:#000;margin-right:15px;">Download CSV</a>');
                 $('#example_length label select.input-sm').customSelect();
                 $('.input-sm').css({"padding":"0px 12px","fontSize":"18px","fontFamily":"latobold"});
                 $('.dataTables_filter input').attr("placeholder", "Search by address, name, city, zip, anything!");
@@ -110,7 +113,7 @@
                 $('#example_length select.form-control').css({"height":"46px","border-radius":"0px","border-color":"#5cb85c"});
                 $('#example_length').css({"margin-left":"5px","padding":"5px 0px"});
                 $('#example_info.dataTables_info').css({"display":"none"});
-                $('.dataTables_length').css("float","right");
+                $('.dataTables_length').css("float","left");
          
             });
             
