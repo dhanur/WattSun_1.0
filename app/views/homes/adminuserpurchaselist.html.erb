@@ -74,8 +74,17 @@
         <script>
             $(document).ready(function() {
 
-                $('#example').dataTable();
-                    $('#example_length label select.input-sm').customSelect();
+                $('#example').dataTable({
+                	
+                	"aaSorting": [[ 0, "desc" ]],
+					"aoColumns": [
+						null,
+						null,
+						null,
+						null
+				  ]
+			    });
+                $('#example_length label select.input-sm').customSelect();
                 $('.dataTables_filter input').attr("placeholder", "Search by address, name, city, zip, anything!");
                 $('.input-sm').css({"padding":"0px 12px","fontSize":"18px","fontWeight":"bold"});
                 $('.dataTables_filter input').attr("class", "form-control");

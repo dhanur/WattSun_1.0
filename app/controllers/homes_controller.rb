@@ -211,11 +211,15 @@ class HomesController < ApplicationController
       @usersalestranc=User.joins(:user_purchases).select("users.id, users.first_name, users.last_name, users.company_name, users.credits, users.monthly_charge, user_purchases.*").where("users.id = ? and user_purchases.status = 1",session[:admin_user_transaction_view_id])
 
       @usersalestranc_csv = CSV.generate do |csv|
-               csv << ["Transaction Id", "Address", "Name", "Company Name", "IPQ Checks", "On", "IPQ Valid", "IPQ Active Price", "Active Monthly Access Fee", "Owner Name", "Mailing Address", "Owner occupied",
+               csv << ["Transaction Id", "Street", "City", "State", "Zip", "Name", "Company Name", "IPQ Checks", "Date", "Time", "IPQ Valid", "IPQ Active Price", "Active Monthly Access Fee", "Owner Name", "Mailing Address", "Owner occupied",
                         "Owned For", "Last Sale Price", "Land Use Code", "Zoning", "No. Of Residential/common units", "Gross Area", "No. of bedrooms", "No. of bathrooms",
                         "Age Of Home","Has Pool?", "Heat type", "Heat fuel", "Roof type", "Roof Shape", "Roof material","Roof frame", "No. of Stories", "Estimated Credit Score", "Segmentation",
                         "How Green?","Estimated Household Income", "Estimated Debt to Income", "Premoves","Approximate Head of Household Age", "Approximate no. of people living here", "% homes owned (vs. rented)",
-                        "Estimated Home Equity"]
+                        "Estimated Home Equity", "Utility Provider", "Solar Homes for ZIP", "3rd Party for ZIP", "Avg. System for ZIP", "Installer1 for ZIP","Installer2 for ZIP","Installer3 for ZIP",
+                        "Installer4 for ZIP","Installer5 for ZIP", "Panel Brand1 for ZIP", "Panel Brand2 for ZIP", "Panel Brand3 for ZIP","Inverter Brand1 for ZIP", "Inverter Brand2 for ZIP", "Inverter Brand3 for ZIP",
+                        "Solar Homes for CITY", "3rd Party for CITY", "Avg. System for CITY", "Installer1 for CITY","Installer2 for CITY","Installer3 for CITY", "Installer4 for CITY","Installer5 for CITY", "Panel Brand1 for CITY",
+                        "Panel Brand2 for CITY", "Panel Brand3 for CITY","Inverter Brand1 for CITY", "Inverter Brand2 for CITY", "Inverter Brand3 for CITY"]
+
                         
                @usersalestranc.each do |tranc|
                         user_zone_date=tranc.purchase_date
@@ -423,11 +427,177 @@ class HomesController < ApplicationController
                            home_equity=''
                         end
           
-                                                             
-                        csv << [tranc.transaction_id, tranc.address, tranc.first_name+' '+tranc.last_name, tranc.company_name, tranc.prev_check, (user_zone_date).strftime('%d %b, %H:%M'), ipq_valid, ipq_active_price, mothly_access_fee,
-                                tranc.owner_name, tranc.mailing_address,ocp,owned, last_sale_price, tranc.land_use_code, tranc.zoning, tranc.no_of_residential_per_common_units, gross_area, tranc.no_of_bedrooms, tranc.no_of_bathrooms,
-                                age, pool, tranc.heat_type, tranc.heat_fuel, tranc.roof_type, tranc.roof_shape, tranc.roof_material, tranc.roof_frame, tranc.no_of_stories, est_credit_score, segmentation, aiq_green, eestimated_income,
-                                debt_ratio, premoves, householdage, tranc.PersonsatResidence_z4, owner_rented, home_equity ]
+          
+                        splited_address=(tranc.address).split(",")
+                        state=(splited_address[2]).split(" ")
+
+
+                  
+                        utl= Utilitytable.select("utility").where("zip = ?",tranc.zip)
+                        
+                        if !(utl.nil? || utl.blank?)
+                        utlstr=''
+                        utl.each do |u|       
+                             utlstr=utlstr+u.utility+', '
+                        end                           
+                             utlstr=utlstr[0..(utlstr.length-3)] 
+                        else
+                             utlstr=''
+                        end
+                                                                                                     
+                        zee=ZipEverythingElse.select("*").where("zip = ?",tranc.zip).limit(1)
+                        
+                        if !(zee.nil? || zee.blank?)
+                          solar_homes=zee.first['no_of_solar_homes']
+                          owned_system=zee.first['3rd_party_owned_system'].to_s+'%'
+                          avg_sys_size=zee.first['average_system_size'].to_s+'kW'
+                        else
+                          solar_homes=''
+                          owned_system=''
+                          avg_sys_size=''
+                        end
+                        
+                    
+                        ztp=ZipTopInstaller.select("*").where("zip = ?",tranc.zip).order('no_of_solar_homes desc').limit(5)
+                        
+                        if !(ztp.nil? || ztp.blank?)
+                          installer=''
+                          ztp.each do |zp|       
+                            installer=installer+zp.installers+','
+                          end                           
+                            installer=installer[0..(installer.length-2)].split(',')
+                             
+                            installer1=installer[0]
+                            installer2=installer[1]
+                            installer3=installer[2]
+                            installer4=installer[3]
+                            installer5=installer[4]
+                        else
+                            installer1=''  
+                            installer2=''
+                            installer3=''
+                            installer4=''
+                            installer5=''
+                        end
+                 
+                        
+                        zpb=ZipPanelBrand.select("*").where("zip = ?",tranc.zip).order('no_of_solar_homes desc').limit(3)
+                        
+                        if !(zpb.nil? || zpb.blank?)
+                          panel=''
+                            zpb.each do |zb|       
+                              panel=panel+zb.panel_brands+','
+                            end                           
+                            panel=panel[0..(panel.length-2)].split(',')
+                             
+                            panel1=panel[0]
+                            panel2=panel[1]
+                            panel3=panel[2]
+                        else
+                            panel1=''  
+                            panel2=''
+                            panel3=''                           
+                        end
+                 
+                        zib=ZipInverterBrand.select("*").where("zip = ?",tranc.zip).order('no_of_solar_homes desc').limit(3)
+        
+                        if !(zib.nil? || zib.blank?)
+                          inverter=''
+                            zib.each do |ib|       
+                              inverter=inverter+ib.inverter_brands+','
+                            end                           
+                            inverter=inverter[0..(inverter.length-2)].split(',')
+                             
+                            inverter1=inverter[0]
+                            inverter2=inverter[1]
+                            inverter3=inverter[2]
+                        else
+                            inverter1=''  
+                            inverter2=''
+                            inverter3=''                           
+                        end
+                 
+     
+                        cee=CityEverythingElse.select("*").where("city = ?",tranc.city).limit(1)  
+                                                 
+                        if !(cee.nil? || cee.blank?)
+                          city_solar_homes=cee.first['no_of_solar_homes']
+                          city_owned_system=cee.first['3rd_party_owned_system'].to_s+'%'
+                          city_avg_sys_size=cee.first['average_system_size'].to_s+'kW'
+                        else
+                          city_solar_homes=''
+                          city_owned_system=''
+                          city_avg_sys_size=''
+                        end
+                                            
+          
+                        ctp=CityTopInstaller.select("*").where("city = ?",tranc.city).order('no_of_solar_homes desc').limit(5) 
+                        
+                        if !(ctp.nil? || ctp.blank?)
+                          city_installer=''
+                          ctp.each do |cp|       
+                            city_installer=city_installer+cp.installers+','
+                          end                           
+                            city_installer=city_installer[0..(city_installer.length-2)].split(',')
+                             
+                            city_installer1=city_installer[0]
+                            city_installer2=city_installer[1]
+                            city_installer3=city_installer[2]
+                            city_installer4=city_installer[3]
+                            city_installer5=city_installer[4]
+                        else
+                            city_installer1=''  
+                            city_installer2=''
+                            city_installer3=''
+                            city_installer4=''
+                            city_installer5=''
+                        end
+                               
+                  
+                        cpb=CityPanelBrand.select("*").where("city = ?",tranc.city).order('no_of_solar_homes desc').limit(3) 
+                        
+                        if !(cpb.nil? || cpb.blank?)
+                            city_panel=''
+                            cpb.each do |cb|       
+                              city_panel=city_panel+cb.panel_brands+','
+                            end                           
+                            city_panel=city_panel[0..(city_panel.length-2)].split(',')
+                             
+                            city_panel1=city_panel[0]
+                            city_panel2=city_panel[1]
+                            city_panel3=city_panel[2]
+                        else
+                            city_panel1=''  
+                            city_panel2=''
+                            city_panel3=''                           
+                        end
+                                                        
+                  
+                        cib=CityInverterBrand.select("*").where("city = ?",tranc.city).order('no_of_solar_homes desc').limit(3)
+ 
+                        if !(cib.nil? || cib.blank?)
+                            city_inverter=''
+                            cib.each do |ib|       
+                              city_inverter=city_inverter+ib.inverter_brands+','
+                            end                           
+                            city_inverter=city_inverter[0..(city_inverter.length-2)].split(',')
+                             
+                            city_inverter1=city_inverter[0]
+                            city_inverter2=city_inverter[1]
+                            city_inverter3=city_inverter[2]
+                        else
+                            city_inverter1=''  
+                            city_inverter2=''
+                            city_inverter3=''                           
+                        end                         
+
+                                                            
+                        csv << [tranc.transaction_id, splited_address[0], tranc.city, state[0], tranc.zip, tranc.first_name+' '+tranc.last_name, tranc.company_name, tranc.prev_check, (user_zone_date).strftime('%d %b, %y'), (user_zone_date).strftime('%H:%M'),
+                               ipq_valid, ipq_active_price, mothly_access_fee,tranc.owner_name, tranc.mailing_address,ocp,owned, last_sale_price, tranc.land_use_code, tranc.zoning, tranc.no_of_residential_per_common_units, gross_area,
+                               tranc.no_of_bedrooms, tranc.no_of_bathrooms, age, pool, tranc.heat_type, tranc.heat_fuel, tranc.roof_type, tranc.roof_shape, tranc.roof_material, tranc.roof_frame, tranc.no_of_stories, est_credit_score, segmentation,
+                               aiq_green, eestimated_income, debt_ratio, premoves, householdage, tranc.PersonsatResidence_z4, owner_rented, home_equity, utlstr, solar_homes,owned_system, avg_sys_size, installer1, installer2, installer3, installer4, installer5,
+                               panel1, panel2, panel3, inverter1, inverter2, inverter3, city_solar_homes, city_owned_system, city_avg_sys_size, city_installer1, city_installer2, city_installer3, city_installer4, city_installer5,
+                               city_panel1, city_panel2, city_panel3, city_inverter1, city_inverter2, city_inverter3]
                               end
            end
 
@@ -523,11 +693,14 @@ class HomesController < ApplicationController
        @allsalestranc=User.joins(:user_purchases).select("users.id, users.first_name, users.last_name, users.company_name, users.credits, users.monthly_charge, user_purchases.*")
        @allsalestranc_csv = CSV.generate do |csv|
 
-               csv << ["Transaction Id", "Address", "Name", "Company Name", "IPQ Checks", "On", "IPQ Valid", "IPQ Active Price", "Active Monthly Access Fee", "Owner Name", "Mailing Address", "Owner occupied",
+               csv << ["Transaction Id", "Street", "City", "State", "Zip", "Name", "Company Name", "IPQ Checks", "Date", "Time", "IPQ Valid", "IPQ Active Price", "Active Monthly Access Fee", "Owner Name", "Mailing Address", "Owner occupied",
                         "Owned For", "Last Sale Price", "Land Use Code", "Zoning", "No. Of Residential/common units", "Gross Area", "No. of bedrooms", "No. of bathrooms",
                         "Age Of Home","Has Pool?", "Heat type", "Heat fuel", "Roof type", "Roof Shape", "Roof material","Roof frame", "No. of Stories", "Estimated Credit Score", "Segmentation",
                         "How Green?","Estimated Household Income", "Estimated Debt to Income", "Premoves","Approximate Head of Household Age", "Approximate no. of people living here", "% homes owned (vs. rented)",
-                        "Estimated Home Equity"]
+                        "Estimated Home Equity", "Utility Provider", "Solar Homes for ZIP", "3rd Party for ZIP", "Avg. System for ZIP", "Installer1 for ZIP","Installer2 for ZIP","Installer3 for ZIP",
+                        "Installer4 for ZIP","Installer5 for ZIP", "Panel Brand1 for ZIP", "Panel Brand2 for ZIP", "Panel Brand3 for ZIP","Inverter Brand1 for ZIP", "Inverter Brand2 for ZIP", "Inverter Brand3 for ZIP",
+                        "Solar Homes for CITY", "3rd Party for CITY", "Avg. System for CITY", "Installer1 for CITY","Installer2 for CITY","Installer3 for CITY", "Installer4 for CITY","Installer5 for CITY", "Panel Brand1 for CITY",
+                        "Panel Brand2 for CITY", "Panel Brand3 for CITY","Inverter Brand1 for CITY", "Inverter Brand2 for CITY", "Inverter Brand3 for CITY"]
 
 
                @allsalestranc.each do |tranc|
@@ -736,11 +909,176 @@ class HomesController < ApplicationController
                            home_equity=''
                         end
           
-                                                             
-                        csv << [tranc.transaction_id, tranc.address, tranc.first_name+' '+tranc.last_name, tranc.company_name, tranc.prev_check, (user_zone_date).strftime('%d %b, %H:%M'), ipq_valid, ipq_active_price, mothly_access_fee,
-                                tranc.owner_name, tranc.mailing_address,ocp,owned, last_sale_price, tranc.land_use_code, tranc.zoning, tranc.no_of_residential_per_common_units, gross_area, tranc.no_of_bedrooms, tranc.no_of_bathrooms,
-                                age, pool, tranc.heat_type, tranc.heat_fuel, tranc.roof_type, tranc.roof_shape, tranc.roof_material, tranc.roof_frame, tranc.no_of_stories, est_credit_score, segmentation, aiq_green, eestimated_income,
-                                debt_ratio, premoves, householdage, tranc.PersonsatResidence_z4, owner_rented, home_equity ]
+          
+                        splited_address=(tranc.address).split(",")
+                        state=(splited_address[2]).split(" ")
+
+                  
+                        utl= Utilitytable.select("utility").where("zip = ?",tranc.zip)
+                        
+                        if !(utl.nil? || utl.blank?)
+                        utlstr=''
+                        utl.each do |u|       
+                             utlstr=utlstr+u.utility+', '
+                        end                           
+                             utlstr=utlstr[0..(utlstr.length-3)] 
+                        else
+                             utlstr=''
+                        end
+                                                                                                     
+                        zee=ZipEverythingElse.select("*").where("zip = ?",tranc.zip).limit(1)
+                        
+                        if !(zee.nil? || zee.blank?)
+                          solar_homes=zee.first['no_of_solar_homes']
+                          owned_system=zee.first['3rd_party_owned_system'].to_s+'%'
+                          avg_sys_size=zee.first['average_system_size'].to_s+'kW'
+                        else
+                          solar_homes=''
+                          owned_system=''
+                          avg_sys_size=''
+                        end
+                        
+                    
+                        ztp=ZipTopInstaller.select("*").where("zip = ?",tranc.zip).order('no_of_solar_homes desc').limit(5)
+                        
+                        if !(ztp.nil? || ztp.blank?)
+                          installer=''
+                          ztp.each do |zp|       
+                            installer=installer+zp.installers+','
+                          end                           
+                            installer=installer[0..(installer.length-2)].split(',')
+                             
+                            installer1=installer[0]
+                            installer2=installer[1]
+                            installer3=installer[2]
+                            installer4=installer[3]
+                            installer5=installer[4]
+                        else
+                            installer1=''  
+                            installer2=''
+                            installer3=''
+                            installer4=''
+                            installer5=''
+                        end
+                 
+                        
+                        zpb=ZipPanelBrand.select("*").where("zip = ?",tranc.zip).order('no_of_solar_homes desc').limit(3)
+                        
+                        if !(zpb.nil? || zpb.blank?)
+                          panel=''
+                            zpb.each do |zb|       
+                              panel=panel+zb.panel_brands+','
+                            end                           
+                            panel=panel[0..(panel.length-2)].split(',')
+                             
+                            panel1=panel[0]
+                            panel2=panel[1]
+                            panel3=panel[2]
+                        else
+                            panel1=''  
+                            panel2=''
+                            panel3=''                           
+                        end
+                 
+                        zib=ZipInverterBrand.select("*").where("zip = ?",tranc.zip).order('no_of_solar_homes desc').limit(3)
+        
+                        if !(zib.nil? || zib.blank?)
+                          inverter=''
+                            zib.each do |ib|       
+                              inverter=inverter+ib.inverter_brands+','
+                            end                           
+                            inverter=inverter[0..(inverter.length-2)].split(',')
+                             
+                            inverter1=inverter[0]
+                            inverter2=inverter[1]
+                            inverter3=inverter[2]
+                        else
+                            inverter1=''  
+                            inverter2=''
+                            inverter3=''                           
+                        end
+                 
+     
+                        cee=CityEverythingElse.select("*").where("city = ?",tranc.city).limit(1)  
+                                                 
+                        if !(cee.nil? || cee.blank?)
+                          city_solar_homes=cee.first['no_of_solar_homes']
+                          city_owned_system=cee.first['3rd_party_owned_system'].to_s+'%'
+                          city_avg_sys_size=cee.first['average_system_size'].to_s+'kW'
+                        else
+                          city_solar_homes=''
+                          city_owned_system=''
+                          city_avg_sys_size=''
+                        end
+                                            
+          
+                        ctp=CityTopInstaller.select("*").where("city = ?",tranc.city).order('no_of_solar_homes desc').limit(5) 
+                        
+                        if !(ctp.nil? || ctp.blank?)
+                          city_installer=''
+                          ctp.each do |cp|       
+                            city_installer=city_installer+cp.installers+','
+                          end                           
+                            city_installer=city_installer[0..(city_installer.length-2)].split(',')
+                             
+                            city_installer1=city_installer[0]
+                            city_installer2=city_installer[1]
+                            city_installer3=city_installer[2]
+                            city_installer4=city_installer[3]
+                            city_installer5=city_installer[4]
+                        else
+                            city_installer1=''  
+                            city_installer2=''
+                            city_installer3=''
+                            city_installer4=''
+                            city_installer5=''
+                        end
+                               
+                  
+                        cpb=CityPanelBrand.select("*").where("city = ?",tranc.city).order('no_of_solar_homes desc').limit(3) 
+                        
+                        if !(cpb.nil? || cpb.blank?)
+                            city_panel=''
+                            cpb.each do |cb|       
+                              city_panel=city_panel+cb.panel_brands+','
+                            end                           
+                            city_panel=city_panel[0..(city_panel.length-2)].split(',')
+                             
+                            city_panel1=city_panel[0]
+                            city_panel2=city_panel[1]
+                            city_panel3=city_panel[2]
+                        else
+                            city_panel1=''  
+                            city_panel2=''
+                            city_panel3=''                           
+                        end
+                                                        
+                  
+                        cib=CityInverterBrand.select("*").where("city = ?",tranc.city).order('no_of_solar_homes desc').limit(3)
+ 
+                        if !(cib.nil? || cib.blank?)
+                            city_inverter=''
+                            cib.each do |ib|       
+                              city_inverter=city_inverter+ib.inverter_brands+','
+                            end                           
+                            city_inverter=city_inverter[0..(city_inverter.length-2)].split(',')
+                             
+                            city_inverter1=city_inverter[0]
+                            city_inverter2=city_inverter[1]
+                            city_inverter3=city_inverter[2]
+                        else
+                            city_inverter1=''  
+                            city_inverter2=''
+                            city_inverter3=''                           
+                        end                         
+
+
+                        csv << [tranc.transaction_id, splited_address[0], tranc.city, state[0], tranc.zip, tranc.first_name+' '+tranc.last_name, tranc.company_name, tranc.prev_check, (user_zone_date).strftime('%d %b, %y'), (user_zone_date).strftime('%H:%M'),
+                               ipq_valid, ipq_active_price, mothly_access_fee,tranc.owner_name, tranc.mailing_address,ocp,owned, last_sale_price, tranc.land_use_code, tranc.zoning, tranc.no_of_residential_per_common_units, gross_area,
+                               tranc.no_of_bedrooms, tranc.no_of_bathrooms, age, pool, tranc.heat_type, tranc.heat_fuel, tranc.roof_type, tranc.roof_shape, tranc.roof_material, tranc.roof_frame, tranc.no_of_stories, est_credit_score, segmentation,
+                               aiq_green, eestimated_income, debt_ratio, premoves, householdage, tranc.PersonsatResidence_z4, owner_rented, home_equity, utlstr, solar_homes,owned_system, avg_sys_size, installer1, installer2, installer3, installer4, installer5,
+                               panel1, panel2, panel3, inverter1, inverter2, inverter3, city_solar_homes, city_owned_system, city_avg_sys_size, city_installer1, city_installer2, city_installer3, city_installer4, city_installer5,
+                               city_panel1, city_panel2, city_panel3, city_inverter1, city_inverter2, city_inverter3]
                               end
            end
 

@@ -21,10 +21,7 @@
     
     
     <style>      
-       /*div.gm-style>div>div>div>div>div>div>div{
-       		background:red !important;
        	
-       }*/	
             #myModal{
                 overflow-y:hidden;
             }
@@ -52,20 +49,44 @@
         #search_error{
             visibility:hidden;
         }
-        .gm-style-iw{
-        	background:red;
+        /*.gm-style-iw{
         	color:#fff;
         	font-family:latoreg;
         	font-size:13px;
         	
         }
-        
+        .gm-style div div div div div div div div div{
+       		background:red !important;
+       	
+       }*/
+       
+        /*.gm-style div div div div div div{
+       		background:none;
+       	
+       }
+       
+       .gm-style div div div > div:first-of-type{
+       		background:red !important;
+       	
+       }*/
+      
+ 
+       /*.gm-style div div div div:nth-of-type(4)
+       {
+       	background:red !important;
+       
+       }
+       
+       .gm-style div div div div{ background: none;}
+       
+      */
        
     </style>
       
       
     
 		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+        <script src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobubble/src/infobubble.js"></script>
 
 	    <!-- <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script> -->
     	<!-- <script src="//www.google.com/jsapi?key=595146919660-rou65rsr0k1efgse3kgflrt6a713h4rd.apps.googleusercontent.com" type="text/javascript"></script> -->
@@ -1491,16 +1512,7 @@
     <div width="32px">
     <img id="loadingimage" style="display:none;width:50px;height:50px;position:absolute;top:50%;left:50%;auto;z-index: 100000000000" src = "/assets/greenloader.gif" >
     </div>
-    <script type="text/javascript">
-      var script = '<script type="text/javascript" src="http://google-maps-' +
-          'utility-library-v3.googlecode.com/svn/trunk/infobubble/src/infobubble';
-      if (document.location.search.indexOf('compiled') !== -1) {
-        script += '-compiled';
-      }
-      script += '.js"><' + '/script>';
-      document.write(script);
-    </script>
-    
+   
     
     
     <script type="text/javascript">
@@ -1720,6 +1732,25 @@
 			var longitude;
 			var marker = new Array;
 		    var map;
+		    var infoBubble = new InfoBubble({
+					shadowStyle: 3,
+					padding: 0,
+					backgroundColor: '#C0392B',
+					borderRadius: 4,
+					arrowSize: 15,
+					borderWidth: 1,
+					borderColor: '#C0392B',
+					// disableAutoPan: true,
+					hideCloseButton: true,
+					arrowPosition: 50,
+					// overflow: hidden,
+					// backgroundClassName: 'phoney',
+					arrowStyle:0,
+					minWidth: 200,
+					minHeight: 60,
+					maxWidth: 300,
+					maxHight: 200,
+				});
 		
            
             var check2 = 0;
@@ -1791,11 +1822,6 @@
 		 	   	
 		    	// var lookAt = ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND);		
 				var input = document.getElementById('loc_search').value;
-                  
-					marker = new google.maps.Marker({
-						position : new google.maps.LatLng(latitude, longitude),
-						map : map,
-					});
 					setValueNewTranscation(formatted_address);
 					var position2 = new google.maps.LatLng(latitude, longitude);
 					map.setCenter(position2);
@@ -1843,6 +1869,7 @@
 				 marker[len] = new google.maps.Marker({
 					position: new google.maps.LatLng(latitude,longitude),
 					map: map,
+					icon: markerImage,
 				});
 		
 				var position2 = new google.maps.LatLng(latitude,longitude);
@@ -1853,7 +1880,7 @@
 	
 			
 					setValue(transaction[len]);
-			
+			        infoBubble.open(map, marker[len]);
 					// Prevent default balloon from popping up for marker placemarks
 			
 					event.preventDefault();
@@ -1905,6 +1932,7 @@
    //     console.log(secondline)
 		
 		$("#panel_search_result").html(input1[0]+'<br>'+secondline);
+		$("#puchased_marker").html(input1[0]+'<br>'+secondline);
 		    	
        		var offset = new Date().getTimezoneOffset();
 			
@@ -3208,7 +3236,7 @@
 		}
 		
 		$("#panel_search_result").html(input1[0]+'<br>'+secondline);					   	
-		
+		infoBubble.setContent('<div id="sold_marker" style="color:#fff;font-family:latoreg;font-size:15px;padding:10px;">'+input1[0]+'<br>'+secondline+'</div>');
 			
    	    	
    		$.ajax({
@@ -4230,7 +4258,8 @@
 						citycode = response['transaction'][0]['city'];					
 											        
 							        input1=response['transaction'][0]['address'];
-							   		input1 = input1.split(",");							
+							        
+			        		   		input1 = input1.split(",");							
 									var secondline=''
 									
 									for(i=1; i< (input1.length-1); i++)
@@ -4239,6 +4268,8 @@
 									}
 									
 									$("#panel_search_result").html(input1[0]+'<br>'+secondline);
+									
+									// infoBubble.setContent('<div id="puchased_marker" style="color:#fff;font-family:latoreg;font-size:15px;padding:10px;">'+input1[0]+'<br>'+secondline+'</div>');
 					 
 					
 					  var check_flag=0;
@@ -5217,32 +5248,52 @@
 				});       	
        	
        } 
-		var infowindow = new google.maps.InfoWindow();
+		
 		var imageUrl = 'http://beta.prospectzen.com/assets/red_circle.png';
 		var markerImage = new google.maps.MarkerImage(imageUrl);
 
-           function call(x,input) {
-           	marker[x] = new google.maps.Marker({
-					position: new google.maps.LatLng(lat[x], lng[x]),
-					map: map,
-					icon: markerImage
-					});
-           
-
-		google.maps.event.addListener(marker[x], 'click', function() {
-
-		setValue(transaction[x]);
-		var data = '<div class="info"  id="info" style="background-Color:#FF0000;"> <p>'+input + '</p></div>';
-        
-		infowindow.setContent(data);
-        infowindow.open(map, marker[x]);
+       	function call(x,input) {
+				marker[x] = new google.maps.Marker({
+				position: new google.maps.LatLng(lat[x], lng[x]),
+				map: map,
+				icon: markerImage
+				});
 		
-		event.preventDefault();
+				
+		
+				google.maps.event.addListener(marker[x], 'click', function() {
+					if (check2==x) {
+						
+					}
+					else
+					{
+		      		input1 = input.split(",");							
+					var secondline=''
+					
+					for(i=1; i< (input1.length-1); i++)
+					{
+						secondline=secondline+input1[i]+' ';
+					}
+					
+					$("#panel_search_result").html(input1[0]+'<br>'+secondline);
+					
+					infoBubble.setContent('<div id="puchased_marker" style="color:#fff;font-family:latoreg;font-size:15px;text-align: justify;">'+input1[0]+'<br>'+secondline+'</div>');
+					infoBubble.open(map, marker[x]);
+					
+					setValue(transaction[x]);			
+					
+					event.preventDefault();
+                    check2 = x;
+                  }
+		       });
+		       
+		         // google.maps.event.addDomListener(document.getElementById('close'),
+                  // 'click', function() {
+                 // infoBubble.close();
+              // });
+		}
 
-					});
-           }
-     
-     
+   
      
 			function others() {
 			//	input1 = formatted_address.split(",");
@@ -5261,7 +5312,6 @@
 				
 				   {
 				 
-				   
 				   	<% if session[:last_viewed_address] %>		   	
 				     
 				     console.log('<%= session[:last_viewed_address] %>');

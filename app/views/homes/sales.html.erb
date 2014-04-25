@@ -85,9 +85,20 @@
         <script>
             $(document).ready(function() {
 
-                $('#example').dataTable();
-                  $('#example_length label select.input-sm').customSelect();
-                 $('.input-sm').css({"padding":"0px 12px","fontSize":"18px","fontFamily":"latobold"});
+                $('#example').dataTable({
+                	
+                	"aaSorting": [[ 0, "desc" ]],
+					"aoColumns": [
+						null,
+						null,
+						null,
+						null,
+						null,
+						null
+					]
+			    });
+                $('#example_length label select.input-sm').customSelect();
+                $('.input-sm').css({"padding":"0px 12px","fontSize":"18px","fontFamily":"latobold"});
                 $('.dataTables_filter input').attr("placeholder", "Search by address, name, city, zip, anything!");
                 $('.dataTables_filter input').attr("class", "form-control");
                 $('.dataTables_filter input').css({"border-radius":"0px","border-color":"#5cb85c","fontFamily":"latoreg"});
@@ -100,11 +111,12 @@
                 $('#example_length').css({"margin-left":"5px","padding":"5px 0px"});
                 $('#example_info.dataTables_info').css({"display":"none"});
                 $('.dataTables_length').css("float","right");
-                
+         
             });
             
             
-                	
+           
+       	
 		function abc(tranc_id)
           {
           	
