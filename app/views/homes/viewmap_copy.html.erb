@@ -3236,7 +3236,6 @@
 		}
 		
 		$("#panel_search_result").html(input1[0]+'<br>'+secondline);					   	
-		infoBubble.setContent('<div id="sold_marker" style="color:#fff;font-family:latoreg;font-size:17px;line-height:20px;padding-top:5%;padding-bottom:5%;text-align:center;">'+input1[0]+'<br>'+secondline+'</div>');
 			
    	    	
    		$.ajax({
@@ -4268,7 +4267,8 @@
 									}
 									
 									$("#panel_search_result").html(input1[0]+'<br>'+secondline);					 
-					
+					                infoBubble.setContent('<div id="sold_marker" style="color:#fff;font-family:latoreg;font-size:17px;line-height:20px;padding-top:5%;padding-bottom:5%;text-align:center;">'+input1[0]+'<br>'+secondline+'</div>');
+
 					  var check_flag=0;
                       
                       if (response['transaction'].length > 0){

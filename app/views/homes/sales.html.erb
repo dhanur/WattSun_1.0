@@ -99,7 +99,7 @@
 						null
 					]
 			    });
-                $( "#example_length" ).append('<a href="/homes/allsalescsv" style="float:right;font-size:16px;color:#000;margin-right:15px;">Download CSV</a>');
+                $( "#example_length" ).append('<a href="/homes/allsalescsv" style="float: right;font-size: 16px;margin-right: 15px;background: #5cb85c;color: #fff;font-family: latolig;padding: 10px;">Export CSV file</a>');
                 $('#example_length label select.input-sm').customSelect();
                 $('.input-sm').css({"padding":"0px 12px","fontSize":"18px","fontFamily":"latobold"});
                 $('.dataTables_filter input').attr("placeholder", "Search by address, name, city, zip, anything!");
@@ -114,6 +114,8 @@
                 $('#example_length').css({"margin-left":"5px","padding":"5px 0px"});
                 $('#example_info.dataTables_info').css({"display":"none"});
                 $('.dataTables_length').css("float","left");
+                $('.dataTables_length').css("width","100%");
+                
          
             });
             
@@ -218,7 +220,7 @@
                     </ul>
                 </div>
                 <div id="menu_content" style="float:right;">
-                    <a href="/homes/allsalescsv" style="float:right;font-size:16px;color:#000;margin-right:15px;">Download CSV</a>
+                    
                     <div style="clear:both;"></div>
                     <div id="menu_content_header">
                        <div style="float:left"> View all prospects qualified on ProspectZen since the beginning of time </div>
