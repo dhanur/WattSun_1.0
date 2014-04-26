@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20140407130751) do
   create_table "city_everything_elses", force: true do |t|
     t.string  "city",                   limit: 100, null: false
     t.integer "no_of_solar_homes",                  null: false
-    t.string  "3rd_party_owned_system", limit: 100, null: false
+    t.integer "3rd_party_owned_system",             null: false
     t.integer "average_system_size",                null: false
   end
 
@@ -64,38 +64,40 @@ ActiveRecord::Schema.define(version: 20140407130751) do
     t.text   "message",                  null: false
   end
 
-  create_table "speed_on_data", force: true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "speed_on_data", id: false, force: true do |t|
+    t.integer "ZIP5",                            null: false
+    t.integer "ZIP4",                            null: false
+    t.string  "riskiq3",               limit: 5, null: false
+    t.string  "delineate",             limit: 5, null: false
+    t.string  "AIQ_Green",             limit: 5, null: false
+    t.string  "IncomeIQ_Dol",          limit: 5, null: false
+    t.string  "DebtRatio",             limit: 5, null: false
+    t.string  "Premoves",              limit: 5, null: false
+    t.string  "Age_z4",                limit: 5, null: false
+    t.string  "ResidenceTime_z4",      limit: 5, null: false
+    t.string  "MortgageAmount_z4",     limit: 5, null: false
+    t.string  "PersonsatResidence_z4", limit: 5, null: false
+    t.string  "Homeowner_pct_z4",      limit: 5, null: false
+    t.string  "Loantovalue_z4",        limit: 5, null: false
+    t.string  "IncomeIQ_plus_z4",      limit: 5, null: false
+    t.string  "AIQ_Green_plus_z4",     limit: 5, null: false
+    t.string  "Homeequity_pc_z4",      limit: 5, null: false
+    t.string  "NumberofadultsinZip4",  limit: 5, null: false
+    t.string  "State2",                limit: 5, null: false
   end
 
-  create_table "speedon_data", id: false, force: true do |t|
-    t.string "ZIP5",                  limit: 50, null: false
-    t.string "ZIP4",                  limit: 50, null: false
-    t.string "riskiq3",               limit: 50, null: false
-    t.string "delineate",             limit: 50, null: false
-    t.string "AIQ_Green",             limit: 50, null: false
-    t.string "IncomeIQ_Dol",          limit: 50, null: false
-    t.string "DebtRatio",             limit: 50, null: false
-    t.string "Premoves",              limit: 50, null: false
-    t.string "Age_z4",                limit: 50, null: false
-    t.string "ResidenceTime_z4",      limit: 50, null: false
-    t.string "MortgageAmount_z4",     limit: 50, null: false
-    t.string "PersonsatResidence_z4", limit: 50, null: false
-    t.string "Homeowner_pct_z4",      limit: 50, null: false
-    t.string "Loantovalue_z4",        limit: 50, null: false
-    t.string "IncomeIQ_plus_z4",      limit: 50, null: false
-    t.string "AIQ_Green_plus_z4",     limit: 50, null: false
-    t.string "Homeequity_pc_z4",      limit: 50, null: false
-    t.string "NumberofadultsinZip4",  limit: 50, null: false
-    t.string "State2",                limit: 50, null: false
-  end
+  add_index "speed_on_data", ["ZIP4"], name: "ZIP4", using: :btree
+  add_index "speed_on_data", ["ZIP5", "ZIP4"], name: "NewIndex", using: :btree
+  add_index "speed_on_data", ["ZIP5"], name: "ZIP5", using: :btree
 
   create_table "user_purchases", primary_key: "transaction_id", force: true do |t|
     t.integer   "user_id",                            limit: 8,               null: false
     t.string    "address",                            limit: 200,             null: false
+    t.string    "lat",                                limit: 20,              null: false
+    t.string    "long",                               limit: 20,              null: false
     t.integer   "prev_check",                                     default: 0, null: false
     t.integer   "zip",                                                        null: false
+    t.string    "city",                               limit: 50
     t.string    "owner_name",                         limit: 100
     t.string    "mailing_address",                    limit: 200
     t.integer   "owner_occupied_indicator",           limit: 2
@@ -119,7 +121,8 @@ ActiveRecord::Schema.define(version: 20140407130751) do
     t.string    "roof_frame",                         limit: 200
     t.string    "condition",                          limit: 50
     t.integer   "no_of_stories",                      limit: 8
-    t.date      "last_purchase_date"
+    t.datetime  "purchase_date"
+    t.string    "user_zone",                          limit: 7,               null: false
     t.integer   "status",                             limit: 2,               null: false
     t.integer   "zip4"
     t.string    "riskiq3",                            limit: 100
@@ -170,6 +173,7 @@ ActiveRecord::Schema.define(version: 20140407130751) do
     t.string   "password",           limit: 200
     t.integer  "active_status",      limit: 2,   default: 0
     t.date     "last_activity"
+    t.datetime "last_purchase_date"
     t.datetime "registration_date"
     t.date     "forgot_pass_date"
   end

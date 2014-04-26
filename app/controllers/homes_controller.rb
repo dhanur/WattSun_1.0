@@ -13,6 +13,12 @@ class HomesController < ApplicationController
   end
 
   def adminlogin
+        
+    if session[:admin_user_id]      
+          redirect_to :action => "adminuserstatus"
+    elsif session[:super_admin_user_id]
+          redirect_to :action => "superadmin"
+    end
 
   end
 
@@ -1167,15 +1173,24 @@ class HomesController < ApplicationController
 
   def contactreceipt
 
-    @contact = Contact.new(contact_params)
+  #  @contact = Contact.new(contact_params)
 
-    if !@contact.save
-      render :json =>"something wrong"
+    if params[:mobile_phone]
+       contact_no= params[:mobile_phone]
+    else
+       contact_no=""
     end
+
+    Kernel.system 'curl https://prospectzen.zendesk.com/api/v2/tickets.json -d \'{"ticket":{"requester":{"name":"'+params[:full_name]+'", "email":"'+params[:email]+'"}, "subject": "'+params[:about]+'", "comment": { "body": "'+params[:message]+'" }}}\' -H "Content-Type: application/json" -v -u dhanur@prospectzen.com:prospectzen -X POST' 
+
 
   end
 
   def userlogin
+    
+    if session[:cust_user_id]
+       redirect_to :action => "viewmap"
+    end
 
   end
 
@@ -1427,11 +1442,11 @@ class HomesController < ApplicationController
 
     if session[:current_user_id]
       @user=User.select("*").where("id = ?",session[:current_user_id]).limit(1)
-      @contact=Contact.new(:full_name=>@user.first['first_name']+@user.first['last_name'],:email=>@user.first['company_email_id'],:mobile_phone=>@user.first['mobile_phone'],:about=>params[:what_about],:message=>params[:message])
-
-      if !@contact.save
-        render :json=>"Not saved"
-      end
+      
+      @user_name=@user.first["first_name"]+ "" + @user.first["last_name"]
+      @email_id=@user.first["company_email_id"]
+      Kernel.system 'curl https://prospectzen.zendesk.com/api/v2/tickets.json -d \'{"ticket":{"requester":{"name":"'+@user_name+'", "email":"'+@email_id+'"}, "subject": "'+params[:what_about]+'", "comment": { "body": "'+params[:message]+'" }}}\' -H "Content-Type: application/json" -v -u dhanur@prospectzen.com:prospectzen -X POST' 
+   
     else
       redirect_to :action => "userlogin"
 
@@ -2751,7 +2766,7 @@ class HomesController < ApplicationController
     params.permit(:first_name, :last_name, :title, :company_name, :company_address, :zip, :city, :state, :mobile_phone,:office_phone, :company_email_id,  :verification_token, :last_activity, :registration_date);
   end
 
-  def contact_params
-    params.permit(:full_name, :email, :mobile_phone, :about, :message);
-  end
+  # def contact_params
+    # params.permit(:full_name, :email, :mobile_phone, :about, :message);
+  # end
 end

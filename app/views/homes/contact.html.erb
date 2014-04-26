@@ -11,18 +11,18 @@
         <link href="/assets/flat-ui.css" rel="stylesheet">
         <link href="/assets/reset.css" rel="stylesheet">
         <link href="/assets/style_contact.css" rel="stylesheet">
-
         <link href="/assets/mediaqueries_contact.css" rel="stylesheet">
         <script src="/assets/jquery.js"></script>
         <script type="text/javascript" src="/assets/jquery.customSelect.js"></script>
-        <script src="/assets/bootstrap.min.js"></script>
-        
+        <script src="/assets/bootstrap.min.js"></script>        
         <script src="/assets/bootstrap-select.js"></script>
-       
+        <script type="text/javascript" src="/assets/jquery.inputmask.js"></script>
+        
         <script type="text/javascript">
             $(function() {
 
                 $('select.styled').customSelect();
+                $("#mobile_phone").mask("999-999-9999");
 
             });
         </script>
@@ -92,10 +92,10 @@
                 else{
                 
                    $("#side_scroll").addClass("collapse navbar-collapse no-transition");
-                }
-                
+                }                
                            
-  }		
+             }		
+	
 			function dataValidation()
 			{
 								

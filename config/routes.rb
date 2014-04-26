@@ -1,10 +1,10 @@
 Wattsun::Application.routes.draw do
   
-  get '/contact'  => 'high_voltage/pages#show', id: 'contact'
-  get '/faqs'    => 'high_voltage/pages#show', id: 'faqs'
-  get '/privacy'    => 'high_voltage/pages#show', id: 'privacy'
-  get '/terms'    => 'high_voltage/pages#show', id: 'terms'
- 
+  # get '/contact'  => 'high_voltage/pages#show', id: 'contact'
+  # get '/faqs'    => 'high_voltage/pages#show', id: 'faqs'
+  # get '/privacy'    => 'high_voltage/pages#show', id: 'privacy'
+  # get '/terms'    => 'high_voltage/pages#show', id: 'terms'
+  
   
   # root :to => 'high_voltage/pages#show', id: 'index'
   # resources :homes
@@ -16,8 +16,7 @@ Wattsun::Application.routes.draw do
    
    get '/homes/resetpasswordmessage' => 'homes#resetpasswordmessage'
    get '/homes/carddeclinemsg' => 'homes#carddeclinemsg'
-   get '/homes/ifr' => 'homes#ifr' 
-   
+ 
    post '/homes/checkuserexist' => 'homes#checkuserexist' 
    get '/homes/register_cc' => 'homes#register_cc' 
    get '/homes/passwordreset' => 'homes#passwordreset' 
@@ -49,13 +48,9 @@ Wattsun::Application.routes.draw do
    get '/homes/superadmin' => 'homes#superadmin' 
    post '/homes/changeadminstatus' => 'homes#changeadminstatus' 
    post '/homes/test' => 'homes#test' 
-  
     
-   
    get '/homes/adminsignup' => 'homes#adminsignup'
-   post '/homes/admincreate' => 'homes#admincreate'
-   
-       
+   post '/homes/admincreate' => 'homes#admincreate'       
    get '/homes/adminuserstatus' => 'homes#adminuserstatus'
    
    get '/homes/forgotpassword' => 'homes#forgotpassword'

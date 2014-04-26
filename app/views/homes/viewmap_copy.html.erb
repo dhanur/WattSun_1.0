@@ -1549,6 +1549,18 @@
 							'radio' : $(this).val()
 						},
 						success : function(response) {
+							
+													
+					        for ( i = 0; i < 5; i++) {
+				
+							   $("#installer1" + i).html("");
+							
+						    }
+						    
+						    for ( i = 0; i < 3; i++) {
+							   $("#panel1" + i).html("");				
+							   $("#inverter1" + i).html("");
+							}
 
 							if (response['utility'].length > 0) {
 								var str = ''
@@ -1644,6 +1656,17 @@
 							'radio' : $(this).val()
 						},
 						success : function(response) {
+							
+													
+					        for ( i = 0; i < 5; i++) {				
+								$("#installer2" + i).html("");
+						    }
+						    
+						    for ( i = 0; i < 3; i++) {
+								$("#panel2" + i).html("");
+								$("#inverter2" + i).html("");
+													
+							}
 
 							if (response['utility'].length > 0) {
 								var str = ''
@@ -1825,7 +1848,7 @@
 					setValueNewTranscation(formatted_address);
 					var position2 = new google.maps.LatLng(latitude, longitude);
 					map.setCenter(position2);
-					map.setZoom(22);// Why 17? Because it looks good.
+					map.setZoom(21);// Why 17? Because it looks good.
  	
 		    }
 		    
@@ -1845,7 +1868,7 @@
 
                        var position2 = new google.maps.LatLng(lat1, lng1);
                     	      map.setCenter(position2);
-						      map.setZoom(22);  // Why 17? Because it looks good.
+						      map.setZoom(21);  // Why 17? Because it looks good.
 						   
 				<% end %>
 				
@@ -1874,7 +1897,7 @@
 		
 				var position2 = new google.maps.LatLng(latitude,longitude);
 				map.setCenter(position2);
-				map.setZoom(22);  // Why 17? Because it looks good.
+				map.setZoom(21);  // Why 17? Because it looks good.
 				
 				google.maps.event.addListener(marker[len], 'click', function() {
 	

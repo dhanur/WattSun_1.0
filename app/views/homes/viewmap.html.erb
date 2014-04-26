@@ -84,6 +84,7 @@
 
 
 				$("input[type='radio'][name='type1']").click(function() {
+
 										
 					$.ajax({
 						url : "/homes/datafetch",
@@ -95,6 +96,16 @@
 							'radio' : $(this).val()
 						},
 						success : function(response) {
+										
+															
+							for ( i = 0; i < 5; i++) {				
+						    	$("#installer1" + i).html("");
+						    }
+						    
+						    for ( i = 0; i < 3; i++) {
+						    	$("#panel1" + i).html("");								
+							    $("#inverter1" + i).html("");
+							}
 
 							if (response['utility'].length > 0) {
 								var str = ''
@@ -178,8 +189,7 @@
 				});
 
 				$("input[type='radio'][name='type2']").click(function() {
-
-
+	
 					$.ajax({
 						url : "/homes/datafetch",
 						type : "POST",
@@ -190,6 +200,18 @@
 							'radio' : $(this).val()
 						},
 						success : function(response) {
+							
+							
+					        for ( i = 0; i < 5; i++) {		
+					    		$("#installer2" + i).html("");
+						    }
+						    
+						    for ( i = 0; i < 3; i++) {
+			    				$("#panel2" + i).html("");
+	    						$("#inverter2" + i).html("");
+												
+							}
+
 
 							if (response['utility'].length > 0) {
 								var str = ''
