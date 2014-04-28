@@ -366,6 +366,7 @@ hr.style-one {
 /*menu content*/
 #panel_table_content{
     padding:25px;
+    padding-bottom:45px;
     font-family:'latoreg';
     font-size:17px;
     letter-spacing: 0.5px;

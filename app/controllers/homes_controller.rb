@@ -1188,7 +1188,7 @@ class HomesController < ApplicationController
 
   def userlogin
     
-    if session[:cust_user_id]
+    if session[:current_user_id]
        redirect_to :action => "viewmap"
     end
 
@@ -2545,13 +2545,34 @@ class HomesController < ApplicationController
       end
 
       if customer.first['credits']==0
-
+      
+        begin
+          
         charge= Stripe::Charge.create(
         :customer => customer.first['cust_id'],
         :amount => ((customer.first['house_charge'].to_f * 100).to_i),
         :currency => "usd",
         :description => "Charge for IPQ" 
         )
+        
+      rescue Stripe::CardError => e
+       # Since it's a decline, Stripe::CardError will be caught
+      body = e.json_body
+      err  = body[:error]
+    
+      puts "Status is: #{e.http_status}"
+      puts "Type is: #{err[:type]}"
+      puts "Code is: #{err[:code]}"
+      # param is '' in this case
+      puts "Param is: #{err[:param]}"
+      puts "Message is: #{err[:message]}"
+     
+      Emailer.new_record_notification(@user.first['company_email_id']).deliver
+      render :template => "homes/carddeclinemsg", :locals => {:body => body, :err => err, :status => e.http_status} and return
+      # render :json => {"error" => "something went wrong"} and return
+
+    end
+
 
         if(charge.failure_code=='1')
           
@@ -2739,21 +2760,7 @@ class HomesController < ApplicationController
 
   end
 
- def viewmap_test
-  
-    session[:new_marker]=nil
-    if !session[:current_user_id]
-      redirect_to :action => "index"
-    else
-      @address= UserPurchase.select("address").where("user_id = ? and status = 1",session[:current_user_id])
-      @address = @address.to_a.map(&:address)
 
-      @address1= UserPurchase.select("transaction_id").where("user_id = ? and status = 1",session[:current_user_id])
-      @transaction = @address1.to_a.map(&:transaction_id)
-    end
-   
- end
- 
 
 
   private
