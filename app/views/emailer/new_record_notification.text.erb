@@ -1,23 +1,9 @@
+Hi,
 
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
-  </head>
-  <body>  	
-  	 	
-    <p>Welcome to WattSun, Dear <%= @user.first['first_name'] %>,</p>
-       ================
-    <p>
-        Your email id is: <%= @user.first['company_email_id'] %>.
-    </p>
-    <p>
-      To reset your password, just follow this link: <a href="http://beta.prospectzen.com/homes/passwordreset?id=<%= @user.first['company_email_id'] %>&vt=<%=@user.first['verification_token']%>" >click here</a>
-    </p>
-    <p>Thanks for joining and have a great day!</p>
-    
-    <p> Team WattSun </p>     
-       
-    
-  </body>
-</html>
+Your record has been added. You will soon receive an activation email, please click the link in that email to activate your account.
+
+If you have not used an official email id, you will be asked to re-apply.
+
+See you soon!
+
+Team WattSun

@@ -46,6 +46,9 @@
     }
 }
 @media screen and (max-width:767px){
+    .dtext_media{
+        width:92%;
+    }
     .no-transition {
         -webkit-transition: height .0001s;
         -moz-transition: height .0001s;
