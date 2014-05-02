@@ -10,17 +10,7 @@
     <link href="/assets/bootstrap.css" rel="stylesheet">
     <link href="/assets/reset.css" rel="stylesheet">
     <link href="/assets/stylepage2_test.css" rel="stylesheet">
-     
-    <link href="/assets/mediaqueriespage2_test.css" rel="stylesheet">
-    <script src="/assets/jquery.js">
-    </script>
-    <script src="/assets/bootstrap.js">
-    </script>
-    <script src="/assets/jquery.nicescroll.js">
-    </script>
-    
-    
-    <style>      
+     <style>      
        	    #ascrail2000{
                 visibility:hidden;
             }
@@ -50,6 +40,9 @@
         }
         #search_error{
             visibility:hidden;
+        }
+        .dtext_media{
+        width:390px;
         }
         /*.gm-style-iw{
         	color:#fff;
@@ -85,6 +78,16 @@
        
     </style>
       
+    <link href="/assets/mediaqueriespage2_test.css" rel="stylesheet">
+    <script src="/assets/jquery.js">
+    </script>
+    <script src="/assets/bootstrap.js">
+    </script>
+    <script src="/assets/jquery.nicescroll.js">
+    </script>
+    
+    
+    
       
     
 		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
@@ -253,7 +256,7 @@
 		
 
 
-    <div id="panel_container" style="position: relative; opacity:0;">
+    <div id="panel_container" style="position: relative; visibility:hidden">
       <div id="panel_container_content">
         
         <div id="panel_search_result">
@@ -814,7 +817,7 @@
                                 With ProspectZen's Instant 3D Home, you can instantly view a super high-resolution 3D model of your prospect's home, right in your browser. 
 							</div>
                             <div id="rooft0p_img" style="width:100%;"><img style="width:100%;margin:0 auto" src="/assets/3D Rooftop2.png"></div>
-							<div id="features" style="line-height:22px;padding-left:8px;font-size:16px;">
+							<div id="features" style="line-height:22px;padding-left:8px;font-size:15px;">
 								<ul>
 									<li>
 										<div class="glyphicon glyphicon-ok" style="margin-right:10px;float:left"></div><div class="dtext_media" style="float:left">Inspect each roof plane with 6-inch accuracy.</div><div style="clear:both"></div>
@@ -1472,7 +1475,7 @@
                                 With ProspectZen's Instant 3D Home, you can instantly view a super high-resolution 3D model of your prospect's home, right in your browser. 
 							</div>
                             <div id="rooft0p_img" style="width:100%;"><img style="width:100%;margin:0 auto" src="/assets/3D Rooftop2.png"></div>
-							<div id="features" style="line-height:22px;padding-left:8px;font-size:16px;">
+							<div id="features" style="line-height:22px;padding-left:8px;font-size:15px;">
 								<ul>
 									<li>
 										<div class="glyphicon glyphicon-ok" style="margin-right:10px;float:left"></div><div class="dtext_media" style="float:left">Inspect each roof plane with 6-inch accuracy.</div><div style="clear:both"></div>
@@ -1816,9 +1819,19 @@
 					};
 
 					check();
-                    setTimeout(function() {
+					
+					<% if session[:last_viewed_address] %>		
+					 setTimeout(function() {
                       map.setZoom(21);
                     }, 2000);
+                    
+                    <% else %>
+                      setTimeout(function() {
+                      map.setZoom(21);
+                    }, 3000);
+                    			
+                    <% end %> 
+                   
 
 				}
 			});
@@ -1839,87 +1852,59 @@
 						};
 	
 						check();
-                setTimeout(function() {
-                    map.setZoom(21);
-                }, 2000);
-		    	
+	                    <% if session[:last_viewed_address] %>		
+						 setTimeout(function() {
+	                      map.setZoom(21);
+	                    }, 2000);
+	                    
+	                    <% else %>	
+	                      setTimeout(function() {
+	                      map.setZoom(21);
+	                    }, 3000);
+	                   
+	                    <% end %> 
+                   
 		    }
 		
 		
 		    function camerapositionpurchase(latitude,longitude,formatted_address)
 		 	   {
-		 	   	$("#panel_container").css("opacity","1");
+		 	   	$("#panel_container").css("visibility","visible");
                 $('#ascrail2000').css("visibility","visible");  
                 
 		 	   	
 		    	// var lookAt = ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND);		
 				var input = document.getElementById('loc_search').value;
 					setValueNewTranscation(formatted_address);
-					var position2 = new google.maps.LatLng(latitude, longitude);
-
-                  zoomlevel(position2);
- 	
-		    }
-
-
-            function zoomlevel(position3) {
-                var zoom = 20;
-                maxZoomService.getMaxZoomAtLatLng(position3, function (response) {
-                    if (response.status != google.maps.MaxZoomStatus.OK) {
-                        zoom = 20;
-                        //alert(zoom);
-                    } else {
-                        zoom = response.zoom;
-                        console.log(zoom);
-                       map.setZoom(zoom);
-                        map.setCenter(position3);
+			    var position2 = new google.maps.LatLng(latitude, longitude);
+                    map.setCenter(position2);
+ 	                map.setZoom(21);
+		    } 
 
 
-
-
-                    }
-                    //map.setZoom(zoom);
-
-
-
-
-                });
-
-
-
-            }
-
-
-
-
-
+        
             function camerapositionfirsttym(input)
 		 	   {
 		 	   
-		 	   	$("#panel_container").css("opacity","1");
+		 	   	$("#panel_container").css("visibility","visible");
 		 	   	$('#ascrail2000').css("visibility","visible");  
 		 	   	 <% if session[:lat] %>
 		 	   	      lat1 = '<%= session[:lat] %>'
 		    	      lng1 = '<%= session[:lng] %>'
 				     
-				        setValueNewTranscation(input);	
-				        
-
-
-                       var position2 = new google.maps.LatLng(lat1, lng1);
-
-                   zoomlevel(position2);
-
+				      setValueNewTranscation(input);	
+                      var position2 = new google.maps.LatLng(lat1, lng1);
+                      map.setCenter(position2);
+                      map.setZoom(21);
                    <% end %>
-				
-		}
+				  }
 		    
 		 
 	 
 	 
 	    	function cameraposition() {
 
-				$("#panel_container").css("opacity","1");
+			  $("#panel_container").css("visibility","visible");
 		      $("#ascrail2000").css("visibility","visible");  
 				makemake();
 				var len = length2;
@@ -1937,7 +1922,7 @@
 		
 				var position2 = new google.maps.LatLng(latitude,longitude);
 
-                zoomlevel(position2);
+                map.setCenter(position2);
 
 
                 google.maps.event.addListener(marker[len], 'click', function() {
@@ -2033,21 +2018,31 @@
 			           	      transaction =response['alltransaction'];
 									        
 						        var check_flag=0;
-					          
-					            if(response['results'][0]['prev_check']==0)
-					            {					            						            	
-					            	 $("#prev_checks1").html("You're the first");
-					            	 $("#prev_checks2").html("You're the first");
-					            	 check_flag=1;
-					            }
-                              
-                                else
+					           
+					                                    
+ 				               var  ipq_check=response['results'][0]['prev_check'];  
+                      
+                               var arr=('<%=session[:company_email] %>').split('@')
+                                            
+                               if (ipq_check >'0' &&  arr[1]=='prospectzen.com' ) 
                                 {
-                                	 var  ipq_check=response['results'][0]['prev_check'];                            	
-                                	 $("#prev_checks1").html(ipq_check);
-                                	 $("#prev_checks2").html(ipq_check);
-                                	 check_flag=1;
-                                }
+                                   ipq_chk=ipq_check
+                                 }
+                               else if (ipq_check<='1')
+                               {
+                                   ipq_chk="You're the first"
+                                  }
+                               else
+                               {
+                                   ipq_chk=ipq_check-1; 
+                                  }
+                     
+                     
+                                                              
+                                   $("#prev_checks1").html(ipq_chk);
+                                   $("#prev_checks2").html(ipq_chk);
+                                   check_flag=1;
+                            
                                 
 		                    	if(response['results'][0]['owner_name']=='' || response['results'][0]['owner_name']==null )
 		                        {
@@ -2505,11 +2500,18 @@
 							    		   $("#est_credit_score1").html('650-700');
 								     	   $("#est_credit_score2").html('650-700');								   	
 									   }
-									   else if(response['results'][0]['riskiq3']<= 82)
+									   else if(response['results'][0]['riskiq3']<= 64)
 									   {
 							    		   $("#est_credit_score1").html('700-750');
 								     	   $("#est_credit_score2").html('700-750');							   	
-									   }									   
+									   }	
+									   
+									   else if(response['results'][0]['riskiq3']<= 83)
+									   {
+							    		   $("#est_credit_score1").html('750-800');
+								     	   $("#est_credit_score2").html('750-800');							   	
+									   }	
+									   								   
 									   else
 									   {
 							    		   $("#est_credit_score1").html('800+');
@@ -3326,20 +3328,29 @@
                               
                               
                                                      
- 				            if(response['transaction'][0]['prev_check']==0)
-					            {					            						            	
-					            	 $("#prev_checks1").html("You're the first");
-					            	 $("#prev_checks2").html("You're the first");
-					            	 check_flag=1;
-					            }
-                              
-                                else
+ 				               var  ipq_check=response['transaction'][0]['prev_check'];  
+                      
+                               var arr=('<%=session[:company_email] %>').split('@')
+                                            
+                               if (ipq_check >'0' &&  arr[1]=='prospectzen.com' ) 
                                 {
-                                	 var  ipq_check=response['transaction'][0]['prev_check'];                            	
-                                	 $("#prev_checks1").html(ipq_check);
-                                	 $("#prev_checks2").html(ipq_check);
-                                	 check_flag=1;
-                                }
+                                   ipq_chk=ipq_check
+                                 }
+                               else if (ipq_check<='1')
+                               {
+                                   ipq_chk="You're the first"
+                                  }
+                               else
+                               {
+                                   ipq_chk=ipq_check-1; 
+                                  }
+                     
+                     
+                                                              
+                                   $("#prev_checks1").html(ipq_chk);
+                                   $("#prev_checks2").html(ipq_chk);
+                                   check_flag=1;
+                            
     
 		                    	if(response['transaction'][0]['owner_name']=='' || response['transaction'][0]['owner_name']==null )
 		                        {
@@ -3796,11 +3807,18 @@
 							    		   $("#est_credit_score1").html('650-700');
 								     	   $("#est_credit_score2").html('650-700');								   	
 									   }
-									   else if(response['transaction'][0]['riskiq3']<= 82)
+									   else if(response['transaction'][0]['riskiq3']<= 64)
 									   {
 							    		   $("#est_credit_score1").html('700-750');
 								     	   $("#est_credit_score2").html('700-750');							   	
-									   }									   
+									   }	
+									   
+									   else if(response['transaction'][0]['riskiq3']<= 83)
+									   {
+							    		   $("#est_credit_score1").html('750-800');
+								     	   $("#est_credit_score2").html('750-800');							   	
+									   }	
+									   								   
 									   else
 									   {
 							    		   $("#est_credit_score1").html('800+');
@@ -4341,21 +4359,30 @@
                       if (response['transaction'].length > 0){
                      
                                                                                
- 				            if(response['transaction'][0]['prev_check']==0)
-					            {					            						            	
-					            	 $("#prev_checks1").html("You're the first");
-					            	 $("#prev_checks2").html("You're the first");
-					            	 check_flag=1;
-					            }
-                              
-                                else
+ 				                                    
+ 				               var  ipq_check=response['transaction'][0]['prev_check'];  
+                      
+                               var arr=('<%=session[:company_email] %>').split('@')
+                                            
+                               if (ipq_check >'0' &&  arr[1]=='prospectzen.com' ) 
                                 {
-                                	 var  ipq_check=response['transaction'][0]['prev_check'];                            	
-                                	 $("#prev_checks1").html(ipq_check);
-                                	 $("#prev_checks2").html(ipq_check);
-                                	 check_flag=1;
-                                }
-    
+                                   ipq_chk=ipq_check
+                                 }
+                               else if (ipq_check<='1')
+                               {
+                                   ipq_chk="You're the first"
+                                  }
+                               else
+                               {
+                                   ipq_chk=ipq_check-1; 
+                                  }
+                     
+                     
+                                                              
+                                   $("#prev_checks1").html(ipq_chk);
+                                   $("#prev_checks2").html(ipq_chk);
+                                   check_flag=1;
+                            
 
 		                    	if(response['transaction'][0]['owner_name']=='' || response['transaction'][0]['owner_name']==null )
 		                        {
@@ -4816,11 +4843,18 @@
 							    		   $("#est_credit_score1").html('650-700');
 								     	   $("#est_credit_score2").html('650-700');								   	
 									   }
-									   else if(response['transaction'][0]['riskiq3']<= 82)
+									   else if(response['transaction'][0]['riskiq3']<= 64)
 									   {
 							    		   $("#est_credit_score1").html('700-750');
 								     	   $("#est_credit_score2").html('700-750');							   	
-									   }									   
+									   }
+									   
+								       else if(response['transaction'][0]['riskiq3']<= 83)
+									   {
+							    		   $("#est_credit_score1").html('750-800');
+								     	   $("#est_credit_score2").html('750-800');							   	
+									   }	
+									   									   
 									   else
 									   {
 							    		   $("#est_credit_score1").html('800+');
@@ -5372,13 +5406,8 @@
 				   {
 				 
 				   	<% if session[:last_viewed_address] %>		   	
-				     
-				     console.log('<%= session[:last_viewed_address] %>');
-				   
 				     camerapositionfirsttym('<%= session[:last_viewed_address] %>');
-                       <% else %>		
-					       				    
-				   <% end %> 
+                    <% end %> 
 				   
 					}
 
@@ -5419,8 +5448,6 @@
 				             };
 
 		map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
-       // map.setZoom(5);
-       // map.mapOptions(zoom: 21);
         others();
  
     }
@@ -5428,17 +5455,13 @@
 google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 
-    <script>
+ 
+ <script>
       $(document).ready(function(){
           
           //        content table starts  
           $('body').css("overflowY","hidden");
-          
-          
-          
-    
-          
-          
+
 //        content table ends  
 
         $(".tool_tips").tooltip({
@@ -5454,6 +5477,8 @@ google.maps.event.addDomListener(window, 'load', initialize);
 					}, 'slow');
                    $("#panel_container").find("#side").removeClass("glyphicon glyphicon-chevron-left");
                    $("#panel_container").find("#side").addClass("glyphicon glyphicon-chevron-right");
+            
+                    $('#ascrail2000').hide();
 
         });
         $('#panel_container_sidebar').on('click', '.glyphicon-chevron-right', function() {
@@ -5468,6 +5493,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 					}, 'slow');
                    $("#panel_container").find("#side").removeClass("glyphicon glyphicon-chevron-right");
                    $("#panel_container").find("#side").addClass("glyphicon glyphicon-chevron-left");
+                    $('#ascrail2000').show();
 
         });
         

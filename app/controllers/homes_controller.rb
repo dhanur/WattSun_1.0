@@ -210,13 +210,13 @@ class HomesController < ApplicationController
 
   end
 
-  def usersalescsv
+  def userpurchasecsv
+   
+   if session[:current_user_id]
+     
+      @userpurchasestranc=User.joins(:user_purchases).select("users.id, users.first_name, users.last_name, users.company_name,users.company_email_id, users.credits, users.monthly_charge, user_purchases.*").where("users.id = ? and user_purchases.status = 1",session[:current_user_id])
 
-    if ((session[:admin_user_id] || session[:super_admin_user_id]) && session[:admin_user_transaction_view_id])
-
-      @usersalestranc=User.joins(:user_purchases).select("users.id, users.first_name, users.last_name, users.company_name, users.credits, users.monthly_charge, user_purchases.*").where("users.id = ? and user_purchases.status = 1",session[:admin_user_transaction_view_id])
-
-      @usersalestranc_csv = CSV.generate do |csv|
+      @userpurchasestranc_csv = CSV.generate do |csv|
                csv << ["Transaction Id", "Street", "City", "State", "Zip", "Name", "Company Name", "IPQ Checks", "Date", "Time", "IPQ Valid", "IPQ Active Price", "Active Monthly Access Fee", "Owner Name", "Mailing Address", "Owner occupied",
                         "Owned For", "Last Sale Price", "Land Use Code", "Zoning", "No. Of Residential/common units", "Gross Area", "No. of bedrooms", "No. of bathrooms",
                         "Age Of Home","Has Pool?", "Heat type", "Heat fuel", "Roof type", "Roof Shape", "Roof material","Roof frame", "No. of Stories", "Estimated Credit Score", "Segmentation",
@@ -227,7 +227,7 @@ class HomesController < ApplicationController
                         "Panel Brand2 for CITY", "Panel Brand3 for CITY","Inverter Brand1 for CITY", "Inverter Brand2 for CITY", "Inverter Brand3 for CITY"]
 
                         
-               @usersalestranc.each do |tranc|
+               @userpurchasestranc.each do |tranc|
                         user_zone_date=tranc.purchase_date
                         if (tranc.user_zone)[0]=='+'
 
@@ -240,8 +240,16 @@ class HomesController < ApplicationController
                           user_zone_date=user_zone_date-(tranc.user_zone)[4,6].to_i.minutes
 
                         end
-
-
+                       
+                        arr= tranc.company_email_id.split('@')
+                       
+                        if arr[1]=='prospectzen.com' 
+                           prev_chk=tranc.prev_check                        
+                        else                          
+                           prev_chk=tranc.prev_check-1
+                        end
+                        
+                        
                         if tranc.status=='1'
                           ipq_valid="Yes"
                         else
@@ -598,7 +606,421 @@ class HomesController < ApplicationController
                         end                         
 
                                                             
-                        csv << [tranc.transaction_id, splited_address[0], tranc.city, state[0], tranc.zip, tranc.first_name+' '+tranc.last_name, tranc.company_name, tranc.prev_check, (user_zone_date).strftime('%d %b, %y'), (user_zone_date).strftime('%H:%M'),
+                        csv << [tranc.transaction_id, splited_address[0], tranc.city, state[0], tranc.zip, tranc.first_name+' '+tranc.last_name, tranc.company_name, prev_chk, (user_zone_date).strftime('%d %b, %y'), (user_zone_date).strftime('%H:%M'),
+                               ipq_valid, ipq_active_price, mothly_access_fee,tranc.owner_name, tranc.mailing_address,ocp,owned, last_sale_price, tranc.land_use_code, tranc.zoning, tranc.no_of_residential_per_common_units, gross_area,
+                               tranc.no_of_bedrooms, tranc.no_of_bathrooms, age, pool, tranc.heat_type, tranc.heat_fuel, tranc.roof_type, tranc.roof_shape, tranc.roof_material, tranc.roof_frame, tranc.no_of_stories, est_credit_score, segmentation,
+                               aiq_green, eestimated_income, debt_ratio, premoves, householdage, tranc.PersonsatResidence_z4, owner_rented, home_equity, utlstr, solar_homes,owned_system, avg_sys_size, installer1, installer2, installer3, installer4, installer5,
+                               panel1, panel2, panel3, inverter1, inverter2, inverter3, city_solar_homes, city_owned_system, city_avg_sys_size, city_installer1, city_installer2, city_installer3, city_installer4, city_installer5,
+                               city_panel1, city_panel2, city_panel3, city_inverter1, city_inverter2, city_inverter3]
+                              end
+           end
+
+      send_data(@userpurchasestranc_csv, :type => 'text/csv', :filename => 'user_purchasestranc.csv')
+
+    else
+      redirect_to :action => "userlogin"
+    end
+ 
+    
+  end
+
+  def usersalescsv
+
+    if ((session[:admin_user_id] || session[:super_admin_user_id]) && session[:admin_user_transaction_view_id])
+
+      @usersalestranc=User.joins(:user_purchases).select("users.id, users.first_name, users.last_name, users.company_name,users.company_email_id, users.credits, users.monthly_charge, user_purchases.*").where("users.id = ? and user_purchases.status = 1",session[:admin_user_transaction_view_id])
+                       
+      @usersalestranc_csv = CSV.generate do |csv|
+               csv << ["Transaction Id", "Street", "City", "State", "Zip", "Name", "Company Name", "IPQ Checks", "Date", "Time", "IPQ Valid", "IPQ Active Price", "Active Monthly Access Fee", "Owner Name", "Mailing Address", "Owner occupied",
+                        "Owned For", "Last Sale Price", "Land Use Code", "Zoning", "No. Of Residential/common units", "Gross Area", "No. of bedrooms", "No. of bathrooms",
+                        "Age Of Home","Has Pool?", "Heat type", "Heat fuel", "Roof type", "Roof Shape", "Roof material","Roof frame", "No. of Stories", "Estimated Credit Score", "Segmentation",
+                        "How Green?","Estimated Household Income", "Estimated Debt to Income", "Premoves","Approximate Head of Household Age", "Approximate no. of people living here", "% homes owned (vs. rented)",
+                        "Estimated Home Equity", "Utility Provider", "Solar Homes for ZIP", "3rd Party for ZIP", "Avg. System for ZIP", "Installer1 for ZIP","Installer2 for ZIP","Installer3 for ZIP",
+                        "Installer4 for ZIP","Installer5 for ZIP", "Panel Brand1 for ZIP", "Panel Brand2 for ZIP", "Panel Brand3 for ZIP","Inverter Brand1 for ZIP", "Inverter Brand2 for ZIP", "Inverter Brand3 for ZIP",
+                        "Solar Homes for CITY", "3rd Party for CITY", "Avg. System for CITY", "Installer1 for CITY","Installer2 for CITY","Installer3 for CITY", "Installer4 for CITY","Installer5 for CITY", "Panel Brand1 for CITY",
+                        "Panel Brand2 for CITY", "Panel Brand3 for CITY","Inverter Brand1 for CITY", "Inverter Brand2 for CITY", "Inverter Brand3 for CITY"]
+
+                        
+               @usersalestranc.each do |tranc|
+                        user_zone_date=tranc.purchase_date
+                        if (tranc.user_zone)[0]=='+'
+
+                          user_zone_date=user_zone_date+(tranc.user_zone)[1,3].to_i.hours
+                          user_zone_date=user_zone_date+(tranc.user_zone)[4,6].to_i.minutes
+
+                        elsif  (tranc.user_zone)[0]=='-'
+
+                          user_zone_date=user_zone_date-(tranc.user_zone)[1,3].to_i.hours
+                          user_zone_date=user_zone_date-(tranc.user_zone)[4,6].to_i.minutes
+
+                        end
+
+                       arr= tranc.company_email_id.split('@')
+                       
+                        if arr[1]=='prospectzen.com' 
+                           prev_chk=tranc.prev_check                        
+                        else                          
+                           prev_chk=tranc.prev_check-1
+                        end
+                        
+                        
+                        if tranc.status=='1'
+                          ipq_valid="Yes"
+                        else
+                          ipq_valid="No"
+                        end
+                        
+                        if tranc.owner_occupied_indicator=='1'
+                          ocp="Yes"
+                        elsif tranc.owner_occupied_indicator=='0'
+                          ocp="No"
+                        else
+                          ocp=""
+                        end
+                        
+                        if tranc.pool=='1'
+                          pool="Yes"
+                        elsif tranc.pool=='0'
+                          pool="No"
+                        else
+                          pool=""
+                        end
+                        
+                        if tranc.credits=='0'
+                           ipq_active_price=1
+                        else
+                           ipq_active_price=0
+                        end
+                        
+                                   
+                        if !(tranc.IncomeIQ_Dol.nil? || tranc.IncomeIQ_Dol.blank?)
+                           eestimated_income='$'+((tranc.IncomeIQ_Dol).to_i * 1000).to_s
+                        else
+                           eestimated_income=''
+                        end
+              
+                        if !(tranc.last_sale_date.nil? || tranc.last_sale_date.blank?)
+                           owned=Time.diff(Time.now, Time.parse(tranc.last_sale_date),'%y, %M')[:diff]
+                        else
+                           owned=''
+                        end
+                        
+                        if !(tranc.monthly_charge.nil? || tranc.monthly_charge.blank?)
+                           mothly_access_fee='$'+(tranc.monthly_charge).to_s
+                        else
+                           mothly_access_fee=''
+                        end
+                       
+                        if !(tranc.last_sale_price.nil? || tranc.last_sale_price.blank?)
+                           last_sale_price='$'+(tranc.last_sale_price).to_s
+                        else
+                           last_sale_price=''
+                        end
+                       
+                        if !(tranc.gross_area.nil? || tranc.gross_area.blank?)
+                           gross_area=(tranc.gross_area).to_s+' sqft'
+                        else
+                           gross_area=''
+                        end
+  
+                        if tranc.year_built.nil? || tranc.year_built.blank?
+                          age =''
+                        else
+                          age =(Time.now.year - tranc.year_built).to_s + ' years'
+                        end
+
+                    
+                        if !(tranc.riskiq3.nil? || tranc.riskiq3.blank?)
+                     
+                           if (tranc.riskiq3<= '36')                            
+                              est_credit_score='<650';
+                   
+                           elsif(tranc.riskiq3<= '50')                   
+                             est_credit_score='650-700';
+                 
+                           elsif(tranc.riskiq3<= '82')                    
+                             est_credit_score='700-750';
+                                     
+                           else                      
+                               est_credit_score='800+';                   
+                  
+                           end
+                        else
+                           est_credit_score='';
+                        end
+                       
+                                           
+                        if !(tranc.delineate.nil? || tranc.delineate.blank?)
+                     
+                           if (tranc.delineate >= '101' && tranc.delineate <= '105')                            
+                              segmentation='Assimilating New Americans';
+                   
+                           elsif (tranc.delineate >= '201' && tranc.delineate <= '207')                            
+                              segmentation='Mid-Market America';
+ 
+                           elsif (tranc.delineate >= '301' && tranc.delineate <= '307')                            
+                              segmentation='High Society';
+                   
+                           elsif (tranc.delineate >= '401' && tranc.delineate <= '406')                            
+                              segmentation='Blue Collar America';
+ 
+                           elsif (tranc.delineate >= '501' && tranc.delineate <= '506')                            
+                              segmentation='The High and Mighty';
+
+                           elsif (tranc.delineate >= '601' && tranc.delineate <= '604')                            
+                              segmentation='In Town Homeowners';
+                   
+                           elsif (tranc.delineate >= '701' && tranc.delineate <= '704')                            
+                              segmentation='Struggling to Get Ahead';
+ 
+                           elsif (tranc.delineate >= '801' && tranc.delineate <= '803')                            
+                              segmentation='New Americans';
+                                     
+                           elsif (tranc.delineate >= '901' && tranc.delineate <= '904')                     
+                               segmentation='Economic Casualties';                   
+                  
+                           elsif (tranc.delineate >= '1001' && tranc.delineate <= '1006')                     
+                               segmentation="The 'Burbs";                   
+                  
+                           else
+                               segmentation=tranc.delineate;
+                           end
+                        else
+                           segmentation='';
+                        end
+                     
+                                           
+                        if !(tranc.AIQ_Green.nil? || tranc.AIQ_Green.blank?)
+                     
+                           if (tranc.AIQ_Green<= '25')                            
+                              aiq_green='Hardly';
+                   
+                           elsif(tranc.AIQ_Green<= '50')                   
+                             aiq_green='Not very';
+                 
+                           elsif(tranc.AIQ_Green<= '75')                    
+                             aiq_green='Somewhat';
+                                     
+                           else                      
+                               aiq_green='Very';                   
+                  
+                           end
+                        else
+                           aiq_green='';
+                        end
+                       
+                       
+                        if !(tranc.DebtRatio.nil? || tranc.DebtRatio.blank?)
+                           debt_ratio=(tranc.DebtRatio).to_s+'%'
+                        else
+                           debt_ratio=''
+                        end
+              
+              
+                                                               
+                        if !(tranc.Premoves.nil? || tranc.Premoves.blank?)
+                     
+                           if (tranc.Premoves<= '25')                            
+                              premoves='Very Unlikely';
+                   
+                           elsif(tranc.Premoves<= '50')                   
+                              premoves='Unlikely';
+                 
+                           elsif(tranc.Premoves<= '75')                    
+                              premoves='Somewhat';
+                                     
+                           else                      
+                              premoves='Very';                   
+                  
+                           end
+                        else
+                           premoves='';
+                        end
+                       
+                        if tranc.Age_z4.nil? || tranc.Age_z4.blank?
+                          householdage =''
+                        else
+                          householdage =(tranc.Age_z4).to_s + ' years'
+                        end                       
+
+                        if !(tranc.HomeOwner_pct_z4.nil? || tranc.HomeOwner_pct_z4.blank?)
+                           owner_rented=(tranc.HomeOwner_pct_z4).to_s+'%'
+                        else
+                           owner_rented=''
+                        end
+
+                        if !(tranc.Homeequity_pc_z4.nil? || tranc.Homeequity_pc_z4.blank?)
+                           home_equity=(tranc.Homeequity_pc_z4).to_s+'%'
+                        else
+                           home_equity=''
+                        end
+          
+          
+                        splited_address=(tranc.address).split(",")
+                        state=(splited_address[2]).split(" ")
+                     
+                        
+                  
+                        utl= Utilitytable.select("utility").where("zip = ?",tranc.zip)
+                        
+                        if !(utl.nil? || utl.blank?)
+                        utlstr=''
+                        utl.each do |u|       
+                             utlstr=utlstr+u.utility+', '
+                        end                           
+                             utlstr=utlstr[0..(utlstr.length-3)] 
+                        else
+                             utlstr=''
+                        end
+                                                                                                     
+                        zee=ZipEverythingElse.select("*").where("zip = ?",tranc.zip).limit(1)
+                        
+                        if !(zee.nil? || zee.blank?)
+                          solar_homes=zee.first['no_of_solar_homes']
+                          owned_system=zee.first['3rd_party_owned_system'].to_s+'%'
+                          avg_sys_size=zee.first['average_system_size'].to_s+'kW'
+                        else
+                          solar_homes=''
+                          owned_system=''
+                          avg_sys_size=''
+                        end
+                        
+                    
+                        ztp=ZipTopInstaller.select("*").where("zip = ?",tranc.zip).order('no_of_solar_homes desc').limit(5)
+                        
+                        if !(ztp.nil? || ztp.blank?)
+                          installer=''
+                          ztp.each do |zp|       
+                            installer=installer+zp.installers+','
+                          end                           
+                            installer=installer[0..(installer.length-2)].split(',')
+                             
+                            installer1=installer[0]
+                            installer2=installer[1]
+                            installer3=installer[2]
+                            installer4=installer[3]
+                            installer5=installer[4]
+                        else
+                            installer1=''  
+                            installer2=''
+                            installer3=''
+                            installer4=''
+                            installer5=''
+                        end
+                 
+                        
+                        zpb=ZipPanelBrand.select("*").where("zip = ?",tranc.zip).order('no_of_solar_homes desc').limit(3)
+                        
+                        if !(zpb.nil? || zpb.blank?)
+                          panel=''
+                            zpb.each do |zb|       
+                              panel=panel+zb.panel_brands+','
+                            end                           
+                            panel=panel[0..(panel.length-2)].split(',')
+                             
+                            panel1=panel[0]
+                            panel2=panel[1]
+                            panel3=panel[2]
+                        else
+                            panel1=''  
+                            panel2=''
+                            panel3=''                           
+                        end
+                 
+                        zib=ZipInverterBrand.select("*").where("zip = ?",tranc.zip).order('no_of_solar_homes desc').limit(3)
+        
+                        if !(zib.nil? || zib.blank?)
+                          inverter=''
+                            zib.each do |ib|       
+                              inverter=inverter+ib.inverter_brands+','
+                            end                           
+                            inverter=inverter[0..(inverter.length-2)].split(',')
+                             
+                            inverter1=inverter[0]
+                            inverter2=inverter[1]
+                            inverter3=inverter[2]
+                        else
+                            inverter1=''  
+                            inverter2=''
+                            inverter3=''                           
+                        end
+                 
+     
+                        cee=CityEverythingElse.select("*").where("city = ?",tranc.city).limit(1)  
+                                                 
+                        if !(cee.nil? || cee.blank?)
+                          city_solar_homes=cee.first['no_of_solar_homes']
+                          city_owned_system=cee.first['3rd_party_owned_system'].to_s+'%'
+                          city_avg_sys_size=cee.first['average_system_size'].to_s+'kW'
+                        else
+                          city_solar_homes=''
+                          city_owned_system=''
+                          city_avg_sys_size=''
+                        end
+                                            
+          
+                        ctp=CityTopInstaller.select("*").where("city = ?",tranc.city).order('no_of_solar_homes desc').limit(5) 
+                        
+                        if !(ctp.nil? || ctp.blank?)
+                          city_installer=''
+                          ctp.each do |cp|       
+                            city_installer=city_installer+cp.installers+','
+                          end                           
+                            city_installer=city_installer[0..(city_installer.length-2)].split(',')
+                             
+                            city_installer1=city_installer[0]
+                            city_installer2=city_installer[1]
+                            city_installer3=city_installer[2]
+                            city_installer4=city_installer[3]
+                            city_installer5=city_installer[4]
+                        else
+                            city_installer1=''  
+                            city_installer2=''
+                            city_installer3=''
+                            city_installer4=''
+                            city_installer5=''
+                        end
+                               
+                  
+                        cpb=CityPanelBrand.select("*").where("city = ?",tranc.city).order('no_of_solar_homes desc').limit(3) 
+                        
+                        if !(cpb.nil? || cpb.blank?)
+                            city_panel=''
+                            cpb.each do |cb|       
+                              city_panel=city_panel+cb.panel_brands+','
+                            end                           
+                            city_panel=city_panel[0..(city_panel.length-2)].split(',')
+                             
+                            city_panel1=city_panel[0]
+                            city_panel2=city_panel[1]
+                            city_panel3=city_panel[2]
+                        else
+                            city_panel1=''  
+                            city_panel2=''
+                            city_panel3=''                           
+                        end
+                                                        
+                  
+                        cib=CityInverterBrand.select("*").where("city = ?",tranc.city).order('no_of_solar_homes desc').limit(3)
+ 
+                        if !(cib.nil? || cib.blank?)
+                            city_inverter=''
+                            cib.each do |ib|       
+                              city_inverter=city_inverter+ib.inverter_brands+','
+                            end                           
+                            city_inverter=city_inverter[0..(city_inverter.length-2)].split(',')
+                             
+                            city_inverter1=city_inverter[0]
+                            city_inverter2=city_inverter[1]
+                            city_inverter3=city_inverter[2]
+                        else
+                            city_inverter1=''  
+                            city_inverter2=''
+                            city_inverter3=''                           
+                        end                         
+
+                                                            
+                        csv << [tranc.transaction_id, splited_address[0], tranc.city, state[0], tranc.zip, tranc.first_name+' '+tranc.last_name, tranc.company_name, prev_chk, (user_zone_date).strftime('%d %b, %y'), (user_zone_date).strftime('%H:%M'),
                                ipq_valid, ipq_active_price, mothly_access_fee,tranc.owner_name, tranc.mailing_address,ocp,owned, last_sale_price, tranc.land_use_code, tranc.zoning, tranc.no_of_residential_per_common_units, gross_area,
                                tranc.no_of_bedrooms, tranc.no_of_bathrooms, age, pool, tranc.heat_type, tranc.heat_fuel, tranc.roof_type, tranc.roof_shape, tranc.roof_material, tranc.roof_frame, tranc.no_of_stories, est_credit_score, segmentation,
                                aiq_green, eestimated_income, debt_ratio, premoves, householdage, tranc.PersonsatResidence_z4, owner_rented, home_equity, utlstr, solar_homes,owned_system, avg_sys_size, installer1, installer2, installer3, installer4, installer5,
@@ -696,7 +1118,7 @@ class HomesController < ApplicationController
 
     if ((session[:admin_user_id] || session[:super_admin_user_id]))
 
-       @allsalestranc=User.joins(:user_purchases).select("users.id, users.first_name, users.last_name, users.company_name, users.credits, users.monthly_charge, user_purchases.*")
+       @allsalestranc=User.joins(:user_purchases).select("users.id, users.first_name, users.last_name, users.company_name, users.company_email_id, users.credits, users.monthly_charge, user_purchases.*")
        @allsalestranc_csv = CSV.generate do |csv|
 
                csv << ["Transaction Id", "Street", "City", "State", "Zip", "Name", "Company Name", "IPQ Checks", "Date", "Time", "IPQ Valid", "IPQ Active Price", "Active Monthly Access Fee", "Owner Name", "Mailing Address", "Owner occupied",
@@ -722,6 +1144,15 @@ class HomesController < ApplicationController
                           user_zone_date=user_zone_date-(tranc.user_zone)[1,3].to_i.hours
                           user_zone_date=user_zone_date-(tranc.user_zone)[4,6].to_i.minutes
 
+                        end
+                        
+ 
+                        arr= tranc.company_email_id.split('@')
+                       
+                        if arr[1]=='prospectzen.com' 
+                           prev_chk=tranc.prev_check                        
+                        else                          
+                           prev_chk=tranc.prev_check-1
                         end
 
 
@@ -1079,7 +1510,7 @@ class HomesController < ApplicationController
                         end                         
 
 
-                        csv << [tranc.transaction_id, splited_address[0], tranc.city, state[0], tranc.zip, tranc.first_name+' '+tranc.last_name, tranc.company_name, tranc.prev_check, (user_zone_date).strftime('%d %b, %y'), (user_zone_date).strftime('%H:%M'),
+                        csv << [tranc.transaction_id, splited_address[0], tranc.city, state[0], tranc.zip, tranc.first_name+' '+tranc.last_name, tranc.company_name, prev_chk, (user_zone_date).strftime('%d %b, %y'), (user_zone_date).strftime('%H:%M'),
                                ipq_valid, ipq_active_price, mothly_access_fee,tranc.owner_name, tranc.mailing_address,ocp,owned, last_sale_price, tranc.land_use_code, tranc.zoning, tranc.no_of_residential_per_common_units, gross_area,
                                tranc.no_of_bedrooms, tranc.no_of_bathrooms, age, pool, tranc.heat_type, tranc.heat_fuel, tranc.roof_type, tranc.roof_shape, tranc.roof_material, tranc.roof_frame, tranc.no_of_stories, est_credit_score, segmentation,
                                aiq_green, eestimated_income, debt_ratio, premoves, householdage, tranc.PersonsatResidence_z4, owner_rented, home_equity, utlstr, solar_homes,owned_system, avg_sys_size, installer1, installer2, installer3, installer4, installer5,
@@ -1279,7 +1710,7 @@ class HomesController < ApplicationController
 
     if session[:current_user_id]
 
-      @user=User.select("first_name,last_name").where("id = ?",session[:current_user_id]).limit(1)
+      @user=User.select("first_name,last_name,company_email_id").where("id = ?",session[:current_user_id]).limit(1)
       @transctions=UserPurchase.select("address,transaction_id,purchase_date,user_zone").where("user_id = ? and status = 1",session[:current_user_id])
 
     else
@@ -1725,7 +2156,7 @@ class HomesController < ApplicationController
 
   def login
 
-    @user=User.select('id,payment_status').where("company_email_id = ? and password = ? and active_status=1",params[:emailid],params[:password]).limit(1)
+    @user=User.select('id,payment_status,company_email_id').where("company_email_id = ? and password = ? and active_status=1",params[:emailid],params[:password]).limit(1)
     if @user.blank?
 
       session[:errormessage]= params[:emailid]
@@ -1743,6 +2174,7 @@ class HomesController < ApplicationController
       else
         session[:payment_flag]= nil
         session[:current_user_id] =@user.first['id']
+        session[:company_email]=@user.first['company_email_id'] # used for previous checks
         redirect_to :action => "viewmap"
 
       end
@@ -1767,6 +2199,7 @@ class HomesController < ApplicationController
 
   def logout
     session[:cust_user_id]=nil
+    session[:company_email]=nil
     session[:last_viewed_address]=nil
     session[:lat]=nil
     session[:lng]=nil
@@ -1932,15 +2365,19 @@ class HomesController < ApplicationController
 
     @prev_check_address=UserPurchase.select("*").where("address ='"+params[:address]+"'").limit(1)
 
+    arr = customer.first['company_email_id'].split("@")
     if @prev_check_address.blank?
-      @prev_chks=0
-    else
-      arr = customer.first['company_email_id'].split("@")
-      if arr[1]=='prospectzen.com'
-        @prev_chks=@prev_check_address.first['prev_check']
-      else
-        @prev_chks=@prev_check_address.first['prev_check']+1
-      end
+        if arr[1]=='prospectzen.com'
+          @prev_chks=0
+        else
+          @prev_chks=1
+        end
+    else     
+        if arr[1]=='prospectzen.com'
+          @prev_chks=@prev_check_address.first['prev_check']
+        else
+          @prev_chks=@prev_check_address.first['prev_check']+1
+        end
     end
 
     purchasedate=''
@@ -2654,7 +3091,6 @@ class HomesController < ApplicationController
 
       if @userpurchase.save
         UserPurchase.where("address ='"+params[:address]+"'").update_all(:prev_check=>@prev_chks)
-        session[:new_marker]=session[:current_user_id]
         @userpurchase = UserPurchase.select("*").where("user_id = ? and status = 1 and address='"+params[:address]+"'",session[:current_user_id]).limit(1)
         @userpurchase = @userpurchase.to_a.map(&:serializable_hash)
 
@@ -2725,8 +3161,7 @@ class HomesController < ApplicationController
   
 
   def viewmap
-
-    session[:new_marker]=nil
+    
     if !session[:current_user_id]
       redirect_to :action => "index"
     else
@@ -2740,8 +3175,7 @@ class HomesController < ApplicationController
   end
 
   def viewmap_copy
-
-    session[:new_marker]=nil
+    
     if !session[:current_user_id]
       redirect_to :action => "index"
     else

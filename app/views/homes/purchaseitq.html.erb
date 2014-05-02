@@ -53,6 +53,8 @@
 						null						
 					]
 			    });
+			   
+			    $( "#example_length" ).append('<a href="/homes/userpurchasecsv" style="float: right;font-size: 16px;margin-right: 15px;background: #5cb85c;color: #fff;font-family: latolig;padding: 10px;">Export CSV file</a>');
                 $('#example_length label select.input-sm').customSelect();
                 $('.input-sm').css({"padding":"0px 12px","fontSize":"18px","fontWeight":"bold"});
                 $('label').css("fontSize","18px");
@@ -98,6 +100,11 @@
 				});
                 $('#example_length label select').css("display","inline");
 				$('#example_length select.form-control').css({"height":"46px","border-radius":"0px","border-color":"#5cb85c"});
+				
+				$('.dataTables_length').css("float","left");
+                $('.dataTables_length').css("width","100%");
+				
+				
                 if($(window).width()<=767){
                     $('#example_length select.form-control').css("width", "42px");
                     $('.input-sm').css({"padding":"8px 8px !important","width":"75px"});

@@ -421,6 +421,8 @@
 							<div class="col-sm-4" id="prev_credits">
 								<% if @user.first['payment_status'] == '1' %>
 								<%= @user.first['credits'] %> 
+								<% else %>
+								<%= @user.first['credits'] %> 
 								<% end %>
 							</div>
 							<div class="col-sm-4">

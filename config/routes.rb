@@ -116,6 +116,9 @@ Wattsun::Application.routes.draw do
    get '/homes/usersalescsv' => 'homes#usersalescsv' 
    post '/homes/usersalescsv' => 'homes#usersalescsv'    
    
+   get '/homes/userpurchasecsv' => 'homes#userpurchasecsv' 
+   post '/homes/userpurchasecsv' => 'homes#userpurchasecsv'   
+   
    post '/homes/particularaddressview' => 'homes#particularaddressview'
    
   # The priority is based upon order of creation: first created -> highest priority.

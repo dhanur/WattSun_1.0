@@ -380,8 +380,8 @@
               $('#zee').show(); 
               $('#3rd_party_owned_system').show(); 
               $('#average_system').show(); 
-              $('#assz').html(parseFloat(<% if !@zee.blank? %> <%= @zee.first["average_system_size"] %> <% end %>).toFixed(2)+' kW');
-              $('#assc').html(parseFloat(<% if !@cee.blank? %> <%= @cee.first["average_system_size"] %> <% end %>).toFixed(2)+ ' kW');
+              $('#assz').html(<% if !@zee.blank? %> parseFloat(<%= @zee.first["average_system_size"] %>).toFixed(2)+' kW'  <% end %>);
+              $('#assc').html(<% if !@cee.blank? %> parseFloat( <%= @cee.first["average_system_size"] %> ).toFixed(2)+ ' kW' <% end %>);
               $('#smi').show();
          <% end %>
         
@@ -505,8 +505,10 @@
                        <div id="resident_head" class="col-sm-12 main_heading">
                             NEED TO KNOW
                        </div>
+                        <% arr = @user.first['company_email_id'].split("@") %>
                         <div style="clear:both;"></div>
-                        <div id="prev_check"> <div class="col-sm-4 main_heading">No. of checks on this address</div><div class="col-sm-8"><% if @transction.first['prev_check']==0 %> You're the first <% else %>  <%= @transction.first['prev_check'] %> <% end %> </div></div>
+                        <div id="prev_check"> <div class="col-sm-4 main_heading">No. of checks on this address</div><div class="col-sm-8"><% if @transction.first['prev_check']==0  %> You're the first 
+                      	<% elsif @transction.first['prev_check']!=0 &&  arr[1]=='prospectzen.com'  %>  <%= @transction.first['prev_check'] %>  <% elsif @transction.first['prev_check']==1 %>  You're the first  <%else%>	 <%= (@transction.first['prev_check']-1) %> <% end %> </div></div>
                        <div style="clear:both;"></div>
                         <div id="owner_name"> <div class="col-sm-4 main_heading">Name of Owner(s)</div><div class="col-sm-8"><%= @transction.first['owner_name'].titleize %></div></div>
                        <div style="clear:both;"></div>
@@ -566,8 +568,10 @@
 	                        	  <650 
 	                        	 <% elsif @transction.first['riskiq3'].to_i<= 50 %> 
 	                        	 650-700 
-	                        	 <% elsif @transction.first['riskiq3'].to_i<= 82 %> 
+	                        	 <% elsif @transction.first['riskiq3'].to_i<= 64 %> 
 	                        	 700-750 
+	                        	 <% elsif @transction.first['riskiq3'].to_i<= 83 %> 
+	                        	 750-800
 	                        	 <% elsif @transction.first['riskiq3'].to_i<= 99 %>
 	                        	 800+ 
 	                        	 <%end%>
