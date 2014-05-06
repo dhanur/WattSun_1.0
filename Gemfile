@@ -5,37 +5,6 @@ gem 'rails', '4.0.2'
 
 # Use sqlite3 as the database for Active Record
 
-   transaction =response['alltransaction'];
-                          
-                    var check_flag=0;
-                           
-                     
-                      var  ipq_check=response['results'][0]['prev_check'];  
-                      
-                      var arr=('<%=session[:company_email] %>').split('@')
-                      
-                      
-                                if (ipq_check >'0' &&  arr[1]=='prospectzen.com' ) 
-                                {
-                                   ipq_chk=ipq_check
-                                  }
-                               else if (ipq_check<='1')
-                               {
-                                   ipq_chk="You're the first"
-                                  }
-                               else
-                               {
-                                   ipq_chk=ipq_check-'1'; 
-                                  }
-                     
-                     
-                                                              
-                                   $("#prev_checks1").html(ipq_chk);
-                                   $("#prev_checks2").html(ipq_chk);
-                                   check_flag=1;
-                                
-                                
-
 gem 'local_time'
 gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
 

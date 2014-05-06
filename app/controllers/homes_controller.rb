@@ -3100,17 +3100,11 @@ class HomesController < ApplicationController
           owned=Time.diff(Time.now, Time.parse(@userpurchase.first['last_sale_date']),'%y, %M')[:diff]
         end
 
-        @alladdress= UserPurchase.select("address").where("user_id = ? and status = 1",session[:current_user_id])
-        @alladdress = @alladdress.to_a.map(&:address)
-
-        @address1= UserPurchase.select("transaction_id").where("user_id = ? and status = 1",session[:current_user_id])
-        @alltransaction = @address1.to_a.map(&:transaction_id)
-
         if @userpurchase.first['year_built'].blank?
-          render :json=>{:alladdress => @alladdress, :alltransaction =>@alltransaction, :zipeverythingelse=>@zee,:topinstaller=>@ztp,:toppanelbrands=>@zpb,:topinverterbrands=>@zib,:radiotype=>params[:radio],:utility=>@utility, :results => @userpurchase, :age =>'', :owned=> owned}
+          render :json=>{:zipeverythingelse=>@zee,:topinstaller=>@ztp,:toppanelbrands=>@zpb,:topinverterbrands=>@zib,:radiotype=>params[:radio],:utility=>@utility, :results => @userpurchase, :age =>'', :owned=> owned}
 
         else
-          render :json=>{:alladdress => @alladdress, :alltransaction =>@alltransaction,:zipeverythingelse=>@zee,:topinstaller=>@ztp,:toppanelbrands=>@zpb,:topinverterbrands=>@zib,:radiotype=>params[:radio],:utility=>@utility, :results => @userpurchase, :age=> (Time.now.year - @userpurchase.first['year_built']),:owned=> owned}
+          render :json=>{:zipeverythingelse=>@zee,:topinstaller=>@ztp,:toppanelbrands=>@zpb,:topinverterbrands=>@zib,:radiotype=>params[:radio],:utility=>@utility, :results => @userpurchase, :age=> (Time.now.year - @userpurchase.first['year_built']),:owned=> owned}
         end
 
       else
@@ -3123,12 +3117,6 @@ class HomesController < ApplicationController
       addressexist = UserPurchase.select("*").where("user_id = ? and status = 1 and address='"+params[:address]+"'",session[:current_user_id]).limit(1)
       addressexist = addressexist.to_a.map(&:serializable_hash)
 
-      @alladdress= UserPurchase.select("address").where("user_id = ? and status = 1",session[:current_user_id])
-      @alladdress = @alladdress.to_a.map(&:address)
-
-      @address1= UserPurchase.select("transaction_id").where("user_id = ? and status = 1",session[:current_user_id])
-      @alltransaction = @address1.to_a.map(&:transaction_id)
-
       if addressexist.first['last_sale_date'].blank?
         owned =''
       else
@@ -3136,9 +3124,9 @@ class HomesController < ApplicationController
       end
 
       if addressexist.first['year_built'].blank?
-        render :json=>{:alladdress => @alladdress, :alltransaction =>@alltransaction,:zipeverythingelse=>@zee,:topinstaller=>@ztp,:toppanelbrands=>@zpb,:topinverterbrands=>@zib,:radiotype=>params[:radio],:utility=>@utility, :results => addressexist, :age =>'',:owned=> owned}
+        render :json=>{:zipeverythingelse=>@zee,:topinstaller=>@ztp,:toppanelbrands=>@zpb,:topinverterbrands=>@zib,:radiotype=>params[:radio],:utility=>@utility, :results => addressexist, :age =>'',:owned=> owned}
       else
-        render :json=>{:alladdress => @alladdress, :alltransaction =>@alltransaction,:zipeverythingelse=>@zee,:topinstaller=>@ztp,:toppanelbrands=>@zpb,:topinverterbrands=>@zib,:radiotype=>params[:radio],:utility=>@utility,:results => addressexist, :age=> (Time.now.year - addressexist.first['year_built']),:owned=> owned}
+        render :json=>{:zipeverythingelse=>@zee,:topinstaller=>@ztp,:toppanelbrands=>@zpb,:topinverterbrands=>@zib,:radiotype=>params[:radio],:utility=>@utility,:results => addressexist, :age=> (Time.now.year - addressexist.first['year_built']),:owned=> owned}
       end
     end
 
@@ -3168,8 +3156,8 @@ class HomesController < ApplicationController
       @address= UserPurchase.select("address").where("user_id = ? and status = 1",session[:current_user_id])
       @address = @address.to_a.map(&:address)
 
-      @address1= UserPurchase.select("transaction_id").where("user_id = ? and status = 1",session[:current_user_id])
-      @transaction = @address1.to_a.map(&:transaction_id)
+      @alltransaction= UserPurchase.select("transaction_id").where("user_id = ? and status = 1",session[:current_user_id])
+      @transaction = @alltransaction.to_a.map(&:transaction_id)
     end
 
   end
@@ -3188,8 +3176,8 @@ class HomesController < ApplicationController
       @long= UserPurchase.select("lng").where("user_id = ? and status = 1",session[:current_user_id])
       @long = @long.to_a.map(&:lng)
 
-      @address1= UserPurchase.select("transaction_id").where("user_id = ? and status = 1",session[:current_user_id])
-      @transaction = @address1.to_a.map(&:transaction_id)
+      @alltransaction= UserPurchase.select("transaction_id").where("user_id = ? and status = 1",session[:current_user_id])
+      @transaction = @alltransaction.to_a.map(&:transaction_id)
     end
 
   end

@@ -79,6 +79,7 @@
     </style>
       
     <link href="/assets/mediaqueriespage2_test.css" rel="stylesheet">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
     <script src="/assets/jquery.js">
     </script>
     <script src="/assets/bootstrap.js">
@@ -1525,7 +1526,7 @@
 			var radiovalue = 'zip';
 			var citycode = '';
 			var zipcode = '';
-			var placeSearch, autocomplete;
+			var autocomplete;
 			var x, y;
 			var length2 = 0;
 			// var transcationid;
@@ -1749,7 +1750,7 @@
 					});
 				});
 			});
-            
+            var transaction_id ;
             var addresses = new Array;
             var transaction = new Array;
             var lat = new Array;
@@ -1757,8 +1758,8 @@
 			var latitude;
 			var longitude;
 			var marker = new Array;
+            var marker2;
 		    var map;
-            var maxZoomService = new google.maps.MaxZoomService();
 		    var infoBubble = new InfoBubble({
 					shadowStyle: 3,
 					padding: 0,
@@ -1835,9 +1836,12 @@
 
 				}
 			});
-			
-			
-	    function qualifyclick()
+
+
+
+
+
+                function qualifyclick()
 		    {
 		    	input = document.getElementById('loc_search').value;
 	
@@ -1912,8 +1916,8 @@
 				lat[len] = latitude;
 				lng[len] = longitude;
 				$("#loadingimage").hide();
-				
-				
+                transaction[len] = transaction_id;
+				console.log()
 				 marker[len] = new google.maps.Marker({
 					position: new google.maps.LatLng(latitude,longitude),
 					map: map,
@@ -1940,7 +1944,7 @@
                 google.maps.event.addListener(map, "click", function () {
                     infoBubble.close();
                 });
-				
+
 				length2 = length2 + 1;
 
 
@@ -1980,8 +1984,7 @@
 		{
 			secondline=secondline+input1[i]+' ';
 		}
-		
-   //     console.log(secondline)
+
 		
 		$("#panel_search_result").html(input1[0]+'<br>'+secondline);
 		$("#puchased_marker").html(input1[0]+'<br>'+secondline);
@@ -2014,12 +2017,10 @@
                     
 					success : function(response) {
 								
-						      
-			           	      transaction =response['alltransaction'];
-									        
+
 						        var check_flag=0;
-					           
-					                                    
+                        transaction_id= response['results'][0]['transaction_id'];
+					             console.log(transaction_id);
  				               var  ipq_check=response['results'][0]['prev_check'];  
                       
                                var arr=('<%=session[:company_email] %>').split('@')
@@ -3014,144 +3015,15 @@
         
 			function check() {
 				var input = document.getElementById('loc_search').value;
-				//console.log(input)
+
 				$.ajax({
 					type : "Post",
 					url : "http://maps.google.com/maps/api/geocode/json?sensor=false&address=" + input,
 					dataType : "JSON",
 					async : false,
 					success : function(response) {
-                        var latlong = response.results[0]["geometry"]["location"];
-                        
-                        latitude = latlong.lat;
-                        longitude = latlong.lng;
-                        
-						var length = response["results"][0]["address_components"].length;
-						 
- 						formatted_address=response["results"][0]["formatted_address"];
- 							
-						for (var i = 0; i < length; i++) {
-						
-							var addressType = response["results"][0]["address_components"][i]["types"][0];
-							if (componentForm[addressType]) {
-								if (addressType == 'postal_code') {
-									zipcode = response["results"][0]["address_components"][i]["long_name"];
 
-								}
-
-								if (addressType == 'locality') {
-									citycode = response["results"][0]["address_components"][i]["long_name"];
-
-								}
-
-							}
-						}
-						for (var i = 0; i < length; i++) {
-							var addressType1 = response["results"][0]["address_components"][i]["types"][0];
-							if (componentForm[addressType1]) {
-
-								if (addressType1 == 'country') {
-									componentForm1['country'] = response["results"][0]["address_components"][i]["short_name"];
-
-								}
-								if (addressType1 == 'street_number') {
-									componentForm1['street_number'] = response["results"][0]["address_components"][i]["short_name"];
-
-								}
-								if (addressType1 == 'administrative_area_level_1') {
-									componentForm1['administrative_area_level_1'] = response["results"][0]["address_components"][i]["short_name"];
-
-								}
-								if (addressType1 == 'administrative_area_level_2') {
-									componentForm1['administrative_area_level_2'] = response["results"][0]["address_components"][i]["short_name"];
-
-								}
-								if (addressType1 == 'route') {
-									componentForm1['route'] = response["results"][0]["address_components"][i]["short_name"];
-
-								}
-								if (addressType1 == 'locality') {
-									componentForm1['locality'] = response["results"][0]["address_components"][i]["long_name"];
-
-								}
-								if (addressType1 == 'postal_code') {
-									componentForm1['postal_code'] = response["results"][0]["address_components"][i]["short_name"];
-
-								}
-							}
-						}
-
-						if (componentForm1['postal_code'] != '' && componentForm1['country'] != '' && componentForm1['locality'] != '' && componentForm1['street_number'] != '' && componentForm1['route'] != '' && componentForm1['administrative_area_level_2'] != '' && componentForm1['administrative_area_level_1'] != '') 
-						{
-						   	 
-							flag = 1;
-                            $('#search_error').css("visibility","hidden");
-//							$("#search_error").html("No error");
-                            $('#loc_search').css("outline","0px");
-							
-							$("#prev_chk").hide();
-							$("#check_show_money1").hide();
-							$("#check_show_money2").hide();
-							
-							$("#check_electricity1").hide();
-							$("#check_electricity2").hide();
-							
-							$("#check_ease_of_installation1").hide();
-							$("#check_ease_of_installation2").hide();
-							
-							$("#check_need_to_know1").hide();
-							$("#check_need_to_know2").hide();
-							
-		    				$("#check_area_profile1").hide();
-							$("#check_area_profile2").hide();
-							
-							
-							$("#check_solar_adoption1").hide();					
-							$("#check_solar_adoption2").hide();
-							
-		   
-						//    console.log(input1[0]);
-						//    console.log(input1[1]);
-						    
-						     // alert(formatted_address);				
-					    	$.ajax({
-								url : "/homes/addresspresentcheck",
-								type : "POST",
-								dataType : 'JSON',
-								
-								data : {
-									'address' :	formatted_address
-								},
-							
-								success : function(response1) {	
-							    
-							        if (response1['data']==0)
-									{
-							    			input1=formatted_address;
-							         		input1 = input1.split(",");							
-											input1.pop();
-
-											$("#address_display_on_popup").html(input1.toString()+" ?");																			
-											$("#myModal").modal();
-							        }
-							            
-							        else
-							         {
-							    
-							         	camerapositionpurchase(latitude,longitude,formatted_address);
-							         	
-							         }							    
-							    
-							   }
-							 });
-							    					   
-						  
-						} else {
-							flag = 0;
-							$("#search_error").css("visibility","visible");
-							$("#search_error").html('That is not a valid street address.');
-                            $('#loc_search').css("outline","3px solid red");
-						}
+                        checkaddress(response);
 
 					},
 					// latlong = response["results"][0]["geometry"]["location"];        },
@@ -5419,6 +5291,7 @@
 			 types : ['geocode']
 		 });
 
+
          var mapOptions = {
 				            center: new google.maps.LatLng(37.6,-95.665),
                              zoom: 5,
@@ -5446,13 +5319,176 @@
                              }
 
 				             };
-
+        geocoder = new google.maps.Geocoder();
 		map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
+
+//        google.maps.event.addListener(map, 'click', function(event) {
+//            componentForm1 = {
+//                street_number: '',
+//                route: '',
+//                locality: '',
+//                country: '',
+//                postal_code: '',
+//                administrative_area_level_1: '',
+//                administrative_area_level_2: ''
+//            };
+//
+//            var latlng = event.latLng;
+//
+//            codeLatLng(latlng);
+//
+//
+//        });
+
+
+
         others();
  
     }
 
-google.maps.event.addDomListener(window, 'load', initialize);
+
+//            function codeLatLng(latlng) {
+//                $.ajax({
+//                    type : "Post",
+//                    url : "http://maps.google.com/maps/api/geocode/json?sensor=false&latlng=" + latlng.lat() + "," +latlng.lng(),
+//                    dataType : "JSON",
+//                    async : false,
+//                    success : function(response) {
+//                        if(response.status == google.maps.GeocoderStatus.OK) {
+//
+//                            checkaddress(response);
+//                        }
+//                        else
+//                            alert('Geocoder failed due to: ' + response.status);
+//
+//                    },
+//
+//                    error : function(error) {
+//
+//                    }
+//                });
+//
+//            }
+
+
+            function checkaddress(response) {
+                console.log(response)
+                var latlong = response.results[0]["geometry"]["location"];
+
+                latitude = latlong.lat;
+                longitude = latlong.lng;
+
+                var length = response["results"][0]["address_components"].length;
+
+                formatted_address=response["results"][0]["formatted_address"];
+                $('#loc_search').val(formatted_address);
+
+                for (var i = 0; i < length; i++) {
+                    var addressType1 = response["results"][0]["address_components"][i]["types"][0];
+                    if (componentForm[addressType1]) {
+
+                        if (addressType1 == 'country') {
+                            componentForm1['country'] = response["results"][0]["address_components"][i]["short_name"];
+
+                        }
+                        if (addressType1 == 'street_number') {
+                            componentForm1['street_number'] = response["results"][0]["address_components"][i]["short_name"];
+
+                        }
+                        if (addressType1 == 'administrative_area_level_1') {
+                            componentForm1['administrative_area_level_1'] = response["results"][0]["address_components"][i]["short_name"];
+
+                        }
+                        if (addressType1 == 'administrative_area_level_2') {
+                            componentForm1['administrative_area_level_2'] = response["results"][0]["address_components"][i]["short_name"];
+
+                        }
+                        if (addressType1 == 'route') {
+                            componentForm1['route'] = response["results"][0]["address_components"][i]["short_name"];
+
+                        }
+                        if (addressType1 == 'locality') {
+                            componentForm1['locality'] = response["results"][0]["address_components"][i]["long_name"];
+                            citycode = response["results"][0]["address_components"][i]["long_name"];
+                        }
+                        if (addressType1 == 'postal_code') {
+                            componentForm1['postal_code'] = response["results"][0]["address_components"][i]["short_name"];
+                            zipcode = response["results"][0]["address_components"][i]["short_name"];
+                        }
+                    }
+                }
+
+                if (componentForm1['postal_code'] != '' && componentForm1['country'] != '' && componentForm1['locality'] != '' && componentForm1['street_number'] != '' && componentForm1['route'] != '' && componentForm1['administrative_area_level_2'] != '' && componentForm1['administrative_area_level_1'] != '')
+                {
+
+                    flag = 1;
+                    $('#search_error').css("visibility","hidden");
+//							$("#search_error").html("No error");
+                    $('#loc_search').css("outline","0px");
+
+                    $("#prev_chk").hide();
+                    $("#check_show_money1").hide();
+                    $("#check_show_money2").hide();
+
+                    $("#check_electricity1").hide();
+                    $("#check_electricity2").hide();
+
+                    $("#check_ease_of_installation1").hide();
+                    $("#check_ease_of_installation2").hide();
+
+                    $("#check_need_to_know1").hide();
+                    $("#check_need_to_know2").hide();
+
+                    $("#check_area_profile1").hide();
+                    $("#check_area_profile2").hide();
+
+
+                    $("#check_solar_adoption1").hide();
+                    $("#check_solar_adoption2").hide();
+
+
+
+                    $.ajax({
+                        url : "/homes/addresspresentcheck",
+                        type : "POST",
+                        dataType : 'JSON',
+
+                        data : {
+                            'address' :	formatted_address
+                        },
+
+                        success : function(response1) {
+
+                            if (response1['data']==0)
+                            {
+                                input1=formatted_address;
+                                input1 = input1.split(",");
+                                input1.pop();
+
+                                $("#address_display_on_popup").html(input1.toString()+" ?");
+                                $("#myModal").modal();
+                            }
+
+                            else
+                            {
+
+                                camerapositionpurchase(latitude,longitude,formatted_address);
+
+                            }
+
+                        }
+                    });
+
+
+                } else {
+                    flag = 0;
+                    $("#search_error").css("visibility","visible");
+                    $("#search_error").html('That is not a valid street address.');
+                    $('#loc_search').css("outline","3px solid red");
+                }
+            }
+
+            google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 
  
