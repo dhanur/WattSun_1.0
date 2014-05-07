@@ -1755,10 +1755,11 @@
             var transaction = new Array;
             var lat = new Array;
             var lng = new Array;
+            var latlng;
 			var latitude;
 			var longitude;
 			var marker = new Array;
-            var marker2;
+            var flagclick = 0;
 		    var map;
 		    var infoBubble = new InfoBubble({
 					shadowStyle: 3,
@@ -1779,6 +1780,26 @@
 					maxWidth: 1000,
 					maxHeight: 200
 				});
+
+            var infoBubble2 = new InfoBubble({
+                shadowStyle: 3,
+                padding: 0,
+                backgroundColor: '#C0392B',
+                borderRadius: 0,
+                arrowSize: 8,
+                borderWidth: 1,
+                borderColor: '#C0392B',
+                // disableAutoPan: true,
+                hideCloseButton: true,
+                arrowPosition: 50,
+                // overflow: hidden,
+                // backgroundClassName: 'phoney',
+                arrowStyle:0,
+                minWidth: 250,
+                minHeight: 70,
+                maxWidth: 1000,
+                maxHeight: 200
+            });
 		
            
             var check2 = 0;
@@ -1943,6 +1964,7 @@
 
                 google.maps.event.addListener(map, "click", function () {
                     infoBubble.close();
+                    infoBubble2.close();
                 });
 
 				length2 = length2 + 1;
@@ -3026,7 +3048,7 @@
                         checkaddress(response);
 
 					},
-					// latlong = response["results"][0]["geometry"]["location"];        },
+
 					error : function(error) {
 
 					}
@@ -5322,23 +5344,23 @@
         geocoder = new google.maps.Geocoder();
 		map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
 
-//        google.maps.event.addListener(map, 'click', function(event) {
-//            componentForm1 = {
-//                street_number: '',
-//                route: '',
-//                locality: '',
-//                country: '',
-//                postal_code: '',
-//                administrative_area_level_1: '',
-//                administrative_area_level_2: ''
-//            };
-//
-//            var latlng = event.latLng;
-//
-//            codeLatLng(latlng);
-//
-//
-//        });
+        google.maps.event.addListener(map, 'click', function(event) {
+            componentForm1 = {
+                street_number: '',
+                route: '',
+                locality: '',
+                country: '',
+                postal_code: '',
+                administrative_area_level_1: '',
+                administrative_area_level_2: ''
+            };
+
+            latlng = event.latLng;
+
+            codeLatLng(latlng);
+
+
+        });
 
 
 
@@ -5347,32 +5369,32 @@
     }
 
 
-//            function codeLatLng(latlng) {
-//                $.ajax({
-//                    type : "Post",
-//                    url : "http://maps.google.com/maps/api/geocode/json?sensor=false&latlng=" + latlng.lat() + "," +latlng.lng(),
-//                    dataType : "JSON",
-//                    async : false,
-//                    success : function(response) {
-//                        if(response.status == google.maps.GeocoderStatus.OK) {
-//
-//                            checkaddress(response);
-//                        }
-//                        else
-//                            alert('Geocoder failed due to: ' + response.status);
-//
-//                    },
-//
-//                    error : function(error) {
-//
-//                    }
-//                });
-//
-//            }
+            function codeLatLng(latlng) {
+                $.ajax({
+                    type : "Post",
+                    url : "http://maps.google.com/maps/api/geocode/json?sensor=false&latlng=" + latlng.lat() + "," +latlng.lng(),
+                    dataType : "JSON",
+                    async : false,
+                    success : function(response) {
+                        if(response.status == google.maps.GeocoderStatus.OK) {
+                            flagclick = 1;
+                            checkaddress(response);
+                        }
+                        else
+                            alert('Geocoder failed due to: ' + response.status);
+
+                    },
+
+                    error : function(error) {
+
+                    }
+                });
+
+            }
 
 
             function checkaddress(response) {
-                console.log(response)
+//                console.log(response)
                 var latlong = response.results[0]["geometry"]["location"];
 
                 latitude = latlong.lat;
@@ -5381,7 +5403,7 @@
                 var length = response["results"][0]["address_components"].length;
 
                 formatted_address=response["results"][0]["formatted_address"];
-                $('#loc_search').val(formatted_address);
+//                $('#loc_search').val(formatted_address);
 
                 for (var i = 0; i < length; i++) {
                     var addressType1 = response["results"][0]["address_components"][i]["types"][0];
@@ -5420,7 +5442,6 @@
 
                 if (componentForm1['postal_code'] != '' && componentForm1['country'] != '' && componentForm1['locality'] != '' && componentForm1['street_number'] != '' && componentForm1['route'] != '' && componentForm1['administrative_area_level_2'] != '' && componentForm1['administrative_area_level_1'] != '')
                 {
-
                     flag = 1;
                     $('#search_error').css("visibility","hidden");
 //							$("#search_error").html("No error");
@@ -5461,12 +5482,21 @@
 
                             if (response1['data']==0)
                             {
-                                input1=formatted_address;
+                                input1 = formatted_address;
                                 input1 = input1.split(",");
-                                input1.pop();
+                                input1.pop(input1);
 
-                                $("#address_display_on_popup").html(input1.toString()+" ?");
-                                $("#myModal").modal();
+                                if(flagclick == 1){
+                                    infoBubble2.setPosition(latlng);
+                                    alert()
+                                    infoBubble.setContent('<div id="sold_marker" style="color:#fff;font-family:latoreg;font-size:17px;line-height:20px;padding-top:5%;padding-bottom:5%;text-align:left;padding-left:10px;">'+input1+'</div>');
+                                    infoBubble2.open(map);
+                                }
+                                else {
+
+                                    $("#address_display_on_popup").html(input1.toString() + " ?");
+                                    $("#myModal").modal();
+                                }
                             }
 
                             else

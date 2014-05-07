@@ -36,7 +36,7 @@ Wattsun::Application.routes.draw do
    post '/homes/login' => 'homes#login'
    post '/homes/logout' => 'homes#logout'   
    post '/homes/adminlogout' => 'homes#adminlogout'
-   get '/homes/viewmap_copy' => 'homes#viewmap_copy'   
+    
    get  '/homes/example' => 'homes#example'
    post '/homes/changestatus' => 'homes#changestatus'
   
@@ -107,8 +107,8 @@ Wattsun::Application.routes.draw do
    get '/homes/salesview' => 'homes#salesview'
    post '/homes/salesviewtransaction' => 'homes#salesviewtransaction'
    
-   post '/homes/viewmap_copy' => 'homes#viewmap_copy'
-   get '/homes/viewmap_copy' => 'homes#viewmap_copy'
+   # post '/homes/viewmap_copy' => 'homes#viewmap_copy'
+   # get '/homes/viewmap_copy' => 'homes#viewmap_copy'
   
    get '/homes/allsalescsv' => 'homes#allsalescsv' 
    post '/homes/allsalescsv' => 'homes#allsalescsv' 

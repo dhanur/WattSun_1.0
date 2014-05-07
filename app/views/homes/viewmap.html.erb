@@ -44,37 +44,7 @@
       .dtext_media{
           width:390px;
       }
-      /*.gm-style-iw{
-        	color:#fff;
-        	font-family:latoreg;
-        	font-size:13px;
-        	
-        }
-        .gm-style div div div div div div div div div{
-       		background:red !important;
-       	
-       }*/
-
-      /*.gm-style div div div div div div{
-       		background:none;
-       	
-       }
-       
-       .gm-style div div div > div:first-of-type{
-       		background:red !important;
-       	
-       }*/
-
-
-      /*.gm-style div div div div:nth-of-type(4)
-       {
-       	background:red !important;
-       
-       }
-       
-       .gm-style div div div div{ background: none;}
-       
-      */
+   
 
   </style>
 
@@ -1774,10 +1744,10 @@
         // overflow: hidden,
         // backgroundClassName: 'phoney',
         arrowStyle:0,
-        minWidth: 250,
-        minHeight: 70,
-        maxWidth: 1000,
-        maxHeight: 200
+        minWidth: 300,
+        minHeight: 80,
+        maxWidth: 300,
+        maxHeight: 80
     });
 
 
@@ -1882,6 +1852,7 @@
         setValueNewTranscation(formatted_address);
         var position2 = new google.maps.LatLng(latitude, longitude);
         map.setCenter(position2);
+        map.panBy(-200,0);
         map.setZoom(21);
     }
 
@@ -3037,9 +3008,10 @@
 
     function makepurchase() {
 
-        $('#myModal').modal('hide');
-
-        map.setZoom(21);
+       $('#myModal').modal('hide');
+       setTimeout(function() {
+                map.setZoom(21);
+            }, 3000);
         $('#loadingimage').show();
 
         // $("#panel_search_result").hide();
@@ -4224,7 +4196,7 @@
                 }
 
                 $("#panel_search_result").html(input1[0]+'<br>'+secondline);
-                infoBubble.setContent('<div id="sold_marker" style="color:#fff;font-family:latoreg;font-size:17px;line-height:20px;padding-top:5%;padding-bottom:5%;text-align:left;padding-left:10px;">'+input1[0]+'<br>'+secondline+'</div>');
+                infoBubble.setContent('<div id="sold_marker" style="color:#fff;font-family:latoreg;font-size:18px;line-height:20px;width: auto;display: table;margin: 0 auto;padding: 19px;"> <center style="text-align:left;">'+input1[0]+'<br>'+secondline+'</center></div>');
 
                 var check_flag=0;
 
@@ -5242,7 +5214,7 @@
 
             $("#panel_search_result").html(input1[0]+'<br>'+secondline);
 
-            infoBubble.setContent('<div id="puchased_marker" style="color:#fff;font-family:latoreg;font-size:17px;line-height:20px;padding-top:5%;padding-bottom:5%;text-align:left;padding-left:10px;">'+input1[0]+'<br>'+secondline+'</div>');
+            infoBubble.setContent('<div id="puchased_marker" style="color:#fff;font-family:latoreg;font-size:18px;line-height:20px;width: auto;display: table;margin: 0 auto;padding: 19px;"> <center style="text-align:left;">'+input1[0]+'<br>'+secondline+'</center></div>');
             infoBubble.open(map, marker[x]);
 
             setValue(transaction[x]);
