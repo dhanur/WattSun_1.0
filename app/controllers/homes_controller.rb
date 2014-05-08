@@ -1635,7 +1635,8 @@ class HomesController < ApplicationController
     if @user.blank?
       render :json =>{:error =>params[:emailid]}
     else
-      User.where(:id=>@user.first['id']).limit(1).update_all(:last_activity => Time.now,:password=>params[:password])
+      md_pass=Digest::MD5.hexdigest(params[:password])
+      User.where(:id=>@user.first['id']).limit(1).update_all(:last_activity => Time.now,:password=>md_pass)
       session[:cust_user_id]=@user.first['id'];
 
       redirect_to :action => "userlogin"
@@ -1822,9 +1823,8 @@ class HomesController < ApplicationController
         User.where(:id=>@user.first['id']).update_all(:last_activity => Time.now, :office_phone => params[:ophone])
         render :json => {:status =>"done" }
 
-      elsif (@user.first['password']==params[:cur_psd])
-
-        User.where(:id=>@user.first['id']).update_all(:last_activity => Time.now, :password => params[:new_psd])
+      elsif (@user.first['password']==(Digest::MD5.hexdigest(params[:cur_psd])))        
+        User.where(:id=>@user.first['id']).update_all(:last_activity => Time.now, :password =>(Digest::MD5.hexdigest(params[:new_psd])))
         render :json => {:status =>"done" }
       else
         render :json => {:status =>"not" }
@@ -1857,9 +1857,9 @@ class HomesController < ApplicationController
         User.where(:id=>@user.first['id']).update_all(:last_activity => Time.now, :office_phone => params[:ophone])
         render :json => {:status =>"done" }
 
-      elsif (@user.first['password']==params[:cur_psd])
+      elsif (@user.first['password']==(Digest::MD5.hexdigest(params[:cur_psd])))
 
-        User.where(:id=>@user.first['id']).update_all(:last_activity => Time.now, :password => params[:new_psd])
+        User.where(:id=>@user.first['id']).update_all(:last_activity => Time.now, :password =>(Digest::MD5.hexdigest(params[:cur_psd])))
         render :json => {:status =>"done" }
       else
         render :json => {:status =>"not" }
@@ -1893,8 +1893,8 @@ class HomesController < ApplicationController
   end
 
   def adminsignin
-
-    @admin=Admin.select("*").where("admin_email_id = ? and admin_password = ?",params[:emailid],params[:password]).limit(1)
+    md_pass=Digest::MD5.hexdigest(params[:password])
+    @admin=Admin.select("*").where("admin_email_id = ? and admin_password = ?",params[:emailid],md_pass).limit(1)
 
     if @admin.blank?
       session[:admin_errormessage]= params[:emailid]
@@ -1936,7 +1936,7 @@ class HomesController < ApplicationController
       session[:admin_signup_errormessage]=nil
       @adminuser = Admin.new(admin_params)
       @adminuser.admin_token=Digest::MD5.hexdigest(params[:admin_email_id])
-
+      @adminuser.admin_password=Digest::MD5.hexdigest(params[:admin_password])
       if @adminuser.save
         #Emailer.new_record_notification(params[:company_email_id]).deliver
         redirect_to :action => "adminlogin"
@@ -2155,8 +2155,9 @@ class HomesController < ApplicationController
   end
 
   def login
-
-    @user=User.select('id,payment_status,company_email_id').where("company_email_id = ? and password = ? and active_status=1",params[:emailid],params[:password]).limit(1)
+    
+    md_pass=Digest::MD5.hexdigest(params[:password])
+    @user=User.select('id,payment_status,company_email_id').where("company_email_id = ? and password = ? and active_status=1",params[:emailid],md_pass).limit(1)
     if @user.blank?
 
       session[:errormessage]= params[:emailid]
@@ -2248,7 +2249,8 @@ class HomesController < ApplicationController
     if @user.blank?
       render :json =>{:error =>"Not Exists"}
     else
-      User.where(:id=>@user.first['id']).limit(1).update_all(:last_activity => Time.now, :password=>params[:password])
+      md_pass=Digest::MD5.hexdigest(params[:password])
+      User.where(:id=>@user.first['id']).limit(1).update_all(:last_activity => Time.now, :password=>md_pass)
       session[:cust_user_id]=@user.first['id'];
 
       render :json =>{:results => "done" }
@@ -3189,7 +3191,25 @@ class HomesController < ApplicationController
 
   end
 
+def viewmap_test
+    
+    if !session[:current_user_id]
+      redirect_to :action => "index"
+    else
+      @address= UserPurchase.select("address").where("user_id = ? and status = 1",session[:current_user_id])
+      @address = @address.to_a.map(&:address)
+      
+      @lat= UserPurchase.select("lat").where("user_id = ? and status = 1",session[:current_user_id])
+      @lat = @lat.to_a.map(&:lat)
+      
+      @long= UserPurchase.select("lng").where("user_id = ? and status = 1",session[:current_user_id])
+      @long = @long.to_a.map(&:lng)
 
+      @alltransaction= UserPurchase.select("transaction_id").where("user_id = ? and status = 1",session[:current_user_id])
+      @transaction = @alltransaction.to_a.map(&:transaction_id)
+    end
+
+  end
 
 
   private

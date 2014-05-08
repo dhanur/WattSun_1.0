@@ -1835,11 +1835,26 @@
         setTimeout(function() {
             map.setZoom(21);
         }, 3000);
+        
 
         <% end %>
 
     }
 
+
+	google.maps.Map.prototype.panToWithOffset = function(latlng, offsetX, offsetY) {
+	    var map = this;
+	    var ov = new google.maps.OverlayView();
+	    ov.onAdd = function() {
+	        var proj = this.getProjection();
+	        var aPoint = proj.fromLatLngToContainerPixel(latlng);
+	        aPoint.x = aPoint.x+offsetX;
+	        aPoint.y = aPoint.y+offsetY;
+	        map.panTo(proj.fromContainerPixelToLatLng(aPoint));
+	    }; 
+	    ov.draw = function() {}; 
+	    ov.setMap(this); 
+	};
 
     function camerapositionpurchase(latitude,longitude,formatted_address)
     {
@@ -1851,8 +1866,10 @@
         var input = document.getElementById('loc_search').value;
         setValueNewTranscation(formatted_address);
         var position2 = new google.maps.LatLng(latitude, longitude);
-        map.setCenter(position2);
-        map.panBy(-200,0);
+        // alert(position2);
+        map.setCenter(position2);        
+        map.panToWithOffset(position2, -parseInt($('#panel_container').width()/2), 0); 
+        // map.panBy(-200,0);
         map.setZoom(21);
     }
 
@@ -1870,6 +1887,7 @@
         setValueNewTranscation(input);
         var position2 = new google.maps.LatLng(lat1, lng1);
         map.setCenter(position2);
+        map.panToWithOffset(position2, -parseInt($('#panel_container').width()), 0);
         map.setZoom(21);
         <% end %>
     }
@@ -1896,28 +1914,23 @@
         });
 
         var position2 = new google.maps.LatLng(latitude,longitude);
-
         map.setCenter(position2);
-
-
+        map.panToWithOffset(position2, -parseInt($('#panel_container').width()/2), 0);
+     
         google.maps.event.addListener(marker[len], 'click', function() {
-
-
-            setValue(transaction[len]);
-
             infoBubble.open(map, marker[len]);
+            setValue(transaction[len]);
+            
             // Prevent default balloon from popping up for marker placemarks
-
             event.preventDefault();
-
+            setTimeout(function() { map.panToWithOffset(position2, -parseInt($('#panel_container').width()/2), 0); }, 500); 
         });
-
+      
         google.maps.event.addListener(map, "click", function () {
             infoBubble.close();
         });
 
         length2 = length2 + 1;
-
 
     }
 
@@ -5201,8 +5214,7 @@
             icon: markerImage
         });
 
-
-
+        var position2= new google.maps.LatLng(lat[x], lng[x]);
         google.maps.event.addListener(marker[x], 'click', function() {
             input1 = input.split(",");
             var secondline=''
@@ -5216,14 +5228,13 @@
 
             infoBubble.setContent('<div id="puchased_marker" style="color:#fff;font-family:latoreg;font-size:18px;line-height:20px;width: auto;display: table;margin: 0 auto;padding: 19px;"> <center style="text-align:left;">'+input1[0]+'<br>'+secondline+'</center></div>');
             infoBubble.open(map, marker[x]);
-
-            setValue(transaction[x]);
-
+            setTimeout(function() { map.panToWithOffset(position2, -parseInt($('#panel_container').width()/2), 0); }, 500);
             event.preventDefault();
-
+            
         });
 
-
+       
+    
         google.maps.event.addListener(map, "click", function () {
             infoBubble.close();
         });
@@ -5438,6 +5449,7 @@
 
     google.maps.event.addDomListener(window, 'load', initialize);
 </script>
+
 
 
 <script>
