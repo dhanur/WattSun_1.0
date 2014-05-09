@@ -1816,12 +1816,12 @@
         var menu_tab_height=$('#panel_menu').innerHeight();
         var abs_google_srch=$('#loc_search').innerHeight();
         var error_message_height=$('#search_error').innerHeight();
-        var total_fixed=win_height-(nav_height+srch_height+menu_tab_height+abs_google_srch+error_message_height);
+        var total_fixed=win_height-(nav_height+srch_height+menu_tab_height+abs_google_srch);
         $("#map-canvas").css("height", $(window).height()-(nav_height+abs_google_srch+error_message_height));
 
-        $('#panel_container').css("margin-top",nav_height+abs_google_srch+error_message_height);
+        $('#panel_container').css("margin-top",nav_height+abs_google_srch);
 
-        $('#abc').css("margin-top",nav_height+abs_google_srch+error_message_height);
+        $('#abc').css("margin-top",nav_height+abs_google_srch);
         $('#panel_table_content').css({"height":total_fixed,"overflowY":"hidden"});
         $("#panel_table_content").niceScroll({
             styler : "fb",
@@ -1845,7 +1845,7 @@
         var menu_tab_height=$('#panel_menu').innerHeight();
         var abs_google_srch=$('#loc_search').innerHeight();
         var error_message_height=$('#search_error').innerHeight();
-        var total_fixed=win_height-(nav_height+srch_height+menu_tab_height+abs_google_srch+error_message_height);
+        var total_fixed=win_height-(nav_height+srch_height+menu_tab_height+abs_google_srch);
 
         $("#map-canvas").css("height", $(window).height()-(nav_height+abs_google_srch+error_message_height));
 
@@ -1856,8 +1856,8 @@
 //            alert("err_msg"+error_message_height);
 
         //console.log(win_height,nav_height,srch_height,menu_tab_height,abs_google_srch,error_message_height);
-        $('#panel_container').css("margin-top",nav_height+abs_google_srch+error_message_height+5);
-        $('#abc').css("margin-top",nav_height+abs_google_srch+error_message_height+5);
+        $('#panel_container').css("margin-top",nav_height+abs_google_srch+5);
+        $('#abc').css("margin-top",nav_height+abs_google_srch+5);
         $('#panel_table_content').css({"height":total_fixed,"overflowY":"scroll"});
         $("#panel_table_content").niceScroll({
             styler : "fb",
@@ -1891,7 +1891,7 @@
         $('#search_bar').css("position","absolute");
         $('#loc_search').css("border","1px solid #bdc3c7");
         $('#search_bar').css("border","0px");
-        $('#search_bar').css("margin-top","69px");
+        $('#search_bar').css("margin-top","117px");
         $('#loc_search').css("width",center_width);
         $('#nav_search').css("width","50px");
         $('#bgnav').removeAttr('style');
@@ -1912,8 +1912,8 @@
         $('#search_bar').css("margin-top","69px");
         $('#loc_search').css("width",center_width);
         $('#nav_search').css("width","50px");
-        $('#search_bar').css("margin-top","61px");
-        $('#bgnav').css("padding","13px 0px 10px 0px");
+        $('#search_bar').css("margin-top","117px");
+        $('#bgnav').css("padding","13px 0px 10px 0px !important");
     }
 
 
