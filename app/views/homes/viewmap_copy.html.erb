@@ -1762,6 +1762,8 @@
             var markerclick = new google.maps.Marker({
             });
             var flagclick = 0;
+            var flagpurchase = 0;
+            var flagerror = 0;
 		    var map;
 		    var infoBubble = new InfoBubble({
 					shadowStyle: 3,
@@ -1861,24 +1863,37 @@
 						administrative_area_level_1: '',
 		                administrative_area_level_2: ''
 					};
+
                     infoBubbleclick.close();
                     infoBubbleerror.close();
+
                     markerclick.setMap(null);
                     flagclick = 0;
+
 					check();
-					
-					<% if session[:last_viewed_address] %>		
-					 setTimeout(function() {
-                      map.setZoom(21);
-                    }, 2000);
-                    
-                    <% else %>
-                      setTimeout(function() {
-                      map.setZoom(21);
-                    }, 3000);
-                    			
-                    <% end %> 
-                   
+
+                    if(flagerror != 1){
+
+                        <% if session[:last_viewed_address] %>
+
+                            setTimeout(function() {
+                                map.setZoom(21);
+                            }, 2000);
+
+
+
+                        <% end %>
+
+                    }
+//                    else if(flagpurchase == 1)
+//                    {  alert("dkjfgkhv ");
+//                        setTimeout(function () {
+//                        map.setZoom(21);
+//                        }, 3000);
+//
+//                    }
+
+                    flagerror = 0;
 
 				}
 			});
@@ -1903,29 +1918,49 @@
 
                 infoBubbleclick.close();
                 infoBubbleerror.close();
+
                 markerclick.setMap(null);
                 flagclick = 0;
-						check();
-	                    <% if session[:last_viewed_address] %>		
-						 setTimeout(function() {
-	                      map.setZoom(21);
-	                    }, 2000);
-	                    
-	                    <% else %>	
-	                      setTimeout(function() {
-	                      map.setZoom(21);
-	                    }, 3000);
-	                   
-	                    <% end %> 
-                   
+
+			    check();
+
+                if(flagerror != 1){
+                    <% if session[:last_viewed_address] %>
+
+                        setTimeout(function() {
+                            map.setZoom(21);
+                        }, 2000);
+
+
+
+                    <% end %>
+
+                }
+//                else if(flagpurchase == 1)
+//                {   alert("dkjfgkhv ");
+//                    setTimeout(function () {
+//                        map.setZoom(21);
+//                    }, 3000);
+//
+//                }
+
+                flagerror = 0;
+
 		    }
 
 		
 		    function camerapositionpurchase(latitude,longitude,formatted_address)
 		 	   {   if(flagclick==1) {
                    var position2 = new google.maps.LatLng(latitude, longitude);
+                   var inputclick = formatted_address.split(",");
+                   var secondline=''
+
+                   for(i=1; i< (inputclick.length-1); i++)
+                   {
+                       secondline=secondline+inputclick[i]+' ';
+                   }
+                   infoBubble.setContent('<div id="sold_marker" style="color:#fff;font-family:latoreg;font-size:17px;line-height:20px;padding-top:5%;padding-bottom:5%;text-align:center;padding-left:10px;">'+inputclick[0]+'<br>'+secondline+'</div>');
                    infoBubble.setPosition(position2);
-                   infoBubble.setContent(formatted_address);
                    infoBubble.open(map);
                }
 		 	   	$("#panel_container").css("visibility","visible");
@@ -1935,14 +1970,18 @@
 			    var position2 = new google.maps.LatLng(latitude, longitude);
                     map.setCenter(position2);
 
- 	                map.setZoom(21);
-		    } 
+                   map.setZoom(21);
+
+                  setTimeout(function () {
+                       map.setZoom(21);
+                   }, 1000);
+		    }
 
 
         
             function camerapositionfirsttym(input)
 		 	   {
-		 	   
+
 		 	   	$("#panel_container").css("visibility","visible");
 		 	   	$('#ascrail2000').css("visibility","visible");  
 		 	   	 <% if session[:lat] %>
@@ -1963,16 +2002,20 @@
 	    	function cameraposition() {
 
 			  $("#panel_container").css("visibility","visible");
-		      $("#ascrail2000").css("visibility","visible");  
+		      $("#ascrail2000").css("visibility","visible");
+
 				makemake();
+
 				var len = length2;
 				addresses[len] = formatted_address;
 				lat[len] = latitude;
 				lng[len] = longitude;
 				$("#loadingimage").hide();
                 transaction[len] = transaction_id;
-                 markerclick.setMap(null);
+
+                markerclick.setMap(null);         //remove infobubble of click event
                 infoBubbleclick.close();
+
 				 marker[len] = new google.maps.Marker({
 					position: new google.maps.LatLng(latitude,longitude),
 					map: map,
@@ -1981,9 +2024,13 @@
 		
 				var position2 = new google.maps.LatLng(latitude,longitude);
 
+                map.setZoom(21);
                 map.setCenter(position2);
-//                map.panBy(-200,0);
 
+                setTimeout(function() {
+
+                    map.setZoom(21);
+                }, 2000);
 
                 google.maps.event.addListener(marker[len], 'click', function() {
                     infoBubbleclick.close();
@@ -3081,6 +3128,8 @@
                             $("#search_error").css("visibility", "visible");
                             $("#search_error").html('That is not a valid street address.');
                             $('#loc_search').css("outline", "3px solid red");
+                            flagerror = 1;
+
                         }
 
 					},
@@ -3093,120 +3142,133 @@
 			}
 
 	
-			function makepurchase() {				
-				
+			function makepurchase() {
+
+
+                alert($("#myModal").length);
 			    	$('#myModal').modal('hide');
 
-                if(flagclick == 1){
-                    setTimeout(function() {
-                        map.setZoom(21);
-                    }, 2000);
-                }
-			    	
-			    	$('#loadingimage').show();
-			    					
-				  // $("#panel_search_result").hide();
-					$("#prev_chk").hide();
-					$("#check_show_money1").hide();
-					$("#check_show_money2").hide();
-					
-					$("#check_electricity1").hide();
-					$("#check_electricity2").hide();
-					
-					$("#check_ease_of_installation1").hide();
-					$("#check_ease_of_installation2").hide();
-					
-												
-					$("#check_need_to_know1").hide();
-     				$("#check_need_to_know2").hide();
-							
-					
-					$("#check_solar_adoption1").hide();					
-					$("#check_solar_adoption2").hide();
 
-							
-    				$("#check_area_profile1").hide();
-					$("#check_area_profile2").hide();
-						
-										
-					$('#utilityspan1').html('');
-					$('#utilityspan2').html('');
 
-					$("#owner_name1").html('');
-					$("#owner_name2").html('');
 
-					$("#mailing_address1").html('');
-					$("#mailing_address2").html('');
+                alert($("#myModal").length);
 
-					$("#owner_occupied1").html('');
-					$("#owner_occupied2").html('');					
-					
-					$("#last_sale_date1").html('');
-					$("#last_sale_date2").html('');
-					
-					$("#last_sale_price1").html('');
-					$("#last_sale_price2").html('');		
-					
-					$("#last_sale_price_per_sqrft1").html('');
-					$("#last_sale_price_per_sqrft2").html('');						
-					
-					$("#land_use_code1").html('');
-					$("#land_use_code2").html('');
-					
-					$("#zoning1").html('');
-					$("#zoning2").html('');		
-					
-					$("#residential_per_common_units1").html('');
-					$("#residential_per_common_units2").html('');	
 
-					$("#gross_area1").html('');
-					$("#gross_area2").html('');
-					
-					$("#living_area1").html('');
-					$("#living_area2").html('');		
-					
-					$("#no_of_bedroom1").html('');
-					$("#no_of_bedroom2").html('');	
-
-					$("#no_of_bathroom1").html('');
-					$("#no_of_bathroom1").html('');
-					
-					$("#age_of_home1").html('');
-					$("#age_of_home2").html('');		
-					
-					$("#pool1").html('');
-					$("#pool2").html('');		
-
-					$("#heat_type1").html('');
-					$("#heat_type2").html('');
-
-					$("#heat_fuel1").html('');
-					$("#heat_fuel2").html('');
-
-					$("#roof_type1").html('');
-					$("#roof_type2").html('');
-					
-					$("#roof_shape1").html('');
-					$("#roof_shape2").html('');
-					
-					$("#roof_frame1").html('');
-					$("#roof_frame2").html('');					
-
-					$("#roof_material1").html('');
-					$("#roof_material2").html('');
-
-					$("#roof_condition1").html('');
-					$("#roof_condition2").html('');	
-					
-
-					$("#est_credit_score1").html('');
-					$("#est_credit_score2").html('');
-
-					$("#est_annual_income1").html('');
-					$("#est_annual_income2").html('');
-					
-					
-					cameraposition();
+//
+//                    if(flagclick == 1){
+//                        setTimeout(function() {
+//                            map.setZoom(21);
+//                        }, 2000);
+//                    }
+////                    else
+////                    {
+////                        flagpurchase = 1;
+////                    }
+//
+////			    	$('#loadingimage').show();
+//
+//				  // $("#panel_search_result").hide();
+//					$("#prev_chk").hide();
+//					$("#check_show_money1").hide();
+//					$("#check_show_money2").hide();
+//
+//					$("#check_electricity1").hide();
+//					$("#check_electricity2").hide();
+//
+//					$("#check_ease_of_installation1").hide();
+//					$("#check_ease_of_installation2").hide();
+//
+//
+//					$("#check_need_to_know1").hide();
+//     				$("#check_need_to_know2").hide();
+//
+//
+//					$("#check_solar_adoption1").hide();
+//					$("#check_solar_adoption2").hide();
+//
+//
+//    				$("#check_area_profile1").hide();
+//					$("#check_area_profile2").hide();
+//
+//
+//					$('#utilityspan1').html('');
+//					$('#utilityspan2').html('');
+//
+//					$("#owner_name1").html('');
+//					$("#owner_name2").html('');
+//
+//					$("#mailing_address1").html('');
+//					$("#mailing_address2").html('');
+//
+//					$("#owner_occupied1").html('');
+//					$("#owner_occupied2").html('');
+//
+//					$("#last_sale_date1").html('');
+//					$("#last_sale_date2").html('');
+//
+//					$("#last_sale_price1").html('');
+//					$("#last_sale_price2").html('');
+//
+//					$("#last_sale_price_per_sqrft1").html('');
+//					$("#last_sale_price_per_sqrft2").html('');
+//
+//					$("#land_use_code1").html('');
+//					$("#land_use_code2").html('');
+//
+//					$("#zoning1").html('');
+//					$("#zoning2").html('');
+//
+//					$("#residential_per_common_units1").html('');
+//					$("#residential_per_common_units2").html('');
+//
+//					$("#gross_area1").html('');
+//					$("#gross_area2").html('');
+//
+//					$("#living_area1").html('');
+//					$("#living_area2").html('');
+//
+//					$("#no_of_bedroom1").html('');
+//					$("#no_of_bedroom2").html('');
+//
+//					$("#no_of_bathroom1").html('');
+//					$("#no_of_bathroom1").html('');
+//
+//					$("#age_of_home1").html('');
+//					$("#age_of_home2").html('');
+//
+//					$("#pool1").html('');
+//					$("#pool2").html('');
+//
+//					$("#heat_type1").html('');
+//					$("#heat_type2").html('');
+//
+//					$("#heat_fuel1").html('');
+//					$("#heat_fuel2").html('');
+//
+//					$("#roof_type1").html('');
+//					$("#roof_type2").html('');
+//
+//					$("#roof_shape1").html('');
+//					$("#roof_shape2").html('');
+//
+//					$("#roof_frame1").html('');
+//					$("#roof_frame2").html('');
+//
+//					$("#roof_material1").html('');
+//					$("#roof_material2").html('');
+//
+//					$("#roof_condition1").html('');
+//					$("#roof_condition2").html('');
+//
+//
+//					$("#est_credit_score1").html('');
+//					$("#est_credit_score2").html('');
+//
+//					$("#est_annual_income1").html('');
+//					$("#est_annual_income2").html('');
+//
+//
+//					cameraposition();
 
 		}
 	
@@ -5343,8 +5405,8 @@
 				 
 				   	<% if session[:last_viewed_address] %>		   	
 				     camerapositionfirsttym('<%= session[:last_viewed_address] %>');
-                    <% end %> 
-				   
+                    <% end %>
+
 					}
 
 		      }
@@ -5469,7 +5531,6 @@
                 var length = response["results"][0]["address_components"].length;
 
                 formatted_address=response["results"][0]["formatted_address"];
-//                $('#loc_search').val(formatted_address);
 
                 for (var i = 0; i < length; i++) {
                     var addressType1 = response["results"][0]["address_components"][i]["types"][0];
@@ -5539,7 +5600,7 @@
                         url : "/homes/addresspresentcheck",
                         type : "POST",
                         dataType : 'JSON',
-
+                        async : false,
                         data : {
                             'address' :	formatted_address
                         },
@@ -5613,18 +5674,19 @@
                     else {
                         if((componentForm1['postal_code'] != '') || (componentForm1['locality'] != ''))
                         {    var position2 = new google.maps.LatLng(latitude,longitude);
-                            alert("hi");
+
                             map.setCenter(position2);
                             setTimeout(function() {
                                 map.setZoom(15);
                             }, 2500);
-
+                            flagerror = 1;
                         }
                         else {
                             flag = 0;
                             $("#search_error").css("visibility", "visible");
                             $("#search_error").html('That is not a valid street address.');
                             $('#loc_search').css("outline", "3px solid red");
+                            flagerror = 1;
                         }
                     }
                 }
@@ -5632,7 +5694,10 @@
 
             function clearbox(){
                 if (flagclick == 1) {
+                    markerclick.setMap(null);
                     infoBubbleclick.close();
+                    infoBubble.close();
+                    infoBubbleerror.close();
                 }
             }
 

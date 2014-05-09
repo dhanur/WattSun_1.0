@@ -1730,6 +1730,9 @@
     var marker = new Array;
     var marker2;
     var map;
+    var position3;
+    var flag_to_set_marker_center=1;
+    
     var infoBubble = new InfoBubble({
         shadowStyle: 3,
         padding: 0,
@@ -1773,6 +1776,21 @@
     };
 
     var formatted_address;
+    
+    	google.maps.Map.prototype.panToWithOffset = function(latlng, offsetX, offsetY) {
+	    var map = this;
+	    var ov = new google.maps.OverlayView();
+	    ov.onAdd = function() {
+	        var proj = this.getProjection();
+	        var aPoint = proj.fromLatLngToContainerPixel(latlng);
+	        aPoint.x = aPoint.x+offsetX;
+	        aPoint.y = aPoint.y+offsetY;
+	        map.panTo(proj.fromContainerPixelToLatLng(aPoint));
+	    }; 
+	    ov.draw = function() {}; 
+	    ov.setMap(this); 
+	};
+
 
     $(window).bind('keypress', function(e) {
         if (e.keyCode == 13) {
@@ -1799,6 +1817,7 @@
             <% else %>
             setTimeout(function() {
                 map.setZoom(21);
+                map.panToWithOffset(position3, -parseInt($('#panel_container').width()/2), 0); 
             }, 3000);
 
             <% end %>
@@ -1806,9 +1825,6 @@
 
         }
     });
-
-
-
 
 
     function qualifyclick()
@@ -1834,42 +1850,25 @@
         <% else %>
         setTimeout(function() {
             map.setZoom(21);
+            map.panToWithOffset(position3, -parseInt($('#panel_container').width()/2), 0); 
         }, 3000);
-        
 
         <% end %>
 
     }
 
 
-	google.maps.Map.prototype.panToWithOffset = function(latlng, offsetX, offsetY) {
-	    var map = this;
-	    var ov = new google.maps.OverlayView();
-	    ov.onAdd = function() {
-	        var proj = this.getProjection();
-	        var aPoint = proj.fromLatLngToContainerPixel(latlng);
-	        aPoint.x = aPoint.x+offsetX;
-	        aPoint.y = aPoint.y+offsetY;
-	        map.panTo(proj.fromContainerPixelToLatLng(aPoint));
-	    }; 
-	    ov.draw = function() {}; 
-	    ov.setMap(this); 
-	};
-
     function camerapositionpurchase(latitude,longitude,formatted_address)
     {
         $("#panel_container").css("visibility","visible");
         $('#ascrail2000').css("visibility","visible");
-
-
-        // var lookAt = ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND);		
+      
         var input = document.getElementById('loc_search').value;
         setValueNewTranscation(formatted_address);
         var position2 = new google.maps.LatLng(latitude, longitude);
-        // alert(position2);
-        map.setCenter(position2);        
+        map.setCenter(position2);
+        position3=position2;
         map.panToWithOffset(position2, -parseInt($('#panel_container').width()/2), 0); 
-        // map.panBy(-200,0);
         map.setZoom(21);
     }
 
@@ -1887,6 +1886,7 @@
         setValueNewTranscation(input);
         var position2 = new google.maps.LatLng(lat1, lng1);
         map.setCenter(position2);
+        position3=position2;
         map.panToWithOffset(position2, -parseInt($('#panel_container').width()), 0);
         map.setZoom(21);
         <% end %>
@@ -1904,9 +1904,9 @@
         addresses[len] = formatted_address;
         lat[len] = latitude;
         lng[len] = longitude;
-        $("#loadingimage").hide();
+       // $("#loadingimage").hide();
         transaction[len] = transaction_id;
-        console.log()
+       
         marker[len] = new google.maps.Marker({
             position: new google.maps.LatLng(latitude,longitude),
             map: map,
@@ -1915,23 +1915,25 @@
 
         var position2 = new google.maps.LatLng(latitude,longitude);
         map.setCenter(position2);
+        position3=position2;
         map.panToWithOffset(position2, -parseInt($('#panel_container').width()/2), 0);
-     
+   
         google.maps.event.addListener(marker[len], 'click', function() {
-            infoBubble.open(map, marker[len]);
             setValue(transaction[len]);
-            
-            // Prevent default balloon from popping up for marker placemarks
+            infoBubble.open(map, marker[len]);         
             event.preventDefault();
-            setTimeout(function() { map.panToWithOffset(position2, -parseInt($('#panel_container').width()/2), 0); }, 500); 
+            
+            if (flag_to_set_marker_center==1)
+            {            
+            	            setTimeout(function() { map.panToWithOffset(position2, -parseInt($('#panel_container').width()/2), 0); }, 500);
+            }
         });
-      
+
         google.maps.event.addListener(map, "click", function () {
             infoBubble.close();
         });
-
+        map.setZoom(21);
         length2 = length2 + 1;
-
     }
 
 
@@ -2720,14 +2722,6 @@
                     $("#check_ease_of_installation2").hide();
                 }
 
-
-
-
-
-
-
-
-
                 if(response['results'][0]['delineate']=='' || response['results'][0]['delineate']==null )
                 {
                     $("#d1").hide();
@@ -3024,10 +3018,11 @@
        $('#myModal').modal('hide');
        setTimeout(function() {
                 map.setZoom(21);
+                map.panToWithOffset(position3, -parseInt($('#panel_container').width()/2), 0);
             }, 3000);
-        $('#loadingimage').show();
-
-        // $("#panel_search_result").hide();
+       
+       // $('#loadingimage').show();
+       // $("#panel_search_result").hide();
         $("#prev_chk").hide();
         $("#check_show_money1").hide();
         $("#check_show_money2").hide();
@@ -5207,34 +5202,36 @@
     var imageUrl = 'http://beta.prospectzen.com/assets/red_circle.png';
     var markerImage = new google.maps.MarkerImage(imageUrl);
 
+ 
     function call(x,input) {
         marker[x] = new google.maps.Marker({
             position: new google.maps.LatLng(lat[x], lng[x]),
             map: map,
             icon: markerImage
         });
-
-        var position2= new google.maps.LatLng(lat[x], lng[x]);
-        google.maps.event.addListener(marker[x], 'click', function() {
+        var position2 = new google.maps.LatLng(lat[x], lng[x]);
+          position3=position2;
+          google.maps.event.addListener(marker[x], 'click', function() {
             input1 = input.split(",");
             var secondline=''
-
             for(i=1; i< (input1.length-1); i++)
             {
                 secondline=secondline+input1[i]+' ';
             }
-
             $("#panel_search_result").html(input1[0]+'<br>'+secondline);
 
             infoBubble.setContent('<div id="puchased_marker" style="color:#fff;font-family:latoreg;font-size:18px;line-height:20px;width: auto;display: table;margin: 0 auto;padding: 19px;"> <center style="text-align:left;">'+input1[0]+'<br>'+secondline+'</center></div>');
             infoBubble.open(map, marker[x]);
-            setTimeout(function() { map.panToWithOffset(position2, -parseInt($('#panel_container').width()/2), 0); }, 500);
+            setValue(transaction[x]);
+            position3=position2;
             event.preventDefault();
-            
+            if (flag_to_set_marker_center==1)
+            {
+                     setTimeout(function() { map.panToWithOffset(position2, -parseInt($('#panel_container').width()/2), 0); }, 500);
+            }
         });
 
-       
-    
+
         google.maps.event.addListener(map, "click", function () {
             infoBubble.close();
         });
@@ -5451,7 +5448,6 @@
 </script>
 
 
-
 <script>
     $(document).ready(function(){
 
@@ -5466,7 +5462,9 @@
         );
 
         $('#panel_container_sidebar').on('click', '.glyphicon-chevron-left', function() {
-
+            
+            flag_to_set_marker_center=0;
+            
             var panel_width=$('#panel_container').width()-24;
             $("#panel_container").animate({
                 'margin-left' : -panel_width
@@ -5475,6 +5473,9 @@
             $("#panel_container").find("#side").addClass("glyphicon glyphicon-chevron-right");
 
             $('#ascrail2000').hide();
+             
+            setTimeout(function() { map.panToWithOffset(position3, 0, 0); }, 500);
+
 
         });
         $('#panel_container_sidebar').on('click', '.glyphicon-chevron-right', function() {
@@ -5483,14 +5484,14 @@
 //                if(side_class=="glyphicon glyphicon-chevron-right"){
 //                
 //                }
-
+            flag_to_set_marker_center=1;
             $("#panel_container").animate({
                 'margin-left' : "0px"
             }, 'slow');
             $("#panel_container").find("#side").removeClass("glyphicon glyphicon-chevron-right");
             $("#panel_container").find("#side").addClass("glyphicon glyphicon-chevron-left");
             $('#ascrail2000').show();
-
+            setTimeout(function() { map.panToWithOffset(position3, -parseInt($('#panel_container').width()/2), 0); }, 500);
         });
 
         var win_width=$(window).width();
