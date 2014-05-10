@@ -1926,7 +1926,7 @@
             {
                 secondline=secondline+inputclick[i]+' ';
             }
-            infoBubble.setContent('<div id="sold_marker" style="color:#fff;font-family:latoreg;font-size:17px;line-height:20px;padding-top:5%;padding-bottom:5%;text-align:center;padding-left:10px;">'+inputclick[0]+'<br>'+secondline+'</div>');
+            infoBubble.setContent('<div id="sold_marker" style="color:#fff;font-family:latoreg;font-size:17px;line-height:20px;padding-top:5%;padding-bottom:5%;text-align:center;padding-left:10px;"><center style="text-align:left;">'+inputclick[0]+'<br>'+secondline+'</center></div>');
             infoBubble.setPosition(position2);
             infoBubble.open(map);
         }
@@ -1964,8 +1964,9 @@
 
         setValueNewTranscation(input);
         var position2 = new google.maps.LatLng(lat1, lng1);
-        map.setCenter(position2);
+//      map.setCenter(position2);
         position3=position2;
+
         map.panToWithOffset(position2, -parseInt($('#panel_container').width()), 0);
         map.setZoom(21);
         <% end %>
