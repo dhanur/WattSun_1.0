@@ -1736,7 +1736,7 @@
     var flagerror = 0;
     var map;
     var position3;
-    var flag_to_set_marker_center=1;
+    var flag_to_set_marker_center = 0;
 
     var infoBubble = new InfoBubble({
         shadowStyle: 3,
@@ -1932,6 +1932,7 @@
         }
 
         $("#panel_container").css("visibility","visible");
+        flag_to_set_marker_center = 1;
         $('#ascrail2000').css("visibility","visible");
       
         var input = document.getElementById('loc_search').value;
@@ -1955,6 +1956,7 @@
     {
 
         $("#panel_container").css("visibility","visible");
+        flag_to_set_marker_center = 1;
         $('#ascrail2000').css("visibility","visible");
         <% if session[:lat] %>
         lat1 = '<%= session[:lat] %>'
@@ -1976,6 +1978,7 @@
 
         $("#panel_container").css("visibility","visible");
         $("#ascrail2000").css("visibility","visible");
+        flag_to_set_marker_center = 1;
         makemake();
         var len = length2;
         addresses[len] = formatted_address;
@@ -1986,7 +1989,7 @@
 
         markerclick.setMap(null);         //remove infobubble of click event
         infoBubbleclick.close();
-       
+
         marker[len] = new google.maps.Marker({
             position: new google.maps.LatLng(latitude,longitude),
             map: map,
@@ -5566,6 +5569,14 @@
 
                     infoBubbleerror.open(map, markerclick);
                     infoBubbleerror.setContent('<div id="click_marker" style="color:#fff;font-family:latoreg;font-size:17px;line-height:20px;padding-top:5%;padding-bottom:5%;text-align:center;padding-left:10px;">Sorry! No street address detected</div>');
+
+                    var position2 = new google.maps.LatLng(latlng.lat(), latlng.lng());
+                    position3 = position2;
+
+                    if (flag_to_set_marker_center==1)
+                    {
+                        setTimeout(function() { map.panToWithOffset(position2, -parseInt($('#panel_container').width()/2), 0); }, 500);
+                    }
                 }
 
             },
@@ -5699,6 +5710,12 @@
                                     +'</input>'
                                     +'<div style="clear:both;"></div>'
                                     +'</div>');
+                            var position2 = new google.maps.LatLng(latlng.lat(), latlng.lng());
+                            position3 = position2;
+                            if (flag_to_set_marker_center==1)
+                            {
+                                setTimeout(function() { map.panToWithOffset(position2, -parseInt($('#panel_container').width()/2), 0); }, 500);
+                            }
 
                         }
                         else {
@@ -5729,6 +5746,12 @@
 
                 infoBubbleerror.open(map, markerclick);
                 infoBubbleerror.setContent('<div id="click_marker" style="color:#fff;font-family:latoreg;font-size:17px;line-height:20px;padding-top:5%;padding-bottom:5%;text-align:;padding-left:10px;">Sorry! No street address detected</div>');
+                var position2 = new google.maps.LatLng(latlng.lat(), latlng.lng());
+                position3 = position2;
+                if (flag_to_set_marker_center==1)
+                {
+                    setTimeout(function() { map.panToWithOffset(position2, -parseInt($('#panel_container').width()/2), 0); }, 500);
+                }
 
             }
             else {
