@@ -44,7 +44,7 @@
       .dtext_media{
           width:390px;
       }
-   
+
 
   </style>
 
@@ -57,17 +57,9 @@
   <script src="/assets/jquery.nicescroll.js">
   </script>
 
-
-
-
-
   <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
-  <script src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobubble/src/infobubble.js"></script>
-
-  <!-- <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script> -->
-  <!-- <script src="//www.google.com/jsapi?key=595146919660-rou65rsr0k1efgse3kgflrt6a713h4rd.apps.googleusercontent.com" type="text/javascript"></script> -->
-
-
+  <script src="/assets/infobubble.js"></script>
+  <!--<script src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobubble/src/infobubble.js"></script>-->
 
 </head>
 <body>
@@ -110,9 +102,6 @@
         </div>
 
       </div>
-
-
-
 
       <div class="collapse navbar-collapse no-transition"  id="pull_right" >
         <ul class="nav navbar-nav">
@@ -1725,15 +1714,21 @@
     var transaction = new Array;
     var lat = new Array;
     var lng = new Array;
+    var latlng;
     var latitude;
     var longitude;
     var marker = new Array;
-    var marker2;
+    var markerclick = new google.maps.Marker({
+    });
+    var flagclick = 0;   // flag for click on map
+    var flagerror = 0;
     var map;
+
     var position3;
-    var flag_to_set_marker_center=1;
-    
-    var infoBubble = new InfoBubble({
+
+    var flag_to_set_marker_center = 2;   // 2 means first time search
+
+    var infoBubble = new InfoBubble({      // infoBubble for purchased houses
         shadowStyle: 3,
         padding: 0,
         backgroundColor: '#C0392B',
@@ -1753,8 +1748,46 @@
         maxHeight: 80
     });
 
+    var infoBubbleclick = new InfoBubble({       // infoBubble for click on map houses
+        shadowStyle: 3,
+        padding: 0,
+        backgroundColor: '#5cb85c',
+        borderRadius: 0,
+        arrowSize: 8,
+        borderWidth: 1,
+        borderColor: '#5cb85c',
+        // disableAutoPan: true,
+        hideCloseButton: true,
+        arrowPosition: 50,
+        // overflow: hidden,
+        // backgroundClassName: 'phoney',
+        arrowStyle:0,
+        minWidth: 300,
+        minHeight: 130,
+        maxWidth: 2000,
+        maxHeight: 170
+    });
 
-    var check2 = 0;
+    var infoBubbleerror = new InfoBubble({
+        shadowStyle: 3,
+        padding: 0,
+        backgroundColor: '#5cb85c',
+        borderRadius: 0,
+        arrowSize: 8,
+        borderWidth: 1,
+        borderColor: '#5cb85c',
+        // disableAutoPan: true,
+        hideCloseButton: true,
+        arrowPosition: 50,
+        // overflow: hidden,
+        // backgroundClassName: 'phoney',
+        arrowStyle:0,
+        minWidth: 200,
+        minHeight: 70,
+        maxWidth: 1000,
+        maxHeight: 200
+    });
+
     var componentForm = {
         street_number : 'short_name',
         route : 'short_name',
@@ -1776,20 +1809,20 @@
     };
 
     var formatted_address;
-    
-    	google.maps.Map.prototype.panToWithOffset = function(latlng, offsetX, offsetY) {
-	    var map = this;
-	    var ov = new google.maps.OverlayView();
-	    ov.onAdd = function() {
-	        var proj = this.getProjection();
-	        var aPoint = proj.fromLatLngToContainerPixel(latlng);
-	        aPoint.x = aPoint.x+offsetX;
-	        aPoint.y = aPoint.y+offsetY;
-	        map.panTo(proj.fromContainerPixelToLatLng(aPoint));
-	    }; 
-	    ov.draw = function() {}; 
-	    ov.setMap(this); 
-	};
+
+    google.maps.Map.prototype.panToWithOffset = function(latlng, offsetX, offsetY) {      // for moving map according to view
+        var map = this;
+        var ov = new google.maps.OverlayView();
+        ov.onAdd = function() {
+            var proj = this.getProjection();
+            var aPoint = proj.fromLatLngToContainerPixel(latlng);
+            aPoint.x = aPoint.x+offsetX;
+            aPoint.y = aPoint.y+offsetY;
+            map.panTo(proj.fromContainerPixelToLatLng(aPoint));
+        };
+        ov.draw = function() {};
+        ov.setMap(this);
+    };
 
 
     $(window).bind('keypress', function(e) {
@@ -1806,22 +1839,28 @@
                 administrative_area_level_1: '',
                 administrative_area_level_2: ''
             };
+            infoBubbleclick.close();
+            infoBubbleerror.close();
+
+            markerclick.setMap(null);
+            flagclick = 0;
 
             check();
 
-            <% if session[:last_viewed_address] %>
-            setTimeout(function() {
-                map.setZoom(21);
-            }, 2000);
+            if(flagerror != 1){
 
-            <% else %>
-            setTimeout(function() {
-                map.setZoom(21);
-                map.panToWithOffset(position3, -parseInt($('#panel_container').width()/2), 0); 
-            }, 3000);
+                <% if session[:last_viewed_address] %>
 
-            <% end %>
+                setTimeout(function() {
+                    map.setZoom(21);
+                }, 2000);
 
+                <% end %>
+
+            }
+
+
+            flagerror = 0;
 
         }
     });
@@ -1831,7 +1870,7 @@
     {
         input = document.getElementById('loc_search').value;
 
-        componentForm1 = {
+        componentForm1 = {             // To check each new address properly componentForm1 is cleared
             street_number : '',
             route : '',
             locality : '',
@@ -1840,44 +1879,94 @@
             administrative_area_level_1: '',
             administrative_area_level_2: ''
         };
+        infoBubbleclick.close();
+        infoBubbleerror.close();
+
+        markerclick.setMap(null);
+        flagclick = 0;
 
         check();
-        <% if session[:last_viewed_address] %>
-        setTimeout(function() {
-            map.setZoom(21);
-        }, 2000);
 
-        <% else %>
-        setTimeout(function() {
-            map.setZoom(21);
-            map.panToWithOffset(position3, -parseInt($('#panel_container').width()/2), 0); 
-        }, 3000);
+        if(flagerror != 1){
 
-        <% end %>
+            <% if session[:last_viewed_address] %>
+
+            setTimeout(function() {
+                map.setZoom(21);
+            }, 2000);
+
+            <% end %>
+
+        }
+
+
+        flagerror = 0;
 
     }
 
 
-    function camerapositionpurchase(latitude,longitude,formatted_address)
+    function camerapositionOnSearch(latitude,longitude,formatted_address)       // function for moving to house on searching purchased houses or to their nearby click
     {
         $("#panel_container").css("visibility","visible");
         $('#ascrail2000').css("visibility","visible");
-      
-        var input = document.getElementById('loc_search').value;
-        setValueNewTranscation(formatted_address);
         var position2 = new google.maps.LatLng(latitude, longitude);
         map.setCenter(position2);
-        position3=position2;
-        map.panToWithOffset(position2, -parseInt($('#panel_container').width()/2), 0); 
         map.setZoom(21);
+
+        if (flag_to_set_marker_center==2)
+        {
+            flag_to_set_marker_center = 1;
+        }
+
+        // if map is clicked near by to purchased address
+        if(flagclick==1) {
+            var inputclick = formatted_address.split(",");
+            var secondline=''
+
+            for(i=1; i< (inputclick.length-1); i++)
+            {
+                secondline=secondline+inputclick[i]+' ';
+            }
+            infoBubble.setContent('<div id="puchased_marker" style="color:#fff;font-family:latoreg;font-size:18px;line-height:20px;width: auto;display: table;margin: 0 auto;padding: 19px;"> <center style="text-align:left;">'+inputclick[0]+'<br>'+secondline+'</center></div>');
+            infoBubble.setPosition(position2);
+            infoBubble.open(map);
+            setValueNewTranscation(formatted_address);
+            setTimeout(function () {
+                map.setZoom(21);
+                console.log(flag_to_set_marker_center);
+
+                if (flag_to_set_marker_center > 0)     //if panel is open
+                    {
+                        map.panToWithOffset(position2, -parseInt($('#panel_container').width()/2), 0);
+                    }
+
+                    }, 1000);
+                 }
+            else{
+                setValueNewTranscation(formatted_address);
+            console.log(flag_to_set_marker_center);
+                    setTimeout(function () {
+                        map.setZoom(21);
+                        if (flag_to_set_marker_center > 0)   //if panel is open
+                        {
+                            map.panToWithOffset(position2, -parseInt($('#panel_container').width()/2), 0);
+                        }
+
+                    }, 1000);
+
+                }
+
+        position3=position2;
+
     }
 
 
 
-    function camerapositionfirsttym(input)
+    function camerapositionOnSession(input)      // function for moving to house on page refresh and for stored session houses
     {
 
         $("#panel_container").css("visibility","visible");
+        flag_to_set_marker_center = 1;
         $('#ascrail2000').css("visibility","visible");
         <% if session[:lat] %>
         lat1 = '<%= session[:lat] %>'
@@ -1887,6 +1976,7 @@
         var position2 = new google.maps.LatLng(lat1, lng1);
         map.setCenter(position2);
         position3=position2;
+
         map.panToWithOffset(position2, -parseInt($('#panel_container').width()), 0);
         map.setZoom(21);
         <% end %>
@@ -1895,18 +1985,25 @@
 
 
 
-    function cameraposition() {
+    function camerapositionOnPurchase() {          // function for moving to house on  purchasing house
 
         $("#panel_container").css("visibility","visible");
-        $("#ascrail2000").css("visibility","visible");
+//        $("#ascrail2000").css("visibility","visible");
+        if (flag_to_set_marker_center==2)
+        {
+            flag_to_set_marker_center = 1;
+        }
         makemake();
         var len = length2;
         addresses[len] = formatted_address;
         lat[len] = latitude;
         lng[len] = longitude;
-       // $("#loadingimage").hide();
+        $("#loadingimage").hide();
         transaction[len] = transaction_id;
-       
+
+        markerclick.setMap(null);         //remove infobubble of click event
+        infoBubbleclick.close();
+
         marker[len] = new google.maps.Marker({
             position: new google.maps.LatLng(latitude,longitude),
             map: map,
@@ -1915,24 +2012,30 @@
 
         var position2 = new google.maps.LatLng(latitude,longitude);
         map.setCenter(position2);
+        map.setZoom(21);
+        setTimeout(function() {
+            map.setZoom(21);
+            if (flag_to_set_marker_center > 0)
+            {
+                map.panToWithOffset(position2, -parseInt($('#panel_container').width()/2), 0);
+            }
+        }, 2000);
         position3=position2;
-        map.panToWithOffset(position2, -parseInt($('#panel_container').width()/2), 0);
-   
+
+
         google.maps.event.addListener(marker[len], 'click', function() {
             setValue(transaction[len]);
-            infoBubble.open(map, marker[len]);         
+            infoBubble.open(map, marker[len]);
+            infoBubbleclick.close();
+            infoBubbleerror.close();
+            markerclick.setMap(null);
             event.preventDefault();
-            
-            if (flag_to_set_marker_center==1)
-            {            
-            	            setTimeout(function() { map.panToWithOffset(position2, -parseInt($('#panel_container').width()/2), 0); }, 500);
+            console.log(flag_to_set_marker_center);
+            if (flag_to_set_marker_center > 0)
+            {
+                setTimeout(function() { map.panToWithOffset(position2, -parseInt($('#panel_container').width()/2), 0); }, 500);
             }
         });
-
-        google.maps.event.addListener(map, "click", function () {
-            infoBubble.close();
-        });
-        map.setZoom(21);
         length2 = length2 + 1;
     }
 
@@ -2991,7 +3094,7 @@
     }
 
 
-    function check() {
+    function check() {                   // hit the google api for lat long
         var input = document.getElementById('loc_search').value;
 
         $.ajax({
@@ -3000,8 +3103,16 @@
             dataType : "JSON",
             async : false,
             success : function(response) {
+                if(response.status == google.maps.GeocoderStatus.OK) {
+                    checkaddress(response);
+                }
+                else {
+                    $("#search_error").css("visibility", "visible");
+                    $("#search_error").html('That is not a valid street address.');
+                    $('#loc_search').css("outline", "3px solid red");
+                    flagerror = 1;
 
-                checkaddress(response);
+                }
 
             },
 
@@ -3014,15 +3125,129 @@
 
 
     function makepurchase() {
+        var $modal = $('#myModal');
+        $modal.modal('hide');
+        $('#loadingimage').show();
+        $modal.on('hidden.bs.modal', function(e) {
 
-       $('#myModal').modal('hide');
-       setTimeout(function() {
-                map.setZoom(21);
-                map.panToWithOffset(position3, -parseInt($('#panel_container').width()/2), 0);
-            }, 3000);
-       
-       // $('#loadingimage').show();
-       // $("#panel_search_result").hide();
+
+            // $("#panel_search_result").hide();
+            $("#prev_chk").hide();
+            $("#check_show_money1").hide();
+            $("#check_show_money2").hide();
+
+            $("#check_electricity1").hide();
+            $("#check_electricity2").hide();
+
+            $("#check_ease_of_installation1").hide();
+            $("#check_ease_of_installation2").hide();
+
+
+            $("#check_need_to_know1").hide();
+            $("#check_need_to_know2").hide();
+
+
+            $("#check_solar_adoption1").hide();
+            $("#check_solar_adoption2").hide();
+
+
+            $("#check_area_profile1").hide();
+            $("#check_area_profile2").hide();
+
+
+            $('#utilityspan1').html('');
+            $('#utilityspan2').html('');
+
+            $("#owner_name1").html('');
+            $("#owner_name2").html('');
+
+            $("#mailing_address1").html('');
+            $("#mailing_address2").html('');
+
+            $("#owner_occupied1").html('');
+            $("#owner_occupied2").html('');
+
+            $("#last_sale_date1").html('');
+            $("#last_sale_date2").html('');
+
+            $("#last_sale_price1").html('');
+            $("#last_sale_price2").html('');
+
+            $("#last_sale_price_per_sqrft1").html('');
+            $("#last_sale_price_per_sqrft2").html('');
+
+            $("#land_use_code1").html('');
+            $("#land_use_code2").html('');
+
+            $("#zoning1").html('');
+            $("#zoning2").html('');
+
+            $("#residential_per_common_units1").html('');
+            $("#residential_per_common_units2").html('');
+
+            $("#gross_area1").html('');
+            $("#gross_area2").html('');
+
+            $("#living_area1").html('');
+            $("#living_area2").html('');
+
+            $("#no_of_bedroom1").html('');
+            $("#no_of_bedroom2").html('');
+
+            $("#no_of_bathroom1").html('');
+            $("#no_of_bathroom1").html('');
+
+            $("#age_of_home1").html('');
+            $("#age_of_home2").html('');
+
+            $("#pool1").html('');
+            $("#pool2").html('');
+
+            $("#heat_type1").html('');
+            $("#heat_type2").html('');
+
+            $("#heat_fuel1").html('');
+            $("#heat_fuel2").html('');
+
+            $("#roof_type1").html('');
+            $("#roof_type2").html('');
+
+            $("#roof_shape1").html('');
+            $("#roof_shape2").html('');
+
+            $("#roof_frame1").html('');
+            $("#roof_frame2").html('');
+
+            $("#roof_material1").html('');
+            $("#roof_material2").html('');
+
+            $("#roof_condition1").html('');
+            $("#roof_condition2").html('');
+
+
+            $("#est_credit_score1").html('');
+            $("#est_credit_score2").html('');
+
+            $("#est_annual_income1").html('');
+            $("#est_annual_income2").html('');
+
+
+            camerapositionOnPurchase();
+
+        });
+
+    }
+
+    function makepurchaseonclick() {
+        infoBubbleclick.close();
+
+        setTimeout(function() {
+            map.setZoom(21);
+        }, 2000);
+
+        $('#loadingimage').show();
+
+        // $("#panel_search_result").hide();
         $("#prev_chk").hide();
         $("#check_show_money1").hide();
         $("#check_show_money2").hide();
@@ -3033,18 +3258,14 @@
         $("#check_ease_of_installation1").hide();
         $("#check_ease_of_installation2").hide();
 
-
         $("#check_need_to_know1").hide();
         $("#check_need_to_know2").hide();
-
 
         $("#check_solar_adoption1").hide();
         $("#check_solar_adoption2").hide();
 
-
         $("#check_area_profile1").hide();
         $("#check_area_profile2").hide();
-
 
         $('#utilityspan1').html('');
         $('#utilityspan2').html('');
@@ -3115,17 +3336,16 @@
         $("#roof_condition1").html('');
         $("#roof_condition2").html('');
 
-
         $("#est_credit_score1").html('');
         $("#est_credit_score2").html('');
 
         $("#est_annual_income1").html('');
         $("#est_annual_income2").html('');
 
-
-        cameraposition();
+        camerapositionOnPurchase();
 
     }
+
 
 
 
@@ -4186,7 +4406,6 @@
             async:false,
             data : {
                 'tranc' :x
-                // 'zip' : zipcode
             },
             success : function(response) {
 
@@ -5200,18 +5419,25 @@
     }
 
     var imageUrl = 'http://beta.prospectzen.com/assets/red_circle.png';
+    var imageUrlgreen = 'http://beta.prospectzen.com/assets/green_circle.png';
     var markerImage = new google.maps.MarkerImage(imageUrl);
+    var markerImagegreen = new google.maps.MarkerImage(imageUrlgreen);
 
- 
+
     function call(x,input) {
         marker[x] = new google.maps.Marker({
             position: new google.maps.LatLng(lat[x], lng[x]),
             map: map,
             icon: markerImage
         });
+
         var position2 = new google.maps.LatLng(lat[x], lng[x]);
-          position3=position2;
-          google.maps.event.addListener(marker[x], 'click', function() {
+        position3=position2;
+        google.maps.event.addListener(marker[x], 'click', function() {
+            infoBubbleclick.close();
+            infoBubbleerror.close();
+            markerclick.setMap(null);
+
             input1 = input.split(",");
             var secondline=''
             for(i=1; i< (input1.length-1); i++)
@@ -5225,15 +5451,12 @@
             setValue(transaction[x]);
             position3=position2;
             event.preventDefault();
-            if (flag_to_set_marker_center==1)
+            console.log(flag_to_set_marker_center);
+
+            if (flag_to_set_marker_center  == 1)
             {
-                     setTimeout(function() { map.panToWithOffset(position2, -parseInt($('#panel_container').width()/2), 0); }, 500);
+                setTimeout(function() { map.panToWithOffset(position2, -parseInt($('#panel_container').width()/2), 0); }, 500);
             }
-        });
-
-
-        google.maps.event.addListener(map, "click", function () {
-            infoBubble.close();
         });
 
     }
@@ -5247,6 +5470,7 @@
                         lat = <%= raw @lat %>
                                 lng = <%= raw @long %>
                                         length2 = addresses.length;
+
         for (var x = 0; x < addresses.length; x++) {
 
             call(x,addresses[x]);
@@ -5258,7 +5482,7 @@
         {
 
             <% if session[:last_viewed_address] %>
-            camerapositionfirsttym('<%= session[:last_viewed_address] %>');
+            camerapositionOnSession('<%= session[:last_viewed_address] %>');
             <% end %>
 
         }
@@ -5302,32 +5526,86 @@
         geocoder = new google.maps.Geocoder();
         map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
 
-//        google.maps.event.addListener(map, 'click', function(event) {
-//            componentForm1 = {
-//                street_number: '',
-//                route: '',
-//                locality: '',
-//                country: '',
-//                postal_code: '',
-//                administrative_area_level_1: '',
-//                administrative_area_level_2: ''
-//            };
-//
-//            var latlng = event.latLng;
-//
-//            codeLatLng(latlng);
-//
-//
-//        });
+        google.maps.event.addListener(map, 'click', function(event) {
+            componentForm1 = {
+                street_number: '',
+                route: '',
+                locality: '',
+                country: '',
+                postal_code: '',
+                administrative_area_level_1: '',
+                administrative_area_level_2: ''
+            };
+
+            markerclick.setMap(null);
+
+            infoBubble.close();
+
+            infoBubbleclick.close();
+
+            infoBubbleerror.close();
+
+            latlng = event.latLng;
 
 
+            codeLatLng(latlng);
+
+        });
 
         others();
 
     }
 
+    function codeLatLng(latlng) {
+        $.ajax({
+            type : "Post",
+            url : "http://maps.google.com/maps/api/geocode/json?sensor=false&latlng=" + latlng.lat() + "," +latlng.lng(),
+            dataType : "JSON",
+            async : false,
+            success : function(response) {
+                if(response.status == google.maps.GeocoderStatus.OK) {
+                    flagclick = 1;
+                    checkaddress(response);
+                }
+                else {
 
-    function checkaddress(response) {
+                    markerclick.setMap(null);
+
+                    infoBubble.close();
+
+                    infoBubbleclick.close();
+
+                    infoBubbleerror.close();
+                    markerclick = new google.maps.Marker({
+                        position: new google.maps.LatLng(latlng.lat(), latlng.lng()),
+                        map: map,
+                        icon: markerImagegreen
+                    });
+
+                    infoBubbleerror.open(map, markerclick);
+                    infoBubbleerror.setContent('<div id="click_marker" style="color:#fff;font-family:latoreg;font-size:17px;line-height:20px;padding-top:5%;padding-bottom:5%;text-align:center;padding-left:10px;">Sorry! No street address detected</div>');
+
+                    var position2 = new google.maps.LatLng(latlng.lat(), latlng.lng());
+                    position3 = position2;
+                    console.log(flag_to_set_marker_center);
+                    if (flag_to_set_marker_center > 0)
+                    {
+                        setTimeout(function() { map.panToWithOffset(position2, -parseInt($('#panel_container').width()/2), 0); }, 500);
+                    }
+                }
+
+            },
+
+            error : function(error) {
+
+            }
+        });
+
+    }
+
+
+
+    function checkaddress(response) {          // validate the address according to requirement
 
         var latlong = response.results[0]["geometry"]["location"];
 
@@ -5337,7 +5615,7 @@
         var length = response["results"][0]["address_components"].length;
 
         formatted_address=response["results"][0]["formatted_address"];
-        $('#loc_search').val(formatted_address);
+//        $('#loc_search').val(formatted_address);
 
         for (var i = 0; i < length; i++) {
             var addressType1 = response["results"][0]["address_components"][i]["types"][0];
@@ -5415,32 +5693,111 @@
 
                 success : function(response1) {
 
-                    if (response1['data']==0)
-                    {
-                        input1=formatted_address;
+                    if (response1['data'] == 0) {
+                        input1 = formatted_address;
+
                         input1 = input1.split(",");
-                        input1.pop();
+                        var inputclick = formatted_address;
+                        inputclick = inputclick.split(",");
+                        input1.pop(input1);
 
-                        $("#address_display_on_popup").html(input1.toString()+" ?");
-                        $("#myModal").modal();
+                        var secondline=''
+
+                        for(i=1; i< (inputclick.length-1); i++)
+                        {
+                            secondline=secondline+inputclick[i]+' ';
+                        }
+
+                        if (flagclick == 1) {
+
+                            markerclick = new google.maps.Marker({
+                                position: new google.maps.LatLng(latlng.lat(),latlng.lng()),
+                                map: map,
+                                icon: markerImagegreen
+                            });
+
+
+                            infoBubbleclick.open(map, markerclick);
+                            infoBubbleclick.setContent('<div id="click_marker" style="color:#fff;font-family:latoreg;font-size:17px;line-height:20px;padding-top:5%;padding-bottom:5%;text-align:center;padding-left:10px;">'+inputclick[0]+'<br>'+secondline+'</div><div style="width:171px;max-width:1000px;max-height:1000px;margin:0 auto;">'
+                                    +'<input id="itq_qualify" class="w-button address-button apply-button btn btn-primary btn-sm" type="button" style="float: left; display: inline;margin-right:15px;background:#C0392B;" onclick="makepurchaseonclick()" value="Qualify" >'
+                                    +'</input>'
+                                    +'<input id="itq_cancel" type="submit" class="w-button address-button apply-button btn btn-primary btn-sm" data-dismiss="modal" style=" float:left;" value="Cancel" onclick="clearbox()">'
+                                    +'</input>'
+                                    +'<div style="clear:both;"></div>'
+                                    +'</div>');
+                            var position2 = new google.maps.LatLng(latlng.lat(), latlng.lng());
+                            position3 = position2;
+                            console.log(flag_to_set_marker_center);
+                            if (flag_to_set_marker_center == 1)     //  only when
+                            {
+                                setTimeout(function() { map.panToWithOffset(position2, -parseInt($('#panel_container').width()/2), 0); }, 500);
+                            }
+
+                        }
+                        else {
+
+                            $("#address_display_on_popup").html(input1.toString() + " ?");
+                            $("#myModal").modal();
+                        }
                     }
 
-                    else
-                    {
+                    else {
 
-                        camerapositionpurchase(latitude,longitude,formatted_address);
+                        camerapositionOnSearch(latitude, longitude, formatted_address);
 
                     }
-
                 }
             });
 
 
         } else {
-            flag = 0;
-            $("#search_error").css("visibility","visible");
-            $("#search_error").html('That is not a valid street address.');
-            $('#loc_search').css("outline","3px solid red");
+
+            if (flagclick == 1) {
+
+                markerclick = new google.maps.Marker({
+                    position: new google.maps.LatLng(latlng.lat(),latlng.lng()),
+                    map: map,
+                    icon: markerImagegreen
+                });
+
+                infoBubbleerror.open(map, markerclick);
+                infoBubbleerror.setContent('<div id="click_marker" style="color:#fff;font-family:latoreg;font-size:17px;line-height:20px;padding-top:5%;padding-bottom:5%;text-align:;padding-left:10px;">Sorry! No street address detected</div>');
+                var position2 = new google.maps.LatLng(latlng.lat(), latlng.lng());
+                position3 = position2;
+                console.log(flag_to_set_marker_center);
+                if (flag_to_set_marker_center == 1)
+                {
+                    setTimeout(function() { map.panToWithOffset(position2, -parseInt($('#panel_container').width()/2), 0); }, 500);
+                }
+
+            }
+            else {
+                if((componentForm1['postal_code'] != '') || (componentForm1['locality'] != ''))
+                {    var position2 = new google.maps.LatLng(latitude,longitude);
+
+                    map.setCenter(position2);
+                    setTimeout(function() {
+                        map.setZoom(15);
+                    }, 2500);
+                    flagerror = 1;
+                }
+                else {
+                    flag = 0;
+                    $("#search_error").css("visibility", "visible");
+                    $("#search_error").html('That is not a valid street address.');
+                    $('#loc_search').css("outline", "3px solid red");
+                    flagerror = 1;
+                }
+            }
+        }
+    }
+
+    function clearbox(){
+        if (flagclick == 1) {
+            markerclick.setMap(null);
+            infoBubbleclick.close();
+            infoBubble.close();
+            infoBubbleerror.close();
         }
     }
 
@@ -5462,9 +5819,9 @@
         );
 
         $('#panel_container_sidebar').on('click', '.glyphicon-chevron-left', function() {
-            
+
             flag_to_set_marker_center=0;
-            
+
             var panel_width=$('#panel_container').width()-24;
             $("#panel_container").animate({
                 'margin-left' : -panel_width
@@ -5473,7 +5830,7 @@
             $("#panel_container").find("#side").addClass("glyphicon glyphicon-chevron-right");
 
             $('#ascrail2000').hide();
-             
+
             setTimeout(function() { map.panToWithOffset(position3, 0, 0); }, 500);
 
 
