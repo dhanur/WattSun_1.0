@@ -44,6 +44,24 @@
       .dtext_media{
           width:390px;
       }
+      .inside_qualify{
+          -webkit-font-smoothing: antialiased;
+      }
+      .inside_cancel{
+          -webkit-font-smoothing: antialiased;
+      }
+      .inside_cancel{
+          background: rgb(92, 184, 92) !important;
+          border: 2px solid #fff !important;
+          padding: 2.5px 10px !important;
+          color:#fff !important;
+      }
+      .inside_cancel:hover{
+          background: #fff !important;
+          border: 2px solid #fff !important;
+          padding: 2.5px 10px !important;
+          color:rgb(92, 184, 92) !important;
+      }
 
 
   </style>
@@ -356,7 +374,7 @@
       </td>
       <td class="right_data">
 							                      <span id='last_sale_date1' data-toggle="tooltip" data-original-title="Time since last property sale" class="tool_tips green-tooltip">
-							                          
+
 							                      </span>
       </td>
     </tr>
@@ -367,24 +385,24 @@
 													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Self explanatory" class="tool_tips green-tooltip">Time at Residence</span></div></td>
 													<td class="right_data"><span id='time_at_residence1'>  </span></td>
 												</tr>
-												
+
 												<tr id="aom1" style="display: none;" >
 													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Outstanding home mortgage value" class="tool_tips green-tooltip">Amount of Mortgage</span></div></td>
 													<td class="right_data"><span id='amount_of_mortgage1'>  </span></td>
 												</tr>
 
-												
-    											
+
+
 												<tr id="lbthvr1" style="display: none;" >
 													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="owner_text" class="tool_tips green-tooltip">Loan Balance to Home Value Ratio</span></div></td>
 													<td class="right_data"><span id='loan_balance_to_home_value_ratio1'>  </span></td>
 												</tr>
-												
+
 												<tr id="is1" style="display: none;" >
 													<td class="left_data"><div><span data-toggle="tooltip" data-original-title='This is a relative score, "is he wealthy or not - relative to the rest of the U.S.?"' class="tool_tips green-tooltip">Income Score</span></div></td>
 													<td class="right_data"><span id='income_score1'>  </span></td>
 												</tr>
-												
+
 												<tr id="aiz1" style="display: none;" >
 													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="owner_text" class="tool_tips green-tooltip">Adults in Zip+4</span></div></td>
 													<td class="right_data"><span id='adults_in_zip1'>  </span></td>
@@ -1040,7 +1058,7 @@
         </td>
         <td class="right_data">
 							                      <span id='land_use_code2'>
-							                          
+
 							                      </span>
         </td>
       </tr>
@@ -1054,7 +1072,7 @@
         </td>
         <td class="right_data">
 							                      <span id='residential_per_common_units2'>
-							                          
+
 							                      </span>
         </td>
       </tr>
@@ -1072,7 +1090,7 @@
         </td>
         <td class="right_data">
 							                      <span id='last_sale_date2' data-toggle="tooltip" data-original-title="Time since last property sale" class="tool_tips green-tooltip">
-							                          
+
 							                      </span>
         </td>
       </tr>
@@ -1082,24 +1100,24 @@
 													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Self explanatory" class="tool_tips green-tooltip">Time at Residence</span></div></td>
 													<td class="right_data"><span id='time_at_residence2'>  </span></td>
 												</tr>
-												
+
 												<tr id="aom2" style="display: none;" >
 													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="Outstanding home mortgage value" class="tool_tips green-tooltip">Amount of Mortgage</span></div></td>
 													<td class="right_data"><span id='amount_of_mortgage2'>  </span></td>
 												</tr>
 
 
-												
+
 												<tr id="lbthvr2" style="display: none;" >
 													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="owner_text" class="tool_tips green-tooltip">Loan Balance to Home Value Ratio</span></div></td>
 													<td class="right_data"><span id='loan_balance_to_home_value_ratio2'>  </span></td>
 												</tr>
-												
+
 												<tr id="is2" style="display: none;" >
 													<td class="left_data"><div><span data-toggle="tooltip" data-original-title='This is a relative score, "is he wealthy or not - relative to the rest of the U.S.?"' class="tool_tips green-tooltip">Income Score</span></div></td>
 													<td class="right_data"><span id='income_score2'>  </span></td>
 												</tr>
-												
+
 												<tr id="aiz2" style="display: none;" >
 													<td class="left_data"><div><span data-toggle="tooltip" data-original-title="owner_text" class="tool_tips green-tooltip">Adults in Zip+4</span></div></td>
 													<td class="right_data"><span id='adults_in_zip2'>  </span></td>
@@ -1151,7 +1169,7 @@
         </td>
         <td class="right_data">
 							                      <span id='last_sale_price2' data-toggle="tooltip" data-original-title="Price of last recorded property sale" class="tool_tips green-tooltip">
-							                          
+
 							                      </span>
         </td>
       </tr>
@@ -1277,7 +1295,7 @@
                     </td>
                     <td class="right_data">
                       <span id='last_sale_price_per_sqrft2'>
-                          
+
                       </span>
                     </td>
                   </tr> -->
@@ -1376,7 +1394,7 @@
         </td>
         <td class="right_data">
                       <span id='zoning2' data-toggle="tooltip" data-original-title="Based on zoning system used by county" class="tool_tips green-tooltip">
-                          
+
                       </span>
         </td>
       </tr>
@@ -1496,7 +1514,7 @@
         $('#loc_search').focusin(function() {
             $('#search_error').css("visibility","hidden");
             $('#loc_search').css("outline","0px");
-//					$('#search_error').html('No error');					
+//					$('#search_error').html('No error');
 
         });
 
@@ -1936,25 +1954,25 @@
                 console.log(flag_to_set_marker_center);
 
                 if (flag_to_set_marker_center > 0)     //if panel is open
-                    {
-                        map.panToWithOffset(position2, -parseInt($('#panel_container').width()/2), 0);
-                    }
-
-                    }, 1000);
-                 }
-            else{
-                setValueNewTranscation(formatted_address);
-            console.log(flag_to_set_marker_center);
-                    setTimeout(function () {
-                        map.setZoom(21);
-                        if (flag_to_set_marker_center > 0)   //if panel is open
-                        {
-                            map.panToWithOffset(position2, -parseInt($('#panel_container').width()/2), 0);
-                        }
-
-                    }, 1000);
-
+                {
+                    map.panToWithOffset(position2, -parseInt($('#panel_container').width()/2), 0);
                 }
+
+            }, 1000);
+        }
+        else{
+            setValueNewTranscation(formatted_address);
+            console.log(flag_to_set_marker_center);
+            setTimeout(function () {
+                map.setZoom(21);
+                if (flag_to_set_marker_center > 0)   //if panel is open
+                {
+                    map.panToWithOffset(position2, -parseInt($('#panel_container').width()/2), 0);
+                }
+
+            }, 1000);
+
+        }
 
         position3=position2;
 
@@ -2293,72 +2311,72 @@
                 // $("#tar1").hide();
                 // $("#tar2").hide();
                 // }
-// 		                        
+//
                 // else{
-// 		                        	
+//
                 // $("#tar1").show();
                 // $("#tar2").show();
                 // $("#time_at_residence1").html(response['results'][0]['ResidenceTime_z4']);
                 // $("#time_at_residence2").html(response['results'][0]['ResidenceTime_z4']);
                 // check_flag=1;
                 // }
-// 		     		                      
+//
                 // if(response['results'][0]['MortgageAmount_z4']=='' || response['results'][0]['MortgageAmount_z4']==null )
                 // {
                 // $("#aom1").hide();
                 // $("#aom2").hide();
                 // }
-// 		                        
+//
                 // else{
-// 		                        	
+//
                 // $("#aom1").show();
                 // $("#aom2").show();
                 // $("#amount_of_mortgage1").html(response['results'][0]['MortgageAmount_z4']);
                 // $("#amount_of_mortgage2").html(response['results'][0]['MortgageAmount_z4']);
                 // check_flag=1;
                 // }
-//                   
-// 		     		                      		                      
+//
+//
                 // if(response['results'][0]['Loantovalue_z4']=='' || response['results'][0]['Loantovalue_z4']==null )
                 // {
                 // $("#lbthvr1").hide();
                 // $("#lbthvr2").hide();
                 // }
-// 		                        
+//
                 // else{
-// 		                        	
+//
                 // $("#lbthvr1").show();
                 // $("#lbthvr2").show();
                 // $("#loan_balance_to_home_value_ratio1").html(response['results'][0]['Loantovalue_z4']);
                 // $("#loan_balance_to_home_value_ratio2").html(response['results'][0]['Loantovalue_z4']);
                 // check_flag=1;
                 // }
-// 		     		                      
+//
                 // if(response['results'][0]['IncomeIQ_plus_z4']=='' || response['results'][0]['IncomeIQ_plus_z4']==null )
                 // {
                 // $("#is1").hide();
                 // $("#is2").hide();
                 // }
-// 		                        
+//
                 // else{
-// 		                        	
+//
                 // $("#is1").show();
                 // $("#is2").show();
                 // $("#income_score1").html(response['results'][0]['IncomeIQ_plus_z4']);
                 // $("#income_score2").html(response['results'][0]['IncomeIQ_plus_z4']);
                 // check_flag=1;
                 // }
-// 		     		                      
-// 	     		                     
-// 		                      
+//
+//
+//
                 // if(response['results'][0]['NumberofadultsinZip4']=='' || response['results'][0]['NumberofadultsinZip4']==null )
                 // {
                 // $("#aiz1").hide();
                 // $("#aiz2").hide();
                 // }
-// 		                        
+//
                 // else{
-// 		                        	
+//
                 // $("#aiz1").show();
                 // $("#aiz2").show();
                 // $("#adults_in_zip1").html(response['results'][0]['NumberofadultsinZip4']);
@@ -2536,16 +2554,16 @@
 
 
 
-// 						
-// 																
+//
+//
                 // if(response['results'][0]['last_sale_price_per_sqr_ft']=='' || response['results'][0]['last_sale_price_per_sqr_ft']==null)
                 // {
                 // $("#lspps1").hide();
                 // $("#lspps2").hide();
                 // }
-// 		                        
+//
                 // else{
-// 		                        	
+//
                 // $("#lspps1").show();
                 // $("#lspps2").show();
                 // $("#last_sale_price_per_sqrft1").html(response['results'][0]['last_sale_price_per_sqr_ft']);
@@ -3241,10 +3259,12 @@
     function makepurchaseonclick() {
         infoBubbleclick.close();
 
-        setTimeout(function() {
-            map.setZoom(21);
-        }, 2000);
+        if(flagclick == 1) {
+            setTimeout(function () {
+                map.setZoom(21);
+            }, 2000);
 
+        }
         $('#loadingimage').show();
 
         // $("#panel_search_result").hide();
@@ -3392,7 +3412,7 @@
                 citycode = response['transaction'][0]['city'];
 
                 // $("#prev_chk").show();
-                // $("#prev_checks").html(response['transaction'][0]['prev_check']);	
+                // $("#prev_checks").html(response['transaction'][0]['prev_check']);
 
                 var check_flag=0;
 
@@ -3577,74 +3597,74 @@
                     // $("#tar1").hide();
                     // $("#tar2").hide();
                     // }
-// 		                        
+//
                     // else{
-// 		                        	
+//
                     // $("#tar1").show();
                     // $("#tar2").show();
                     // $("#time_at_residence1").html(response['transaction'][0]['ResidenceTime_z4']);
                     // $("#time_at_residence2").html(response['transaction'][0]['ResidenceTime_z4']);
                     // check_flag=1;
                     // }
-// 		     		                      
+//
                     // if(response['transaction'][0]['MortgageAmount_z4']=='' || response['transaction'][0]['MortgageAmount_z4']==null )
                     // {
                     // $("#aom1").hide();
                     // $("#aom2").hide();
                     // }
-// 		                        
+//
                     // else{
-// 		                        	
+//
                     // $("#aom1").show();
                     // $("#aom2").show();
                     // $("#amount_of_mortgage1").html(response['transaction'][0]['MortgageAmount_z4']);
                     // $("#amount_of_mortgage2").html(response['transaction'][0]['MortgageAmount_z4']);
                     // check_flag=1;
                     // }
-// 		     		                      
-// 		                      
-// 
-// 		     		                      		                      
+//
+//
+//
+//
                     // if(response['transaction'][0]['Loantovalue_z4']=='' || response['transaction'][0]['Loantovalue_z4']==null )
                     // {
                     // $("#lbthvr1").hide();
                     // $("#lbthvr2").hide();
                     // }
-// 		                        
+//
                     // else{
-// 		                        	
+//
                     // $("#lbthvr1").show();
                     // $("#lbthvr2").show();
                     // $("#loan_balance_to_home_value_ratio1").html(response['transaction'][0]['Loantovalue_z4']);
                     // $("#loan_balance_to_home_value_ratio2").html(response['transaction'][0]['Loantovalue_z4']);
                     // check_flag=1;
                     // }
-// 		     		                      
+//
                     // if(response['transaction'][0]['IncomeIQ_plus_z4']=='' || response['transaction'][0]['IncomeIQ_plus_z4']==null )
                     // {
                     // $("#is1").hide();
                     // $("#is2").hide();
                     // }
-// 		                        
+//
                     // else{
-// 		                        	
+//
                     // $("#is1").show();
                     // $("#is2").show();
                     // $("#income_score1").html(response['transaction'][0]['IncomeIQ_plus_z4']);
                     // $("#income_score2").html(response['transaction'][0]['IncomeIQ_plus_z4']);
                     // check_flag=1;
                     // }
-// 		     		                      
-// 		      
-// 	                      
+//
+//
+//
                     // if(response['transaction'][0]['NumberofadultsinZip4']=='' || response['transaction'][0]['NumberofadultsinZip4']==null )
                     // {
                     // $("#aiz1").hide();
                     // $("#aiz2").hide();
                     // }
-// 		                        
+//
                     // else{
-// 		                        	
+//
                     // $("#aiz1").show();
                     // $("#aiz2").show();
                     // $("#adults_in_zip1").html(response['transaction'][0]['NumberofadultsinZip4']);
@@ -3829,9 +3849,9 @@
                     // $("#lspps1").hide();
                     // $("#lspps2").hide();
                     // }
-// 		                        
+//
                     // else{
-// 		                        	
+//
                     // $("#lspps1").show();
                     // $("#lspps2").show();
                     // $("#last_sale_price_per_sqrft1").html(response['transaction'][0]['last_sale_price_per_sqr_ft']);
@@ -4603,81 +4623,81 @@
                     }
 
 
-//      		                      		                      
+//
                     // if(response['transaction'][0]['ResidenceTime_z4']=='' || response['transaction'][0]['ResidenceTime_z4']==null )
                     // {
                     // $("#tar1").hide();
                     // $("#tar2").hide();
                     // }
-// 		                        
+//
                     // else{
-// 		                        	
+//
                     // $("#tar1").show();
                     // $("#tar2").show();
                     // $("#time_at_residence1").html(response['transaction'][0]['ResidenceTime_z4']);
                     // $("#time_at_residence2").html(response['transaction'][0]['ResidenceTime_z4']);
                     // check_flag=1;
                     // }
-// 		     		                      
+//
                     // if(response['transaction'][0]['MortgageAmount_z4']=='' || response['transaction'][0]['MortgageAmount_z4']==null )
                     // {
                     // $("#aom1").hide();
                     // $("#aom2").hide();
                     // }
-// 		                        
+//
                     // else{
-// 		                        	
+//
                     // $("#aom1").show();
                     // $("#aom2").show();
                     // $("#amount_of_mortgage1").html(response['transaction'][0]['MortgageAmount_z4']);
                     // $("#amount_of_mortgage2").html(response['transaction'][0]['MortgageAmount_z4']);
                     // check_flag=1;
                     // }
-// 		     		                      
-// 		                      
-// 	                      
-// 		     		                      		                      
+//
+//
+//
+//
                     // if(response['transaction'][0]['Loantovalue_z4']=='' || response['transaction'][0]['Loantovalue_z4']==null )
                     // {
                     // $("#lbthvr1").hide();
                     // $("#lbthvr2").hide();
                     // }
-// 		                        
+//
                     // else{
-// 		                        	
+//
                     // $("#lbthvr1").show();
                     // $("#lbthvr2").show();
                     // $("#loan_balance_to_home_value_ratio1").html(response['transaction'][0]['Loantovalue_z4']);
                     // $("#loan_balance_to_home_value_ratio2").html(response['transaction'][0]['Loantovalue_z4']);
                     // check_flag=1;
                     // }
-// 		     		                      
+//
                     // if(response['transaction'][0]['IncomeIQ_plus_z4']=='' || response['transaction'][0]['IncomeIQ_plus_z4']==null )
                     // {
                     // $("#is1").hide();
                     // $("#is2").hide();
                     // }
-// 		                        
+//
                     // else{
-// 		                        	
+//
                     // $("#is1").show();
                     // $("#is2").show();
                     // $("#income_score1").html(response['transaction'][0]['IncomeIQ_plus_z4']);
                     // $("#income_score2").html(response['transaction'][0]['IncomeIQ_plus_z4']);
                     // check_flag=1;
                     // }
-// 		     		                      
-// 		      
-// 	     		                     
-// 		                      
+//
+//
+//
+//
                     // if(response['transaction'][0]['NumberofadultsinZip4']=='' || response['transaction'][0]['NumberofadultsinZip4']==null )
                     // {
                     // $("#aiz1").hide();
                     // $("#aiz2").hide();
                     // }
-// 		                        
+//
                     // else{
-// 		                        	
+//
                     // $("#aiz1").show();
                     // $("#aiz2").show();
                     // $("#adults_in_zip1").html(response['transaction'][0]['NumberofadultsinZip4']);
@@ -4864,9 +4884,9 @@
                     // $("#lspps1").hide();
                     // $("#lspps2").hide();
                     // }
-// 		                        
+//
                     // else{
-// 		                        	
+//
                     // $("#lspps1").show();
                     // $("#lspps2").show();
                     // $("#last_sale_price_per_sqrft1").html(response['transaction'][0]['last_sale_price_per_sqr_ft']);
@@ -5654,7 +5674,24 @@
 
         if (componentForm1['postal_code'] != '' && componentForm1['country'] != '' && componentForm1['locality'] != '' && componentForm1['street_number'] != '' && componentForm1['route'] != '' && componentForm1['administrative_area_level_2'] != '' && componentForm1['administrative_area_level_1'] != '')
         {
+            var range_check = componentForm1['street_number'].split("-");
+            if(range_check.length > 1){
+                markerclick = new google.maps.Marker({
+                    position: new google.maps.LatLng(latlng.lat(),latlng.lng()),
+                    map: map,
+                    icon: markerImagegreen
+                });
 
+                infoBubbleerror.open(map, markerclick);
+                infoBubbleerror.setContent('<div id="click_marker" style="color:#fff;font-family:latoreg;font-size:17px;line-height:20px;padding-top:5%;padding-bottom:5%;text-align:center;padding-left:10px;">Sorry! No street address detected</div>');
+                var position2 = new google.maps.LatLng(latlng.lat(), latlng.lng());
+                position3 = position2;
+                if (flag_to_set_marker_center == 1)
+                {
+                    setTimeout(function() { map.panToWithOffset(position2, -parseInt($('#panel_container').width()/2), 0); }, 500);
+                }
+                return 0;
+            }
             flag = 1;
             $('#search_error').css("visibility","hidden");
 //							$("#search_error").html("No error");
@@ -5710,6 +5747,7 @@
 
                         if (flagclick == 1) {
 
+                            console.log("flag");
                             markerclick = new google.maps.Marker({
                                 position: new google.maps.LatLng(latlng.lat(),latlng.lng()),
                                 map: map,
@@ -5719,9 +5757,9 @@
 
                             infoBubbleclick.open(map, markerclick);
                             infoBubbleclick.setContent('<div id="click_marker" style="color:#fff;font-family:latoreg;font-size:17px;line-height:20px;padding-top:5%;padding-bottom:5%;text-align:center;padding-left:10px;">'+inputclick[0]+'<br>'+secondline+'</div><div style="width:171px;max-width:1000px;max-height:1000px;margin:0 auto;">'
-                                    +'<input id="itq_qualify" class="w-button address-button apply-button btn btn-primary btn-sm" type="button" style="float: left; display: inline;margin-right:15px;background:#C0392B;" onclick="makepurchaseonclick()" value="Qualify" >'
+                                    +'<input id="itq_qualify" class="w-button address-button apply-button btn btn-primary btn-sm inside_qualify" type="button" style="float: left; display: inline;margin-right:15px;background:#C0392B;" onclick="makepurchaseonclick()" value="Qualify" >'
                                     +'</input>'
-                                    +'<input id="itq_cancel" type="submit" class="w-button address-button apply-button btn btn-primary btn-sm" data-dismiss="modal" style=" float:left;" value="Cancel" onclick="clearbox()">'
+                                    +'<input id="itq_cancel" type="submit" class="w-button address-button apply-button btn btn-primary btn-sm inside_cancel" data-dismiss="modal" style=" float:left;" value="Cancel" onclick="clearbox()">'
                                     +'</input>'
                                     +'<div style="clear:both;"></div>'
                                     +'</div>');
@@ -5736,8 +5774,40 @@
                         }
                         else {
 
-                            $("#address_display_on_popup").html(input1.toString() + " ?");
-                            $("#myModal").modal();
+                            console.log("search bar");
+                            markerclick = new google.maps.Marker({
+                                position: new google.maps.LatLng(latitude,longitude),
+                                map: map,
+                                icon: markerImagegreen
+                            });
+
+
+                            infoBubbleclick.open(map, markerclick);
+                            infoBubbleclick.setContent('<div id="click_marker" style="color:#fff;font-family:latoreg;font-size:17px;line-height:20px;padding-top:5%;padding-bottom:5%;text-align:center;padding-left:10px;">'+inputclick[0]+'<br>'+secondline+'</div><div style="width:171px;max-width:1000px;max-height:1000px;margin:0 auto;">'
+                                    +'<input id="itq_qualify" class="w-button address-button apply-button btn btn-primary btn-sm inside_qualify" type="button" style="float: left; display: inline;margin-right:15px;background:#C0392B;" onclick="makepurchaseonclick()" value="Qualify" >'
+                                    +'</input>'
+                                    +'<input id="itq_cancel" type="submit" class="w-button address-button apply-button btn btn-primary btn-sm inside_cancel" data-dismiss="modal" style=" float:left;" value="Cancel" onclick="clearbox()">'
+                                    +'</input>'
+                                    +'<div style="clear:both;"></div>'
+                                    +'</div>');
+                            var position2 = new google.maps.LatLng(latitude,longitude);
+                            position3 = position2;
+                            console.log(flag_to_set_marker_center);
+                            map.setZoom(21);
+
+                            if (flag_to_set_marker_center == 1) {
+                                setTimeout(function () {
+                                    map.setZoom(21);
+                                    map.panToWithOffset(position2, -parseInt($('#panel_container').width() / 2), 0);
+                                }, 900);
+                            }
+
+                            else if (flag_to_set_marker_center == 2){
+                                setTimeout(function () {
+                                    map.setZoom(21);
+                                }, 900);
+                            }
+
                         }
                     }
 
@@ -5793,12 +5863,12 @@
     }
 
     function clearbox(){
-        if (flagclick == 1) {
+
             markerclick.setMap(null);
             infoBubbleclick.close();
             infoBubble.close();
             infoBubbleerror.close();
-        }
+
     }
 
     google.maps.event.addDomListener(window, 'load', initialize);
@@ -5808,10 +5878,10 @@
 <script>
     $(document).ready(function(){
 
-        //        content table starts  
+        //        content table starts
         $('body').css("overflowY","hidden");
 
-//        content table ends  
+//        content table ends
 
         $(".tool_tips").tooltip({
                     placement : 'top'
@@ -5839,7 +5909,7 @@
 
 //				var side_class=$('#side').attr('class');
 //                if(side_class=="glyphicon glyphicon-chevron-right"){
-//                
+//
 //                }
             flag_to_set_marker_center=1;
             $("#panel_container").animate({

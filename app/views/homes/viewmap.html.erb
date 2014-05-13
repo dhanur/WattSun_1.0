@@ -44,6 +44,24 @@
       .dtext_media{
           width:390px;
       }
+      .inside_qualify{
+          -webkit-font-smoothing: antialiased;
+      }
+      .inside_cancel{
+          -webkit-font-smoothing: antialiased;
+      }
+      .inside_cancel{
+          background: rgb(92, 184, 92) !important;
+          border: 2px solid #fff !important;
+          padding: 2.5px 10px !important;
+          color:#fff !important;
+      }
+      .inside_cancel:hover{
+          background: #fff !important;
+          border: 2px solid #fff !important;
+          padding: 2.5px 10px !important;
+          color:rgb(92, 184, 92) !important;
+      }
 
 
   </style>
@@ -5654,7 +5672,24 @@
 
         if (componentForm1['postal_code'] != '' && componentForm1['country'] != '' && componentForm1['locality'] != '' && componentForm1['street_number'] != '' && componentForm1['route'] != '' && componentForm1['administrative_area_level_2'] != '' && componentForm1['administrative_area_level_1'] != '')
         {
+            var range_check = componentForm1['street_number'].split("-");
+            if(range_check.length > 1){
+                markerclick = new google.maps.Marker({
+                    position: new google.maps.LatLng(latlng.lat(),latlng.lng()),
+                    map: map,
+                    icon: markerImagegreen
+                });
 
+                infoBubbleerror.open(map, markerclick);
+                infoBubbleerror.setContent('<div id="click_marker" style="color:#fff;font-family:latoreg;font-size:17px;line-height:20px;padding-top:5%;padding-bottom:5%;text-align:center;padding-left:10px;">Sorry! No street address detected</div>');
+                var position2 = new google.maps.LatLng(latlng.lat(), latlng.lng());
+                position3 = position2;
+                if (flag_to_set_marker_center == 1)
+                {
+                    setTimeout(function() { map.panToWithOffset(position2, -parseInt($('#panel_container').width()/2), 0); }, 500);
+                }
+                return 0;
+            }
             flag = 1;
             $('#search_error').css("visibility","hidden");
 //							$("#search_error").html("No error");
@@ -5719,9 +5754,9 @@
 
                             infoBubbleclick.open(map, markerclick);
                             infoBubbleclick.setContent('<div id="click_marker" style="color:#fff;font-family:latoreg;font-size:17px;line-height:20px;padding-top:5%;padding-bottom:5%;text-align:center;padding-left:10px;">'+inputclick[0]+'<br>'+secondline+'</div><div style="width:171px;max-width:1000px;max-height:1000px;margin:0 auto;">'
-                                    +'<input id="itq_qualify" class="w-button address-button apply-button btn btn-primary btn-sm" type="button" style="float: left; display: inline;margin-right:15px;background:#C0392B;" onclick="makepurchaseonclick()" value="Qualify" >'
+                                    +'<input id="itq_qualify" class="w-button address-button apply-button btn btn-primary btn-sm inside_qualify" type="button" style="float: left; display: inline;margin-right:15px;background:#C0392B;" onclick="makepurchaseonclick()" value="Qualify" >'
                                     +'</input>'
-                                    +'<input id="itq_cancel" type="submit" class="w-button address-button apply-button btn btn-primary btn-sm" data-dismiss="modal" style=" float:left;" value="Cancel" onclick="clearbox()">'
+                                    +'<input id="itq_cancel" type="submit" class="w-button address-button apply-button btn btn-primary btn-sm inside_cancel" data-dismiss="modal" style=" float:left;" value="Cancel" onclick="clearbox()">'
                                     +'</input>'
                                     +'<div style="clear:both;"></div>'
                                     +'</div>');
